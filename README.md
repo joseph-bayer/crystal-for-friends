@@ -1,3 +1,11 @@
+# Crystal For Friends
+
+This is a version of Pokemon Crystal meant for me and my friends. It is built upon the CrystalShireEngine.
+
+Below, you will find the original readme for the CrystalShireEngine
+
+---
+
 # CrystalShireEngine (CSE)
 
 CrystalShireEngine (CSE) is an enhanced engine for Pokemon Crystal romhacking.
