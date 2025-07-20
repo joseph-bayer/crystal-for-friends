@@ -1,0 +1,10 @@
+ApricornBalls:
+	;  apricorn
+	dw RED_APRICORN
+	dw BLU_APRICORN
+	dw YLW_APRICORN
+	dw GRN_APRICORN
+	dw WHT_APRICORN
+	dw BLK_APRICORN
+	dw PNK_APRICORN
+	dw -1
