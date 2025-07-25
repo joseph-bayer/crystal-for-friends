@@ -86,7 +86,8 @@ DEF MON_DEF_EV             rb
 DEF MON_SPD_EV             rb
 DEF MON_SAT_EV             rb
 DEF MON_SDF_EV             rb
-                           rb_skip 4
+                           rb_skip 3
+DEF MON_CAUGHTBALL         rb    ; new byte for pokeball type
 DEF MON_DVS                rw
 DEF MON_PP                 rb NUM_MOVES
 DEF MON_HAPPINESS          rb
@@ -132,7 +133,8 @@ DEF SAVEMON_DEF_EV             rb
 DEF SAVEMON_SPD_EV             rb
 DEF SAVEMON_SAT_EV             rb
 DEF SAVEMON_SDF_EV             rb
-                               rb_skip 4
+                               rb_skip 3
+DEF SAVEMON_CAUGHTBALL         rb    ; new byte for pokeball type
 DEF SAVEMON_DVS                rw
 ; savemon_struct is identical to party_struct before this point
 DEF SAVEMON_MOVES_HIGH         rb NUM_MOVES
@@ -181,6 +183,24 @@ DEF CAUGHT_BY_GIRL    EQU 1
 DEF CAUGHT_BY_BOY     EQU 2
 
 DEF CAUGHT_EGG_LEVEL EQU 1
+
+; caught ball constants
+DEF CAUGHT_BALL_MASK EQU %00001111   ; 4 bits for ball type (0-15)
+
+; ball ID to caught ball conversion
+; converts item ID (0x0200-0x020B) to caught ball value (0-11)
+DEF CAUGHT_MASTER_BALL  EQU 0
+DEF CAUGHT_ULTRA_BALL   EQU 1
+DEF CAUGHT_GREAT_BALL   EQU 2
+DEF CAUGHT_POKE_BALL    EQU 3
+DEF CAUGHT_HEAVY_BALL   EQU 4
+DEF CAUGHT_LEVEL_BALL   EQU 5
+DEF CAUGHT_LURE_BALL    EQU 6
+DEF CAUGHT_FAST_BALL    EQU 7
+DEF CAUGHT_FRIEND_BALL  EQU 8
+DEF CAUGHT_MOON_BALL    EQU 9
+DEF CAUGHT_LOVE_BALL    EQU 10
+DEF CAUGHT_PARK_BALL    EQU 11
 
 DEF MON_CRY_LENGTH EQU 6
 

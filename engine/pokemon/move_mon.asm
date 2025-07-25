@@ -1367,10 +1367,20 @@ GivePoke::
 	ld a, b
 	and a
 	jr z, .party
+  push hl
+  ld hl, POKE_BALL
+	call GetItemIDFromIndex
+	ld [wCurItem], a ; set mon's caught ball to POKE_BALL
+  pop hl
 	farcall SetBoxMonCaughtData
 	jr .set_caught_data
 
 .party
+  push hl
+  ld hl, POKE_BALL
+	call GetItemIDFromIndex
+	ld [wCurItem], a ; set mon's caught ball to POKE_BALL
+  pop hl
 	farcall SetCaughtData
 .set_caught_data
 	farcall GiveANickname_YesNo

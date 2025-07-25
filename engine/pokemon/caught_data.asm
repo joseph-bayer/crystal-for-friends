@@ -159,6 +159,17 @@ SetCaughtData:
 	dec a
 	ld hl, wPartyMon1CaughtLevel
 	call GetPartyLocation
+	call SetBoxmonOrEggmonCaughtData
+	
+	; Set the caught ball data
+	ld a, [wPartyCount]
+	dec a
+	ld hl, wPartyMon1
+	call GetPartyLocation
+	ld bc, MON_CAUGHTBALL
+	add hl, bc
+	call SetCaughtBallData
+	ret
 SetBoxmonOrEggmonCaughtData:
 	ld a, [wTimeOfDay]
 	inc a
@@ -196,11 +207,22 @@ SetBoxmonOrEggmonCaughtData:
 SetBoxMonCaughtData:
 	ld hl, wBufferMonCaughtData
 	call SetBoxmonOrEggmonCaughtData
+	
+	; Set the caught ball data for box Pokemon
+	ld hl, wBufferMon + MON_CAUGHTBALL
+	call SetCaughtBallData
+	
 	farjp UpdateStorageBoxMonFromTemp
 
 SetGiftBoxMonCaughtData:
 	ld hl, wBufferMonCaughtLevel
 	call SetGiftMonCaughtData
+	
+	; Set the ball data to Poke Ball (3) for box Pokemon
+	ld hl, wBufferMon + MON_CAUGHTBALL
+	ld a, 3  ; Always use Poke Ball for gifts
+	ld [hl], a
+	
 	farjp UpdateStorageBoxMonFromTemp
 
 SetGiftPartyMonCaughtData:
@@ -210,6 +232,19 @@ SetGiftPartyMonCaughtData:
 	push bc
 	call GetPartyLocation
 	pop bc
+	call SetGiftMonCaughtData
+	
+	; Set the ball data to Poke Ball (3) for party Pokemon
+	ld a, [wPartyCount]
+	dec a
+	ld hl, wPartyMon1
+	call GetPartyLocation
+	ld bc, MON_CAUGHTBALL
+	add hl, bc
+	ld a, 3  ; Always use Poke Ball for gifts
+	ld [hl], a
+	ret
+
 SetGiftMonCaughtData:
 	xor a
 	ld [hli], a
@@ -230,4 +265,37 @@ SetEggMonCaughtData:
 	call SetBoxmonOrEggmonCaughtData
 	pop af
 	ld [wCurPartyLevel], a
+	ret
+
+
+SetCaughtBallData:
+; Set the caught ball data for a Pokemon
+; Input: hl = pointer to MON_CAUGHTBALL location
+	ld a, [wCurItem]  ; Get 8-bit item ID
+	push hl           ; Save destination pointer
+	call GetItemIndexFromID  ; Convert 8-bit ID to 16-bit index in hl
+	
+	; Check if it's a ball item (0x0200-0x020B range)
+	ld a, h
+	cp HIGH(FIRST_BALL_ITEM)  ; Compare high byte with 0x02
+	jr nz, .not_a_ball       ; If not 0x02, it's not a ball
+	
+	; High byte is 0x02, check low byte range
+	ld a, l
+	cp LOW(FIRST_BALL_ITEM)              ; Compare with 0x00
+	jr c, .not_a_ball                    ; If < 0x00, not a ball
+	cp LOW(FIRST_BALL_ITEM) + NUM_BALL_ITEM_POCKET  ; Compare with 0x0C
+	jr nc, .not_a_ball                   ; If >= 0x0C, not a ball
+	
+	; It's a valid ball, convert to 0-11 range
+	sub LOW(FIRST_BALL_ITEM)             ; Convert 0x00-0x0B to 0-11
+	jr .store_ball
+
+.not_a_ball
+	ld a, 3  ; Default to 3 (Poke Ball) for non-balls
+
+.store_ball
+	pop hl             ; Restore destination pointer
+	and CAUGHT_BALL_MASK
+	ld [hl], a
 	ret

@@ -395,7 +395,9 @@ StatsScreen_InitUpperHalf:
 	rst PlaceString
 	call StatsScreen_PlaceHorizontalDivider
 	call StatsScreen_PlacePageSwitchArrows
-	jr StatsScreen_PlaceShinyIcon
+	call StatsScreen_PlaceShinyIcon
+	call PlaceCaughtBall
+	ret
 
 .PlaceHPBar:
 	ld hl, wTempMonHP
@@ -465,9 +467,47 @@ StatsScreen_PlacePageSwitchArrows:
 StatsScreen_PlaceShinyIcon:
 	ld bc, wTempMonDVs
 	farcall CheckShininess
-	ret nc
+  ret nc
 	hlcoord 19, 0
 	ld [hl], "⁂"
+	ret
+
+PlaceCaughtBall:
+; Display the pokeball type number used to catch this Pokemon on stats screen
+; Place pokeball type at coordinate (19, 0)
+	ld hl, wTempMon + MON_CAUGHTBALL
+	ld a, [hl]
+	and CAUGHT_BALL_MASK
+	hlcoord 10, 6
+  ld [hl], $32 ; pokeball tile
+
+; Uncomment to debug ball type being assigned correctly
+; 	; Convert ball type (0-11) to display character
+; 	cp 10
+; 	jr c, .single_digit
+; 	cp 10
+; 	jr z, .ten
+; 	cp 11
+; 	jr z, .eleven
+; 	jr .unknown
+	
+; .single_digit:
+; 	add "0"  ; Convert 0-9 to "0"-"9"
+; 	jr .display
+	
+; .ten:
+; 	ld a, "A"  ; Display 10 as A
+; 	jr .display
+	
+; .eleven:
+; 	ld a, "B"  ; Display 11 as B
+; 	jr .display
+	
+; .unknown:
+; 	ld a, "?"  ; Display unknown values as ?
+	
+; .display:
+; 	ld [hl], a
 	ret
 
 StatsScreen_LoadGFX:

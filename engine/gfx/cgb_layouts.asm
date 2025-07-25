@@ -255,6 +255,7 @@ _CGB_StatsScreenHPPals:
 	ld bc, 3 palettes ; pink, green, and blue page palettes
 	ld a, BANK(wBGPals1)
 	call FarCopyWRAM
+	
 	call WipeAttrmap
 
 	hlcoord 0, 0, wAttrmap
@@ -281,12 +282,56 @@ _CGB_StatsScreenHPPals:
 	lb bc, 2, 2
 	ld a, $5 ; blue page palette
 	call FillBoxCGB
+	
+	; Color the caught ball based on ball type
+	call .SetBallColor
 
 	call ApplyAttrmap
 	call ApplyPals
 	ld a, TRUE
 	ldh [hCGBPalUpdate], a
 	ret
+
+.SetBallColor:
+	; Get the ball type from the caught Pokemon data
+	ld hl, wTempMon + MON_CAUGHTBALL
+	ld a, [hl]
+	and CAUGHT_BALL_MASK
+	
+	; Support all ball types (0-11: MASTER through PARK_BALL)
+	cp 12  ; Check if ball type < 12
+	jr nc, .default_color  ; Use default if >= 12
+	
+	; Calculate the source address for this ball's palette
+	; Each palette is 8 bytes (4 colors * 2 bytes each)
+	ld l, a  ; l = ball_type
+	ld h, 0
+	add hl, hl
+	add hl, hl
+	add hl, hl  ; hl = ball_type * 8
+	ld bc, BallColorPals
+	add hl, bc  ; hl now points to the palette data for this ball type
+	
+	; Load this specific palette into slot 6
+	ld de, wBGPals1 palette 6
+	ld bc, 1 palettes ; 8 bytes = 1 palette
+	ld a, BANK(wBGPals1)
+	call FarCopyWRAM
+	
+	; Use palette 6 for the ball
+	ld a, 6
+	jr .set_ball_attr
+
+.default_color:
+	ld a, $0  ; Default to palette 0 for other ball types
+
+.set_ball_attr:
+	hlcoord 10, 6, wAttrmap
+	ld [hl], a
+	ret
+
+BallColorPals:
+INCLUDE "gfx/stats/ball_colors.pal"
 
 StatsScreenPagePals:
 INCLUDE "gfx/stats/pages.pal"

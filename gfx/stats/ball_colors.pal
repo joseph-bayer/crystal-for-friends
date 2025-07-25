@@ -1,0 +1,39 @@
+; Ball color palettes for stats screen (all ball types)
+; Format: White, Ball Color, Darker Ball Color, Black
+; Only the needed palette gets loaded dynamically
+
+; MASTER_BALL
+	RGB 31,31,31, 31,31,31, 20,08,23, 00,00,00
+
+; ULTRA_BALL
+	RGB 31,31,31, 31,31,31, 10,10,12, 00,00,00
+
+; GREAT_BALL
+	RGB 31,31,31, 31,31,31, 09,13,30, 00,00,00
+
+; POKE_BALL
+	RGB 31,31,31, 31,31,31, 30,08,05, 00,00,00
+
+; HEAVY_BALL
+	RGB 31,31,31, 31,31,31, 06,10,12, 00,00,00
+
+; LEVEL_BALL
+	RGB 31,31,31, 31,31,31, 30,24,00, 00,00,00
+
+; LURE_BALL
+	RGB 31,31,31, 31,31,31, 04,14,30, 00,00,00
+
+; FAST_BALL
+	RGB 31,31,31, 31,31,31, 31,16,04, 00,00,00
+
+; FRIEND_BALL
+	RGB 31,31,31, 31,31,31, 04,17,04, 00,00,00
+
+; MOON_BALL
+	RGB 31,31,31, 31,31,31, 07,19,25, 00,00,00
+
+; LOVE_BALL
+	RGB 31,31,31, 31,31,31, 30,11,22, 00,00,00
+
+; PARK_BALL
+	RGB 31,31,31, 31,31,31, 18,18,05, 00,00,00

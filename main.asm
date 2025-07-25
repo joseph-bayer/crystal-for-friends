@@ -20,6 +20,9 @@ SECTION "bank2", ROMX
 INCLUDE "engine/overworld/player_object.asm"
 INCLUDE "engine/math/sine.asm"
 INCLUDE "engine/predef.asm"
+
+
+SECTION "bank2_2", ROMX
 INCLUDE "engine/gfx/color.asm"
 
 
