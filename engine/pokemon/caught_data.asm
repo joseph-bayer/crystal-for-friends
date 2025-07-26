@@ -263,6 +263,16 @@ SetEggMonCaughtData:
 	ld a, CAUGHT_EGG_LEVEL
 	ld [wCurPartyLevel], a
 	call SetBoxmonOrEggmonCaughtData
+
+	; Set the caught ball data
+	ld a, [wPartyCount]
+	dec a
+	ld hl, wPartyMon1
+	call GetPartyLocation
+	ld bc, MON_CAUGHTBALL
+	add hl, bc
+	call SetCaughtBallData
+
 	pop af
 	ld [wCurPartyLevel], a
 	ret
@@ -271,6 +281,13 @@ SetEggMonCaughtData:
 SetCaughtBallData:
 ; Set the caught ball data for a Pokemon
 ; Input: hl = pointer to MON_CAUGHTBALL location
+	; Check if ball is already defined (non-zero)
+  ; This allows Odd Eggs to be set with a specific ball type
+  ; We're checking non-zero, so the odd egg can never be set to a MASTER_BALL (since it's represent by 0)
+	ld a, [hl]
+	and CAUGHT_BALL_MASK
+	ret nz            ; Return if ball is already set
+	
 	ld a, [wCurItem]  ; Get 8-bit item ID
 	push hl           ; Save destination pointer
 	call GetItemIndexFromID  ; Convert 8-bit ID to 16-bit index in hl

@@ -1,4 +1,3 @@
-; TODO: May need to set up caught ball code?
 _GiveOddEgg:
 	; Figure out which egg to give.
 

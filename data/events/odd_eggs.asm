@@ -1,4 +1,3 @@
-; TODO: May need to define caught ball code?
 DEF NUM_ODD_EGGS EQU 7
 
 MACRO prob
@@ -57,7 +56,8 @@ OddEggs:
 	dw 00256 ; OT ID
 	bigdt 125 ; Exp
 	db 0, 0, 0, 0, 0, 0 ; EVs
-	db 0, 0, 0, 0 ; padding
+	db 0, 0, 0 ; padding
+  db %00000011 ; caught ball TODO: change to something fun!
 	dn 2, 10, 10, 10 ; DVs
 	db 30, 20, 10, 0 ; PP
 	db 20 ; Step cycles to hatch
@@ -80,7 +80,8 @@ OddEggs:
 	dw 00768 ; OT ID
 	bigdt 125 ; Exp
 	db 0, 0, 0, 0, 0, 0 ; EVs
-	db 0, 0, 0, 0 ; padding
+	db 0, 0, 0 ; padding
+  db %00000011 ; caught ball TODO: change to something fun!
 	dn 2, 10, 10, 10 ; DVs
 	db 35, 20, 10, 0 ; PP
 	db 20 ; Step cycles to hatch
@@ -103,7 +104,8 @@ OddEggs:
 	dw 00768 ; OT ID
 	bigdt 125 ; Exp
 	db 0, 0, 0, 0, 0, 0 ; EVs
-	db 0, 0, 0, 0 ; padding
+	db 0, 0, 0 ; padding
+  db %00000011 ; caught ball TODO: change to something fun!
 	dn 2, 10, 10, 10 ; DVs
 	db 15, 20, 10, 0 ; PP
 	db 20 ; Step cycles to hatch
@@ -126,7 +128,8 @@ OddEggs:
 	dw 00512 ; OT ID
 	bigdt 125 ; Exp
 	db 0, 0, 0, 0, 0, 0 ; EVs
-	db 0, 0, 0, 0 ; padding
+	db 0, 0, 0 ; padding
+  db %00000011 ; caught ball TODO: change to something fun!
 	dn 2, 10, 10, 10 ; DVs
 	db 35, 30, 10, 0 ; PP
 	db 20 ; Step cycles to hatch
@@ -149,7 +152,8 @@ OddEggs:
 	dw 00512 ; OT ID
 	bigdt 125 ; Exp
 	db 0, 0, 0, 0, 0, 0 ; EVs
-	db 0, 0, 0, 0 ; padding
+	db 0, 0, 0 ; padding
+  db %00000011 ; caught ball TODO: change to something fun!
 	dn 2, 10, 10, 10 ; DVs
 	db 25, 10, 0, 0 ; PP
 	db 20 ; Step cycles to hatch
@@ -172,7 +176,8 @@ OddEggs:
 	dw 00512 ; OT ID
 	bigdt 125 ; Exp
 	db 0, 0, 0, 0, 0, 0 ; EVs
-	db 0, 0, 0, 0 ; padding
+	db 0, 0, 0 ; padding
+  db %00000011 ; caught ball TODO: change to something fun!
 	dn 2, 10, 10, 10 ; DVs
 	db 30, 30, 10, 0 ; PP
 	db 20 ; Step cycles to hatch
@@ -195,7 +200,8 @@ OddEggs:
 	dw 00256 ; OT ID
 	bigdt 125 ; Exp
 	db 0, 0, 0, 0, 0, 0 ; EVs
-	db 0, 0, 0, 0 ; padding
+	db 0, 0, 0 ; padding
+  db %00000011 ; caught ball TODO: change to something fun!
 	dn 2, 10, 10, 10 ; DVs
 	db 35, 10, 0, 0 ; PP
 	db 20 ; Step cycles to hatch
