@@ -1,7 +1,9 @@
-	object_const_def
+		object_const_def
 	const NEWBARKTOWN_TEACHER
 	const NEWBARKTOWN_FISHER
 	const NEWBARKTOWN_RIVAL
+	; const NEWBARKTOWN_POKEBALL_VENDOR
+	; const NEWBARKTOWN_GIFT_TESTER
 
 NewBarkTown_MapScripts:
 	def_scene_scripts
@@ -125,6 +127,85 @@ NewBarkTownRivalScript:
 	applymovement NEWBARKTOWN_RIVAL, NewBarkTown_RivalReturnsToTheShadowsMovement
 	end
 
+; DEBUG: Uncomment here for new NPC to give you pokeballs of each type
+NewBarkTownPokeballVendorScript:
+	faceplayer
+	opentext
+	checkevent EVENT_GOT_STARTER_POKEBALLS
+	iftrue .AlreadyGotPokeballs
+	writetext PokeballVendorIntroText
+	yesorno
+	iffalse .Refused
+	writetext PokeballVendorGivingText
+	waitbutton
+	
+	; Give 20 of each pokeball type
+	verbosegiveitem MASTER_BALL, 20
+	verbosegiveitem ULTRA_BALL, 20
+	verbosegiveitem GREAT_BALL, 20
+	verbosegiveitem POKE_BALL, 20
+	verbosegiveitem HEAVY_BALL, 20
+	verbosegiveitem LEVEL_BALL, 20
+	verbosegiveitem LURE_BALL, 20
+	verbosegiveitem FAST_BALL, 20
+	verbosegiveitem FRIEND_BALL, 20
+	verbosegiveitem MOON_BALL, 20
+	verbosegiveitem LOVE_BALL, 20
+	verbosegiveitem PARK_BALL, 20
+	
+	setevent EVENT_GOT_STARTER_POKEBALLS
+	writetext PokeballVendorFinishedText
+	waitbutton
+	closetext
+	end
+
+.AlreadyGotPokeballs:
+	writetext PokeballVendorAlreadyGaveText
+	waitbutton
+	closetext
+	end
+
+.Refused:
+	writetext PokeballVendorRefusedText
+	waitbutton
+	closetext
+	end
+; END DEBUG: Uncomment here for new NPC to give you pokeballs of each type
+
+; DEBUG: Uncomment here for new NPC to give you a test gift pokemon
+; NewBarkTownGiftTesterScript:
+; 	faceplayer
+; 	opentext
+; 	checkevent EVENT_GOT_TEST_POKEMON
+; 	iftrue .AlreadyGotPokemon
+; 	writetext GiftTesterIntroText
+; 	yesorno
+; 	iffalse .Refused
+; 	writetext GiftTesterGivingText
+; 	waitbutton
+	
+; 	; This uses the extended givepoke format to force gift behavior
+; 	givepoke PIKACHU, 10, MASTER_BALL
+	
+; 	setevent EVENT_GOT_TEST_POKEMON
+; 	writetext GiftTesterGaveText
+; 	waitbutton
+; 	closetext
+; 	end
+
+; .AlreadyGotPokemon:
+; 	writetext GiftTesterAlreadyGaveText
+; 	waitbutton
+; 	closetext
+; 	end
+
+; .Refused:
+; 	writetext GiftTesterRefusedText
+; 	waitbutton
+; 	closetext
+; 	end
+; END DEBUG: Uncomment here for new NPC to give you a test gift pokemon
+
 NewBarkTownSign:
 	jumptext NewBarkTownSignText
 
@@ -193,6 +274,99 @@ Text_GearIsImpressive:
 	para "Did your mom get"
 	line "it for you?"
 	done
+
+; DEBUG: Uncomment here for new NPC to give you pokeballs of each type
+; PokeballVendorIntroText:
+; 	text "Hello there, young"
+; 	line "trainer!"
+	
+; 	para "I'm the POKEBALL"
+; 	line "VENDOR. I've got a"
+; 	cont "special starter kit"
+; 	cont "for new trainers!"
+	
+; 	para "Would you like 20"
+; 	line "of each type of"
+; 	cont "POKEBALL?"
+; 	done
+
+; PokeballVendorGivingText:
+; 	text "Excellent! Here's"
+; 	line "your starter"
+; 	cont "POKEBALL kit!"
+; 	done
+
+; PokeballVendorFinishedText:
+; 	text "There you go!"
+; 	line "20 of each type"
+; 	cont "of POKEBALL!"
+	
+; 	para "Use them wisely"
+; 	line "to catch lots of"
+; 	cont "#MON!"
+; 	done
+
+; PokeballVendorAlreadyGaveText:
+; 	text "You already got"
+; 	line "your starter"
+; 	cont "POKEBALL kit!"
+	
+; 	para "Good luck on your"
+; 	line "#MON journey!"
+; 	done
+
+; PokeballVendorRefusedText:
+; 	text "No problem! Come"
+; 	line "back if you change"
+; 	cont "your mind!"
+; 	done
+; END DEBUG: Uncomment here for new NPC to give you pokeballs of each type
+
+; DEBUG: Uncomment here for new NPC to give you a test gift pokemon
+; GiftTesterIntroText:
+; 	text "Hey there! I'm"
+; 	line "testing the gift"
+; 	cont "#MON system!"
+	
+; 	para "Want a free"
+; 	line "PIKACHU to test"
+; 	cont "pokeball storage?"
+; 	done
+
+; GiftTesterGivingText:
+; 	text "Great! Here's your"
+; 	line "test PIKACHU!"
+; 	done
+
+; GiftTesterGaveText:
+; 	text "Check your stats"
+; 	line "screen to see what"
+; 	cont "ball type it shows!"
+	
+; 	para "Gift #MON should"
+; 	line "show ball type 3!"
+; 	done
+
+; GiftTesterAlreadyGaveText:
+; 	text "You already got"
+; 	line "your test PIKACHU!"
+	
+; 	para "Check its stats to"
+; 	line "see the ball type!"
+; 	done
+
+; GiftTesterRefusedText:
+; 	text "No worries! Come"
+; 	line "back if you want"
+; 	cont "to test later!"
+; 	done
+
+; GiftTesterOTName:
+; 	db "TESTER@"
+
+; GiftTesterPokemonName:
+; 	db "TESTPIKA@"
+; END DEBUG: Uncomment here for new NPC to give you a test gift pokemon
 
 Text_WaitPlayer:
 	text "Wait, <PLAY_G>!"
@@ -302,3 +476,5 @@ NewBarkTown_MapEvents:
 	object_event  6,  8, SPRITE_TEACHER, SPRITEMOVEDATA_SPINRANDOM_SLOW, 1, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, NewBarkTownTeacherScript, -1
 	object_event 12,  9, SPRITE_FISHER, SPRITEMOVEDATA_WALK_UP_DOWN, 0, 1, -1, -1, PAL_NPC_GREEN, OBJECTTYPE_SCRIPT, 0, NewBarkTownFisherScript, -1
 	object_event  3,  2, SPRITE_RIVAL, SPRITEMOVEDATA_STANDING_RIGHT, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, NewBarkTownRivalScript, EVENT_RIVAL_NEW_BARK_TOWN
+	object_event  9,  6, SPRITE_POKEFAN_M, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, NewBarkTownPokeballVendorScript, -1
+	object_event  5, 13, SPRITE_YOUNGSTER, SPRITEMOVEDATA_STANDING_UP, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, NewBarkTownGiftTesterScript, -1
