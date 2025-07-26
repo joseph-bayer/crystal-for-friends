@@ -1,3 +1,4 @@
+; TODO: May need to set up caught ball code?
 _GiveOddEgg:
 	; Figure out which egg to give.
 
@@ -78,6 +79,7 @@ _GiveOddEgg:
 	dec c
 	jr nz, .move_loop
 
+  ; remove the Egg Ticket from the player's inventory.
 	push hl
 	ld hl, EGG_TICKET
 	call GetItemIDFromIndex
