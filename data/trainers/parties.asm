@@ -1,10 +1,18 @@
 ; Trainer data structure:
 ; - db "NAME@", TRAINERTYPE_* constant
 ; - 1 to 6 Pokémon:
-;    * for TRAINERTYPE_NORMAL:     db level, species
-;    * for TRAINERTYPE_MOVES:      db level, species, 4 moves
-;    * for TRAINERTYPE_ITEM:       db level, species, item
-;    * for TRAINERTYPE_ITEM_MOVES: db level, species, item, 4 moves
+;    * for TRAINERTYPE_NORMAL:     db level
+;                                  dw species
+;    * for TRAINERTYPE_MOVES:      db level
+;                                  dw species
+;                                  dw 4 moves
+;    * for TRAINERTYPE_ITEM:       db level
+;                                  dw species
+;                                  dw item
+;    * for TRAINERTYPE_ITEM_MOVES: db level
+;                                  dw species
+;                                  dw item
+;                                  dw 4 moves
 ; - db -1 ; end
 
 SECTION "Enemy Trainer Parties 1", ROMX
