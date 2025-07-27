@@ -4,6 +4,7 @@
 	const NEWBARKTOWN_RIVAL
 	; const NEWBARKTOWN_POKEBALL_VENDOR
 	; const NEWBARKTOWN_GIFT_TESTER
+	const NEWBARKTOWN_ODD_EGG_VENDOR
 
 NewBarkTown_MapScripts:
 	def_scene_scripts
@@ -128,48 +129,48 @@ NewBarkTownRivalScript:
 	end
 
 ; DEBUG: Uncomment here for new NPC to give you pokeballs of each type
-NewBarkTownPokeballVendorScript:
-	faceplayer
-	opentext
-	checkevent EVENT_GOT_STARTER_POKEBALLS
-	iftrue .AlreadyGotPokeballs
-	writetext PokeballVendorIntroText
-	yesorno
-	iffalse .Refused
-	writetext PokeballVendorGivingText
-	waitbutton
+; NewBarkTownPokeballVendorScript:
+; 	faceplayer
+; 	opentext
+; 	checkevent EVENT_GOT_STARTER_POKEBALLS
+; 	iftrue .AlreadyGotPokeballs
+; 	writetext PokeballVendorIntroText
+; 	yesorno
+; 	iffalse .Refused
+; 	writetext PokeballVendorGivingText
+; 	waitbutton
 	
-	; Give 20 of each pokeball type
-	verbosegiveitem MASTER_BALL, 20
-	verbosegiveitem ULTRA_BALL, 20
-	verbosegiveitem GREAT_BALL, 20
-	verbosegiveitem POKE_BALL, 20
-	verbosegiveitem HEAVY_BALL, 20
-	verbosegiveitem LEVEL_BALL, 20
-	verbosegiveitem LURE_BALL, 20
-	verbosegiveitem FAST_BALL, 20
-	verbosegiveitem FRIEND_BALL, 20
-	verbosegiveitem MOON_BALL, 20
-	verbosegiveitem LOVE_BALL, 20
-	verbosegiveitem PARK_BALL, 20
+; 	; Give 20 of each pokeball type
+; 	verbosegiveitem MASTER_BALL, 20
+; 	verbosegiveitem ULTRA_BALL, 20
+; 	verbosegiveitem GREAT_BALL, 20
+; 	verbosegiveitem POKE_BALL, 20
+; 	verbosegiveitem HEAVY_BALL, 20
+; 	verbosegiveitem LEVEL_BALL, 20
+; 	verbosegiveitem LURE_BALL, 20
+; 	verbosegiveitem FAST_BALL, 20
+; 	verbosegiveitem FRIEND_BALL, 20
+; 	verbosegiveitem MOON_BALL, 20
+; 	verbosegiveitem LOVE_BALL, 20
+; 	verbosegiveitem PARK_BALL, 20
 	
-	setevent EVENT_GOT_STARTER_POKEBALLS
-	writetext PokeballVendorFinishedText
-	waitbutton
-	closetext
-	end
+; 	setevent EVENT_GOT_STARTER_POKEBALLS
+; 	writetext PokeballVendorFinishedText
+; 	waitbutton
+; 	closetext
+; 	end
 
-.AlreadyGotPokeballs:
-	writetext PokeballVendorAlreadyGaveText
-	waitbutton
-	closetext
-	end
+; .AlreadyGotPokeballs:
+; 	writetext PokeballVendorAlreadyGaveText
+; 	waitbutton
+; 	closetext
+; 	end
 
-.Refused:
-	writetext PokeballVendorRefusedText
-	waitbutton
-	closetext
-	end
+; .Refused:
+; 	writetext PokeballVendorRefusedText
+; 	waitbutton
+; 	closetext
+; 	end
 ; END DEBUG: Uncomment here for new NPC to give you pokeballs of each type
 
 ; DEBUG: Uncomment here for new NPC to give you a test gift pokemon
@@ -205,6 +206,49 @@ NewBarkTownPokeballVendorScript:
 ; 	closetext
 ; 	end
 ; END DEBUG: Uncomment here for new NPC to give you a test gift pokemon
+
+; DEBUG: Uncomment here for new NPC to give you an Odd Egg
+; NewBarkTownOddEggVendorScript:
+; 	faceplayer
+; 	opentext
+; 	checkevent EVENT_GOT_ODD_EGG
+; 	iftrue .AlreadyGotOddEgg
+; 	writetext OddEggVendorIntroText
+; 	yesorno
+; 	iffalse .Refused
+; 	readvar VAR_PARTYCOUNT
+; 	ifequal PARTY_LENGTH, .PartyFull
+; 	writetext OddEggVendorGivingText
+; 	playsound SFX_KEY_ITEM
+; 	waitsfx
+; 	special GiveOddEgg
+; 	writetext OddEggVendorGotOddEggText
+; 	playsound SFX_GET_EGG
+; 	waitsfx
+; 	writetext OddEggVendorDescribeOddEggText
+; 	waitbutton
+; 	closetext
+; 	setevent EVENT_GOT_ODD_EGG
+; 	end
+
+; .PartyFull:
+; 	writetext OddEggVendorPartyFullText
+; 	waitbutton
+; 	closetext
+; 	end
+
+; .AlreadyGotOddEgg:
+; 	writetext OddEggVendorAlreadyGaveText
+; 	waitbutton
+; 	closetext
+; 	end
+
+; .Refused:
+; 	writetext OddEggVendorRefusedText
+; 	waitbutton
+; 	closetext
+; 	end
+; END DEBUG: Uncomment here for new NPC to give you an Odd Egg
 
 NewBarkTownSign:
 	jumptext NewBarkTownSignText
@@ -368,6 +412,81 @@ Text_GearIsImpressive:
 ; 	db "TESTPIKA@"
 ; END DEBUG: Uncomment here for new NPC to give you a test gift pokemon
 
+; DEBUG: Uncomment here for new NPC to give you an Odd Egg
+; OddEggVendorIntroText:
+; 	text "Hello there, young"
+; 	line "trainer!"
+	
+; 	para "I'm an EGG"
+; 	line "researcher who has"
+; 	cont "been studying rare"
+; 	cont "and unusual EGGS."
+	
+; 	para "I found this very"
+; 	line "peculiar EGG that"
+; 	cont "seems different"
+; 	cont "from normal ones."
+	
+; 	para "Would you like to"
+; 	line "take care of this"
+; 	cont "ODD EGG for me?"
+; 	done
+
+; OddEggVendorGivingText:
+; 	text "Wonderful! Please"
+; 	line "take good care"
+; 	cont "of it!"
+; 	done
+
+; OddEggVendorGotOddEggText:
+; 	text "<PLAYER> received"
+; 	line "ODD EGG!"
+; 	done
+
+; OddEggVendorDescribeOddEggText:
+; 	text "That EGG is very"
+; 	line "special indeed."
+	
+; 	para "I found it while"
+; 	line "researching rare"
+; 	cont "#MON breeding."
+	
+; 	para "The #MON inside"
+; 	line "might be quite"
+; 	cont "unique!"
+	
+; 	para "Keep it with you"
+; 	line "and walk around."
+; 	cont "It should hatch"
+; 	cont "eventually!"
+; 	done
+
+; OddEggVendorPartyFullText:
+; 	text "Oh my! Your party"
+; 	line "is full!"
+	
+; 	para "Please make some"
+; 	line "room and come"
+; 	cont "back to me!"
+; 	done
+
+; OddEggVendorAlreadyGaveText:
+; 	text "How is that ODD"
+; 	line "EGG doing?"
+	
+; 	para "I hope it hatches"
+; 	line "into something"
+; 	cont "wonderful for you!"
+; 	done
+
+; OddEggVendorRefusedText:
+; 	text "Oh, that's a shame."
+; 	line "If you change your"
+; 	cont "mind, please come"
+; 	cont "back anytime!"
+; 	done
+; END DEBUG: Uncomment here for new NPC to give you an Odd Egg
+
 Text_WaitPlayer:
 	text "Wait, <PLAY_G>!"
 	done
@@ -476,5 +595,6 @@ NewBarkTown_MapEvents:
 	object_event  6,  8, SPRITE_TEACHER, SPRITEMOVEDATA_SPINRANDOM_SLOW, 1, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, NewBarkTownTeacherScript, -1
 	object_event 12,  9, SPRITE_FISHER, SPRITEMOVEDATA_WALK_UP_DOWN, 0, 1, -1, -1, PAL_NPC_GREEN, OBJECTTYPE_SCRIPT, 0, NewBarkTownFisherScript, -1
 	object_event  3,  2, SPRITE_RIVAL, SPRITEMOVEDATA_STANDING_RIGHT, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, NewBarkTownRivalScript, EVENT_RIVAL_NEW_BARK_TOWN
-	object_event  9,  6, SPRITE_POKEFAN_M, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, NewBarkTownPokeballVendorScript, -1
-	object_event  5, 13, SPRITE_YOUNGSTER, SPRITEMOVEDATA_STANDING_UP, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, NewBarkTownGiftTesterScript, -1
+	; object_event  9,  6, SPRITE_POKEFAN_M, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, NewBarkTownPokeballVendorScript, -1
+	; object_event  5, 13, SPRITE_YOUNGSTER, SPRITEMOVEDATA_STANDING_UP, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, NewBarkTownGiftTesterScript, -1
+	; object_event  2, 10, SPRITE_GRAMPS, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_SCRIPT, 0, NewBarkTownOddEggVendorScript, -1

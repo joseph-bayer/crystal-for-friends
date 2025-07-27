@@ -37,10 +37,11 @@
 	const EVENT_GOT_TOTODILE_FROM_ELM
 	const EVENT_GOT_CHIKORITA_FROM_ELM
   ; DEBUG: Uncomment here for new NPC in new bark to give you pokeballs of each type
-	;const EVENT_GOT_STARTER_POKEBALLS
+	; const EVENT_GOT_STARTER_POKEBALLS
  
 	; DEBUG: Uncomment here for new NPC in new bark to give you a test gift pokemon
-  ;const EVENT_GOT_TEST_POKEMON
+  ; const EVENT_GOT_TEST_POKEMON
+
 	const EVENT_GOT_MYSTERY_EGG_FROM_MR_POKEMON
 	const EVENT_GAVE_MYSTERY_EGG_TO_ELM
 	const EVENT_JASMINE_RETURNED_TO_GYM
