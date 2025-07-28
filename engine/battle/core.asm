@@ -778,26 +778,6 @@ TryEnemyFlee:
 	call IsInWordArray
 	jr c, .Flee
 
-	call BattleRandom
-	add a
-	jr nc, .Stay
-
-	push af
-	; de preserved from last call
-	ld hl, OftenFleeMons
-	call IsInWordArray
-	pop de
-	jr c, .Flee
-
-	ld a, d
-	cp 20 percent ; double the value because of the previous add a, a
-	jr nc, .Stay
-
-	ld de, 2
-	ld hl, SometimesFleeMons
-	call IsInWordArray
-	jr c, .Flee
-
 .Stay:
 	and a
 	ret
