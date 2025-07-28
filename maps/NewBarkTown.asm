@@ -2,6 +2,7 @@
 	const NEWBARKTOWN_TEACHER
 	const NEWBARKTOWN_FISHER
 	const NEWBARKTOWN_RIVAL
+	; const NEWBARKTOWN_PRYCE_TRAINER
 	; const NEWBARKTOWN_POKEBALL_VENDOR
 	; const NEWBARKTOWN_GIFT_TESTER
 	; const NEWBARKTOWN_ODD_EGG_VENDOR
@@ -127,6 +128,33 @@ NewBarkTownRivalScript:
 	applymovement PLAYER, NewBarkTown_RivalShovesYouOutMovement
 	applymovement NEWBARKTOWN_RIVAL, NewBarkTown_RivalReturnsToTheShadowsMovement
 	end
+
+; DEBUG: Uncomment here to test battling
+; NewBarkTownPryceTrainerScript:
+; 	faceplayer
+; 	opentext
+; 	checkevent EVENT_BEAT_PRYCE
+; 	iftrue .Beaten
+; 	writetext NewBarkTownPryceTrainerIntroText
+; 	waitbutton
+; 	closetext
+; 	winlosstext NewBarkTownPryceTrainerWinText, NewBarkTownPryceTrainerLossText
+; 	loadtrainer PRYCE, 3
+; 	startbattle
+; 	reloadmapafterbattle
+; 	setevent EVENT_BEAT_PRYCE
+; 	opentext
+; 	writetext NewBarkTownPryceTrainerAfterText
+; 	waitbutton
+; 	closetext
+; 	end
+
+; .Beaten:
+; 	writetext NewBarkTownPryceTrainerBeatenText
+; 	waitbutton
+; 	closetext
+; 	end
+; END DEBUG: Uncomment here to test battling
 
 ; DEBUG: Uncomment here for new NPC to give you pokeballs of each type
 ; NewBarkTownPokeballVendorScript:
@@ -572,6 +600,50 @@ NewBarkTownElmsHouseSignText:
 	text "ELM'S HOUSE"
 	done
 
+; DEBUG: Uncomment here for Pryce Trainer
+; NewBarkTownPryceTrainerIntroText:
+; 	text "I'm training to"
+; 	line "become an ICE-type"
+; 	cont "specialist!"
+	
+; 	para "I've been studying"
+; 	line "PRYCE's techniques!"
+	
+; 	para "Let me show you"
+; 	line "what I've learned!"
+; 	done
+
+; NewBarkTownPryceTrainerWinText:
+; 	text "Wow! You're really"
+; 	line "strong!"
+; 	done
+
+; NewBarkTownPryceTrainerLossText:
+; 	text "Don't give up!"
+; 	line "Keep training!"
+; 	done
+
+; NewBarkTownPryceTrainerAfterText:
+; 	text "That was amazing!"
+; 	line "I need to train"
+; 	cont "much harder!"
+	
+; 	para "Maybe one day I'll"
+; 	line "be as good as"
+; 	cont "PRYCE himself!"
+; 	done
+
+; NewBarkTownPryceTrainerBeatenText:
+; 	text "I'm still working"
+; 	line "on perfecting my"
+; 	cont "ICE-type strategy!"
+	
+; 	para "PRYCE's techniques"
+; 	line "are really tough"
+; 	cont "to master!"
+; 	done
+; END DEBUG: Uncomment here for Pryce Trainer
+
 NewBarkTown_MapEvents:
 	db 0, 0 ; filler
 
@@ -595,6 +667,7 @@ NewBarkTown_MapEvents:
 	object_event  6,  8, SPRITE_TEACHER, SPRITEMOVEDATA_SPINRANDOM_SLOW, 1, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, NewBarkTownTeacherScript, -1
 	object_event 12,  9, SPRITE_FISHER, SPRITEMOVEDATA_WALK_UP_DOWN, 0, 1, -1, -1, PAL_NPC_GREEN, OBJECTTYPE_SCRIPT, 0, NewBarkTownFisherScript, -1
 	object_event  3,  2, SPRITE_RIVAL, SPRITEMOVEDATA_STANDING_RIGHT, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, NewBarkTownRivalScript, EVENT_RIVAL_NEW_BARK_TOWN
+	; object_event  8, 11, SPRITE_COOLTRAINER_M, SPRITEMOVEDATA_STANDING_LEFT, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_TRAINER, 1, NewBarkTownPryceTrainerScript, -1
 	; object_event  9,  6, SPRITE_POKEFAN_M, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, NewBarkTownPokeballVendorScript, -1
 	; object_event  5, 13, SPRITE_YOUNGSTER, SPRITEMOVEDATA_STANDING_UP, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, NewBarkTownGiftTesterScript, -1
 	; object_event  2, 10, SPRITE_GRAMPS, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_SCRIPT, 0, NewBarkTownOddEggVendorScript, -1
