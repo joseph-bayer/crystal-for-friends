@@ -3,7 +3,7 @@
 This is a version of Pokemon Crystal meant for me and my friends. It is built upon the CrystalShireEngine.
 
 ## Changes
-- TODO: Trainer Teams based heavily upon Pokemon Crystal Legacy
+- Trainer Teams based heavily upon Pokemon Crystal Legacy
 - TODO: Wild Pokemon locations based heavily upon Pokemon Crystal Legacy
 - Dark type moves are now Physical
 - Ghost type moves are now Special
