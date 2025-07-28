@@ -15,8 +15,6 @@
 ;                                  dw 4 moves
 ; - db -1 ; end
 
-; TODO: Replace Legendaries
-; TODO: Remove enemy trainer parties from linker and add section for each group
 
 SECTION "Enemy Trainer Parties 1", ROMX
 
@@ -2403,7 +2401,7 @@ GruntMGroup:
 	db -1 ; end
 
 	next_list_item ; GRUNTM (2)
-	db "ETO@", TRAINERTYPE_NORMAL
+	db "GRUNT@", TRAINERTYPE_NORMAL
 	db 11
 	dw ELEKID
 	db 11
@@ -2517,7 +2515,7 @@ GruntMGroup:
 	db -1 ; end
 
 	next_list_item ; GRUNTM (15)
-	db "ETO@", TRAINERTYPE_NORMAL
+	db "GRUNT@", TRAINERTYPE_NORMAL
 	db 36
 	dw POLIWRATH
 	db 36
@@ -2617,7 +2615,7 @@ GruntMGroup:
 	db -1 ; end
 
 	next_list_item ; GRUNTM (28)
-	db "ETO@", TRAINERTYPE_NORMAL
+	db "GRUNT@", TRAINERTYPE_NORMAL
 	db 28
 	dw JYNX
 	db 28
@@ -4556,7 +4554,7 @@ BlackbeltGroup:
 
 ExecutiveMGroup:
 	next_list_item ; EXECUTIVEM (1)
-	db "ARCHER@", TRAINERTYPE_MOVES
+	db "EXECUTIVE@", TRAINERTYPE_MOVES
 	db 39
 	dw WEEZING
 	dw SELFDESTRUCT, SMOG, SMOKESCREEN, NO_MOVE
@@ -4610,7 +4608,7 @@ ExecutiveMGroup:
 	db -1 ; end
 
 	next_list_item ; EXECUTIVEM (4)
-	db "ARCHER@", TRAINERTYPE_MOVES
+	db "EXECUTIVE@", TRAINERTYPE_MOVES
 	db 30
 	dw WEEZING
 	dw SMOKESCREEN, TACKLE, TOXIC, NO_MOVE
@@ -5191,7 +5189,7 @@ CamperGroup:
 
 ExecutiveFGroup:
 	next_list_item ; EXECUTIVEF (1)
-	db "ARIANA@", TRAINERTYPE_MOVES
+	db "EXECUTIVE@", TRAINERTYPE_MOVES
 	db 39
 	dw ARBOK
 	dw SCREECH, BITE, GLARE, NO_MOVE
@@ -5210,7 +5208,7 @@ ExecutiveFGroup:
 	db -1 ; end
 
 	next_list_item ; EXECUTIVEF (2)
-	db "ARIANA@", TRAINERTYPE_MOVES
+	db "EXECUTIVE@", TRAINERTYPE_MOVES
 	db 31
 	dw ARBOK
 	dw LEER, SLUDGE_BOMB, BITE, NO_MOVE
