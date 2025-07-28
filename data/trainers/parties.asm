@@ -3746,6 +3746,8 @@ SuperNerdGroup:
 
 	end_list_items
 
+SECTION "Enemy Trainer Parties 3", ROMX
+
 Rival2Group:
 	next_list_item ; RIVAL2 (1)
 	db "?@", TRAINERTYPE_ITEM_MOVES
