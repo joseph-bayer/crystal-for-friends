@@ -4,13 +4,22 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
 
 ## Changes
 - Trainer Teams based heavily upon Pokemon Crystal Legacy
-- TODO: Wild Pokemon locations based heavily upon Pokemon Crystal Legacy
+- Wild Pokemon locations based heavily upon Pokemon Crystal Legacy
+- TODO: All Pokemon available
+  - TODO: NPC Trades
+  - TODO: Gift
+  - TODO: Fossils
+  - Game Corner
+  - TODO: Legendaries
+- TODO: Celebi Event
+- TODO: Dynamic teams for CHUCK, PRYCE, and JASMINE depending on the order you face them in
 - Dark type moves are now Physical
 - Ghost type moves are now Special
 - Odd Egg Changes
   - Always Shiny
   - Odds of getting each kind of mon is more even
 - The ball that a Pokemon is caught in is displayed on the stats screen
+- Only Roaming Legendaries flee wild battles
 
 Below, you will find the original readme for the CrystalShireEngine
 
