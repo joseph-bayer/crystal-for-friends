@@ -16,7 +16,7 @@
 ; - db -1 ; end
 
 
-SECTION "Enemy Trainer Parties 1", ROMX
+SECTION "Falkner Trainer Party", ROMX
 
 FalknerGroup:
 	next_list_item ; FALKNER (1)
@@ -32,6 +32,8 @@ FalknerGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Whitney Trainer Party", ROMX
 
 WhitneyGroup:
 	next_list_item ; WHITNEY (1)
@@ -52,6 +54,8 @@ WhitneyGroup:
 
 	end_list_items
 
+SECTION "Bugsy Trainer Party", ROMX
+
 BugsyGroup:
 	next_list_item ; BUGSY (1)
 	db "BUGSY@", TRAINERTYPE_ITEM_MOVES
@@ -70,6 +74,8 @@ BugsyGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Morty Trainer Party", ROMX
 
 MortyGroup:
 	next_list_item ; MORTY (1)
@@ -93,6 +99,8 @@ MortyGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Pryce Trainer Party", ROMX
 
 PryceGroup:
 	next_list_item ; PRYCE (1): If you battle Pryce first
@@ -164,6 +172,8 @@ PryceGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Jasmine Trainer Party", ROMX
 
 JasmineGroup:
 	next_list_item ; JASMINE (1): If you battle Jasmine first
@@ -241,6 +251,8 @@ JasmineGroup:
 
 	end_list_items
 
+SECTION "Chuck Trainer Party", ROMX
+
 ChuckGroup:
 	next_list_item ; CHUCK (1): If you battle Chuck first
 	db "CHUCK@", TRAINERTYPE_ITEM_MOVES
@@ -312,6 +324,8 @@ ChuckGroup:
 
 	end_list_items
 
+SECTION "Clair Trainer Party", ROMX
+
 ClairGroup:
 	next_list_item ; CLAIR (1)
 	db "CLAIR@", TRAINERTYPE_ITEM_MOVES
@@ -338,6 +352,8 @@ ClairGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Rival1 Trainer Party", ROMX
 
 Rival1Group:
 	next_list_item ; RIVAL1 (1)
@@ -579,7 +595,10 @@ Rival1Group:
 
 	end_list_items
 
+; unused?
 PokemonProfGroup:
+
+SECTION "Will Trainer Party", ROMX
 
 WillGroup:
 	next_list_item ; WILL (1)
@@ -607,6 +626,8 @@ WillGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "PKMN Trainer Party", ROMX
 
 PKMNTrainerGroup:
 	next_list_item ; CAL (1)
@@ -641,6 +662,8 @@ PKMNTrainerGroup:
 
 	end_list_items
 
+SECTION "Bruno Trainer Party", ROMX
+
 BrunoGroup:
 	next_list_item ; BRUNO (1)
 	db "BRUNO@", TRAINERTYPE_ITEM_MOVES
@@ -667,6 +690,8 @@ BrunoGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Karen Trainer Party", ROMX
 
 KarenGroup:
 	next_list_item ; KAREN (1)
@@ -695,6 +720,8 @@ KarenGroup:
 
 	end_list_items
 
+SECTION "Koga Trainer Party", ROMX
+
 KogaGroup:
 	next_list_item ; KOGA (1)
 	db "KOGA@", TRAINERTYPE_ITEM_MOVES
@@ -721,6 +748,8 @@ KogaGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Champion Trainer Party", ROMX
 
 ChampionGroup:
 	next_list_item ; CHAMPION (1)
@@ -753,6 +782,8 @@ ChampionGroup:
 
 	end_list_items
 
+SECTION "Brock Trainer Party", ROMX
+
 BrockGroup:
 	next_list_item ; BROCK (1)
 	db "BROCK@", TRAINERTYPE_ITEM_MOVES
@@ -783,6 +814,8 @@ BrockGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Misty Trainer Party", ROMX
 
 MistyGroup:
 	next_list_item ; MISTY (1)
@@ -815,6 +848,8 @@ MistyGroup:
 
 	end_list_items
 
+SECTION "Lt Surge Trainer Party", ROMX
+
 LtSurgeGroup:
 	next_list_item ; LT_SURGE (1)
 	db "LT.SURGE@", TRAINERTYPE_ITEM_MOVES
@@ -845,6 +880,8 @@ LtSurgeGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Scientist Trainer Party", ROMX
 
 ScientistGroup:
 	next_list_item ; SCIENTIST (1)
@@ -884,6 +921,8 @@ ScientistGroup:
 
 	end_list_items
 
+SECTION "Erika Trainer Party", ROMX
+
 ErikaGroup:
 	next_list_item ; ERIKA (1)
 	db "ERIKA@", TRAINERTYPE_ITEM_MOVES
@@ -914,6 +953,8 @@ ErikaGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Youngster Trainer Party", ROMX
 
 YoungsterGroup:
 	next_list_item ; YOUNGSTER (1)
@@ -1024,7 +1065,7 @@ YoungsterGroup:
 
 	end_list_items
 
-SECTION "Enemy Trainer Parties 2", ROMX
+SECTION "Schoolboy Trainer Party", ROMX
 
 SchoolboyGroup:
 	next_list_item ; SCHOOLBOY (1)
@@ -1244,6 +1285,8 @@ SchoolboyGroup:
 
 	end_list_items
 
+SECTION "Bird Keeper Trainer Party", ROMX
+
 BirdKeeperGroup:
 	next_list_item ; BIRD_KEEPER (1)
 	db "ROD@", TRAINERTYPE_NORMAL
@@ -1421,6 +1464,8 @@ BirdKeeperGroup:
 
 	end_list_items
 
+SECTION "Lass Trainer Party", ROMX
+
 LassGroup:
 	next_list_item ; LASS (1)
 	db "CARRIE@", TRAINERTYPE_MOVES
@@ -1577,6 +1622,8 @@ LassGroup:
 
 	end_list_items
 
+SECTION "Janine Trainer Party", ROMX
+
 JanineGroup:
 	next_list_item ; JANINE (1)
 	db "JANINE@", TRAINERTYPE_ITEM_MOVES
@@ -1607,6 +1654,8 @@ JanineGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Cooltrainer M Trainer Party", ROMX
 
 CooltrainerMGroup:
 	next_list_item ; COOLTRAINERM (1)
@@ -1877,6 +1926,8 @@ CooltrainerMGroup:
 
 	end_list_items
 
+SECTION "Cooltrainer F Trainer Party", ROMX
+
 CooltrainerFGroup:
 	next_list_item ; COOLTRAINERF (1)
 	db "GWEN@", TRAINERTYPE_NORMAL
@@ -2144,6 +2195,8 @@ CooltrainerFGroup:
 
 	end_list_items
 
+SECTION "Beauty Trainer Party", ROMX
+
 BeautyGroup:
 	next_list_item ; BEAUTY (1)
 	db "VICTORIA@", TRAINERTYPE_NORMAL
@@ -2273,6 +2326,8 @@ BeautyGroup:
 
 	end_list_items
 
+SECTION "Pokemaniac Trainer Party", ROMX
+
 PokemaniacGroup:
 	next_list_item ; POKEMANIAC (1)
 	db "LARRY@", TRAINERTYPE_NORMAL
@@ -2388,6 +2443,8 @@ PokemaniacGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Grunt M Trainer Party", ROMX
 
 GruntMGroup:
 	next_list_item ; GRUNTM (1)
@@ -2660,6 +2717,8 @@ GruntMGroup:
 
 	end_list_items
 
+SECTION "Gentleman Trainer Party", ROMX
+
 GentlemanGroup:
 	next_list_item ; GENTLEMAN (1)
 	db "PRESTON@", TRAINERTYPE_NORMAL
@@ -2701,6 +2760,8 @@ GentlemanGroup:
 
 	end_list_items
 
+SECTION "Skier Trainer Party", ROMX
+
 SkierGroup:
 	next_list_item ; SKIER (1)
 	db "ROXANNE@", TRAINERTYPE_NORMAL
@@ -2715,6 +2776,8 @@ SkierGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Teacher Trainer Party", ROMX
 
 TeacherGroup:
 	next_list_item ; TEACHER (1)
@@ -2740,6 +2803,8 @@ TeacherGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Sabrina Trainer Party", ROMX
 
 SabrinaGroup:
 	next_list_item ; SABRINA (1)
@@ -2771,6 +2836,8 @@ SabrinaGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Bug Catcher Trainer Party", ROMX
 
 BugCatcherGroup:
 	next_list_item ; BUG_CATCHER (1)
@@ -2946,6 +3013,8 @@ BugCatcherGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Fisher Trainer Party", ROMX
 
 FisherGroup:
 	next_list_item ; FISHER (1)
@@ -3177,6 +3246,8 @@ FisherGroup:
 
 	end_list_items
 
+SECTION "Swimmer M Trainer Party", ROMX
+
 SwimmerMGroup:
 	next_list_item ; SWIMMERM (1)
 	db "HAROLD@", TRAINERTYPE_NORMAL
@@ -3366,6 +3437,8 @@ SwimmerMGroup:
 
 	end_list_items
 
+SECTION "Swimmer F Trainer Party", ROMX
+
 SwimmerFGroup:
 	next_list_item ; SWIMMERF (1)
 	db "ELAINE@", TRAINERTYPE_NORMAL
@@ -3515,6 +3588,8 @@ SwimmerFGroup:
 
 	end_list_items
 
+SECTION "Sailor Trainer Party", ROMX
+
 SailorGroup:
 	next_list_item ; SAILOR (1)
 	db "EUGENE@", TRAINERTYPE_NORMAL
@@ -3625,6 +3700,8 @@ SailorGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Super Nerd Trainer Party", ROMX
 
 SuperNerdGroup:
 	next_list_item ; SUPER_NERD (1)
@@ -3744,7 +3821,7 @@ SuperNerdGroup:
 
 	end_list_items
 
-SECTION "Enemy Trainer Parties 3", ROMX
+SECTION "Rival2 Trainer Party", ROMX
 
 Rival2Group:
 	next_list_item ; RIVAL2 (1)
@@ -3917,6 +3994,8 @@ Rival2Group:
 
 	end_list_items
 
+SECTION "Guitarist Trainer Party", ROMX
+
 GuitaristGroup:
 	next_list_item ; GUITARIST (1)
 	db "CLYDE@", TRAINERTYPE_NORMAL
@@ -3941,6 +4020,8 @@ GuitaristGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Hiker Trainer Party", ROMX
 
 HikerGroup:
 	next_list_item ; HIKER (1)
@@ -4164,6 +4245,8 @@ HikerGroup:
 
 	end_list_items
 
+SECTION "Biker Trainer Party", ROMX
+
 BikerGroup:
 	next_list_item ; BIKER (1)
 	db "BENNY@", TRAINERTYPE_NORMAL
@@ -4247,6 +4330,8 @@ BikerGroup:
 
 	end_list_items
 
+SECTION "Blaine Trainer Party", ROMX
+
 BlaineGroup:
 	next_list_item ; BLAINE (1)
 	db "BLAINE@", TRAINERTYPE_ITEM_MOVES
@@ -4277,6 +4362,8 @@ BlaineGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Burglar Trainer Party", ROMX
 
 BurglarGroup:
 	next_list_item ; BURGLAR (1)
@@ -4310,6 +4397,8 @@ BurglarGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Firebreather Trainer Party", ROMX
 
 FirebreatherGroup:
 	next_list_item ; FIREBREATHER (1)
@@ -4377,6 +4466,8 @@ FirebreatherGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Juggler Trainer Party", ROMX
 
 JugglerGroup:
 	next_list_item ; JUGGLER (1)
@@ -4446,6 +4537,8 @@ JugglerGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Blackbelt Trainer Party", ROMX
 
 BlackbeltGroup:
 	next_list_item ; BLACKBELT_T (1)
@@ -4552,6 +4645,8 @@ BlackbeltGroup:
 
 	end_list_items
 
+SECTION "Executive M Trainer Party", ROMX
+
 ExecutiveMGroup:
 	next_list_item ; EXECUTIVEM (1)
 	db "EXECUTIVE@", TRAINERTYPE_MOVES
@@ -4624,6 +4719,8 @@ ExecutiveMGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Psychic Trainer Party", ROMX
 
 PsychicGroup:
 	next_list_item ; PSYCHIC_T (1)
@@ -4737,6 +4834,8 @@ PsychicGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Picnicker Trainer Party", ROMX
 
 PicnickerGroup:
 	next_list_item ; PICNICKER (1)
@@ -4980,6 +5079,8 @@ PicnickerGroup:
 
 	end_list_items
 
+SECTION "Camper Trainer Party", ROMX
+
 CamperGroup:
 	next_list_item ; CAMPER (1)
 	db "ROLAND@", TRAINERTYPE_NORMAL
@@ -5187,6 +5288,8 @@ CamperGroup:
 
 	end_list_items
 
+SECTION "Executive F Trainer Party", ROMX
+
 ExecutiveFGroup:
 	next_list_item ; EXECUTIVEF (1)
 	db "EXECUTIVE@", TRAINERTYPE_MOVES
@@ -5224,6 +5327,8 @@ ExecutiveFGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Sage Trainer Party", ROMX
 
 SageGroup:
 	next_list_item ; SAGE (1)
@@ -5334,6 +5439,8 @@ SageGroup:
 
 	end_list_items
 
+SECTION "Medium Trainer Party", ROMX
+
 MediumGroup:
 	next_list_item ; MEDIUM (1)
 	db "MARTHA@", TRAINERTYPE_NORMAL
@@ -5391,6 +5498,8 @@ MediumGroup:
 
 	end_list_items
 
+SECTION "Boarder Trainer Party", ROMX
+
 BoarderGroup:
 	next_list_item ; BOARDER (1)
 	db "RONALD@", TRAINERTYPE_NORMAL
@@ -5419,6 +5528,8 @@ BoarderGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Pokefan M Trainer Party", ROMX
 
 PokefanMGroup:
 	next_list_item ; POKEFANM (1)
@@ -5554,6 +5665,8 @@ PokefanMGroup:
 
 	end_list_items
 
+SECTION "Kimono Girl Trainer Party", ROMX
+
 KimonoGirlGroup:
 	next_list_item ; KIMONO_GIRL (1)
 	db "NAOKO@", TRAINERTYPE_NORMAL
@@ -5596,6 +5709,8 @@ KimonoGirlGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Twins Trainer Party", ROMX
 
 TwinsGroup:
 	next_list_item ; TWINS (1)
@@ -5700,6 +5815,8 @@ TwinsGroup:
 
 	end_list_items
 
+SECTION "Pokefan F Trainer Party", ROMX
+
 PokefanFGroup:
 	next_list_item ; POKEFANF (1)
 	db "BEVERLY@", TRAINERTYPE_ITEM
@@ -5757,6 +5874,8 @@ PokefanFGroup:
 
 	end_list_items
 
+SECTION "Red Trainer Party", ROMX
+
 RedGroup:
 	next_list_item ; RED (1)
 	db "RED@", TRAINERTYPE_ITEM_MOVES
@@ -5787,6 +5906,8 @@ RedGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Blue Trainer Party", ROMX
 
 BlueGroup:
 	next_list_item ; BLUE (1)
@@ -5819,6 +5940,8 @@ BlueGroup:
 
 	end_list_items
 
+SECTION "Officer Trainer Party", ROMX
+
 OfficerGroup:
 	next_list_item ; OFFICER (1)
 	db "KEITH@", TRAINERTYPE_NORMAL
@@ -5835,6 +5958,8 @@ OfficerGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Grunt F Trainer Party", ROMX
 
 GruntFGroup:
 	next_list_item ; GRUNTF (1)
@@ -5887,6 +6012,8 @@ GruntFGroup:
 
 	end_list_items
 
+SECTION "Mysticalman Trainer Party", ROMX
+
 MysticalmanGroup:
 	next_list_item ; MYSTICALMAN (1)
 	db "EUSINE@", TRAINERTYPE_MOVES
@@ -5902,6 +6029,8 @@ MysticalmanGroup:
 	db -1 ; end
 
 	end_list_items
+
+SECTION "Kris Trainer Party", ROMX
 
 KrisGroup:
 	next_list_item; KRIS (1)

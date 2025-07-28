@@ -120,7 +120,6 @@ ROMX $1f
 	"Map Scripts 10"
 ROMX $20
 	"bank20"
-	"Enemy Trainer Parties 2"
 ROMX $21
 	"bank21"
 ROMX $22
@@ -196,7 +195,6 @@ ROMX $40
 	"Fade System"
 ROMX $41
 	"bank41"
-	"Enemy Trainer Parties 1"
 ROMX $42
 	"Intro Logo"
 	"Credits"
