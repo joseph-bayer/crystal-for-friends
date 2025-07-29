@@ -1739,7 +1739,7 @@ SeadraEvosAttacks:
 	db 0 ; no more level-up moves
 
 GoldeenEvosAttacks:
-	dbbw EVOLVE_LEVEL, 33, SEAKING
+	dbbw EVOLVE_LEVEL, 28, SEAKING
 	db 0 ; no more evolutions
 	dbw 1, PECK
 	dbw 1, TAIL_WHIP

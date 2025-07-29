@@ -321,7 +321,7 @@ LedianEvosAttacks:
 	db 0 ; no more level-up moves
 
 SpinarakEvosAttacks:
-	dbbw EVOLVE_LEVEL, 22, ARIADOS
+	dbbw EVOLVE_LEVEL, 21, ARIADOS
 	db 0 ; no more evolutions
 	dbw 1, POISON_STING
 	dbw 1, STRING_SHOT
@@ -779,7 +779,7 @@ GirafarigEvosAttacks:
 	db 0 ; no more level-up moves
 
 PinecoEvosAttacks:
-	dbbw EVOLVE_LEVEL, 31, FORRETRESS
+	dbbw EVOLVE_LEVEL, 25, FORRETRESS
 	db 0 ; no more evolutions
 	dbw 1, TACKLE
 	dbw 1, PROTECT
@@ -964,7 +964,7 @@ UrsaringEvosAttacks:
 	db 0 ; no more level-up moves
 
 SlugmaEvosAttacks:
-	dbbw EVOLVE_LEVEL, 38, MAGCARGO
+	dbbw EVOLVE_LEVEL, 27, MAGCARGO
 	db 0 ; no more evolutions
 	dbw 1, SMOG
 	dbw 8, EMBER
