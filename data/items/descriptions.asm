@@ -193,6 +193,9 @@ ItemDescriptionsKeyItems:
 	dw PassDesc         ; 0113
 	dw SquirtBottleDesc ; 0114
 	dw RainbowWingDesc  ; 0115
+	dw OldAmberDesc     ; 0116
+	dw DomeFossilDesc   ; 0117
+	dw HelixFossilDesc  ; 0118
 .IndirectEnd:
 
 ItemDescriptionsBalls:
@@ -735,6 +738,15 @@ DragonFangDesc:
 LeftoversDesc:
 	db   "Restores HP during"
 	next "battle. (HOLD)@"
+
+OldAmberDesc:
+	db   "Fossilized resin"
+	next "containing DNA.@"
+
+DomeFossilDesc:
+HelixFossilDesc:
+	db   "A fossilized"
+	next "#mon shell.@"
 
 MysteryBerryDesc:
 	db   "A self-restore"

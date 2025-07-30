@@ -21,6 +21,62 @@ RuinsOfAlphInnerChamberStrangePresenceScript:
 	opentext
 	writetext RuinsOfAlphStrangePresenceText
 	waitbutton
+
+.aerodactyl
+	checkevent EVENT_GOT_OLD_AMBER
+	iffalse .aerodactyl_puzzle
+	sjump .omanyte
+.aerodactyl_puzzle
+	checkevent EVENT_SOLVED_AERODACTYL_PUZZLE
+	iftrue .get_old_amber
+	sjump .omanyte
+.get_old_amber
+	verbosegiveitem OLD_AMBER
+	iffalse .NoRoom
+	setevent EVENT_GOT_OLD_AMBER
+
+.omanyte
+	checkevent EVENT_GOT_HELIX_FOSSIL
+	iffalse .omanyte_puzzle
+	sjump .kabuto
+.omanyte_puzzle
+	checkevent EVENT_SOLVED_OMANYTE_PUZZLE
+	iftrue .get_helix_fossil
+	sjump .kabuto
+.get_helix_fossil
+	verbosegiveitem HELIX_FOSSIL
+	iffalse .NoRoom
+	setevent EVENT_GOT_HELIX_FOSSIL
+
+.kabuto
+	checkevent EVENT_GOT_DOME_FOSSIL
+	iffalse .kabuto_puzzle
+	sjump .gs_ball
+.kabuto_puzzle
+	checkevent EVENT_SOLVED_KABUTO_PUZZLE
+	iftrue .get_dome_fossil
+	sjump .gs_ball
+.get_dome_fossil
+	verbosegiveitem DOME_FOSSIL
+	iffalse .NoRoom
+	setevent EVENT_GOT_DOME_FOSSIL
+
+.gs_ball
+	checkevent EVENT_GOT_GS_BALL_FROM_GOLDENROD_POKEMON_CENTER
+	iffalse .ho_oh_puzzle
+	sjump .end
+.ho_oh_puzzle
+	checkevent EVENT_SOLVED_HO_OH_PUZZLE
+	iftrue .get_gs_ball
+	sjump .end
+.get_gs_ball
+	verbosegiveitem GS_BALL
+	iffalse .NoRoom
+	setevent EVENT_GOT_GS_BALL_FROM_GOLDENROD_POKEMON_CENTER
+	setevent EVENT_CAN_GIVE_GS_BALL_TO_KURT
+
+.NoRoom
+.end
 	closetext
 	setscene SCENE_RUINSOFALPHINNERCHAMBER_NOOP
 	setevent EVENT_MADE_UNOWN_APPEAR_IN_RUINS

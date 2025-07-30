@@ -213,6 +213,9 @@ ItemEffectsKeyItems:
 	dw NoEffect           ; PASS
 	dw SquirtbottleEffect ; SQUIRTBOTTLE
 	dw NoEffect           ; RAINBOW_WING
+	dw NoEffect           ; OLD_AMBER
+	dw NoEffect           ; HELIX_FOSSIL
+	dw NoEffect           ; DOME_FOSSIL
 .IndirectEnd:
 
 ItemEffectsBalls:

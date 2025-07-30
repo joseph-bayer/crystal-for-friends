@@ -185,6 +185,9 @@ KeyItemNames::
 	li "PASS"         ; 0113
 	li "SQUIRTBOTTLE" ; 0114
 	li "RAINBOW WING" ; 0115
+	li "OLD AMBER"    ; 0116
+	li "DOME FOSSIL"  ; 0117
+	li "HELIX FOSSIL" ; 0118
 	assert_list_length NUM_KEY_ITEM_POCKET
 
 BallNames::
