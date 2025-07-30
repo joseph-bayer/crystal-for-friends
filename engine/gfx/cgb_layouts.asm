@@ -326,7 +326,7 @@ _CGB_StatsScreenHPPals:
 	ld a, $0  ; Default to palette 0 for other ball types
 
 .set_ball_attr:
-	hlcoord 10, 6, wAttrmap
+	hlcoord 8, 6, wAttrmap
 	ld [hl], a
 	ret
 

@@ -478,7 +478,7 @@ PlaceCaughtBall:
 	ld hl, wTempMon + MON_CAUGHTBALL
 	ld a, [hl]
 	and CAUGHT_BALL_MASK
-	hlcoord 10, 6
+	hlcoord 8, 6
   ld [hl], $32 ; pokeball tile
 
 ; Uncomment to debug ball type being assigned correctly
