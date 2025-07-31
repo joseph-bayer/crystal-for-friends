@@ -21,7 +21,20 @@ MahoganyGymPryceScript:
 	waitbutton
 	closetext
 	winlosstext PryceText_Impressed, 0
+  ; Level scaling if statements
+  readvar VAR_BADGES
+  ifequal 6, .SevenBadges
+  ifequal 5, .SixBadges
+  ifequal 4, .FiveBadges
+.FiveBadges:
 	loadtrainer PRYCE, PRYCE1
+  sjump .MahoganyGymPryceScriptEnd
+.SixBadges:
+  loadtrainer PRYCE, 2
+  sjump .MahoganyGymPryceScriptEnd
+.SevenBadges:
+  loadtrainer PRYCE, 3
+.MahoganyGymPryceScriptEnd:
 	startbattle
 	reloadmapafterbattle
 	setevent EVENT_BEAT_PRYCE

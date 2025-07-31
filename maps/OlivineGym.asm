@@ -16,7 +16,20 @@ OlivineGymJasmineScript:
 	waitbutton
 	closetext
 	winlosstext Jasmine_BetterTrainer, 0
+  ; Level scaling if statements
+  readvar VAR_BADGES
+  ifequal 6, .SevenBadges
+  ifequal 5, .SixBadges
+  ifequal 4, .FiveBadges
+.FiveBadges:
 	loadtrainer JASMINE, JASMINE1
+  sjump .OlivineGymJasmineScriptEnd
+.SixBadges:
+  loadtrainer JASMINE, 2
+  sjump .OlivineGymJasmineScriptEnd
+.SevenBadges:
+  loadtrainer JASMINE, 3
+.OlivineGymJasmineScriptEnd:
 	startbattle
 	reloadmapafterbattle
 	setevent EVENT_BEAT_JASMINE

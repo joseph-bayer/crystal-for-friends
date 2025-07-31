@@ -38,7 +38,20 @@ CianwoodGymChuckScript:
 	waitbutton
 	closetext
 	winlosstext ChuckLossText, 0
+  ;  Level scaling if statements
+  readvar VAR_BADGES
+  ifequal 6, .SevenBadges
+  ifequal 5, .SixBadges
+  ifequal 4, .FiveBadges
+.FiveBadges:
 	loadtrainer CHUCK, CHUCK1
+  sjump .CianwoodGymChuckScriptEnd
+.SixBadges:
+  loadtrainer CHUCK, 2
+  sjump .CianwoodGymChuckScriptEnd
+.SevenBadges:
+  loadtrainer CHUCK, 3
+.CianwoodGymChuckScriptEnd:
 	startbattle
 	reloadmapafterbattle
 	setevent EVENT_BEAT_CHUCK
