@@ -361,6 +361,7 @@ DEF CELEBIEVENT_FOREST_IS_RESTLESS_F EQU 2
 
 ; wLuckyNumberShowFlag::
 DEF LUCKYNUMBERSHOW_GAME_OVER_F EQU 0
+; TODO: space for more daily events in bits 1-7?
 
 ; wDayCareMan::
 DEF DAYCAREMAN_HAS_MON_F         EQU 0

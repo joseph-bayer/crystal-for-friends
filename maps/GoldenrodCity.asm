@@ -13,6 +13,8 @@
 	const GOLDENRODCITY_ROCKET4
 	const GOLDENRODCITY_ROCKET5
 	const GOLDENRODCITY_ROCKET6
+	const GOLDENRODCITY_ROCKET7
+	const GOLDENRODCITY_ROCKET8
 	const GOLDENRODCITY_MOVETUTOR
 
 GoldenrodCity_MapScripts:
@@ -231,6 +233,12 @@ GoldenrodCityRocket5Script:
 GoldenrodCityRocket6Script:
 	jumptextfaceplayer GoldenrodCityRocket6Text
 
+GoldenrodCityRocket7Script:
+	jumptextfaceplayer GoldenrodCityRocket7Text
+
+GoldenrodCityRocket8Script:
+	jumptextfaceplayer GoldenrodCityRocket8Text
+
 GoldenrodCityStationSign:
 	jumptext GoldenrodCityStationSignText
 
@@ -410,6 +418,25 @@ GoldenrodCityRocket6Text:
 	text "Come taste the"
 	line "true terror of"
 	cont "TEAM ROCKET!"
+	done
+
+GoldenrodCityRocket7Text:
+	text "We're back and"
+	line "stronger than ever!"
+
+	para "This time we won't"
+	line "let some kid ruin"
+	cont "our plans!"
+	done
+
+GoldenrodCityRocket8Text:
+	text "The boss has big"
+	line "plans for this"
+	cont "radio station!"
+
+	para "Soon all of JOHTO"
+	line "will hear our"
+	cont "message!"
 	done
 
 GoldenrodCityStationSignText:
@@ -594,4 +621,6 @@ GoldenrodCity_MapEvents:
 	object_event 29, 20, SPRITE_ROCKET, SPRITEMOVEDATA_STANDING_UP, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, GoldenrodCityRocket4Script, EVENT_RADIO_TOWER_ROCKET_TAKEOVER
 	object_event 29,  7, SPRITE_ROCKET, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, GoldenrodCityRocket5Script, EVENT_RADIO_TOWER_ROCKET_TAKEOVER
 	object_event 31, 10, SPRITE_ROCKET, SPRITEMOVEDATA_STANDING_LEFT, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, GoldenrodCityRocket6Script, EVENT_RADIO_TOWER_ROCKET_TAKEOVER
+	object_event 12, 31, SPRITE_ROCKET, SPRITEMOVEDATA_STANDING_RIGHT, 1, 1, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, GoldenrodCityRocket7Script, EVENT_RADIO_TOWER_ROCKET_TAKEOVER
+	object_event 28, 31, SPRITE_ROCKET, SPRITEMOVEDATA_STANDING_LEFT, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, GoldenrodCityRocket8Script, EVENT_RADIO_TOWER_ROCKET_TAKEOVER
 	object_event 12, 22, SPRITE_POKEFAN_M, SPRITEMOVEDATA_SPINRANDOM_SLOW, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, MoveTutorScript, EVENT_GOLDENROD_CITY_MOVE_TUTOR
