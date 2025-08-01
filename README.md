@@ -3,16 +3,29 @@
 This is a version of Pokemon Crystal meant for me and my friends. It is built upon the CrystalShireEngine.
 
 ## Changes
-- Trainer Teams based heavily upon Pokemon Crystal Legacy
-- Wild Pokemon locations based heavily upon Pokemon Crystal Legacy
+- Built upon the CrystalShireEngine. See section below titled "CrystalShireEngine" to see the README for that project
+- Many changes based heavily upon Crystal Legacy
+  - Trainer Teams
+  - Dynamic teams for CHUCK, PRYCE, and JASMINE depending on the order you face them in
+  - Wild Encounters
+  - NPC Trades
+  - Fossils
+    - Solve the fossil mon puzzles in the Ruins of Alph for each respective fossil
+  - Celebi Event
+    - Solve the Ho-Oh puzzle in the Ruins of Alph
+  - Game Corner Prizes
+  - Updated Evos
+  - Level-up learnsets
+  - TODO: TM/HM learnsets
+  - TODO: Reduced hatch cycles
+  - TODO: Move updates
 - TODO: All Pokemon available
-  - TODO: NPC Trades
   - TODO: Gift
-  - TODO: Fossils
-  - Game Corner
-  - TODO: Legendaries
-- TODO: Celebi Event
-- TODO: Dynamic teams for CHUCK, PRYCE, and JASMINE depending on the order you face them in
+  - TODO: Articuno
+  - TODO: Zapdos
+  - TODO: Moltres
+  - TODO: Mewtwo
+  - TODO: Mew
 - Dark type moves are now Physical
 - Ghost type moves are now Special
 - Odd Egg Changes
@@ -20,6 +33,7 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Odds of getting each kind of mon is more even
 - The ball that a Pokemon is caught in is displayed on the stats screen
 - Only Roaming Legendaries flee wild battles
+- Minor update to Goldenrod layout so it's easier to get to the underground and the bike shop
 
 Below, you will find the original readme for the CrystalShireEngine
 
