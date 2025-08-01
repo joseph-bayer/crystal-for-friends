@@ -16,9 +16,10 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Game Corner Prizes
   - Updated Evos
   - Level-up learnsets
-  - TODO: TM/HM learnsets
-  - TODO: Reduced hatch cycles
-  - TODO: Move updates
+  - TM/HM learnsets
+  - Reduced hatch cycles
+  - Hatch Cycles
+  - Move updates
 - TODO: All Pokemon available
   - TODO: Gift
   - TODO: Articuno
