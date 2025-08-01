@@ -322,8 +322,8 @@ SwordsDanceDescription:
 	next "creases ATTACK.@"
 
 CutDescription:
-	db   "Cuts using claws,"
-	next "scythes, etc.@"
+	db   "Has a high criti-"
+	next "cal hit ratio.@"
 
 GustDescription:
 	db   "Whips up a strong"
@@ -622,7 +622,7 @@ EarthquakeDescription:
 	next "vs. flying foes.@"
 
 FissureDescription:
-	db   "A ground-type,"
+	db   "A GROUND-type,"
 	next "one-hit KO attack.@"
 
 DigDescription:
@@ -834,8 +834,8 @@ LovelyKissDescription:
 	next "to fall asleep.@"
 
 SkyAttackDescription:
-	db   "1st turn: Prepare"
-	next "2nd turn: Attack@"
+	db   "A powerful flying"
+	next "attack.@"
 
 TransformDescription:
 	db   "The user assumes"
@@ -959,7 +959,7 @@ SnoreDescription:
 
 CurseDescription:
 	db   "Works differently"
-	next "for ghost-types.@"
+	next "for GHOST-types.@"
 
 FlailDescription:
 	db   "Stronger if the"
@@ -1222,11 +1222,11 @@ TwisterDescription:
 	next "to attack.@"
 
 RainDanceDescription:
-	db   "Boosts water-type"
+	db   "Boosts WATER-type"
 	next "moves for 5 turns.@"
 
 SunnyDayDescription:
-	db   "Boosts fire-type"
+	db   "Boosts FIRE-type"
 	next "moves for 5 turns.@"
 
 CrunchDescription:
