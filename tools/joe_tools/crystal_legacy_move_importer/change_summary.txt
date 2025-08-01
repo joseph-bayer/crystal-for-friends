@@ -1,0 +1,279 @@
+Crystal Legacy Move Importer - Change Summary
+==================================================
+
+Total moves processed: 251
+Total changes applied: 90
+
+Detailed Changes:
+--------------------
+
+Move: ABSORB
+  Changes: pp: 20 -> 25
+
+Move: AEROBLAST
+  Changes: pp: 5 -> 10
+
+Move: ANCIENTPOWER
+  Changes: pp: 5 -> 10
+
+Move: BARRAGE
+  Changes: power: 15 -> 20, accuracy: 85 -> 100
+
+Move: BEAT_UP
+  Changes: power: 10 -> 20
+
+Move: BIND
+  Changes: accuracy: 75 -> 85
+
+Move: BLIZZARD
+  Changes: accuracy: 70 -> 85
+
+Move: BONEMERANG
+  Changes: pp: 10 -> 20
+
+Move: BONE_CLUB
+  Changes: accuracy: 85 -> 100
+
+Move: BONE_RUSH
+  Changes: accuracy: 80 -> 100, pp: 10 -> 20
+
+Move: CLAMP
+  Changes: accuracy: 75 -> 100
+
+Move: COMET_PUNCH
+  Changes: power: 18 -> 25, accuracy: 85 -> 100, pp: 15 -> 25
+
+Move: CONSTRICT
+  Changes: power: 10 -> 40
+
+Move: CRABHAMMER
+  Changes: power: 90 -> 110, accuracy: 85 -> 100
+
+Move: CROSS_CHOP
+  Changes: accuracy: 80 -> 85, pp: 5 -> 10
+
+Move: CRUNCH
+  Changes: effect: EFFECT_SP_DEF_DOWN_HIT -> EFFECT_DEFENSE_DOWN_HIT
+
+Move: CUT
+  Changes: power: 50 -> 55, type: NORMAL -> BUG
+
+Move: DIG
+  Changes: power: 60 -> 70, pp: 10 -> 20
+
+Move: DISABLE
+  Changes: accuracy: 55 -> 75
+
+Move: DIZZY_PUNCH
+  Changes: pp: 10 -> 20
+
+Move: DOUBLESLAP
+  Changes: power: 15 -> 20, accuracy: 85 -> 100, pp: 10 -> 35
+
+Move: DRAGONBREATH
+  Changes: power: 60 -> 70
+
+Move: DRAGON_RAGE
+  Changes: pp: 10 -> 20
+
+Move: DYNAMICPUNCH
+  Changes: pp: 5 -> 10
+
+Move: EGG_BOMB
+  Changes: type: NORMAL -> GRASS, accuracy: 75 -> 100
+
+Move: EXTREMESPEED
+  Changes: pp: 5 -> 10
+
+Move: FAINT_ATTACK
+  Changes: power: 60 -> 70
+
+Move: FIRE_SPIN
+  Changes: power: 15 -> 35, accuracy: 70 -> 100
+
+Move: FLAME_WHEEL
+  Changes: power: 60 -> 65
+
+Move: FLY
+  Changes: accuracy: 95 -> 100
+
+Move: FURY_ATTACK
+  Changes: power: 15 -> 18, accuracy: 85 -> 100
+
+Move: FURY_SWIPES
+  Changes: power: 18 -> 20, accuracy: 80 -> 100, pp: 15 -> 20
+
+Move: FUTURE_SIGHT
+  Changes: power: 80 -> 120
+
+Move: GIGA_DRAIN
+  Changes: power: 60 -> 75, pp: 5 -> 15
+
+Move: GLARE
+  Changes: accuracy: 75 -> 90
+
+Move: HI_JUMP_KICK
+  Changes: power: 85 -> 120
+
+Move: HYDRO_PUMP
+  Changes: accuracy: 80 -> 85, pp: 5 -> 10
+
+Move: ICE_BEAM
+  Changes: pp: 10 -> 15
+
+Move: ICY_WIND
+  Changes: power: 55 -> 65, accuracy: 95 -> 100, pp: 15 -> 20
+
+Move: IRON_TAIL
+  Changes: accuracy: 75 -> 90, effect_chance: 30 -> 20
+
+Move: JUMP_KICK
+  Changes: power: 70 -> 90
+
+Move: LEECH_LIFE
+  Changes: power: 20 -> 40, pp: 15 -> 25
+
+Move: LICK
+  Changes: power: 20 -> 30
+
+Move: LOW_KICK
+  Changes: accuracy: 90 -> 100
+
+Move: MACH_PUNCH
+  Changes: power: 40 -> 50
+
+Move: MEGAHORN
+  Changes: pp: 10 -> 5
+
+Move: MEGA_DRAIN
+  Changes: pp: 10 -> 20
+
+Move: MEGA_KICK
+  Changes: accuracy: 75 -> 85, pp: 5 -> 10
+
+Move: METAL_CLAW
+  Changes: power: 50 -> 70, accuracy: 95 -> 100, pp: 35 -> 25
+
+Move: MILK_DRINK
+  Changes: pp: 10 -> 5
+
+Move: MUD_SLAP
+  Changes: pp: 10 -> 15
+
+Move: OCTAZOOKA
+  Changes: accuracy: 85 -> 100, pp: 10 -> 15
+
+Move: OUTRAGE
+  Changes: power: 90 -> 110
+
+Move: PAY_DAY
+  Changes: power: 40 -> 60
+
+Move: PETAL_DANCE
+  Changes: power: 70 -> 90
+
+Move: PIN_MISSILE
+  Changes: power: 14 -> 20, accuracy: 85 -> 100, pp: 20 -> 30
+
+Move: POISONPOWDER
+  Changes: accuracy: 75 -> 90
+
+Move: POISON_GAS
+  Changes: accuracy: 55 -> 85
+
+Move: POISON_STING
+  Changes: power: 15 -> 30
+
+Move: PSYCHIC_M
+  Changes: pp: 10 -> 15
+
+Move: PSYWAVE
+  Changes: accuracy: 80 -> 95
+
+Move: RAIN_DANCE
+  Changes: pp: 5 -> 10
+
+Move: RAZOR_WIND
+  Changes: accuracy: 75 -> 95, pp: 10 -> 15
+
+Move: RECOVER
+  Changes: pp: 20 -> 5
+
+Move: REST
+  Changes: pp: 10 -> 5
+
+Move: ROCK_SLIDE
+  Changes: power: 75 -> 80, accuracy: 90 -> 95, pp: 10 -> 15
+
+Move: ROCK_SMASH
+  Changes: power: 20 -> 60, effect_chance: 50 -> 20
+
+Move: ROCK_THROW
+  Changes: accuracy: 90 -> 95, pp: 15 -> 25
+
+Move: ROLLING_KICK
+  Changes: accuracy: 85 -> 100
+
+Move: SACRED_FIRE
+  Changes: pp: 5 -> 10
+
+Move: SKY_ATTACK
+  Changes: effect: EFFECT_SKY_ATTACK -> EFFECT_NORMAL_HIT, power: 140 -> 120, accuracy: 90 -> 85, pp: 5 -> 10
+
+Move: SLAM
+  Changes: accuracy: 75 -> 100
+
+Move: SLUDGE_BOMB
+  Changes: pp: 10 -> 15
+
+Move: SMOG
+  Changes: power: 20 -> 25, accuracy: 70 -> 100
+
+Move: SOFTBOILED
+  Changes: pp: 10 -> 5
+
+Move: SONICBOOM
+  Changes: accuracy: 90 -> 100
+
+Move: SPIKE_CANNON
+  Changes: power: 20 -> 22, type: NORMAL -> STEEL
+
+Move: STEEL_WING
+  Changes: accuracy: 90 -> 100
+
+Move: SUBMISSION
+  Changes: power: 80 -> 90, accuracy: 80 -> 100
+
+Move: SUNNY_DAY
+  Changes: pp: 5 -> 10
+
+Move: SUPERSONIC
+  Changes: accuracy: 55 -> 70
+
+Move: TACKLE
+  Changes: accuracy: 95 -> 100
+
+Move: TAKE_DOWN
+  Changes: power: 90 -> 95, accuracy: 85 -> 100
+
+Move: THIEF
+  Changes: power: 40 -> 60, pp: 10 -> 15
+
+Move: TRIPLE_KICK
+  Changes: power: 10 -> 20, accuracy: 90 -> 100, pp: 10 -> 15
+
+Move: TRI_ATTACK
+  Changes: power: 80 -> 85, pp: 10 -> 15
+
+Move: TWINEEDLE
+  Changes: power: 25 -> 40
+
+Move: TWISTER
+  Changes: power: 40 -> 70
+
+Move: VINE_WHIP
+  Changes: power: 35 -> 40, pp: 10 -> 25
+
+Move: WATERFALL
+  Changes: effect: EFFECT_NORMAL_HIT -> EFFECT_FLINCH_HIT, power: 80 -> 70, effect_chance: 0 -> 30
+
