@@ -1,6 +1,6 @@
 	db 0 ; species ID placeholder
 
-	db  75,  80,  85,  50, 100,  90
+	db  90,  80,  95,  50, 100,  90
 	evs  0,   0,   0,   0,   3,   0
 	;   hp  atk  def  spd  sat  sdf
 
@@ -9,7 +9,7 @@
 	db 184 ; base exp
 	dw NO_ITEM, NO_ITEM ; items
 	db GENDER_F50 ; gender ratio
-	db 20 ; step cycles to hatch
+	db 5 ; step cycles to hatch
 	INCBIN "gfx/pokemon/vileplume/front.dimensions"
 	dw NULL, NULL ; unused (beta front/back pics)
 	db GROWTH_MEDIUM_SLOW ; growth rate

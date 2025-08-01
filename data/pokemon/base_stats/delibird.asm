@@ -1,6 +1,6 @@
 	db 0 ; species ID placeholder
 
-	db  45,  55,  45,  75,  65,  45
+	db  60,  75,  55,  80,  85,  45
 	evs  0,   0,   0,   1,   0,   0
 	;   hp  atk  def  spd  sat  sdf
 
@@ -9,7 +9,7 @@
 	db 183 ; base exp
 	dw NO_ITEM, NO_ITEM ; items
 	db GENDER_F50 ; gender ratio
-	db 20 ; step cycles to hatch
+	db 5 ; step cycles to hatch
 	INCBIN "gfx/pokemon/delibird/front.dimensions"
 	dw NULL, NULL ; unused (beta front/back pics)
 	db GROWTH_FAST ; growth rate

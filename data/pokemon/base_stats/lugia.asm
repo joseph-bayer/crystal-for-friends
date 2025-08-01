@@ -9,7 +9,7 @@
 	db 220 ; base exp
 	dw NO_ITEM, NO_ITEM ; items
 	db GENDER_UNKNOWN ; gender ratio
-	db 120 ; step cycles to hatch
+	db 30 ; step cycles to hatch
 	INCBIN "gfx/pokemon/lugia/front.dimensions"
 	dw NULL, NULL ; unused (beta front/back pics)
 	db GROWTH_SLOW ; growth rate

@@ -9,7 +9,7 @@
 	db 196 ; base exp
 	dw NO_ITEM, METAL_COAT ; items
 	db GENDER_F50 ; gender ratio
-	db 25 ; step cycles to hatch
+	db 6 ; step cycles to hatch
 	INCBIN "gfx/pokemon/steelix/front.dimensions"
 	dw NULL, NULL ; unused (beta front/back pics)
 	db GROWTH_MEDIUM_FAST ; growth rate

@@ -9,7 +9,7 @@
 	db 207 ; base exp
 	dw STARDUST, STAR_PIECE ; items
 	db GENDER_UNKNOWN ; gender ratio
-	db 20 ; step cycles to hatch
+	db 5 ; step cycles to hatch
 	INCBIN "gfx/pokemon/starmie/front.dimensions"
 	dw NULL, NULL ; unused (beta front/back pics)
 	db GROWTH_SLOW ; growth rate

@@ -1,6 +1,6 @@
 	db 0 ; species ID placeholder
 
-	db  65,  40,  70,  70,  80, 140
+	db  65,  50,  70,  70,  80, 140
 	evs  0,   0,   0,   0,   0,   2
 	;   hp  atk  def  spd  sat  sdf
 
@@ -9,7 +9,7 @@
 	db 168 ; base exp
 	dw NO_ITEM, NO_ITEM ; items
 	db GENDER_F50 ; gender ratio
-	db 25 ; step cycles to hatch
+	db 6 ; step cycles to hatch
 	INCBIN "gfx/pokemon/mantine/front.dimensions"
 	dw NULL, NULL ; unused (beta front/back pics)
 	db GROWTH_SLOW ; growth rate

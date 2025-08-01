@@ -1,0 +1,906 @@
+Pokemon Base Stats Update Summary
+========================================
+Date: 2025-07-31 21:40:48
+Processed: 251 legacy files
+Updated: 251 current files
+
+Pokemon with changes (251):
+
+ABRA:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+AERODACTYL:
+  - step_cycles: db 35 ; step cycles to hatch -> db 9 ; step cycles to hatch
+
+AIPOM:
+  - base_stats: db  55,  70,  55,  85,  40,  55 -> db  70,  90,  65,  90,  40,  65
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+ALAKAZAM:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+AMPHAROS:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+ARBOK:
+  - base_stats: db  60,  85,  69,  80,  65,  79 -> db  62,  95,  69,  90,  65,  79
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+ARCANINE:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+ARIADOS:
+  - base_stats: db  70,  90,  70,  40,  60,  60 -> db  70,  90,  70,  80,  70,  70
+  - step_cycles: db 15 ; step cycles to hatch -> db 4 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+ARTICUNO:
+  - step_cycles: db 80 ; step cycles to hatch -> db 20 ; step cycles to hatch
+
+AZUMARILL:
+  - base_stats: db 100,  50,  80,  50,  50,  80 -> db 100,  50,  80,  50,  70,  80
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+BAYLEEF:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+BEEDRILL:
+  - step_cycles: db 15 ; step cycles to hatch -> db 4 ; step cycles to hatch
+
+BELLOSSOM:
+  - base_stats: db  75,  80,  85,  50,  90, 100 -> db  90,  80,  95,  50,  90, 100
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+BELLSPROUT:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+BLASTOISE:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+BLISSEY:
+  - step_cycles: db 40 ; step cycles to hatch -> db 10 ; step cycles to hatch
+
+BULBASAUR:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+BUTTERFREE:
+  - step_cycles: db 15 ; step cycles to hatch -> db 4 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+CATERPIE:
+  - step_cycles: db 15 ; step cycles to hatch -> db 4 ; step cycles to hatch
+
+CELEBI:
+  - step_cycles: db 120 ; step cycles to hatch -> db 30 ; step cycles to hatch
+
+CHANSEY:
+  - base_stats: db 250,  05,  05,  50,  35, 105 -> db 250,   5,   5,  50,  35, 105
+  - step_cycles: db 40 ; step cycles to hatch -> db 10 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+CHARIZARD:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+CHARMANDER:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+CHARMELEON:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+CHIKORITA:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+CHINCHOU:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+CLEFABLE:
+  - base_stats: db  95,  70,  73,  60,  85,  90 -> db  95,  70,  73,  60,  95,  90
+  - step_cycles: db 10 ; step cycles to hatch -> db 2 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+CLEFAIRY:
+  - step_cycles: db 10 ; step cycles to hatch -> db 2 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+CLEFFA:
+  - step_cycles: db 10 ; step cycles to hatch -> db 2 ; step cycles to hatch
+
+CLOYSTER:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+CORSOLA:
+  - base_stats: db  55,  55,  85,  35,  65,  85 -> db  85,  55,  95,  35,  65,  95
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+CROBAT:
+  - step_cycles: db 15 ; step cycles to hatch -> db 4 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+CROCONAW:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+CUBONE:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+CYNDAQUIL:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+DELIBIRD:
+  - base_stats: db  45,  55,  45,  75,  65,  45 -> db  60,  75,  55,  80,  85,  45
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+DEWGONG:
+  - base_stats: db  90,  70,  80,  70,  70,  95 -> db  90,  60,  80,  70,  80,  95
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+DIGLETT:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+DITTO:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+DODRIO:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+DODUO:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+DONPHAN:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+DRAGONAIR:
+  - step_cycles: db 40 ; step cycles to hatch -> db 10 ; step cycles to hatch
+
+DRAGONITE:
+  - step_cycles: db 40 ; step cycles to hatch -> db 10 ; step cycles to hatch
+
+DRATINI:
+  - step_cycles: db 40 ; step cycles to hatch -> db 10 ; step cycles to hatch
+
+DROWZEE:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+DUGTRIO:
+  - base_stats: db  35,  80,  50, 120,  50,  70 -> db  35,  90,  50, 120,  50,  70
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+DUNSPARCE:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+EEVEE:
+  - step_cycles: db 35 ; step cycles to hatch -> db 9 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+EKANS:
+  - base_stats: db  35,  60,  44,  55,  40,  54 -> db  40,  65,  44,  60,  40,  54
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+ELECTABUZZ:
+  - step_cycles: db 25 ; step cycles to hatch -> db 6 ; step cycles to hatch
+
+ELECTRODE:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+ELEKID:
+  - step_cycles: db 25 ; step cycles to hatch -> db 6 ; step cycles to hatch
+
+ENTEI:
+  - base_stats: db 115, 115,  85, 100,  90,  75 -> db 115,  90,  85, 100, 115,  75
+  - step_cycles: db 80 ; step cycles to hatch -> db 20 ; step cycles to hatch
+
+ESPEON:
+  - step_cycles: db 35 ; step cycles to hatch -> db 9 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+EXEGGCUTE:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+EXEGGUTOR:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+FARFETCH_D:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+FEAROW:
+  - step_cycles: db 15 ; step cycles to hatch -> db 4 ; step cycles to hatch
+
+FERALIGATR:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+FLAAFFY:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+FLAREON:
+  - base_stats: db  65, 130,  60,  65,  95, 110 -> db  65, 130,  60,  65, 110,  95
+  - step_cycles: db 35 ; step cycles to hatch -> db 9 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+FORRETRESS:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+FURRET:
+  - base_stats: db  85,  76,  64,  90,  45,  55 -> db  85,  76,  64,  90,  55,  55
+  - step_cycles: db 15 ; step cycles to hatch -> db 4 ; step cycles to hatch
+
+GASTLY:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+GENGAR:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+GEODUDE:
+  - step_cycles: db 15 ; step cycles to hatch -> db 4 ; step cycles to hatch
+
+GIRAFARIG:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+GLIGAR:
+  - base_stats: db  65,  75, 105,  85,  35,  65 -> db  70,  85, 105,  90,  35,  65
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+GLOOM:
+  - base_stats: db  60,  65,  70,  40,  85,  75 -> db  70,  65,  70,  40,  85,  75
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+GOLBAT:
+  - step_cycles: db 15 ; step cycles to hatch -> db 4 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+GOLDEEN:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+GOLDUCK:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+GOLEM:
+  - step_cycles: db 15 ; step cycles to hatch -> db 4 ; step cycles to hatch
+
+GRANBULL:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+GRAVELER:
+  - step_cycles: db 15 ; step cycles to hatch -> db 4 ; step cycles to hatch
+
+GRIMER:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+GROWLITHE:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+GYARADOS:
+  - step_cycles: db 5 ; step cycles to hatch -> db 1 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+HAUNTER:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+HERACROSS:
+  - step_cycles: db 25 ; step cycles to hatch -> db 6 ; step cycles to hatch
+
+HITMONCHAN:
+  - base_stats: db  50, 105,  79,  76,  35, 110 -> db  50, 105,  79,  81,  35, 110
+  - step_cycles: db 25 ; step cycles to hatch -> db 6 ; step cycles to hatch
+
+HITMONLEE:
+  - base_stats: db  50, 120,  53,  87,  35, 110 -> db  50, 120,  58,  87,  35, 110
+  - step_cycles: db 25 ; step cycles to hatch -> db 6 ; step cycles to hatch
+
+HITMONTOP:
+  - base_stats: db  50,  95,  95,  70,  35, 110 -> db  50,  95,  95,  75,  35, 110
+  - step_cycles: db 25 ; step cycles to hatch -> db 6 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+HOOTHOOT:
+  - step_cycles: db 15 ; step cycles to hatch -> db 4 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+HOPPIP:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+HORSEA:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+HOUNDOOM:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+HOUNDOUR:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+HO_OH:
+  - step_cycles: db 120 ; step cycles to hatch -> db 30 ; step cycles to hatch
+
+HYPNO:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+IGGLYBUFF:
+  - step_cycles: db 10 ; step cycles to hatch -> db 2 ; step cycles to hatch
+
+IVYSAUR:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+JIGGLYPUFF:
+  - step_cycles: db 10 ; step cycles to hatch -> db 2 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+JOLTEON:
+  - step_cycles: db 35 ; step cycles to hatch -> db 9 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+JUMPLUFF:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+JYNX:
+  - step_cycles: db 25 ; step cycles to hatch -> db 6 ; step cycles to hatch
+
+KABUTO:
+  - step_cycles: db 30 ; step cycles to hatch -> db 8 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+KABUTOPS:
+  - step_cycles: db 30 ; step cycles to hatch -> db 8 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+KADABRA:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+KAKUNA:
+  - step_cycles: db 15 ; step cycles to hatch -> db 4 ; step cycles to hatch
+
+KANGASKHAN:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+KINGDRA:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+KINGLER:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+KOFFING:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+KRABBY:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+LANTURN:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+LAPRAS:
+  - step_cycles: db 40 ; step cycles to hatch -> db 10 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+LARVITAR:
+  - step_cycles: db 40 ; step cycles to hatch -> db 10 ; step cycles to hatch
+
+LEDIAN:
+  - base_stats: db  55,  35,  50,  85,  55, 110 -> db  75,  35,  50,  85,  55, 110
+  - step_cycles: db 15 ; step cycles to hatch -> db 4 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+LEDYBA:
+  - step_cycles: db 15 ; step cycles to hatch -> db 4 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+LICKITUNG:
+  - base_stats: db  90,  55,  75,  30,  60,  75 -> db  95,  70,  85,  30,  75,  85
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+LUGIA:
+  - step_cycles: db 120 ; step cycles to hatch -> db 30 ; step cycles to hatch
+
+MACHAMP:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+MACHOKE:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+MACHOP:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+MAGBY:
+  - step_cycles: db 25 ; step cycles to hatch -> db 6 ; step cycles to hatch
+
+MAGCARGO:
+  - base_stats: db  50,  50, 120,  30,  80,  80 -> db  60,  80, 130,  30,  90,  80
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+MAGIKARP:
+  - step_cycles: db 5 ; step cycles to hatch -> db 1 ; step cycles to hatch
+
+MAGMAR:
+  - base_stats: db  65,  95,  57,  93, 100,  85 -> db  75,  85,  57,  93, 100,  85
+  - step_cycles: db 25 ; step cycles to hatch -> db 6 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+MAGNEMITE:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+MAGNETON:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+MANKEY:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+MANTINE:
+  - base_stats: db  65,  40,  70,  70,  80, 140 -> db  65,  50,  70,  70,  80, 140
+  - step_cycles: db 25 ; step cycles to hatch -> db 6 ; step cycles to hatch
+
+MAREEP:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+MARILL:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+MAROWAK:
+  - base_stats: db  60,  80, 110,  45,  50,  80 -> db  65,  80, 110,  45,  50,  80
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+MEGANIUM:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+MEOWTH:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+METAPOD:
+  - step_cycles: db 15 ; step cycles to hatch -> db 4 ; step cycles to hatch
+
+MEW:
+  - step_cycles: db 120 ; step cycles to hatch -> db 30 ; step cycles to hatch
+
+MEWTWO:
+  - step_cycles: db 120 ; step cycles to hatch -> db 30 ; step cycles to hatch
+
+MILTANK:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+MISDREAVUS:
+  - base_stats: db  60,  60,  60,  85,  85,  85 -> db  60,  60,  60,  90,  95,  95
+  - step_cycles: db 25 ; step cycles to hatch -> db 6 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+MOLTRES:
+  - step_cycles: db 80 ; step cycles to hatch -> db 20 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+MR__MIME:
+  - step_cycles: db 25 ; step cycles to hatch -> db 6 ; step cycles to hatch
+
+MUK:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+MURKROW:
+  - base_stats: db  60,  85,  42,  91,  85,  42 -> db  70, 105,  52,  95,  76,  52
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+NATU:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+NIDOKING:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+NIDOQUEEN:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+NIDORAN_F:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+NIDORAN_M:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+NIDORINA:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+NIDORINO:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+NINETALES:
+  - base_stats: db  73,  76,  75, 100,  81, 100 -> db  78,  71,  80, 100,  86, 100
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+NOCTOWL:
+  - step_cycles: db 15 ; step cycles to hatch -> db 4 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+OCTILLERY:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+ODDISH:
+  - base_stats: db  45,  50,  55,  30,  75,  65 -> db  50,  50,  55,  30,  75,  65
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+OMANYTE:
+  - step_cycles: db 30 ; step cycles to hatch -> db 8 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+OMASTAR:
+  - step_cycles: db 30 ; step cycles to hatch -> db 8 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+ONIX:
+  - step_cycles: db 25 ; step cycles to hatch -> db 6 ; step cycles to hatch
+
+PARAS:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+PARASECT:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+PERSIAN:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+PHANPY:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+PICHU:
+  - step_cycles: db 10 ; step cycles to hatch -> db 2 ; step cycles to hatch
+
+PIDGEOT:
+  - step_cycles: db 15 ; step cycles to hatch -> db 4 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+PIDGEOTTO:
+  - step_cycles: db 15 ; step cycles to hatch -> db 4 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+PIDGEY:
+  - step_cycles: db 15 ; step cycles to hatch -> db 4 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+PIKACHU:
+  - base_stats: db  35,  55,  30,  90,  50,  40 -> db  35,  55,  40,  90,  50,  50
+  - step_cycles: db 10 ; step cycles to hatch -> db 2 ; step cycles to hatch
+
+PILOSWINE:
+  - base_stats: db 100, 100,  80,  50,  60,  60 -> db 100, 100,  80,  50,  80,  70
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+PINECO:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+PINSIR:
+  - step_cycles: db 25 ; step cycles to hatch -> db 6 ; step cycles to hatch
+
+POLITOED:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+POLIWAG:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+POLIWHIRL:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+POLIWRATH:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+PONYTA:
+  - base_stats: db  50,  85,  55,  90,  65,  65 -> db  50,  85,  55, 100,  65,  65
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+PORYGON:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+PORYGON2:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+PRIMEAPE:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+PSYDUCK:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+PUPITAR:
+  - step_cycles: db 40 ; step cycles to hatch -> db 10 ; step cycles to hatch
+
+QUAGSIRE:
+  - base_stats: db  95,  85,  85,  35,  65,  65 -> db  95,  85,  85,  35,  75,  75
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+QUILAVA:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+QWILFISH:
+  - base_stats: db  65,  95,  75,  85,  55,  55 -> db  75,  95,  85,  85,  65,  75
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+RAICHU:
+  - step_cycles: db 10 ; step cycles to hatch -> db 2 ; step cycles to hatch
+
+RAIKOU:
+  - step_cycles: db 80 ; step cycles to hatch -> db 20 ; step cycles to hatch
+
+RAPIDASH:
+  - base_stats: db  65, 100,  70, 105,  80,  80 -> db  65, 100,  70, 115,  80,  80
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+RATICATE:
+  - step_cycles: db 15 ; step cycles to hatch -> db 4 ; step cycles to hatch
+
+RATTATA:
+  - step_cycles: db 15 ; step cycles to hatch -> db 4 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+REMORAID:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+RHYDON:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+RHYHORN:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+SANDSHREW:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+SANDSLASH:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+SCIZOR:
+  - step_cycles: db 25 ; step cycles to hatch -> db 6 ; step cycles to hatch
+
+SCYTHER:
+  - step_cycles: db 25 ; step cycles to hatch -> db 6 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+SEADRA:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+SEAKING:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+SEEL:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+SENTRET:
+  - step_cycles: db 15 ; step cycles to hatch -> db 4 ; step cycles to hatch
+
+SHELLDER:
+  - base_stats: db  30,  65, 100,  40,  45,  25 -> db  35,  65, 100,  40,  45,  25
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+SHUCKLE:
+  - base_stats: db  20,  10, 230,  05,  10, 230 -> db  20,  10, 230,   5,  10, 230
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+SKARMORY:
+  - step_cycles: db 25 ; step cycles to hatch -> db 6 ; step cycles to hatch
+
+SKIPLOOM:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+SLOWBRO:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+SLOWKING:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+SLOWPOKE:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+SLUGMA:
+  - base_stats: db  40,  40,  40,  20,  70,  40 -> db  50,  70,  60,  20,  70,  60
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+SMEARGLE:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+SMOOCHUM:
+  - step_cycles: db 25 ; step cycles to hatch -> db 6 ; step cycles to hatch
+
+SNEASEL:
+  - base_stats: db  55,  95,  55, 115,  35,  75 -> db  55,  95,  55, 115,  70,  75
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+SNORLAX:
+  - step_cycles: db 40 ; step cycles to hatch -> db 10 ; step cycles to hatch
+
+SNUBBULL:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+SPEAROW:
+  - step_cycles: db 15 ; step cycles to hatch -> db 4 ; step cycles to hatch
+
+SPINARAK:
+  - step_cycles: db 15 ; step cycles to hatch -> db 4 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+SQUIRTLE:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+STANTLER:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+STARMIE:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+STARYU:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+STEELIX:
+  - step_cycles: db 25 ; step cycles to hatch -> db 6 ; step cycles to hatch
+
+SUDOWOODO:
+  - base_stats: db  70, 100, 115,  30,  30,  65 -> db  80, 100, 115,  30,  30,  85
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+SUICUNE:
+  - step_cycles: db 80 ; step cycles to hatch -> db 20 ; step cycles to hatch
+
+SUNFLORA:
+  - base_stats: db  75,  75,  55,  30, 105,  85 -> db  75,  75,  55,  30, 125,  85
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+SUNKERN:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+SWINUB:
+  - base_stats: db  50,  50,  40,  50,  30,  30 -> db  80,  65,  40,  50,  65,  40
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+TANGELA:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+TAUROS:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+TEDDIURSA:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+TENTACOOL:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+TENTACRUEL:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+TOGEPI:
+  - step_cycles: db 10 ; step cycles to hatch -> db 1 ; step cycles to hatch
+
+TOGETIC:
+  - base_stats: db  55,  40,  85,  40,  80, 105 -> db  85,  50,  85,  40,  80, 105
+  - step_cycles: db 10 ; step cycles to hatch -> db 2 ; step cycles to hatch
+
+TOTODILE:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+TYPHLOSION:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+TYRANITAR:
+  - step_cycles: db 40 ; step cycles to hatch -> db 10 ; step cycles to hatch
+
+TYROGUE:
+  - step_cycles: db 25 ; step cycles to hatch -> db 6 ; step cycles to hatch
+
+UMBREON:
+  - step_cycles: db 35 ; step cycles to hatch -> db 9 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+UNOWN:
+  - step_cycles: db 40 ; step cycles to hatch -> db 10 ; step cycles to hatch
+
+URSARING:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+VAPOREON:
+  - step_cycles: db 35 ; step cycles to hatch -> db 9 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+VENOMOTH:
+  - base_stats: db  70,  65,  60,  90,  90,  75 -> db  70,  75,  60, 100,  95,  75
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+VENONAT:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+VENUSAUR:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+VICTREEBEL:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+VILEPLUME:
+  - base_stats: db  75,  80,  85,  50, 100,  90 -> db  90,  80,  95,  50, 100,  90
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+VOLTORB:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+VULPIX:
+  - base_stats: db  38,  41,  40,  65,  50,  65 -> db  45,  41,  45,  75,  60,  70
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+WARTORTLE:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+WEEDLE:
+  - step_cycles: db 15 ; step cycles to hatch -> db 4 ; step cycles to hatch
+
+WEEPINBELL:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+WEEZING:
+  - base_stats: db  65,  90, 120,  60,  85,  70 -> db  75,  90, 120,  60,  85,  70
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+WIGGLYTUFF:
+  - base_stats: db 140,  70,  45,  45,  75,  50 -> db 140,  70,  55,  45,  85,  55
+  - step_cycles: db 10 ; step cycles to hatch -> db 2 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+WOBBUFFET:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+
+WOOPER:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+XATU:
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+YANMA:
+  - base_stats: db  65,  65,  45,  95,  75,  45 -> db  75, 105,  65,  95,  65,  45
+  - step_cycles: db 20 ; step cycles to hatch -> db 5 ; step cycles to hatch
+  - tmhm_learnset: UPDATED
+
+ZAPDOS:
+  - step_cycles: db 80 ; step cycles to hatch -> db 20 ; step cycles to hatch
+
+ZUBAT:
+  - step_cycles: db 15 ; step cycles to hatch -> db 4 ; step cycles to hatch
+  - tmhm_learnset: UPDATED

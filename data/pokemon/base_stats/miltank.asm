@@ -9,7 +9,7 @@
 	db 200 ; base exp
 	dw MOOMOO_MILK, MOOMOO_MILK ; items
 	db GENDER_F100 ; gender ratio
-	db 20 ; step cycles to hatch
+	db 5 ; step cycles to hatch
 	INCBIN "gfx/pokemon/miltank/front.dimensions"
 	dw NULL, NULL ; unused (beta front/back pics)
 	db GROWTH_SLOW ; growth rate

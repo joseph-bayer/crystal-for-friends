@@ -9,7 +9,7 @@
 	db 220 ; base exp
 	dw SACRED_ASH, SACRED_ASH ; items
 	db GENDER_UNKNOWN ; gender ratio
-	db 120 ; step cycles to hatch
+	db 30 ; step cycles to hatch
 	INCBIN "gfx/pokemon/ho_oh/front.dimensions"
 	dw NULL, NULL ; unused (beta front/back pics)
 	db GROWTH_SLOW ; growth rate

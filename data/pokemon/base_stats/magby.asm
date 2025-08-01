@@ -9,7 +9,7 @@
 	db 117 ; base exp
 	dw BURNT_BERRY, BURNT_BERRY ; items
 	db GENDER_F25 ; gender ratio
-	db 25 ; step cycles to hatch
+	db 6 ; step cycles to hatch
 	INCBIN "gfx/pokemon/magby/front.dimensions"
 	dw NULL, NULL ; unused (beta front/back pics)
 	db GROWTH_MEDIUM_FAST ; growth rate

@@ -9,7 +9,7 @@
 	db 116 ; base exp
 	dw NO_ITEM, NO_ITEM ; items
 	db GENDER_F50 ; gender ratio
-	db 15 ; step cycles to hatch
+	db 4 ; step cycles to hatch
 	INCBIN "gfx/pokemon/raticate/front.dimensions"
 	dw NULL, NULL ; unused (beta front/back pics)
 	db GROWTH_MEDIUM_FAST ; growth rate
