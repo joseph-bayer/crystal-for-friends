@@ -34,6 +34,21 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Odds of getting each kind of mon is more even
 - The ball that a Pokemon is caught in is displayed on the stats screen
 - Only Roaming Legendaries flee wild battles
+- Hidden Power
+  - Base Power is always 60
+- Breeding
+  - Fewer step cycles required to hatch eggs
+  - TODO: Update "hatching soon" logic to scale down with the new step cycles
+  - TODO: Breeding man stands outside fence when egg is ready 
+  - Removed trainer ID penalty (same trainer IDs no longer reduce compatibility)
+  - Improved egg generation rates:
+  
+  | Pokemon Pairing | Egg Generation Chance |
+  |----------------|-------------------|
+  | Same species | 50% |
+  | Different species | 25% |
+  
+
 - Minor update to Goldenrod layout so it's easier to get to the underground and the bike shop
 
 Below, you will find the original readme for the CrystalShireEngine
