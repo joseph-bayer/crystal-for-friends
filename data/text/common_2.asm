@@ -720,11 +720,6 @@ _LeftWithDayCareManText::
 	cont "the DAY-CARE MAN."
 	done
 
-_BreedBrimmingWithEnergyText::
-	text "It's brimming with"
-	line "energy."
-	prompt
-
 _BreedNoInterestText::
 	text "It has no interest"
 	line "in @"
@@ -742,13 +737,6 @@ _BreedAppearsToCareForText::
 _BreedFriendlyText::
 	text "It's friendly with"
 	line "@"
-	text_ram wStringBuffer1
-	text "."
-	prompt
-
-_BreedShowsInterestText::
-	text "It shows interest"
-	line "in @"
 	text_ram wStringBuffer1
 	text "."
 	prompt

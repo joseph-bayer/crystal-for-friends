@@ -151,6 +151,16 @@ if DEF(_DEBUG)
 	givepokemove ROCK_SMASH, wPartyMon3, 1
 	givepokemove HEADBUTT,   wPartyMon3, 2
 	givepokemove WATERFALL,  wPartyMon3, 3
+
+  ; DEBUG: CHECK If two Pokemon with same DEF and SPEC DVs can breed
+  ; change lanturn's DVs
+  ; loadmem wPartyMon3DVs+0, %00000000 ; 0 Atk (FEMALE), 0 Def
+  ; loadmem wPartyMon3DVs+1, %00000000 ; 0 Speed, 0 Special
+  ; givepoke LANTURN, 100, LEFTOVERS
+  ; ; change lanturn 2's DVs
+  ; loadmem wPartyMon4DVs+0, %11110000 ; 15 Atk (MALE), 0 Def
+  ; loadmem wPartyMon4DVs+1, %00000000 ; 0 Speed, 0 Special
+
 	; misc pokemon for testing
 	givepoke AMPHAROS, 50
 	givepoke GENGAR, 50

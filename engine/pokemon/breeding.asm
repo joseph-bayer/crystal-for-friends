@@ -56,53 +56,17 @@ CheckBreedmonCompatibility:
 	jr z, .done
 
 .compute
-	call .CheckDVs
-	ld c, 255
-	jr z, .done
 	ld a, [wBreedMon2Species]
 	ld b, a
 	ld a, [wBreedMon1Species]
 	cp b
 	ld c, 254
-	jr z, .compare_ids
+	jr z, .done
 	ld c, 128
-.compare_ids
-	; Speed up
-	ld a, [wBreedMon1ID]
-	ld b, a
-	ld a, [wBreedMon2ID]
-	cp b
-	jr nz, .done
-	ld a, [wBreedMon1ID + 1]
-	ld b, a
-	ld a, [wBreedMon2ID + 1]
-	cp b
-	jr nz, .done
-	ld a, c
-	sub 77
-	ld c, a
 
 .done
 	ld a, c
 	ld [wBreedingCompatibility], a
-	ret
-
-.CheckDVs:
-; If Defense DVs match and the lower 3 bits of the Special DVs match,
-; avoid breeding
-	ld a, [wBreedMon1DVs]
-	and %1111
-	ld b, a
-	ld a, [wBreedMon2DVs]
-	and %1111
-	cp b
-	ret nz
-	ld a, [wBreedMon1DVs + 1]
-	and %111
-	ld b, a
-	ld a, [wBreedMon2DVs + 1]
-	and %111
-	cp b
 	ret
 
 .CheckBreedingGroupCompatibility:
@@ -938,24 +902,14 @@ DayCareMonCompatibilityText:
 	call CheckBreedmonCompatibility
 	pop bc
 	ld a, [wBreedingCompatibility]
-	ld hl, .BreedBrimmingWithEnergyText
-	cp -1
-	ret z
 	ld hl, .BreedNoInterestText
 	and a
 	ret z
 	ld hl, .BreedAppearsToCareForText
 	cp 230
 	ret nc
-	cp 70
 	ld hl, .BreedFriendlyText
-	ret nc
-	ld hl, .BreedShowsInterestText
 	ret
-
-.BreedBrimmingWithEnergyText:
-	text_far _BreedBrimmingWithEnergyText
-	text_end
 
 .BreedNoInterestText:
 	text_far _BreedNoInterestText
@@ -967,8 +921,4 @@ DayCareMonCompatibilityText:
 
 .BreedFriendlyText:
 	text_far _BreedFriendlyText
-	text_end
-
-.BreedShowsInterestText:
-	text_far _BreedShowsInterestText
 	text_end
