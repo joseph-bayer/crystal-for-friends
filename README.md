@@ -43,6 +43,7 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
 - Breeding
   - Fewer step cycles required to hatch eggs
   - Update "hatching soon" and egg animation logic to scale down with the new step cycles
+  - Egg has blue spots when shiny
   - Breeding man stands outside fence when egg is ready 
   - Updated Route 34 map to remove grass patch in egg hatching path
   - Removed trainer ID penalty (same trainer IDs no longer reduce compatibility)
@@ -51,8 +52,6 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
     |----------------|-------------------|
     | Same species | 50% |
     | Different species | 25% |
-  
-
 - Minor update to Goldenrod layout so it's easier to get to the underground and the bike shop
 
 Below, you will find the original readme for the CrystalShireEngine
