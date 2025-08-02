@@ -987,17 +987,17 @@ if DEF(_DEBUG)
 
 .placed_push_start
 endc
-	ld a, [wTempMonHappiness] ; egg status
+	ld a, [wTempMonHappiness] ; egg status (step cycles left)
 	ld de, EggSoonString
-	cp $6
-	jr c, .picked
+	cp $2
+	jr c, .picked ; picked if 0-1
 	ld de, EggCloseString
-	cp $b
-	jr c, .picked
+	cp $4
+	jr c, .picked ; picked if 2-3
 	ld de, EggMoreTimeString
-	cp $29
+	cp $9 ; picked if 4-8
 	jr c, .picked
-	ld de, EggALotMoreTimeString
+	ld de, EggALotMoreTimeString ; picked if 9+
 .picked
 	hlcoord 1, 9
 	rst PlaceString
@@ -1011,8 +1011,8 @@ endc
 	call StatsScreen_AnimateEgg
 
 	ld a, [wTempMonHappiness]
-	cp 6
-	ret nc
+	cp 2
+	ret nc ; play sfx if 0-1
 	ld de, SFX_2_BOOPS
 	jmp PlaySFX
 
@@ -1048,11 +1048,11 @@ StatsScreen_AnimateEgg:
 	ret nc
 	ld a, [wTempMonHappiness]
 	ld e, $7
-	cp 6
-	jr c, .animate
+	cp 2
+	jr c, .animate ; 0-1 step cycles left = more active animation
 	ld e, $8
-	cp 11
-	ret nc
+	cp 4
+	ret nc ; 2-3 = less active animation. 4+ = no animation
 .animate
 	push de
 	ld a, $1
