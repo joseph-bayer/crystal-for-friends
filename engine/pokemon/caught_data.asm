@@ -264,15 +264,24 @@ SetEggMonCaughtData:
 	ld [wCurPartyLevel], a
 	call SetBoxmonOrEggmonCaughtData
 
-	; Set the caught ball data
+	; Set the caught ball data for eggs
 	ld a, [wPartyCount]
 	dec a
 	ld hl, wPartyMon1
 	call GetPartyLocation
 	ld bc, MON_CAUGHTBALL
 	add hl, bc
-	call SetCaughtBallData
+	
+	; Check if ball is already set (for Odd Eggs with specific balls)
+	ld a, [hl]
+	and CAUGHT_BALL_MASK
+	jr nz, .ball_already_set  ; Don't overwrite if already set. This will not work if it's set to MASTER_BALL (0)
+	
+	; Set default ball for eggs (Poke Ball)
+	ld a, %00000011  ; Poke Ball
+	ld [hl], a
 
+.ball_already_set:
 	pop af
 	ld [wCurPartyLevel], a
 	ret
@@ -309,7 +318,7 @@ SetCaughtBallData:
 	jr .store_ball
 
 .not_a_ball
-	ld a, 3  ; Default to 3 (Poke Ball) for non-balls
+	ld a, CAUGHT_POKE_BALL  ; Default to Poke Ball for non-balls
 
 .store_ball
 	pop hl             ; Restore destination pointer
