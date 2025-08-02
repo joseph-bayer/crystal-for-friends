@@ -4,7 +4,7 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
 
 ## Changes
 - Built upon the CrystalShireEngine. See section below titled "CrystalShireEngine" to see the README for that project
-- Many changes based heavily upon Crystal Legacy
+- Many changes converted from or based heavily upon Crystal Legacy
   - Trainer Teams
   - Dynamic teams for CHUCK, PRYCE, and JASMINE depending on the order you face them in
   - Wild Encounters
@@ -14,7 +14,7 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Celebi Event
     - Solve the Ho-Oh puzzle in the Ruins of Alph
   - Game Corner Prizes
-  - Updated Evos
+  - Updated Evolution methods
   - Level-up learnsets
   - TM/HM learnsets
   - Reduced hatch cycles
@@ -34,19 +34,23 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Odds of getting each kind of mon is more even
 - The ball that a Pokemon is caught in is displayed on the stats screen
 - Only Roaming Legendaries flee wild battles
+- Wild Pokemon are more likely to hold items
+  | Common Item | Rare Item |
+  |----------------|-------------------|
+  | **40%** *(+17%)* | **10%** *(+8%)* |
 - Hidden Power
   - Base Power is always 60
 - Breeding
   - Fewer step cycles required to hatch eggs
   - Update "hatching soon" and egg animation logic to scale down with the new step cycles
   - Breeding man stands outside fence when egg is ready 
+  - Updated Route 34 map to remove grass patch in egg hatching path
   - Removed trainer ID penalty (same trainer IDs no longer reduce compatibility)
   - Improved egg generation rates:
-  
-  | Pokemon Pairing | Egg Generation Chance |
-  |----------------|-------------------|
-  | Same species | 50% |
-  | Different species | 25% |
+    | Pokemon Pairing | Egg Generation Chance |
+    |----------------|-------------------|
+    | Same species | 50% |
+    | Different species | 25% |
   
 
 - Minor update to Goldenrod layout so it's easier to get to the underground and the bike shop
