@@ -40,7 +40,10 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   | **40%** *(+17%)* | **10%** *(+8%)* |
 - Hidden Power
   - Base Power is always 60
-- Breeding
+- Headbutt Tree encounters simplified
+  - Headbutting a headbutt tree always results in a Pokemon appearing
+  - Each area type has one encounter table instead of a common and uncommon table
+- Breeding. 
   - Fewer step cycles required to hatch eggs
   - Update "hatching soon" and egg animation logic to scale down with the new step cycles
   - Egg has blue spots when shiny

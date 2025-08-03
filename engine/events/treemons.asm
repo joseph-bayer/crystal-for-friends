@@ -12,7 +12,7 @@ TreeMonEncounter:
 	call GetTreeMons
 	jr nc, .no_battle
 
-	call GetTreeMon
+	call SelectTreeMon
 	jr nc, .no_battle
 
 	ld a, BATTLETYPE_TREE
@@ -118,51 +118,6 @@ GetTreeMons:
 
 INCLUDE "data/wild/treemons.asm"
 
-GetTreeMon:
-	push hl
-	call GetTreeScore
-	pop hl
-	and a ; TREEMON_SCORE_BAD
-	jr z, .bad
-	cp TREEMON_SCORE_GOOD
-	jr z, .good
-	cp TREEMON_SCORE_RARE
-	jr z, .rare
-	ret
-
-.bad
-	; 10% chance of an encounter
-	ld a, 10
-	call RandomRange
-	and a
-	jr nz, NoTreeMon
-	jr SelectTreeMon
-
-.good
-	; 50% chance of an encounter
-	ld a, 10
-	call RandomRange
-	cp 5
-	jr nc, NoTreeMon
-	jr SelectTreeMon
-
-.rare
-	; 80% chance of an encounter
-	ld a, 10
-	call RandomRange
-	cp 8
-	jr nc, NoTreeMon
-	jr .skip
-.loop
-	inc hl
-	inc hl
-	inc hl
-.skip
-	ld a, [hli]
-	inc a
-	jr nz, .loop
-	; fallthrough
-
 SelectTreeMon:
 ; Read a TreeMons table and pick one monster at random.
 
@@ -178,10 +133,7 @@ SelectTreeMon:
 	jr .loop
 
 .ok
-	ld a, [hli]
-	cp -1
-	jr z, NoTreeMon
-
+  inc hl ; move from the percentage byte to the level byte
 	ld a, [hli]
 	ld [wCurPartyLevel], a
 	ld a, [hli]
@@ -190,89 +142,4 @@ SelectTreeMon:
 	call GetPokemonIDFromIndex
 	ld [wTempWildMonSpecies], a
 	scf
-	ret
-
-NoTreeMon:
-	xor a
-	ld [wTempWildMonSpecies], a
-	ld [wCurPartyLevel], a
-	ret
-
-GetTreeScore:
-	call .CoordScore
-	ld [wTreeMonCoordScore], a
-	call .OTIDScore
-	ld [wTreeMonOTIDScore], a
-	ld c, a
-	ld a, [wTreeMonCoordScore]
-	sub c
-	jr z, .rare
-	jr nc, .ok
-	add 10
-.ok
-	cp 5
-	jr c, .good
-
-; bad
-	xor a ; TREEMON_SCORE_BAD
-	ret
-
-.good
-	ld a, TREEMON_SCORE_GOOD
-	ret
-
-.rare
-	ld a, TREEMON_SCORE_RARE
-	ret
-
-.CoordScore:
-	call GetFacingTileCoord
-	ld hl, 0
-	ld c, e
-	ld b, 0
-	ld a, d
-
-	and a
-	jr z, .next
-.loop
-	add hl, bc
-	dec a
-	jr nz, .loop
-.next
-
-	add hl, bc
-	ld c, d
-	add hl, bc
-
-	ld a, h
-	ldh [hDividend], a
-	ld a, l
-	ldh [hDividend + 1], a
-	ld a, 5
-	ldh [hDivisor], a
-	ld b, 2
-	call Divide
-
-	ldh a, [hQuotient + 2]
-	ldh [hDividend], a
-	ldh a, [hQuotient + 3]
-	ldh [hDividend + 1], a
-	ld a, 10
-	ldh [hDivisor], a
-	ld b, 2
-	call Divide
-
-	ldh a, [hRemainder]
-	ret
-
-.OTIDScore:
-	ld a, [wPlayerID]
-	ldh [hDividend], a
-	ld a, [wPlayerID + 1]
-	ldh [hDividend + 1], a
-	ld a, 10
-	ldh [hDivisor], a
-	ld b, 2
-	call Divide
-	ldh a, [hRemainder]
 	ret
