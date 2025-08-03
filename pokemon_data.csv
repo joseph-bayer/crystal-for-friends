@@ -1,0 +1,251 @@
+Pokemon Name,Johto Morning Wild,Johto Day Wild,Johto Night Wild,Kanto Morning Wild,Kanto Day Wild,Kanto Night Wild,Gift Locations,NPC Trade Locations,Headbutt Tree Locations,Rock Smash Locations,Static Locations,Evolves From
+BULBASAUR,,,,Route 26,,,,,,,,
+IVYSAUR,,,,,,,,,,,,BULBASAUR
+VENUSAUR,Silver Cave Outside,,,,,,,,,,,IVYSAUR
+CHARMANDER,,,,,Route 26,,,,,,,
+CHARMELEON,,,,,,,,,,,,CHARMANDER
+CHARIZARD,,Silver Cave Outside,,,,,,,,,,CHARMELEON
+SQUIRTLE,,,,,,Route 26,,,,,,
+WARTORTLE,,,,,,,,,,,,SQUIRTLE
+BLASTOISE,,,Silver Cave Outside,,,,,,,,,WARTORTLE
+CATERPIE,"Bug Catching Contest, Ilex Forest, National Park, Route 30, Route 31","Bug Catching Contest, Ilex Forest, National Park, Route 30, Route 31",Bug Catching Contest,"Route 2, Route 24, Route 25","Route 2, Route 24, Route 25",,,,Ilex Forest,,,
+METAPOD,"Bug Catching Contest, Ilex Forest",Bug Catching Contest,Bug Catching Contest,"Route 24, Route 25",Route 25,,,,Ilex Forest,,,CATERPIE
+BUTTERFREE,Bug Catching Contest,Bug Catching Contest,Bug Catching Contest,"Route 2, Route 24, Route 25","Route 2, Route 24, Route 25",,,,Ilex Forest,,,METAPOD
+WEEDLE,"Bug Catching Contest, Ilex Forest, National Park, Route 30, Route 31","Bug Catching Contest, Ilex Forest, National Park, Route 30, Route 31",Bug Catching Contest,,,,,,Ilex Forest,,,
+KAKUNA,Bug Catching Contest,"Bug Catching Contest, Ilex Forest",Bug Catching Contest,,,,,,Ilex Forest,,,WEEDLE
+BEEDRILL,Bug Catching Contest,Bug Catching Contest,Bug Catching Contest,,,,,,Ilex Forest,,,KAKUNA
+PIDGEY,"Route 29, Route 30, Route 32, Route 35, Route 36, Route 37","Route 29, Route 30, Route 31, Route 32, Route 35, Route 36, Route 37",,"Route 1, Route 2, Route 25, Route 5","Route 1, Route 2, Route 25, Route 5",,,,,,,
+PIDGEOTTO,"Route 37, Route 44","Route 37, Route 44",,"Route 11, Route 13, Route 14, Route 15, Route 25, Route 5, Route 8","Route 11, Route 13, Route 14, Route 15, Route 2, Route 25, Route 5, Route 8",,,,,,,PIDGEY
+PIDGEOT,,,,,,,,,,,,PIDGEOTTO
+RATTATA,"Burned Tower 1F, Route 29, Route 33, Route 36, Route 46, Sprout Tower 2F, Sprout Tower 3F, Tin Tower 2F, Tin Tower 3F, Tin Tower 4F, Tin Tower 5F, Tin Tower 6F, Tin Tower 7F, Tin Tower 8F, Tin Tower 9F","Burned Tower 1F, Route 29, Route 33, Route 36, Route 46, Sprout Tower 2F, Sprout Tower 3F, Tin Tower 2F, Tin Tower 3F, Tin Tower 4F, Tin Tower 5F, Tin Tower 6F, Tin Tower 7F, Tin Tower 8F, Tin Tower 9F","Route 29, Route 33, Route 36, Route 46, Sprout Tower 2F, Sprout Tower 3F, Tin Tower 2F, Tin Tower 3F, Tin Tower 4F, Tin Tower 5F, Tin Tower 6F, Tin Tower 7F, Tin Tower 8F, Tin Tower 9F","Route 1, Route 11, Route 21, Route 22, Route 3, Route 4, Route 6, Route 7, Route 9, Tohjo Falls","Route 1, Route 11, Route 21, Route 22, Route 3, Route 4, Route 6, Route 7, Route 9, Tohjo Falls","Route 1, Route 21, Route 22, Route 3, Route 4, Route 9, Tohjo Falls",,,,,,
+RATICATE,"Burned Tower 1F, Mount Mortar 2F Inside, Route 38, Route 39, Route 42, Route 43, Union Cave B2F","Burned Tower 1F, Mount Mortar 2F Inside, Route 38, Route 39, Route 42, Route 43, Union Cave B2F","Burned Tower 1F, Mount Mortar 2F Inside, Route 38, Route 39, Route 42, Route 43, Union Cave B2F","Route 10 North, Route 11, Route 21, Route 3, Route 4, Route 6, Route 7, Route 9, Tohjo Falls","Route 10 North, Route 11, Route 21, Route 3, Route 4, Route 6, Route 7, Route 9, Tohjo Falls","Route 1, Route 10 North, Route 11, Route 21, Route 3, Route 4, Route 6, Route 9, Tohjo Falls",,,,,,RATTATA
+SPEAROW,"Route 33, Route 46",Route 46,,"Route 10 North, Route 22, Route 3, Route 4, Route 7, Route 9","Route 10 North, Route 22, Route 3, Route 4, Route 7, Route 9",,Route 35 Goldenrod Gate,,"Azalea Town, Route 33, Route 42, Route 44, Route 45, Route 46",,,
+FEAROW,Route 42,Route 42,,"Route 10 North, Route 16, Route 17, Route 18, Route 22, Route 9","Route 10 North, Route 16, Route 17, Route 18, Route 22, Route 9",,,,,,,SPEAROW
+EKANS,"Route 32, Route 33, Route 42","Route 32, Route 33, Route 42",Route 33,"Route 3, Route 4","Route 3, Route 4",,,,"Azalea Town, Route 26, Route 27, Route 32, Route 33, Route 42",,,
+ARBOK,Route 42,Route 42,,"Route 26, Route 27, Route 28, Route 3, Route 4","Route 26, Route 27, Route 28, Route 3, Route 4","Route 26, Route 27",,,,,,EKANS
+PIKACHU,,,,Route 2,Route 2,,"Celadon Game Corner Prize Room, New Bark Town",,,,,PICHU
+RAICHU,,,,,,,,,,,,PIKACHU
+SANDSHREW,Union Cave 1F,Union Cave 1F,Union Cave 1F,"Mount Moon, Route 3, Route 4","Mount Moon, Route 3, Route 4",,,,,,,
+SANDSLASH,,,,Victory Road,Victory Road,Victory Road,,,,,,SANDSHREW
+NIDORAN_F,National Park,National Park,,,,,,,,,,
+NIDORINA,,,,"Route 13, Route 14, Route 15","Route 13, Route 14, Route 15",,,,,,,
+NIDOQUEEN,,,,,,,,,,,,NIDORINA
+NIDORAN_M,National Park,National Park,,,,,,,,,,
+NIDORINO,,,,"Route 13, Route 14, Route 15","Route 13, Route 14, Route 15",,,,,,,
+NIDOKING,,,,,,,,,,,,NIDORINO
+CLEFAIRY,,,,Mount Moon,Mount Moon,"Mount Moon, Route 3, Route 4",,,,,,CLEFFA
+CLEFABLE,,,,,,,,,,,,CLEFAIRY
+VULPIX,Route 37,,,,,,,,,,,
+NINETALES,,,,,,,,,,,,VULPIX
+JIGGLYPUFF,Route 34,Route 34,Route 34,"Route 5, Route 6, Route 7, Route 8","Route 5, Route 6, Route 7, Route 8","Route 5, Route 6, Route 7, Route 8",,,,,,IGGLYBUFF
+WIGGLYTUFF,,,,,,,,,,,,JIGGLYPUFF
+ZUBAT,"Burned Tower B1F, Dark Cave Blackthorn Entrance, Dark Cave Violet Entrance, Ice Path 1F, Mount Mortar 1F Inside, Mount Mortar 1F Outside, Mount Mortar B1F, Slowpoke Well B1F, Slowpoke Well B2F, Union Cave 1F, Union Cave B1F","Burned Tower B1F, Dark Cave Blackthorn Entrance, Dark Cave Violet Entrance, Ice Path 1F, Mount Mortar 1F Inside, Mount Mortar 1F Outside, Mount Mortar B1F, Slowpoke Well B1F, Slowpoke Well B2F, Union Cave 1F, Union Cave B1F","Burned Tower 1F, Burned Tower B1F, Dark Cave Blackthorn Entrance, Dark Cave Violet Entrance, Ice Path 1F, Mount Mortar 1F Inside, Mount Mortar 1F Outside, Mount Mortar B1F, Route 30, Route 31, Route 32, Route 33, Route 42, Slowpoke Well B1F, Slowpoke Well B2F, Union Cave 1F, Union Cave B1F, Whirl Island B2F","Mount Moon, Rock Tunnel 1F, Rock Tunnel B1F, Tohjo Falls","Mount Moon, Rock Tunnel 1F, Rock Tunnel B1F, Tohjo Falls","Mount Moon, Rock Tunnel 1F, Rock Tunnel B1F, Route 10 North, Route 3, Route 4, Route 9, Tohjo Falls",,,,,,
+GOLBAT,"Dark Cave Blackthorn Entrance, Ice Path 1F, Ice Path B1F, Ice Path B2F Blackthorn Side, Ice Path B2F Mahogany Side, Ice Path B3F, Mount Mortar 1F Inside, Mount Mortar 1F Outside, Mount Mortar 2F Inside, Mount Mortar B1F, Silver Cave Item Rooms, Silver Cave Room 1, Silver Cave Room 2, Silver Cave Room 3, Slowpoke Well B2F, Union Cave B2F, Whirl Island B1F, Whirl Island B2F, Whirl Island Cave, Whirl Island Lugia Chamber, Whirl Island Ne, Whirl Island Nw, Whirl Island Se, Whirl Island Sw","Dark Cave Blackthorn Entrance, Ice Path 1F, Ice Path B1F, Ice Path B2F Blackthorn Side, Ice Path B2F Mahogany Side, Ice Path B3F, Mount Mortar 1F Inside, Mount Mortar 1F Outside, Mount Mortar 2F Inside, Mount Mortar B1F, Silver Cave Item Rooms, Silver Cave Room 1, Silver Cave Room 2, Silver Cave Room 3, Slowpoke Well B2F, Union Cave B2F, Whirl Island B1F, Whirl Island B2F, Whirl Island Cave, Whirl Island Lugia Chamber, Whirl Island Ne, Whirl Island Nw, Whirl Island Se, Whirl Island Sw","Dark Cave Blackthorn Entrance, Ice Path 1F, Ice Path B1F, Ice Path B2F Blackthorn Side, Ice Path B2F Mahogany Side, Ice Path B3F, Mount Mortar 1F Inside, Mount Mortar 1F Outside, Mount Mortar 2F Inside, Mount Mortar B1F, Route 42, Route 45, Silver Cave Item Rooms, Silver Cave Room 1, Silver Cave Room 2, Silver Cave Room 3, Slowpoke Well B2F, Union Cave B2F, Whirl Island B1F, Whirl Island B2F, Whirl Island Cave, Whirl Island Lugia Chamber, Whirl Island Ne, Whirl Island Nw, Whirl Island Se, Whirl Island Sw","Tohjo Falls, Victory Road","Tohjo Falls, Victory Road","Rock Tunnel 1F, Rock Tunnel B1F, Route 28, Tohjo Falls, Victory Road",,,,,,ZUBAT
+ODDISH,Ilex Forest,Ilex Forest,Ilex Forest,,,"Route 24, Route 25",,,,,,
+GLOOM,,,,,,Route 24,,,,,,ODDISH
+VILEPLUME,,,,,,,,,,,,GLOOM
+PARAS,"Bug Catching Contest, Ilex Forest","Bug Catching Contest, Ilex Forest","Bug Catching Contest, Ilex Forest",Mount Moon,Mount Moon,Mount Moon,,,,,,
+PARASECT,"Silver Cave Item Rooms, Silver Cave Room 2","Silver Cave Item Rooms, Silver Cave Room 2","Silver Cave Item Rooms, Silver Cave Room 2",,,,,,,,,PARAS
+VENONAT,Bug Catching Contest,Bug Catching Contest,"Bug Catching Contest, Ilex Forest, National Park, Route 43",,,"Route 10 North, Route 13, Route 14, Route 15, Route 24, Route 25, Route 9",,,"Lake Of Rage, Route 43",,,
+VENOMOTH,,,Route 43,,,"Route 10 North, Route 13, Route 14, Route 15, Route 9",,,,,,VENONAT
+DIGLETT,Union Cave B2F,Union Cave B2F,Union Cave B2F,Digletts Cave,Digletts Cave,Digletts Cave,,,,,,
+DUGTRIO,,,,Digletts Cave,Digletts Cave,Digletts Cave,,,,,,DIGLETT
+MEOWTH,Route 38,Route 38,"Route 38, Route 39",,,"Route 11, Route 5, Route 6, Route 7, Route 8",,,,,,
+PERSIAN,,,,,,Route 7,,,,,,MEOWTH
+PSYDUCK,,,"Ilex Forest, National Park, Route 35",,,Route 6,,,,,,
+GOLDUCK,,,"Silver Cave Room 1, Silver Cave Room 2, Silver Cave Room 3",,,,,,,,,PSYDUCK
+MANKEY,Route 34,Route 34,,,,,,,,,,
+PRIMEAPE,,,,,,,,,,,,MANKEY
+GROWLITHE,"Route 35, Route 36","Route 35, Route 36, Route 37",Route 35,Route 8,Route 8,,,,,,,
+ARCANINE,,,,,,,,,,,,GROWLITHE
+POLIWAG,,,"Route 30, Route 31",,,Route 22,,,,,,
+POLIWHIRL,,,Route 44,,,Route 28,,,,,,POLIWAG
+POLIWRATH,,,,,,,,,,,,POLIWHIRL
+ABRA,"Route 34, Route 35","Route 34, Route 35","Route 34, Route 35","Route 24, Route 5, Route 7, Route 8","Route 24, Route 5, Route 7, Route 8","Route 24, Route 5, Route 7, Route 8",Goldenrod Game Corner,,,,,
+KADABRA,,,,Route 8,Route 8,Route 8,,,,,,ABRA
+ALAKAZAM,,,,,,,,,,,,KADABRA
+MACHOP,"Mount Mortar 1F Inside, Mount Mortar 1F Outside, Mount Mortar 2F Inside, Mount Mortar B1F, Route 33","Mount Mortar 1F Inside, Mount Mortar 1F Outside, Mount Mortar 2F Inside, Mount Mortar B1F, Route 33",Route 33,Rock Tunnel 1F,Rock Tunnel 1F,,,Trade for ABRA at Goldenrod Dept Store5F,,,,
+MACHOKE,"Mount Mortar 2F Inside, Silver Cave Room 2","Mount Mortar 2F Inside, Silver Cave Room 2",,Rock Tunnel 1F,Rock Tunnel 1F,,,,,,,MACHOP
+MACHAMP,,,,,,,,,,,,MACHOKE
+BELLSPROUT,"Route 31, Route 32, Route 36","Route 31, Route 32, Route 36",Route 31,"Route 24, Route 25","Route 24, Route 25","Route 24, Route 25",,,,,,
+WEEPINBELL,Route 44,Route 44,Route 44,,,,,,,,,BELLSPROUT
+VICTREEBEL,,,,,,,,,,,,WEEPINBELL
+TENTACOOL,,,,,,,,,,,,
+TENTACRUEL,,,,,,,,,,,,TENTACOOL
+GEODUDE,"Dark Cave Blackthorn Entrance, Dark Cave Violet Entrance, Mount Mortar 1F Inside, Mount Mortar 1F Outside, Mount Mortar 2F Inside, Mount Mortar B1F, Route 46, Union Cave 1F, Union Cave B1F","Dark Cave Blackthorn Entrance, Dark Cave Violet Entrance, Mount Mortar 1F Inside, Mount Mortar 1F Outside, Mount Mortar 2F Inside, Mount Mortar B1F, Route 46, Union Cave 1F, Union Cave B1F","Dark Cave Blackthorn Entrance, Dark Cave Violet Entrance, Mount Mortar 1F Inside, Mount Mortar 1F Outside, Mount Mortar 2F Inside, Mount Mortar B1F, Route 46, Union Cave 1F, Union Cave B1F","Mount Moon, Rock Tunnel 1F, Rock Tunnel B1F","Mount Moon, Rock Tunnel 1F, Rock Tunnel B1F","Mount Moon, Rock Tunnel 1F, Rock Tunnel B1F",,,,,Team Rocket Base B1F,
+GRAVELER,"Dark Cave Blackthorn Entrance, Mount Mortar 2F Inside, Route 45, Silver Cave Room 1, Silver Cave Room 3","Dark Cave Blackthorn Entrance, Mount Mortar 2F Inside, Route 45, Silver Cave Room 1, Silver Cave Room 3","Dark Cave Blackthorn Entrance, Mount Mortar 2F Inside, Route 45, Silver Cave Room 1, Silver Cave Room 3",,,,,,,,,GEODUDE
+GOLEM,Silver Cave Outside,Silver Cave Outside,,Victory Road,Victory Road,Victory Road,,,,,,GRAVELER
+PONYTA,Route 39,Route 39,,"Route 22, Route 26, Route 27, Route 28","Route 22, Route 26, Route 27, Route 28","Route 26, Route 27",,,,,,
+RAPIDASH,Silver Cave Outside,Silver Cave Outside,,"Route 26, Route 27, Route 28","Route 26, Route 27, Route 28","Route 26, Route 27",,,,,,PONYTA
+SLOWPOKE,"Slowpoke Well B1F, Slowpoke Well B2F","Slowpoke Well B1F, Slowpoke Well B2F","Slowpoke Well B1F, Slowpoke Well B2F",Tohjo Falls,Tohjo Falls,Tohjo Falls,,,,,,
+SLOWBRO,,,,,,,,,,,,SLOWPOKE
+MAGNEMITE,"Route 38, Route 39","Route 38, Route 39","Route 38, Route 39","Route 11, Route 6","Route 11, Route 6","Route 11, Route 6",,,,,,
+MAGNETON,,,,,,,,Trade for DUGTRIO at Power Plant,,,,MAGNEMITE
+FARFETCH_D,Route 43,Route 43,,,,,,,,,,
+DODUO,"Route 38, Route 39","Route 38, Route 39",,"Route 22, Route 28","Route 22, Route 28",,,,,,,
+DODRIO,,,,"Route 26, Route 27, Route 28","Route 26, Route 27, Route 28","Route 26, Route 27",,,,,,DODUO
+SEEL,"Whirl Island B1F, Whirl Island B2F, Whirl Island Cave, Whirl Island Lugia Chamber, Whirl Island Ne, Whirl Island Nw, Whirl Island Se, Whirl Island Sw","Whirl Island B1F, Whirl Island B2F, Whirl Island Cave, Whirl Island Lugia Chamber, Whirl Island Ne, Whirl Island Nw, Whirl Island Se, Whirl Island Sw","Whirl Island B1F, Whirl Island Cave, Whirl Island Lugia Chamber, Whirl Island Ne, Whirl Island Nw, Whirl Island Se, Whirl Island Sw",,,,,,,,,
+DEWGONG,Whirl Island Lugia Chamber,Whirl Island Lugia Chamber,Whirl Island Lugia Chamber,,,,,,,,,SEEL
+GRIMER,Route 34,Route 34,Route 34,"Route 16, Route 17, Route 18","Route 16, Route 17, Route 18","Route 16, Route 17, Route 18",,,,,,
+MUK,,,,"Route 16, Route 17, Route 18","Route 16, Route 17, Route 18","Route 16, Route 17, Route 18",,,,,,GRIMER
+SHELLDER,,,,,,,,,,,,
+CLOYSTER,,,,,,,,,,,,SHELLDER
+GASTLY,Sprout Tower 3F,Sprout Tower 3F,"Route 31, Route 32, Route 36, Sprout Tower 2F, Sprout Tower 3F, Tin Tower 2F, Tin Tower 3F, Tin Tower 4F, Tin Tower 5F, Tin Tower 6F, Tin Tower 7F, Tin Tower 8F, Tin Tower 9F",,,,,,,,,
+HAUNTER,,,,,,"Rock Tunnel 1F, Rock Tunnel B1F, Route 8",,Trade for XATU at Pewter Pokecenter1F,,,,GASTLY
+GENGAR,,,,,,,,,,,,HAUNTER
+ONIX,"Silver Cave Room 1, Silver Cave Room 3, Union Cave 1F, Union Cave B1F, Union Cave B2F","Silver Cave Room 1, Silver Cave Room 3, Union Cave 1F, Union Cave B1F, Union Cave B2F","Silver Cave Room 1, Silver Cave Room 3, Union Cave 1F, Union Cave B1F, Union Cave B2F","Rock Tunnel B1F, Victory Road","Rock Tunnel B1F, Victory Road","Rock Tunnel B1F, Victory Road",,Trade for BELLSPROUT at Violet Kyles House,,,,
+DROWZEE,,,Route 34,,,"Route 11, Route 6",,,,,,
+HYPNO,,,,,,Route 11,,,,,,DROWZEE
+KRABBY,"Whirl Island B1F, Whirl Island B2F, Whirl Island Cave, Whirl Island Lugia Chamber, Whirl Island Ne, Whirl Island Nw, Whirl Island Se, Whirl Island Sw","Whirl Island B1F, Whirl Island B2F, Whirl Island Cave, Whirl Island Lugia Chamber, Whirl Island Ne, Whirl Island Nw, Whirl Island Se, Whirl Island Sw","Whirl Island B1F, Whirl Island B2F, Whirl Island Cave, Whirl Island Ne, Whirl Island Nw, Whirl Island Se, Whirl Island Sw",,,,,,,"Cianwood City, Dark Cave Violet Entrance, Route 40, Slowpoke Well B1F",,
+KINGLER,Whirl Island Lugia Chamber,Whirl Island Lugia Chamber,Whirl Island Lugia Chamber,,,,,,,,,KRABBY
+VOLTORB,,,,Route 10 North,Route 10 North,Route 10 North,,Trade for KRABBY at Olivine Tims House,,,Team Rocket Base B1F,
+ELECTRODE,,,,,,,,,,,Team Rocket Base B2F,VOLTORB
+EXEGGCUTE,,,,,,,,,"Lake Of Rage, Route 26, Route 27, Route 29, Route 30, Route 31, Route 32, Route 34, Route 35, Route 36, Route 37, Route 38, Route 39, Route 43",,,
+EXEGGUTOR,,,,,,,,,,,,EXEGGCUTE
+CUBONE,"Mount Mortar 1F Inside, Mount Mortar 1F Outside, Mount Mortar B1F, Union Cave 1F","Mount Mortar 1F Inside, Mount Mortar 1F Outside, Mount Mortar B1F, Union Cave 1F","Mount Mortar 1F Inside, Mount Mortar 1F Outside, Mount Mortar B1F, Union Cave 1F","Rock Tunnel 1F, Rock Tunnel B1F","Rock Tunnel 1F, Rock Tunnel B1F",,,,,,,
+MAROWAK,,,,"Rock Tunnel 1F, Rock Tunnel B1F, Route 10 North, Route 9","Rock Tunnel 1F, Rock Tunnel B1F, Route 10 North, Route 9",,,,,,,CUBONE
+HITMONLEE,,,,,,,,,,,,TYROGUE
+HITMONCHAN,,,,,,,,,,,,TYROGUE
+LICKITUNG,Route 44,Route 44,Route 44,,,,,,,,,
+KOFFING,"Burned Tower 1F, Burned Tower B1F","Burned Tower 1F, Burned Tower B1F","Burned Tower 1F, Burned Tower B1F",,,,,,,,Team Rocket Base B1F,
+WEEZING,,,,,,,,,,,,KOFFING
+RHYHORN,"Mount Mortar 1F Inside, Mount Mortar 1F Outside, Mount Mortar B1F","Mount Mortar 1F Inside, Mount Mortar 1F Outside, Mount Mortar B1F","Mount Mortar 1F Inside, Mount Mortar 1F Outside, Mount Mortar B1F",,,,,,,,,
+RHYDON,,,,Victory Road,Victory Road,Victory Road,,,,,,RHYHORN
+CHANSEY,,,,"Route 13, Route 14, Route 15","Route 13, Route 14, Route 15","Route 13, Route 14, Route 15",,,,,,
+TANGELA,Route 44,Route 44,,"Route 21, Route 28","Route 21, Route 28","Route 21, Route 28",,,,,,
+KANGASKHAN,Union Cave B2F,Union Cave B2F,Union Cave B2F,Rock Tunnel B1F,Rock Tunnel B1F,,,,,,,
+HORSEA,,,,,,,,,,,,
+SEADRA,,,,,,,,,,,,HORSEA
+GOLDEEN,,,,,,,,,,,,
+SEAKING,,,,,,,,,,,,GOLDEEN
+STARYU,,,,,,,,,,,,
+STARMIE,,,,,,,,,,,,STARYU
+MR__MIME,,,,Route 21,Route 21,,,Trade for DODRIO at Blackthorn Emys House,,,,
+SCYTHER,"Bug Catching Contest, National Park","Bug Catching Contest, National Park","Bug Catching Contest, National Park",,,,,,,,,
+JYNX,"Ice Path B1F, Ice Path B2F Blackthorn Side, Ice Path B2F Mahogany Side, Ice Path B3F","Ice Path B1F, Ice Path B2F Blackthorn Side, Ice Path B2F Mahogany Side, Ice Path B3F",Ice Path B3F,,,,,,,,,SMOOCHUM
+ELECTABUZZ,Route 44,Route 44,Route 44,Route 10 North,Route 10 North,Route 10 North,,,,,,ELEKID
+MAGMAR,"Burned Tower B1F, Silver Cave Room 1","Burned Tower B1F, Silver Cave Room 1",Burned Tower B1F,,,,,,,,,MAGBY
+PINSIR,Bug Catching Contest,Bug Catching Contest,Bug Catching Contest,,,,,,,,,
+TAUROS,"Route 38, Route 39","Route 38, Route 39",,,,,,,,,,
+MAGIKARP,,,,,,,,,,,,
+GYARADOS,,,,,,,,,,,Lake Of Rage,MAGIKARP
+LAPRAS,,,,,,,,,,,Union Cave B2F,
+DITTO,Route 34,Route 34,"Route 34, Route 35",,,,,,,,,
+EEVEE,,,,,,,Bills Familys House,,,,,
+VAPOREON,,,,,,,,,,,,EEVEE
+JOLTEON,,,,,,,,,,,,EEVEE
+FLAREON,,,,,,,,,,,,EEVEE
+PORYGON,,,,,,,Goldenrod Game Corner,,,,,
+OMANYTE,,,,,,,Ruins Of Alph Research Center,,,,,
+OMASTAR,,,,,,,,,,,,OMANYTE
+KABUTO,,,,,,,Ruins Of Alph Research Center,,,,,
+KABUTOPS,,,,,,,,,,,,KABUTO
+AERODACTYL,,,,,,,Ruins Of Alph Research Center,Trade for CHANSEY at Route14,,,,
+SNORLAX,,,,,,,,,,,Vermilion City,
+ARTICUNO,,,,,,,,,,,,
+ZAPDOS,,,,,,,,,,,,
+MOLTRES,,,,,,,,,,,,
+DRATINI,,,,,,,"Dragon Shrine, Goldenrod Game Corner",,,,,
+DRAGONAIR,,,,,,,,,,,,DRATINI
+DRAGONITE,,,,,,,,,,,,DRAGONAIR
+MEWTWO,,,,,,,,,,,,
+MEW,,,,,,,,,,,,
+CHIKORITA,,,,Route 27,,,Elms Lab,,,,,
+BAYLEEF,,,,,,,,,,,,CHIKORITA
+MEGANIUM,,,,,,,,,,,,BAYLEEF
+CYNDAQUIL,,,,,Route 27,,Elms Lab,,,,,
+QUILAVA,,,,,,,,,,,,CYNDAQUIL
+TYPHLOSION,,,,,,,,,,,,QUILAVA
+TOTODILE,,,,,,Route 27,Elms Lab,,,,,
+CROCONAW,,,,,,,,,,,,TOTODILE
+FERALIGATR,,,,,,,,,,,,CROCONAW
+SENTRET,Route 29,Route 29,,Route 1,Route 1,,,,,,,
+FURRET,Route 43,Route 43,,Route 1,Route 1,,,,,,,SENTRET
+HOOTHOOT,,,"Ilex Forest, National Park, Route 29, Route 30, Route 31, Route 36, Route 37",,,"Route 1, Route 2, Route 25, Route 5",,,"Ilex Forest, Lake Of Rage, Route 26, Route 27, Route 29, Route 30, Route 31, Route 32, Route 34, Route 35, Route 36, Route 37, Route 38, Route 39, Route 43",,,
+NOCTOWL,,,"Route 37, Route 38, Route 39",,,"Route 11, Route 13, Route 14, Route 15, Route 2, Route 25, Route 5, Route 8",,,Ilex Forest,,,HOOTHOOT
+LEDYBA,"Route 30, Route 31",Route 30,,Route 2,,,,,"Route 29, Route 30, Route 31, Route 34, Route 35, Route 36, Route 37, Route 38, Route 39",,,
+LEDIAN,Route 37,,,Route 2,,,,,,,,LEDYBA
+SPINARAK,,,"National Park, Route 30, Route 31, Route 37",,,Route 2,,,"Route 29, Route 30, Route 31, Route 34, Route 35, Route 36, Route 37, Route 38, Route 39",,,
+ARIADOS,,,Route 37,,,Route 2,,,,,,SPINARAK
+CROBAT,,,Silver Cave Outside,,,,,,,,,GOLBAT
+CHINCHOU,,,,,,,,,,,,
+LANTURN,,,,,,,,,,,,CHINCHOU
+PICHU,Route 31,Route 31,,,,,Odd Egg,,,,,
+CLEFFA,,,,,,,Odd Egg,,,,,
+IGGLYBUFF,,,,,,,Odd Egg,,,,,
+TOGEPI,,,,,,,Violet Pokecenter 1F,,,,,
+TOGETIC,,,,,,,,,,,,TOGEPI
+NATU,Ruins Of Alph Outside,Ruins Of Alph Outside,Ruins Of Alph Outside,,,,,,,,,
+XATU,,,,,,,,,,,,NATU
+MAREEP,"Route 31, Route 32","Route 31, Route 32",Route 32,,,,,,,,,
+FLAAFFY,Route 43,Route 43,Route 43,,,,,,,,,MAREEP
+AMPHAROS,,,,,,,,,,,,FLAAFFY
+BELLOSSOM,,,,,,,,,,,,GLOOM
+MARILL,Union Cave B1F,Union Cave B1F,"Mount Mortar 1F Inside, Mount Mortar 1F Outside, Mount Mortar 2F Inside, Mount Mortar B1F, Route 42, Union Cave B1F",,,,,,,,,
+AZUMARILL,,,,,,,,,,,,MARILL
+SUDOWOODO,,,,,,,,,,,Route 36,
+POLITOED,,,,,,,,,,,,POLIWHIRL
+HOPPIP,Route 29,Route 29,,"Route 11, Route 13, Route 14, Route 15","Route 11, Route 13, Route 14, Route 15",,,,,,,
+SKIPLOOM,,,,Route 14,Route 14,,,,,,,HOPPIP
+JUMPLUFF,,,,,,,,,,,,SKIPLOOM
+AIPOM,,,,,,,,,"Azalea Town, Route 33, Route 42, Route 44, Route 45, Route 46",,,
+SUNKERN,National Park,National Park,,,Route 24,,,,,,,
+SUNFLORA,,,,,,,,,,,,SUNKERN
+YANMA,Route 35,Route 35,Route 35,,,,,,,,,
+WOOPER,Route 32,Route 32,"Route 32, Ruins Of Alph Outside",,,,,,,,,
+QUAGSIRE,Union Cave B2F,Union Cave B2F,"Ruins Of Alph Outside, Silver Cave Outside, Union Cave B2F",,,"Route 13, Route 14, Route 15",,,,,,WOOPER
+ESPEON,,,,,,,,,,,,EEVEE
+UMBREON,,,,,,,,,,,,EEVEE
+MURKROW,,,"National Park, Route 45",,,"Route 16, Route 26, Route 27, Route 7",,,,,,
+SLOWKING,,,,,,,,,,,,SLOWPOKE
+MISDREAVUS,Burned Tower B1F,Burned Tower B1F,"Burned Tower B1F, Silver Cave Item Rooms, Silver Cave Room 2",,,,,,,,,
+UNOWN,Ruins Of Alph Inner Chamber,Ruins Of Alph Inner Chamber,Ruins Of Alph Inner Chamber,,,,,,,,,
+WOBBUFFET,,,Dark Cave Blackthorn Entrance,,,,Celadon Game Corner Prize Room,,,,,
+GIRAFARIG,Route 43,Route 43,Route 43,,,,,,,,,
+PINECO,,,,,,,,,"Ilex Forest, Lake Of Rage, Route 26, Route 27, Route 29, Route 30, Route 31, Route 32, Route 34, Route 35, Route 36, Route 37, Route 38, Route 39, Route 43",,,
+FORRETRESS,,,,,,,,,,,,PINECO
+DUNSPARCE,Dark Cave Violet Entrance,Dark Cave Violet Entrance,Dark Cave Violet Entrance,,,,,,,,,
+GLIGAR,"Route 42, Route 45","Route 42, Route 45","Route 42, Route 45",,,,,,,,,
+STEELIX,,,,Victory Road,Victory Road,Victory Road,,,,,,ONIX
+SNUBBULL,"Route 34, Route 35","Route 34, Route 35",Route 34,"Route 5, Route 6, Route 7, Route 8","Route 5, Route 6, Route 7, Route 8",,,,,,,
+GRANBULL,,,,Route 6,Route 6,,,,,,,SNUBBULL
+QWILFISH,,,,,,,,,,,,
+SCIZOR,,,,,,,,,,,,SCYTHER
+SHUCKLE,,,,,,,Mania's House (Olivine City),,,"Cianwood City, Dark Cave Violet Entrance, Route 40, Slowpoke Well B1F",,
+HERACROSS,,,,,,,,,"Azalea Town, Route 33, Route 42, Route 44, Route 45, Route 46",,,
+SNEASEL,"Ice Path B1F, Ice Path B2F Blackthorn Side, Ice Path B2F Mahogany Side, Ice Path B3F","Ice Path B1F, Ice Path B2F Blackthorn Side, Ice Path B2F Mahogany Side, Ice Path B3F","Ice Path B1F, Ice Path B2F Blackthorn Side, Ice Path B2F Mahogany Side, Ice Path B3F",,,,,,,,,
+TEDDIURSA,"Dark Cave Blackthorn Entrance, Dark Cave Violet Entrance",,,,,,,,,,,
+URSARING,"Dark Cave Blackthorn Entrance, Route 45, Silver Cave Outside, Silver Cave Room 1, Silver Cave Room 2, Silver Cave Room 3","Dark Cave Blackthorn Entrance, Route 45, Silver Cave Outside, Silver Cave Room 1, Silver Cave Room 2, Silver Cave Room 3",Silver Cave Outside,,,,,,,,,TEDDIURSA
+SLUGMA,Burned Tower 1F,Burned Tower 1F,Burned Tower 1F,,"Route 16, Route 17, Route 18",,,,,,,
+MAGCARGO,,,,,,,,,,,,SLUGMA
+SWINUB,"Ice Path 1F, Ice Path B1F, Ice Path B2F Blackthorn Side, Ice Path B2F Mahogany Side, Ice Path B3F","Ice Path 1F, Ice Path B1F, Ice Path B2F Blackthorn Side, Ice Path B2F Mahogany Side, Ice Path B3F",,,,,,,,,,
+PILOSWINE,,,,,,,,,,,,SWINUB
+CORSOLA,,,,,,,,,,,,
+REMORAID,,,,,,,,,,,,
+OCTILLERY,,,,,,,,,,,,REMORAID
+DELIBIRD,,,"Ice Path 1F, Ice Path B1F, Ice Path B2F Blackthorn Side, Ice Path B2F Mahogany Side, Ice Path B3F",,,,,,,,,
+MANTINE,,,,,,,,,,,,
+SKARMORY,"Route 43, Route 45, Silver Cave Outside","Route 43, Route 45, Silver Cave Outside","Route 43, Route 45",,,,,,,,,
+HOUNDOUR,Burned Tower 1F,Burned Tower 1F,"Burned Tower 1F, Route 36",,,Route 7,,,,,,
+HOUNDOOM,,,Silver Cave Outside,,,,,,,,,HOUNDOUR
+KINGDRA,,,,,,,,,,,,SEADRA
+PHANPY,Route 46,Route 46,,,,,,,,,,
+DONPHAN,Route 45,"Route 45, Silver Cave Outside",,Victory Road,Victory Road,Victory Road,,,,,,PHANPY
+STANTLER,,Route 37,Route 37,,,,,,,,,
+SMEARGLE,Ruins Of Alph Outside,Ruins Of Alph Outside,,,,,,,,,,
+TYROGUE,,,,,,,"Mount Mortar B1F, Odd Egg",,,,,
+HITMONTOP,,,,,,,,,,,,TYROGUE
+SMOOCHUM,,,,,,,Odd Egg,,,,,
+ELEKID,,,,,,,Odd Egg,,,,,
+MAGBY,,,,,,,Odd Egg,,,,,
+MILTANK,"Route 38, Route 39","Route 38, Route 39",,,,,,,,,,
+BLISSEY,,,,,,,,,,,,CHANSEY
+RAIKOU,,,,,,,,,,,,
+ENTEI,,,,,,,,,,,,
+SUICUNE,,,,,,,,,,,Tin Tower 1F,
+LARVITAR,"Dark Cave Violet Entrance, Silver Cave Room 1, Silver Cave Room 2, Silver Cave Room 3","Dark Cave Violet Entrance, Silver Cave Room 1, Silver Cave Room 2, Silver Cave Room 3",Dark Cave Violet Entrance,,,,Celadon Game Corner Prize Room,,,,,
+PUPITAR,Silver Cave Room 3,Silver Cave Room 3,,,,,,,,,,LARVITAR
+TYRANITAR,,,,,,,,,,,,PUPITAR
+LUGIA,,,,,,,,,,,Whirl Island Lugia Chamber,
+HO_OH,,,,,,,,,,,Tin Tower Roof,
+CELEBI,,,,,,,,,,,Ilex Forest,
