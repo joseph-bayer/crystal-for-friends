@@ -8,6 +8,7 @@ import csv
 import re
 import os
 from pathlib import Path
+from typing import Set, Dict, List
 from typing import Dict, List, Set, Tuple, Optional
 
 class PokemonDataExtractor:
@@ -28,6 +29,8 @@ class PokemonDataExtractor:
         self.bug_contest_pokemon = set()
         self.static_pokemon = {}
         self.overrides = {}  # For future context overrides
+        self.first_stage_pokemon = set()  # Pokemon that can be hatched from eggs
+        self.egg_hatchable = {}  # Maps Pokemon to whether they can be hatched
         
     def extract_pokemon_constants(self):
         """Extract all Pokemon names from pokemon_constants.asm"""
@@ -533,6 +536,84 @@ class PokemonDataExtractor:
         except Exception as e:
             print(f"Error parsing {file_path}: {e}")
 
+    def extract_first_stages(self):
+        """Extract Pokemon that are listed in first_stages.asm"""
+        first_stages_file = self.base_path / "data" / "pokemon" / "first_stages.asm"
+        
+        with open(first_stages_file, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        # Find all "dw POKEMON_NAME" lines
+        pokemon_pattern = r'dw\s+([A-Z_]+)'
+        matches = re.findall(pokemon_pattern, content)
+        
+        for pokemon in matches:
+            if pokemon in self.pokemon_list:
+                self.first_stage_pokemon.add(pokemon)
+        
+        print(f"Found {len(self.first_stage_pokemon)} Pokemon that are first stages")
+
+    def can_breed(self, pokemon: str) -> bool:
+        """Check if a Pokemon can breed by examining its egg groups"""
+        # Convert Pokemon name to lowercase for filename
+        pokemon_filename = pokemon.lower()
+        base_stats_file = self.base_path / "data" / "pokemon" / "base_stats" / f"{pokemon_filename}.asm"
+        
+        if not base_stats_file.exists():
+            return False
+        
+        try:
+            with open(base_stats_file, 'r', encoding='utf-8') as f:
+                content = f.read()
+            
+            # Look for the egg groups line (format: dn EGG_GROUP1, EGG_GROUP2)
+            egg_groups_pattern = r'.*dn\s+([A-Z_0-9]+),\s*([A-Z_0-9]+).*egg groups'
+            match = re.search(egg_groups_pattern, content)
+            
+            if match:
+                egg_group1, egg_group2 = match.groups()
+                # Pokemon can breed if at least one egg group is not EGG_DITTO or EGG_NONE
+                return egg_group1 not in ['EGG_DITTO', 'EGG_NONE'] or egg_group2 not in ['EGG_DITTO', 'EGG_NONE']
+            
+        except Exception as e:
+            print(f"Error reading base stats for {pokemon}: {e}")
+        
+        return False
+
+    def get_evolution_chain(self, pokemon: str) -> Set[str]:
+        """Get all Pokemon in the evolution chain starting from the given Pokemon"""
+        evolution_chain = {pokemon}
+        
+        # Find all Pokemon that evolve from this one
+        for evolved_pokemon, pre_evolutions in self.evolutions.items():
+            if pokemon in pre_evolutions:
+                # Recursively get the evolution chain for the evolved form
+                evolved_chain = self.get_evolution_chain(evolved_pokemon)
+                evolution_chain.update(evolved_chain)
+        
+        return evolution_chain
+
+    def determine_egg_hatchability(self):
+        """Determine which Pokemon can be hatched from eggs"""
+        for pokemon in self.pokemon_list:
+            can_hatch = False
+            
+            # Only Pokemon in first_stages.asm can potentially be hatched
+            if pokemon in self.first_stage_pokemon:
+                # Get the full evolution chain starting from this first stage
+                evolution_chain = self.get_evolution_chain(pokemon)
+                
+                # Check if any Pokemon in the evolution chain can breed
+                for chain_pokemon in evolution_chain:
+                    if self.can_breed(chain_pokemon):
+                        can_hatch = True
+                        break
+            
+            self.egg_hatchable[pokemon] = can_hatch
+        
+        hatchable_count = sum(1 for can_hatch in self.egg_hatchable.values() if can_hatch)
+        print(f"Found {hatchable_count} Pokemon that can be hatched from eggs")
+
     def add_override(self, pokemon: str, category: str, location: str):
         """Add a manual override for Pokemon location data"""
         if pokemon not in self.overrides:
@@ -544,7 +625,7 @@ class PokemonDataExtractor:
     def generate_csv(self, output_file: str = "pokemon_data.csv"):
         """Generate the CSV file with all Pokemon data"""
         with open(output_file, 'w', newline='', encoding='utf-8') as csvfile:
-            fieldnames = ['Pokemon Name', 'Johto Morning Wild', 'Johto Day Wild', 'Johto Night Wild', 'Kanto Morning Wild', 'Kanto Day Wild', 'Kanto Night Wild', 'Gift Locations', 'NPC Trade Locations', 'Headbutt Tree Locations', 'Rock Smash Locations', 'Static Locations', 'Evolves From']
+            fieldnames = ['Pokemon Name', 'Johto Morning Wild', 'Johto Day Wild', 'Johto Night Wild', 'Kanto Morning Wild', 'Kanto Day Wild', 'Kanto Night Wild', 'Gift Locations', 'NPC Trade Locations', 'Headbutt Tree Locations', 'Rock Smash Locations', 'Static Locations', 'Evolves From', 'Can be Hatched from an Egg']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             
             writer.writeheader()
@@ -577,7 +658,8 @@ class PokemonDataExtractor:
                     'Headbutt Tree Locations': ', '.join(sorted(headbutt_locations)) if headbutt_locations else '',
                     'Rock Smash Locations': ', '.join(sorted(rock_smash_locations)) if rock_smash_locations else '',
                     'Static Locations': ', '.join(sorted(static_locations)) if static_locations else '',
-                    'Evolves From': ', '.join(sorted(evolves_from)) if evolves_from else ''
+                    'Evolves From': ', '.join(sorted(evolves_from)) if evolves_from else '',
+                    'Can be Hatched from an Egg': 'Yes' if self.egg_hatchable.get(pokemon, False) else 'No'
                 })
                 
         print(f"CSV file generated: {output_file}")
@@ -655,7 +737,13 @@ class PokemonDataExtractor:
         print("8. Extracting static Pokemon...")
         self.extract_static_pokemon()
         
-        print("9. Generating CSV...")
+        print("9. Extracting first stage Pokemon...")
+        self.extract_first_stages()
+        
+        print("10. Determining egg hatchability...")
+        self.determine_egg_hatchability()
+        
+        print("11. Generating CSV...")
         self.generate_csv()
         
         print("Extraction complete!")
@@ -676,6 +764,7 @@ class PokemonDataExtractor:
         print(f"Pokemon in Bug Catching Contest: {len(self.bug_contest_pokemon)}")
         print(f"Pokemon found as static encounters: {len(self.static_pokemon)}")
         print(f"Pokemon with evolution data: {len(self.evolutions)}")
+        print(f"Pokemon that can be hatched from eggs: {sum(1 for can_hatch in self.egg_hatchable.values() if can_hatch)}")
 
 
 def main():
