@@ -824,6 +824,7 @@ SlowkingEvosAttacks:
 	dbw 1, TACKLE
 	dbw 1, GROWL
 	dbw 1, WATER_GUN
+  dbw 1, AMNESIA
 	dbw 18, CONFUSION
 	dbw 24, DISABLE
 	dbw 29, PSYBEAM
@@ -946,6 +947,7 @@ SteelixEvosAttacks:
 	dbw 1, TACKLE
 	dbw 1, SCREECH
 	dbw 1, BIND
+  dbw 1, SLAM
 	dbw 12, ROCK_THROW
 	dbw 18, DIG
 	dbw 23, HARDEN
@@ -1006,6 +1008,7 @@ QwilfishEvosAttacks:
 ScizorEvosAttacks:
     db 0 ; no more evolutions
 	dbw 1, QUICK_ATTACK
+  dbw 1, WING_ATTACK
 	dbw 1, LEER
 	dbw 6, FOCUS_ENERGY
 	dbw 12, PURSUIT
