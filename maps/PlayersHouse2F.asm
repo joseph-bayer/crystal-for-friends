@@ -165,6 +165,19 @@ if DEF(_DEBUG)
 	givepoke AMPHAROS, 50
 	givepoke GENGAR, 50
 	givepoke DITTO, 50
+
+  ; DEBUG: Test new evolution items
+  ; giveitem KINGS_ROCK, 2
+  ; giveitem METAL_COAT, 2
+  ; giveitem DRAGON_SCALE, 1
+  ; giveitem UP_GRADE, 1
+  ; givepoke PORYGON, 50, LEFTOVERS
+  ; givepoke POLIWHIRL, 50, LEFTOVERS
+  ; givepoke SLOWPOKE, 50, LEFTOVERS
+  ; givepoke SCYTHER, 50, LEFTOVERS
+  ; givepoke ONIX, 50, LEFTOVERS
+  ; givepoke SEADRA, 50, LEFTOVERS
+
 	; intro events
 	addcellnum PHONE_MOM
 	setmapscene PLAYERS_HOUSE_1F, $1
