@@ -28,6 +28,10 @@ class PokemonDataExtractor:
         self.rock_smash_encounters = {}
         self.bug_contest_pokemon = set()
         self.static_pokemon = {}
+        self.old_rod_fish_groups = {}
+        self.good_rod_fish_groups = {}
+        self.super_rod_fish_groups = {}
+        self.fish_group_locations = {}  # Maps fish groups to their locations
         self.overrides = {}  # For future context overrides
         self.first_stage_pokemon = set()  # Pokemon that can be hatched from eggs
         self.egg_hatchable = {}  # Maps Pokemon to whether they can be hatched
@@ -536,6 +540,165 @@ class PokemonDataExtractor:
         except Exception as e:
             print(f"Error parsing {file_path}: {e}")
 
+    def extract_fishing_encounters(self):
+        """Extract fishing encounters from fish.asm and maps data"""
+        fish_file = self.base_path / "data" / "wild" / "fish.asm"
+        maps_file = self.base_path / "data" / "maps" / "maps.asm"
+        
+        # First, parse the fishing encounter data
+        fish_groups = self._parse_fish_file(fish_file)
+        
+        # Then, parse the maps to see which locations use which fish groups
+        self._parse_fishing_maps(maps_file, fish_groups)
+        
+    def _parse_fish_file(self, file_path: Path) -> Dict[str, Dict[str, List[Tuple[str, int, str]]]]:
+        """Parse fish.asm to extract fishing encounter data"""
+        fish_groups = {}
+        
+        with open(file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        lines = content.split('\n')
+        current_group = None
+        current_rod = None
+        time_fish_groups = {}
+        
+        # First pass: extract TimeFishGroups data
+        in_time_fish_groups = False
+        time_group_index = 0
+        
+        for line in lines:
+            line = line.strip()
+            
+            if line == 'TimeFishGroups:':
+                in_time_fish_groups = True
+                continue
+            
+            if in_time_fish_groups and line.startswith('dbwbw'):
+                # Parse: dbwbw 20, CORSOLA, 20, STARYU ; 0
+                match = re.search(r'dbwbw\s+(\d+),\s+([A-Z_]+),\s*(\d+),\s+([A-Z_]+)', line)
+                if match:
+                    day_level, day_pokemon, night_level, night_pokemon = match.groups()
+                    time_fish_groups[time_group_index] = {
+                        'day': (day_pokemon, int(day_level)),
+                        'night': (night_pokemon, int(night_level))
+                    }
+                    time_group_index += 1
+        
+        # Second pass: extract fish group encounter tables
+        for line in lines:
+            line = line.strip()
+            
+            # Check for fish group start (e.g., ".Shore_Old:")
+            if line.startswith('.') and line.endswith('_Old:'):
+                group_name = line[1:-5]  # Remove '.' and '_Old:'
+                current_group = group_name
+                current_rod = 'Old'
+                if current_group not in fish_groups:
+                    fish_groups[current_group] = {'Old': [], 'Good': [], 'Super': []}
+                continue
+            elif line.startswith('.') and line.endswith('_Good:'):
+                group_name = line[1:-6]  # Remove '.' and '_Good:'
+                current_group = group_name
+                current_rod = 'Good'
+                if current_group not in fish_groups:
+                    fish_groups[current_group] = {'Old': [], 'Good': [], 'Super': []}
+                continue
+            elif line.startswith('.') and line.endswith('_Super:'):
+                group_name = line[1:-7]  # Remove '.' and '_Super:'
+                current_group = group_name
+                current_rod = 'Super'
+                if current_group not in fish_groups:
+                    fish_groups[current_group] = {'Old': [], 'Good': [], 'Super': []}
+                continue
+            
+            # Parse encounter lines (e.g., "dbbw 70 percent + 1, 10, MAGIKARP")
+            if current_group and current_rod and line.startswith('dbbw'):
+                match = re.search(r'dbbw\s+\d+[^,]*,\s*(\d+),\s+([A-Z_]+)', line)
+                if match:
+                    level, pokemon = match.groups()
+                    level = int(level)
+                    
+                    if pokemon == 'TIME_GROUP':
+                        # Handle time group encounters
+                        if level in time_fish_groups:
+                            day_pokemon, day_level = time_fish_groups[level]['day']
+                            night_pokemon, night_level = time_fish_groups[level]['night']
+                            
+                            if day_pokemon in self.pokemon_list:
+                                fish_groups[current_group][current_rod].append((day_pokemon, day_level, 'day'))
+                            if night_pokemon in self.pokemon_list and night_pokemon != day_pokemon:
+                                fish_groups[current_group][current_rod].append((night_pokemon, night_level, 'night'))
+                    elif pokemon in self.pokemon_list:
+                        fish_groups[current_group][current_rod].append((pokemon, level, ''))
+        
+        return fish_groups
+    
+    def _parse_fishing_maps(self, file_path: Path, fish_groups: Dict[str, Dict[str, List[Tuple[str, int, str]]]]):
+        """Parse maps.asm to associate locations with fish groups and store Pokemon by fish group"""
+        with open(file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        # Map fishgroup constants to names
+        fishgroup_names = {
+            'FISHGROUP_SHORE': 'Shore',
+            'FISHGROUP_OCEAN': 'Ocean', 
+            'FISHGROUP_LAKE': 'Lake',
+            'FISHGROUP_POND': 'Pond',
+            'FISHGROUP_DRATINI': 'Dratini',
+            'FISHGROUP_QWILFISH_SWARM': 'Qwilfish_Swarm',
+            'FISHGROUP_REMORAID_SWARM': 'Remoraid_Swarm',
+            'FISHGROUP_GYARADOS': 'Gyarados',
+            'FISHGROUP_DRATINI_2': 'Dratini_2',
+            'FISHGROUP_WHIRL_ISLANDS': 'WhirlIslands',
+            'FISHGROUP_QWILFISH': 'Qwilfish',
+            'FISHGROUP_REMORAID': 'Remoraid',
+        }
+        
+        # First pass: collect all locations for each fish group
+        lines = content.split('\n')
+        for line in lines:
+            line = line.strip()
+            
+            # Look for map entries that include fishgroup info
+            if line.startswith('map ') and any(fg in line for fg in fishgroup_names.keys()):
+                # Extract map name and fishgroup
+                parts = line.split(',')
+                if len(parts) >= 8:  # Ensure we have enough parts
+                    map_name = parts[0].replace('map ', '').strip()
+                    fishgroup_constant = parts[7].strip()
+                    
+                    if fishgroup_constant in fishgroup_names:
+                        fishgroup_name = fishgroup_names[fishgroup_constant]
+                        formatted_location = self._format_location_name(map_name)
+                        
+                        # Store location for this fish group
+                        if fishgroup_name not in self.fish_group_locations:
+                            self.fish_group_locations[fishgroup_name] = set()
+                        self.fish_group_locations[fishgroup_name].add(formatted_location)
+        
+        # Second pass: associate Pokemon with fish groups
+        for fishgroup_name, rod_data in fish_groups.items():
+            for rod_type, encounters in rod_data.items():
+                for pokemon, level, time_suffix in encounters:
+                    fishgroup_display = fishgroup_name
+                    if time_suffix:
+                        fishgroup_display += f" ({time_suffix})"
+                    
+                    # Store Pokemon in appropriate rod dictionary by fish group
+                    if rod_type == 'Old':
+                        if pokemon not in self.old_rod_fish_groups:
+                            self.old_rod_fish_groups[pokemon] = set()
+                        self.old_rod_fish_groups[pokemon].add(fishgroup_display)
+                    elif rod_type == 'Good':
+                        if pokemon not in self.good_rod_fish_groups:
+                            self.good_rod_fish_groups[pokemon] = set()
+                        self.good_rod_fish_groups[pokemon].add(fishgroup_display)
+                    elif rod_type == 'Super':
+                        if pokemon not in self.super_rod_fish_groups:
+                            self.super_rod_fish_groups[pokemon] = set()
+                        self.super_rod_fish_groups[pokemon].add(fishgroup_display)
+
     def extract_first_stages(self):
         """Extract Pokemon that are listed in first_stages.asm"""
         first_stages_file = self.base_path / "data" / "pokemon" / "first_stages.asm"
@@ -625,7 +788,7 @@ class PokemonDataExtractor:
     def generate_csv(self, output_file: str = "pokemon_data.csv"):
         """Generate the CSV file with all Pokemon data"""
         with open(output_file, 'w', newline='', encoding='utf-8') as csvfile:
-            fieldnames = ['Pokemon Name', 'Johto Morning Wild', 'Johto Day Wild', 'Johto Night Wild', 'Kanto Morning Wild', 'Kanto Day Wild', 'Kanto Night Wild', 'Gift Locations', 'NPC Trade Locations', 'Headbutt Tree Locations', 'Rock Smash Locations', 'Static Locations', 'Evolves From', 'Can be Hatched from an Egg']
+            fieldnames = ['Pokemon Name', 'Johto Morning Wild', 'Johto Day Wild', 'Johto Night Wild', 'Kanto Morning Wild', 'Kanto Day Wild', 'Kanto Night Wild', 'Old Rod Fish Groups', 'Good Rod Fish Groups', 'Super Rod Fish Groups', 'Gift Locations', 'NPC Trade Locations', 'Headbutt Tree Locations', 'Rock Smash Locations', 'Static Locations', 'Evolves From', 'Can be Hatched from an Egg']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             
             writer.writeheader()
@@ -638,6 +801,9 @@ class PokemonDataExtractor:
                 kanto_morning_locations = self._get_locations(pokemon, 'kanto_morning')
                 kanto_day_locations = self._get_locations(pokemon, 'kanto_day')
                 kanto_night_locations = self._get_locations(pokemon, 'kanto_night')
+                old_rod_fish_groups = self._get_locations(pokemon, 'old_rod')
+                good_rod_fish_groups = self._get_locations(pokemon, 'good_rod')
+                super_rod_fish_groups = self._get_locations(pokemon, 'super_rod')
                 gift_locations = self._get_locations(pokemon, 'gift')
                 npc_trade_locations = self._get_locations(pokemon, 'npc_trade')
                 headbutt_locations = self._get_locations(pokemon, 'headbutt')
@@ -653,6 +819,9 @@ class PokemonDataExtractor:
                     'Kanto Morning Wild': ', '.join(sorted(kanto_morning_locations)) if kanto_morning_locations else '',
                     'Kanto Day Wild': ', '.join(sorted(kanto_day_locations)) if kanto_day_locations else '',
                     'Kanto Night Wild': ', '.join(sorted(kanto_night_locations)) if kanto_night_locations else '',
+                    'Old Rod Fish Groups': ', '.join(sorted(old_rod_fish_groups)) if old_rod_fish_groups else '',
+                    'Good Rod Fish Groups': ', '.join(sorted(good_rod_fish_groups)) if good_rod_fish_groups else '',
+                    'Super Rod Fish Groups': ', '.join(sorted(super_rod_fish_groups)) if super_rod_fish_groups else '',
                     'Gift Locations': ', '.join(sorted(gift_locations)) if gift_locations else '',
                     'NPC Trade Locations': ', '.join(sorted(npc_trade_locations)) if npc_trade_locations else '',
                     'Headbutt Tree Locations': ', '.join(sorted(headbutt_locations)) if headbutt_locations else '',
@@ -663,6 +832,25 @@ class PokemonDataExtractor:
                 })
                 
         print(f"CSV file generated: {output_file}")
+        
+        # Generate fish group locations reference file
+        self.generate_fish_groups_csv()
+        
+    def generate_fish_groups_csv(self, output_file: str = "fish_groups.csv"):
+        """Generate a separate CSV file showing which locations belong to each fish group"""
+        with open(output_file, 'w', newline='', encoding='utf-8') as csvfile:
+            fieldnames = ['Fish Group', 'Locations']
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            
+            writer.writeheader()
+            
+            for fish_group, locations in sorted(self.fish_group_locations.items()):
+                writer.writerow({
+                    'Fish Group': fish_group,
+                    'Locations': ', '.join(sorted(locations))
+                })
+                
+        print(f"Fish groups reference file generated: {output_file}")
         
     def _get_locations(self, pokemon: str, category: str) -> Set[str]:
         """Get locations for a Pokemon, including overrides"""
@@ -690,6 +878,12 @@ class PokemonDataExtractor:
             locations.update(self.kanto_day_encounters.get(pokemon, set()))
         elif category == 'kanto_night':
             locations.update(self.kanto_night_encounters.get(pokemon, set()))
+        elif category == 'old_rod':
+            locations.update(self.old_rod_fish_groups.get(pokemon, set()))
+        elif category == 'good_rod':
+            locations.update(self.good_rod_fish_groups.get(pokemon, set()))
+        elif category == 'super_rod':
+            locations.update(self.super_rod_fish_groups.get(pokemon, set()))
         elif category == 'gift':
             locations.update(self.gift_pokemon.get(pokemon, set()))
         elif category == 'npc_trade':
@@ -737,13 +931,16 @@ class PokemonDataExtractor:
         print("8. Extracting static Pokemon...")
         self.extract_static_pokemon()
         
-        print("9. Extracting first stage Pokemon...")
+        print("9. Extracting fishing encounters...")
+        self.extract_fishing_encounters()
+        
+        print("10. Extracting first stage Pokemon...")
         self.extract_first_stages()
         
-        print("10. Determining egg hatchability...")
+        print("11. Determining egg hatchability...")
         self.determine_egg_hatchability()
         
-        print("11. Generating CSV...")
+        print("12. Generating CSV...")
         self.generate_csv()
         
         print("Extraction complete!")
@@ -757,6 +954,10 @@ class PokemonDataExtractor:
         print(f"Pokemon found in Kanto morning wild: {len(self.kanto_morning_encounters)}")
         print(f"Pokemon found in Kanto day wild: {len(self.kanto_day_encounters)}")
         print(f"Pokemon found in Kanto night wild: {len(self.kanto_night_encounters)}")
+        print(f"Pokemon found via Old Rod: {len(self.old_rod_fish_groups)}")
+        print(f"Pokemon found via Good Rod: {len(self.good_rod_fish_groups)}")
+        print(f"Pokemon found via Super Rod: {len(self.super_rod_fish_groups)}")
+        print(f"Total fish groups: {len(self.fish_group_locations)}")
         print(f"Pokemon given as gifts: {len(self.gift_pokemon)}")
         print(f"Pokemon available via NPC trades: {len(self.npc_trades)}")
         print(f"Pokemon found via headbutt trees: {len(self.headbutt_encounters)}")
