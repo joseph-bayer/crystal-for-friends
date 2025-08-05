@@ -58,7 +58,7 @@ MANKEY,Route 34,Route 34,,,,,,,,,,,,,,Yes
 PRIMEAPE,,,,,,,,,,,,,,,MANKEY,No
 GROWLITHE,"Route 35, Route 36","Route 35, Route 36, Route 37",Route 35,Route 8,Route 8,,,,,,,,,,,Yes
 ARCANINE,,,,,,,,,,,,,,,GROWLITHE,No
-POLIWAG,,,"Route 30, Route 31",,,Route 22,"Pond, Remoraid","Pond, Pond (day), Remoraid, Remoraid (day)","Pond, Pond (day), Remoraid, Remoraid (day)",,,,,,,Yes
+POLIWAG,,,"Route 30, Route 31",,,Route 22,Pond,Pond,Pond,,,,,,,Yes
 POLIWHIRL,,,Route 44,,,Route 28,,,,,,,,,POLIWAG,No
 POLIWRATH,,,,,,,,,,,,,,,POLIWHIRL,No
 ABRA,"Route 34, Route 35","Route 34, Route 35","Route 34, Route 35","Route 24, Route 5, Route 7, Route 8","Route 24, Route 5, Route 7, Route 8","Route 24, Route 5, Route 7, Route 8",,,,Goldenrod Game Corner,,,,,,Yes
@@ -70,7 +70,7 @@ MACHAMP,,,,,,,,,,,,,,,MACHOKE,No
 BELLSPROUT,"Route 31, Route 32, Route 36","Route 31, Route 32, Route 36",Route 31,"Route 24, Route 25","Route 24, Route 25","Route 24, Route 25",,,,,,,,,,Yes
 WEEPINBELL,Route 44,Route 44,Route 44,,,,,,,,,,,,BELLSPROUT,No
 VICTREEBEL,,,,,,,,,,,,,,,WEEPINBELL,No
-TENTACOOL,,,,,,,"Ocean, Qwilfish","Ocean, Qwilfish, Qwilfish (day)","Qwilfish, Qwilfish (day)",,,,,,,Yes
+TENTACOOL,,,,,,,"Ocean, Qwilfish","Ocean, Qwilfish",Qwilfish,,,,,,,Yes
 TENTACRUEL,,,,,,,,,Ocean,,,,,,TENTACOOL,No
 GEODUDE,"Dark Cave Blackthorn Entrance, Dark Cave Violet Entrance, Mount Mortar 1F Inside, Mount Mortar 1F Outside, Mount Mortar 2F Inside, Mount Mortar B1F, Route 46, Union Cave 1F, Union Cave B1F","Dark Cave Blackthorn Entrance, Dark Cave Violet Entrance, Mount Mortar 1F Inside, Mount Mortar 1F Outside, Mount Mortar 2F Inside, Mount Mortar B1F, Route 46, Union Cave 1F, Union Cave B1F","Dark Cave Blackthorn Entrance, Dark Cave Violet Entrance, Mount Mortar 1F Inside, Mount Mortar 1F Outside, Mount Mortar 2F Inside, Mount Mortar B1F, Route 46, Union Cave 1F, Union Cave B1F","Mount Moon, Rock Tunnel 1F, Rock Tunnel B1F","Mount Moon, Rock Tunnel 1F, Rock Tunnel B1F","Mount Moon, Rock Tunnel 1F, Rock Tunnel B1F",,,,,,,,Team Rocket Base B1F,,Yes
 GRAVELER,"Dark Cave Blackthorn Entrance, Mount Mortar 2F Inside, Route 45, Silver Cave Room 1, Silver Cave Room 3","Dark Cave Blackthorn Entrance, Mount Mortar 2F Inside, Route 45, Silver Cave Room 1, Silver Cave Room 3","Dark Cave Blackthorn Entrance, Mount Mortar 2F Inside, Route 45, Silver Cave Room 1, Silver Cave Room 3",,,,,,,,,,,,GEODUDE,No
@@ -96,8 +96,8 @@ GENGAR,,,,,,,,,,,,,,,HAUNTER,No
 ONIX,"Silver Cave Room 1, Silver Cave Room 3, Union Cave 1F, Union Cave B1F, Union Cave B2F","Silver Cave Room 1, Silver Cave Room 3, Union Cave 1F, Union Cave B1F, Union Cave B2F","Silver Cave Room 1, Silver Cave Room 3, Union Cave 1F, Union Cave B1F, Union Cave B2F","Rock Tunnel B1F, Victory Road","Rock Tunnel B1F, Victory Road","Rock Tunnel B1F, Victory Road",,,,,Trade for BELLSPROUT at Violet Kyles House,,,,,Yes
 DROWZEE,,,Route 34,,,"Route 11, Route 6",,,,,,,,,,Yes
 HYPNO,,,,,,Route 11,,,,,,,,,DROWZEE,No
-KRABBY,"Whirl Island B1F, Whirl Island B2F, Whirl Island Cave, Whirl Island Lugia Chamber, Whirl Island Ne, Whirl Island Nw, Whirl Island Se, Whirl Island Sw","Whirl Island B1F, Whirl Island B2F, Whirl Island Cave, Whirl Island Lugia Chamber, Whirl Island Ne, Whirl Island Nw, Whirl Island Se, Whirl Island Sw","Whirl Island B1F, Whirl Island B2F, Whirl Island Cave, Whirl Island Ne, Whirl Island Nw, Whirl Island Se, Whirl Island Sw",,,,"Shore, WhirlIslands","Shore, WhirlIslands","Shore, WhirlIslands",,,,"Cianwood City, Dark Cave Violet Entrance, Route 40, Slowpoke Well B1F",,,Yes
-KINGLER,Whirl Island Lugia Chamber,Whirl Island Lugia Chamber,Whirl Island Lugia Chamber,,,,,,"Shore, WhirlIslands",,,,,,KRABBY,No
+KRABBY,"Whirl Island B1F, Whirl Island B2F, Whirl Island Cave, Whirl Island Lugia Chamber, Whirl Island Ne, Whirl Island Nw, Whirl Island Se, Whirl Island Sw","Whirl Island B1F, Whirl Island B2F, Whirl Island Cave, Whirl Island Lugia Chamber, Whirl Island Ne, Whirl Island Nw, Whirl Island Se, Whirl Island Sw","Whirl Island B1F, Whirl Island B2F, Whirl Island Cave, Whirl Island Ne, Whirl Island Nw, Whirl Island Se, Whirl Island Sw",,,,"Shore, Whirl Islands","Shore, Whirl Islands","Shore, Whirl Islands",,,,"Cianwood City, Dark Cave Violet Entrance, Route 40, Slowpoke Well B1F",,,Yes
+KINGLER,Whirl Island Lugia Chamber,Whirl Island Lugia Chamber,Whirl Island Lugia Chamber,,,,,,"Shore, Whirl Islands",,,,,,KRABBY,No
 VOLTORB,,,,Route 10 North,Route 10 North,Route 10 North,,,,,Trade for KRABBY at Olivine Tims House,,,Team Rocket Base B1F,,Yes
 ELECTRODE,,,,,,,,,,,,,,Team Rocket Base B2F,VOLTORB,No
 EXEGGCUTE,,,,,,,,,,,,"Lake Of Rage, Route 26, Route 27, Route 29, Route 30, Route 31, Route 32, Route 34, Route 35, Route 36, Route 37, Route 38, Route 39, Route 43",,,,Yes
@@ -114,9 +114,9 @@ RHYDON,,,,Victory Road,Victory Road,Victory Road,,,,,,,,,RHYHORN,No
 CHANSEY,,,,"Route 13, Route 14, Route 15","Route 13, Route 14, Route 15","Route 13, Route 14, Route 15",,,,,,,,,,Yes
 TANGELA,Route 44,Route 44,,"Route 21, Route 28","Route 21, Route 28","Route 21, Route 28",,,,,,,,,,Yes
 KANGASKHAN,Union Cave B2F,Union Cave B2F,Union Cave B2F,Rock Tunnel B1F,Rock Tunnel B1F,,,,,,,,,,,Yes
-HORSEA,,,,,,,,WhirlIslands (day),WhirlIslands (day),,,,,,,Yes
-SEADRA,,,,,,,,,WhirlIslands,,,,,,HORSEA,No
-GOLDEEN,,,,,,,Lake,"Lake, Lake (day)","Lake, Lake (day)",,,,,,,Yes
+HORSEA,,,,,,,,Whirl Islands (day),Whirl Islands (day),,,,,,,Yes
+SEADRA,,,,,,,,,Whirl Islands,,,,,,HORSEA,No
+GOLDEEN,,,,,,,Lake,Lake,Lake,,,,,,,Yes
 SEAKING,,,,,,,,,Lake,,,,,,GOLDEEN,No
 STARYU,,,,,,,,Shore (night),Shore (night),,,,,,,Yes
 STARMIE,,,,,,,,,,,,,,,STARYU,No
@@ -127,7 +127,7 @@ ELECTABUZZ,Route 44,Route 44,Route 44,Route 10 North,Route 10 North,Route 10 Nor
 MAGMAR,"Burned Tower B1F, Silver Cave Room 1","Burned Tower B1F, Silver Cave Room 1",Burned Tower B1F,,,,,,,,,,,,MAGBY,No
 PINSIR,Bug Catching Contest,Bug Catching Contest,Bug Catching Contest,,,,,,,,,,,,,Yes
 TAUROS,"Route 38, Route 39","Route 38, Route 39",,,,,,,,,,,,,,Yes
-MAGIKARP,,,,,,,"Dratini, Dratini_2, Gyarados, Lake, Ocean, Pond, Qwilfish, Qwilfish_Swarm, Remoraid, Remoraid_Swarm, Shore, WhirlIslands","Dratini, Dratini_2, Gyarados, Lake, Ocean, Pond, Qwilfish, Qwilfish_Swarm, Remoraid, Remoraid_Swarm, Shore, WhirlIslands","Dratini, Dratini_2, Gyarados, Lake, Pond, Qwilfish, Remoraid",,,,,,,Yes
+MAGIKARP,,,,,,,"Dratini, Dratini 2, Gyarados, Lake, Ocean, Pond, Qwilfish, Qwilfish Swarm, Shore, Whirl Islands","Dratini, Dratini 2, Gyarados, Lake, Ocean, Pond, Qwilfish, Qwilfish Swarm, Shore, Whirl Islands","Dratini, Dratini 2, Gyarados, Lake, Pond, Qwilfish",,,,,,,Yes
 GYARADOS,,,,,,,,Gyarados (day),Gyarados (day),,,,,Lake Of Rage,MAGIKARP,No
 LAPRAS,,,,,,,,,,,,,,Union Cave B2F,,Yes
 DITTO,Route 34,Route 34,"Route 34, Route 35",,,,,,,,,,,,,No
@@ -145,8 +145,8 @@ SNORLAX,,,,,,,,,,,,,,Vermilion City,,Yes
 ARTICUNO,,,,,,,,,,,,,,,,No
 ZAPDOS,,,,,,,,,,,,,,,,No
 MOLTRES,,,,,,,,,,,,,,,,No
-DRATINI,,,,,,,,"Dratini (day), Dratini_2 (day)","Dratini (day), Dratini_2 (day)","Dragon Shrine, Goldenrod Game Corner",,,,,,Yes
-DRAGONAIR,,,,,,,,,"Dratini, Dratini_2",,,,,,DRATINI,No
+DRATINI,,,,,,,,"Dratini (day), Dratini 2 (day)","Dratini (day), Dratini 2 (day)","Dragon Shrine, Goldenrod Game Corner",,,,,,Yes
+DRAGONAIR,,,,,,,,,"Dratini, Dratini 2",,,,,,DRATINI,No
 DRAGONITE,,,,,,,,,,,,,,,DRAGONAIR,No
 MEWTWO,,,,,,,,,,,,,,,,No
 MEW,,,,,,,,,,,,,,,,No
@@ -209,7 +209,7 @@ GLIGAR,"Route 42, Route 45","Route 42, Route 45","Route 42, Route 45",,,,,,,,,,,
 STEELIX,,,,Victory Road,Victory Road,Victory Road,,,,,,,,,ONIX,No
 SNUBBULL,"Route 34, Route 35","Route 34, Route 35",Route 34,"Route 5, Route 6, Route 7, Route 8","Route 5, Route 6, Route 7, Route 8",,,,,,,,,,,Yes
 GRANBULL,,,,Route 6,Route 6,,,,,,,,,,SNUBBULL,No
-QWILFISH,,,,,,,Qwilfish_Swarm,"Qwilfish_Swarm, Qwilfish_Swarm (day)","Qwilfish, Qwilfish_Swarm, Qwilfish_Swarm (day)",,,,,,,Yes
+QWILFISH,,,,,,,Qwilfish Swarm,Qwilfish Swarm,"Qwilfish, Qwilfish Swarm",,,,,,,Yes
 SCIZOR,,,,,,,,,,,,,,,SCYTHER,No
 SHUCKLE,,,,,,,,,,Mania's House (Olivine City),,,"Cianwood City, Dark Cave Violet Entrance, Route 40, Slowpoke Well B1F",,,Yes
 HERACROSS,,,,,,,,,,,,"Azalea Town, Route 33, Route 42, Route 44, Route 45, Route 46",,,,Yes
@@ -221,7 +221,7 @@ MAGCARGO,,,,,,,,,,,,,,,SLUGMA,No
 SWINUB,"Ice Path 1F, Ice Path B1F, Ice Path B2F Blackthorn Side, Ice Path B2F Mahogany Side, Ice Path B3F","Ice Path 1F, Ice Path B1F, Ice Path B2F Blackthorn Side, Ice Path B2F Mahogany Side, Ice Path B3F",,,,,,,,,,,,,,Yes
 PILOSWINE,,,,,,,,,,,,,,,SWINUB,No
 CORSOLA,,,,,,,,Shore (day),Shore (day),,,,,,,Yes
-REMORAID,,,,,,,Remoraid_Swarm,"Remoraid_Swarm, Remoraid_Swarm (day)","Remoraid, Remoraid_Swarm, Remoraid_Swarm (day)",,,,,,,Yes
+REMORAID,,,,,,,,,,,,,,,,Yes
 OCTILLERY,,,,,,,,,,,,,,,REMORAID,No
 DELIBIRD,,,"Ice Path 1F, Ice Path B1F, Ice Path B2F Blackthorn Side, Ice Path B2F Mahogany Side, Ice Path B3F",,,,,,,,,,,,,Yes
 MANTINE,,,,,,,,,,,,,,,,Yes

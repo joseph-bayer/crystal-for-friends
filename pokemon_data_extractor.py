@@ -646,13 +646,11 @@ class PokemonDataExtractor:
             'FISHGROUP_LAKE': 'Lake',
             'FISHGROUP_POND': 'Pond',
             'FISHGROUP_DRATINI': 'Dratini',
-            'FISHGROUP_QWILFISH_SWARM': 'Qwilfish_Swarm',
-            'FISHGROUP_REMORAID_SWARM': 'Remoraid_Swarm',
+            'FISHGROUP_QWILFISH_SWARM': 'Qwilfish Swarm',
             'FISHGROUP_GYARADOS': 'Gyarados',
-            'FISHGROUP_DRATINI_2': 'Dratini_2',
-            'FISHGROUP_WHIRL_ISLANDS': 'WhirlIslands',
+            'FISHGROUP_DRATINI_2': 'Dratini 2',
+            'FISHGROUP_WHIRL_ISLANDS': 'Whirl Islands',
             'FISHGROUP_QWILFISH': 'Qwilfish',
-            'FISHGROUP_REMORAID': 'Remoraid',
         }
         
         # First pass: collect all locations for each fish group
@@ -678,10 +676,27 @@ class PokemonDataExtractor:
                         self.fish_group_locations[fishgroup_name].add(formatted_location)
         
         # Second pass: associate Pokemon with fish groups
+        # Create a mapping from parsed fish group names to formatted names
+        parsed_to_formatted = {
+            'Shore': 'Shore',
+            'Ocean': 'Ocean',
+            'Lake': 'Lake', 
+            'Pond': 'Pond',
+            'Dratini': 'Dratini',
+            'Qwilfish_Swarm': 'Qwilfish Swarm',
+            'Gyarados': 'Gyarados',
+            'Dratini_2': 'Dratini 2',
+            'WhirlIslands': 'Whirl Islands',
+            'Qwilfish': 'Qwilfish',
+        }
+        
         for fishgroup_name, rod_data in fish_groups.items():
             for rod_type, encounters in rod_data.items():
                 for pokemon, level, time_suffix in encounters:
-                    fishgroup_display = fishgroup_name
+                    # Use the formatted name if available, otherwise use original
+                    formatted_fishgroup_name = parsed_to_formatted.get(fishgroup_name, fishgroup_name)
+                    
+                    fishgroup_display = formatted_fishgroup_name
                     if time_suffix:
                         fishgroup_display += f" ({time_suffix})"
                     
@@ -901,7 +916,35 @@ class PokemonDataExtractor:
         if pokemon in self.overrides and category in self.overrides[pokemon]:
             locations.update(self.overrides[pokemon][category])
             
+        # Deduplicate fishing groups to remove redundancy
+        if category in ['old_rod', 'good_rod', 'super_rod']:
+            locations = self._deduplicate_fish_groups(locations)
+            
         return locations
+    
+    def _deduplicate_fish_groups(self, fish_groups: Set[str]) -> Set[str]:
+        """Remove redundant time-specific fish group entries when base group exists"""
+        deduplicated = set()
+        base_groups = set()
+        time_specific_groups = set()
+        
+        # Separate base groups from time-specific ones
+        for group in fish_groups:
+            if ' (day)' in group or ' (night)' in group:
+                base_group = group.split(' (')[0]
+                time_specific_groups.add(group)
+                base_groups.add(base_group)
+            else:
+                base_groups.add(group)
+                deduplicated.add(group)
+        
+        # Add time-specific groups only if their base group doesn't exist
+        for group in time_specific_groups:
+            base_group = group.split(' (')[0]
+            if base_group not in deduplicated:
+                deduplicated.add(group)
+        
+        return deduplicated
         
     def run_extraction(self):
         """Run the complete extraction process"""
