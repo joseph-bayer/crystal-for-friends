@@ -21,6 +21,8 @@ class PokemonDataExtractor:
         self.johto_morning_encounters = {}
         self.johto_day_encounters = {}
         self.johto_night_encounters = {}
+        self.kanto_water_encounters = {}
+        self.johto_water_encounters = {}
         self.gift_pokemon = {}
         self.evolutions = {}
         self.npc_trades = {}
@@ -82,6 +84,7 @@ class PokemonDataExtractor:
         lines = content.split('\n')
         current_location = None
         current_time_period = None
+        is_water_encounter = False
         
         for line in lines:
             line = line.strip()
@@ -91,10 +94,11 @@ class PokemonDataExtractor:
             if location_match:
                 current_location = location_match.group(1)
                 current_time_period = None
+                is_water_encounter = 'water' in line
                 continue
             
-            # Check for time period markers
-            if current_location:
+            # Check for time period markers (only for grass encounters)
+            if current_location and not is_water_encounter:
                 if line == '; morn':
                     current_time_period = 'morning'
                     continue
@@ -106,7 +110,7 @@ class PokemonDataExtractor:
                     continue
             
             # Check for Pokemon encounter
-            if current_location and current_time_period:
+            if current_location:
                 pokemon_match = re.search(r'dbw\s+\d+,\s+([A-Z_]+)', line)
                 if pokemon_match:
                     pokemon = pokemon_match.group(1)
@@ -114,38 +118,50 @@ class PokemonDataExtractor:
                         # Format location name better
                         formatted_location = self._format_location_name(current_location)
                         
-                        # Store in appropriate time-specific dictionary
-                        if region == "Kanto":
-                            if current_time_period == 'morning':
-                                if pokemon not in self.kanto_morning_encounters:
-                                    self.kanto_morning_encounters[pokemon] = set()
-                                self.kanto_morning_encounters[pokemon].add(formatted_location)
-                            elif current_time_period == 'day':
-                                if pokemon not in self.kanto_day_encounters:
-                                    self.kanto_day_encounters[pokemon] = set()
-                                self.kanto_day_encounters[pokemon].add(formatted_location)
-                            elif current_time_period == 'night':
-                                if pokemon not in self.kanto_night_encounters:
-                                    self.kanto_night_encounters[pokemon] = set()
-                                self.kanto_night_encounters[pokemon].add(formatted_location)
-                        else:  # Johto
-                            if current_time_period == 'morning':
-                                if pokemon not in self.johto_morning_encounters:
-                                    self.johto_morning_encounters[pokemon] = set()
-                                self.johto_morning_encounters[pokemon].add(formatted_location)
-                            elif current_time_period == 'day':
-                                if pokemon not in self.johto_day_encounters:
-                                    self.johto_day_encounters[pokemon] = set()
-                                self.johto_day_encounters[pokemon].add(formatted_location)
-                            elif current_time_period == 'night':
-                                if pokemon not in self.johto_night_encounters:
-                                    self.johto_night_encounters[pokemon] = set()
-                                self.johto_night_encounters[pokemon].add(formatted_location)
+                        # For water encounters, add to water encounter dictionaries
+                        if is_water_encounter:
+                            if region == "Kanto":
+                                if pokemon not in self.kanto_water_encounters:
+                                    self.kanto_water_encounters[pokemon] = set()
+                                self.kanto_water_encounters[pokemon].add(formatted_location)
+                            else:  # Johto
+                                if pokemon not in self.johto_water_encounters:
+                                    self.johto_water_encounters[pokemon] = set()
+                                self.johto_water_encounters[pokemon].add(formatted_location)
+                        # For grass encounters, store in appropriate time-specific dictionary
+                        elif current_time_period:
+                            if region == "Kanto":
+                                if current_time_period == 'morning':
+                                    if pokemon not in self.kanto_morning_encounters:
+                                        self.kanto_morning_encounters[pokemon] = set()
+                                    self.kanto_morning_encounters[pokemon].add(formatted_location)
+                                elif current_time_period == 'day':
+                                    if pokemon not in self.kanto_day_encounters:
+                                        self.kanto_day_encounters[pokemon] = set()
+                                    self.kanto_day_encounters[pokemon].add(formatted_location)
+                                elif current_time_period == 'night':
+                                    if pokemon not in self.kanto_night_encounters:
+                                        self.kanto_night_encounters[pokemon] = set()
+                                    self.kanto_night_encounters[pokemon].add(formatted_location)
+                            else:  # Johto
+                                if current_time_period == 'morning':
+                                    if pokemon not in self.johto_morning_encounters:
+                                        self.johto_morning_encounters[pokemon] = set()
+                                    self.johto_morning_encounters[pokemon].add(formatted_location)
+                                elif current_time_period == 'day':
+                                    if pokemon not in self.johto_day_encounters:
+                                        self.johto_day_encounters[pokemon] = set()
+                                    self.johto_day_encounters[pokemon].add(formatted_location)
+                                elif current_time_period == 'night':
+                                    if pokemon not in self.johto_night_encounters:
+                                        self.johto_night_encounters[pokemon] = set()
+                                    self.johto_night_encounters[pokemon].add(formatted_location)
             
             # Reset location on end marker
             if 'end_grass_wildmons' in line or 'end_water_wildmons' in line:
                 current_location = None
                 current_time_period = None
+                is_water_encounter = False
                 
     def extract_gift_pokemon(self):
         """Extract gift Pokemon from map files"""
@@ -803,7 +819,7 @@ class PokemonDataExtractor:
     def generate_csv(self, output_file: str = "pokemon_data.csv"):
         """Generate the CSV file with all Pokemon data"""
         with open(output_file, 'w', newline='', encoding='utf-8') as csvfile:
-            fieldnames = ['Pokemon Name', 'Johto Morning Wild', 'Johto Day Wild', 'Johto Night Wild', 'Kanto Morning Wild', 'Kanto Day Wild', 'Kanto Night Wild', 'Old Rod Fish Groups', 'Good Rod Fish Groups', 'Super Rod Fish Groups', 'Gift Locations', 'NPC Trade Locations', 'Headbutt Tree Locations', 'Rock Smash Locations', 'Static Locations', 'Evolves From', 'Can be Hatched from an Egg']
+            fieldnames = ['Pokemon Name', 'Johto Morning Wild', 'Johto Day Wild', 'Johto Night Wild', 'Kanto Morning Wild', 'Kanto Day Wild', 'Kanto Night Wild', 'Johto Water', 'Kanto Water', 'Old Rod Fish Groups', 'Good Rod Fish Groups', 'Super Rod Fish Groups', 'Gift Locations', 'NPC Trade Locations', 'Headbutt Tree Locations', 'Rock Smash Locations', 'Static Locations', 'Evolves From', 'Can be Hatched from an Egg']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             
             writer.writeheader()
@@ -816,6 +832,8 @@ class PokemonDataExtractor:
                 kanto_morning_locations = self._get_locations(pokemon, 'kanto_morning')
                 kanto_day_locations = self._get_locations(pokemon, 'kanto_day')
                 kanto_night_locations = self._get_locations(pokemon, 'kanto_night')
+                johto_water_locations = self._get_locations(pokemon, 'johto_water')
+                kanto_water_locations = self._get_locations(pokemon, 'kanto_water')
                 old_rod_fish_groups = self._get_locations(pokemon, 'old_rod')
                 good_rod_fish_groups = self._get_locations(pokemon, 'good_rod')
                 super_rod_fish_groups = self._get_locations(pokemon, 'super_rod')
@@ -834,6 +852,8 @@ class PokemonDataExtractor:
                     'Kanto Morning Wild': ', '.join(sorted(kanto_morning_locations)) if kanto_morning_locations else '',
                     'Kanto Day Wild': ', '.join(sorted(kanto_day_locations)) if kanto_day_locations else '',
                     'Kanto Night Wild': ', '.join(sorted(kanto_night_locations)) if kanto_night_locations else '',
+                    'Johto Water': ', '.join(sorted(johto_water_locations)) if johto_water_locations else '',
+                    'Kanto Water': ', '.join(sorted(kanto_water_locations)) if kanto_water_locations else '',
                     'Old Rod Fish Groups': ', '.join(sorted(old_rod_fish_groups)) if old_rod_fish_groups else '',
                     'Good Rod Fish Groups': ', '.join(sorted(good_rod_fish_groups)) if good_rod_fish_groups else '',
                     'Super Rod Fish Groups': ', '.join(sorted(super_rod_fish_groups)) if super_rod_fish_groups else '',
@@ -893,6 +913,10 @@ class PokemonDataExtractor:
             locations.update(self.kanto_day_encounters.get(pokemon, set()))
         elif category == 'kanto_night':
             locations.update(self.kanto_night_encounters.get(pokemon, set()))
+        elif category == 'johto_water':
+            locations.update(self.johto_water_encounters.get(pokemon, set()))
+        elif category == 'kanto_water':
+            locations.update(self.kanto_water_encounters.get(pokemon, set()))
         elif category == 'old_rod':
             locations.update(self.old_rod_fish_groups.get(pokemon, set()))
         elif category == 'good_rod':
@@ -997,6 +1021,8 @@ class PokemonDataExtractor:
         print(f"Pokemon found in Kanto morning wild: {len(self.kanto_morning_encounters)}")
         print(f"Pokemon found in Kanto day wild: {len(self.kanto_day_encounters)}")
         print(f"Pokemon found in Kanto night wild: {len(self.kanto_night_encounters)}")
+        print(f"Pokemon found in Johto water: {len(self.johto_water_encounters)}")
+        print(f"Pokemon found in Kanto water: {len(self.kanto_water_encounters)}")
         print(f"Pokemon found via Old Rod: {len(self.old_rod_fish_groups)}")
         print(f"Pokemon found via Good Rod: {len(self.good_rod_fish_groups)}")
         print(f"Pokemon found via Super Rod: {len(self.super_rod_fish_groups)}")
@@ -1013,8 +1039,9 @@ class PokemonDataExtractor:
 
 def main():
     """Main function to run the extractor"""
-    # Set the base path to the current directory (where the script is located)
-    base_path = os.path.dirname(os.path.abspath(__file__))
+    # Set the base path to the project root directory (3 levels up from this script)
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    base_path = os.path.join(script_dir, "..", "..", "..")
     
     extractor = PokemonDataExtractor(base_path)
     

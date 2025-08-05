@@ -31,6 +31,11 @@ class PokemonAvailabilityChecker:
             'Kanto Morning Wild',
             'Kanto Day Wild',
             'Kanto Night Wild',
+            'Johto Water',
+            'Kanto Water',
+            'Old Rod Fish Groups',
+            'Good Rod Fish Groups',
+            'Super Rod Fish Groups',
             'Gift Locations',
             'NPC Trade Locations',
             'Headbutt Tree Locations',
@@ -400,6 +405,8 @@ class PokemonAvailabilityChecker:
         """Print a summary of how Pokemon can be obtained"""
         methods = {
             'Wild Encounters': 0,
+            'Water Encounters': 0,
+            'Fishing': 0,
             'Gift Pokemon': 0,
             'NPC Trades': 0,
             'Static Encounters': 0,
@@ -418,6 +425,12 @@ class PokemonAvailabilityChecker:
                 'Johto Morning Wild', 'Johto Day Wild', 'Johto Night Wild',
                 'Kanto Morning Wild', 'Kanto Day Wild', 'Kanto Night Wild'
             ])
+            has_water = any(pokemon_data.get(col, '').strip() for col in [
+                'Johto Water', 'Kanto Water'
+            ])
+            has_fishing = any(pokemon_data.get(col, '').strip() for col in [
+                'Old Rod Fish Groups', 'Good Rod Fish Groups', 'Super Rod Fish Groups'
+            ])
             has_gift = pokemon_data.get('Gift Locations', '').strip()
             has_trade = pokemon_data.get('NPC Trade Locations', '').strip()
             has_static = pokemon_data.get('Static Locations', '').strip()
@@ -428,6 +441,10 @@ class PokemonAvailabilityChecker:
             # Count primary obtainment method
             if has_wild:
                 methods['Wild Encounters'] += 1
+            elif has_water:
+                methods['Water Encounters'] += 1
+            elif has_fishing:
+                methods['Fishing'] += 1
             elif has_gift:
                 methods['Gift Pokemon'] += 1
             elif has_trade:
