@@ -185,8 +185,8 @@ TimeFishGroups:
 	dbwbw 40, DRATINI,    40, DRATINI    ; 9
 	dbwbw 20, QWILFISH,   20, QWILFISH   ; 10
 	dbwbw 40, QWILFISH,   40, QWILFISH   ; 11
-	dbwbw 20, REMORAID,   20, REMORAID   ; 12
-	dbwbw 40, REMORAID,   40, REMORAID   ; 13
+	dbwbw 20, REMORAID,   20, REMORAID   ; 12 unused
+	dbwbw 40, REMORAID,   40, REMORAID   ; 13 unused
 	dbwbw 20, GYARADOS,   20, GYARADOS   ; 14
 	dbwbw 40, GYARADOS,   40, GYARADOS   ; 15
 	dbwbw 10, DRATINI,    10, DRATINI    ; 16
