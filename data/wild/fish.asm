@@ -15,12 +15,10 @@ FishGroups:
 	fishgroup 50 percent + 1, .Pond_Old,             .Pond_Good,             .Pond_Super
 	fishgroup 50 percent + 1, .Dratini_Old,          .Dratini_Good,          .Dratini_Super
 	fishgroup 50 percent + 1, .Qwilfish_Swarm_Old,   .Qwilfish_Swarm_Good,   .Qwilfish_Swarm_Super
-	fishgroup 50 percent + 1, .Remoraid_Swarm_Old,   .Remoraid_Swarm_Good,   .Remoraid_Swarm_Super
 	fishgroup 50 percent + 1, .Gyarados_Old,         .Gyarados_Good,         .Gyarados_Super
 	fishgroup 50 percent + 1, .Dratini_2_Old,        .Dratini_2_Good,        .Dratini_2_Super
 	fishgroup 50 percent + 1, .WhirlIslands_Old,     .WhirlIslands_Good,     .WhirlIslands_Super
 	fishgroup 50 percent + 1, .Qwilfish_Old,         .Qwilfish_Good,         .Qwilfish_Super
-	fishgroup 50 percent + 1, .Remoraid_Old,         .Remoraid_Good,         .Remoraid_Super
 	assert_table_length NUM_FISHGROUPS
 
 .Shore_Old:
@@ -113,21 +111,6 @@ FishGroups:
 	dbbw  90 percent + 1, 40, QWILFISH
 	dbbw 100 percent,     40, QWILFISH
 
-.Remoraid_Swarm_Old:
-	dbbw  70 percent + 1, 10, MAGIKARP
-	dbbw  85 percent + 1, 10, MAGIKARP
-	dbbw 100 percent,     10, REMORAID
-.Remoraid_Swarm_Good:
-	dbbw  35 percent,     20, MAGIKARP
-	dbbw  70 percent,     20, REMORAID
-	dbbw  90 percent + 1, 20, REMORAID
-	dbbw 100 percent,     12, TIME_GROUP
-.Remoraid_Swarm_Super:
-	dbbw  40 percent,     40, REMORAID
-	dbbw  70 percent,     13, TIME_GROUP
-	dbbw  90 percent + 1, 40, REMORAID
-	dbbw 100 percent,     40, REMORAID
-
 .Gyarados_Old:
 	dbbw  70 percent + 1, 10, MAGIKARP
 	dbbw  85 percent + 1, 10, MAGIKARP
@@ -187,21 +170,6 @@ FishGroups:
 	dbbw  70 percent,     21, TIME_GROUP
 	dbbw  90 percent + 1, 40, MAGIKARP
 	dbbw 100 percent,     40, QWILFISH
-
-.Remoraid_Old:
-	dbbw  70 percent + 1, 10, MAGIKARP
-	dbbw  85 percent + 1, 10, MAGIKARP
-	dbbw 100 percent,     10, POLIWAG
-.Remoraid_Good:
-	dbbw  35 percent,     20, MAGIKARP
-	dbbw  70 percent,     20, POLIWAG
-	dbbw  90 percent + 1, 20, POLIWAG
-	dbbw 100 percent,     6, TIME_GROUP
-.Remoraid_Super:
-	dbbw  40 percent,     40, POLIWAG
-	dbbw  70 percent,     7, TIME_GROUP
-	dbbw  90 percent + 1, 40, MAGIKARP
-	dbbw 100 percent,     40, REMORAID
 
 TimeFishGroups:
 	;     day             nite
