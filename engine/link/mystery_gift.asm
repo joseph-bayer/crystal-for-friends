@@ -81,7 +81,7 @@ endc
 	jmp nz, .CommunicationError
 	ld a, [wMysteryGiftPartnerGameVersion]
 	cp POKEMON_PIKACHU_2_VERSION
-	jr z, .skip_checks
+	jr z, .skip_checks ; skip checks for Pokémon Pikachu 2 device
 	call .CheckAlreadyGotFiveGiftsToday
 	ld hl, .MysteryGiftFiveADayText ; Only 5 gifts a day
 	jmp nc, .PrintTextAndExit
@@ -93,7 +93,7 @@ endc
 	and a
 	jr nz, .GiftWaiting
 	ld a, [wMysteryGiftPartnerBackupItem]
-	and a
+	and a 
 	jr nz, .FriendNotReady
 	ld a, [wMysteryGiftPartnerGameVersion]
 	cp POKEMON_PIKACHU_2_VERSION
