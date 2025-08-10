@@ -45,28 +45,28 @@ StageDataForMysteryGift:
 	and 1 ; keep only 1 bit - determines item vs decoration gift later
 	ld [de], a ; store random bit in staging buffer
 
-  ; ??? Generate two gift indices using the player ID bytes in different orders for variety.
-	inc de ; wMysteryGiftStaging+16
+  ; Generate two gift indices - one for item, and one for decoration, using the player ID bytes in different orders for variety.
+	inc de ; wMysteryGiftStaging+16 (Item)
 	call .RandomSample ; generate random gift index based on first byte of player ID (which is stored in B)
 	ld [de], a ; store first gift index in staging buffer
-	inc de ; wMysteryGiftStaging+17
+	inc de ; wMysteryGiftStaging+17 (Decoration)
 	ld a, c ; swap bytes of player ID
 	ld c, b ; for different randomization
 	ld b, a
 	call .RandomSample ; generate second gift index based on second byte of player ID (which is now in B)
 	ld [de], a ; store second gift index in staging buffer
 
-  ; ??? Store backup gift item and daily exchange count.
+  ; Store backup gift item and daily exchange count.
 	inc de ; wMysteryGiftStaging+18
-	ld a, BANK(sBackupMysteryGiftItem) ; get SRAM bank of backup item
+	ld a, BANK(sBackupMysteryGiftItem) ; get SRAM bank of backup item.
 	call OpenSRAM ; switch to SRAM bank
-	ld a, [sBackupMysteryGiftItem] ; load backup gift item
+	ld a, [sBackupMysteryGiftItem] ; load backup gift item. This will be populated if you haven't picked up a mystery gift yet.
 	ld [de], a ; store it in staging buffer
 	inc de ; wMysteryGiftStaging+19
 	ld a, [sNumDailyMysteryGiftPartnerIDs] ; load daily exchange count
 	ld [de], a ; store it in staging buffer
 
-  ; ??? Copy the staged data to the final player data structure.
+  ; Copy the staged data to the final player data structure.
 	ld a, wMysteryGiftPlayerDataEnd - wMysteryGiftPlayerData
 	ld [wUnusedMysteryGiftStagedDataLength], a
 	call CloseSRAM
@@ -76,9 +76,9 @@ StageDataForMysteryGift:
 	jmp CopyBytes
 
 ; BC = byte from player ID to use as random seed
-; ??? A = random gift index (0-31)
-; First time RandomSample is called, B is the high byte of player ID and C is the low byte.
-; Second time RandomSample is called, the high and low byte are swapped.
+; A = random gift index (0-33)
+; When called for an Item, B is the high byte of player ID and C is the low byte.
+; When called for a decoration, C is the high byte of player ID and B is the low byte.
 .RandomSample:
 	push de
 	call Random

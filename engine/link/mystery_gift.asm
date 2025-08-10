@@ -89,23 +89,23 @@ endc
 	ld hl, .MysteryGiftOneADayText ; Only one gift a day per person
 	jmp c, .PrintTextAndExit
 .skip_checks
-	ld a, [wMysteryGiftPlayerBackupItem]
+	ld a, [wMysteryGiftPlayerBackupItem] ; Check if you have a pending gift
 	and a
-	jr nz, .GiftWaiting
-	ld a, [wMysteryGiftPartnerBackupItem]
+	jr nz, .GiftWaiting ; If yes, tell player to get it first
+	ld a, [wMysteryGiftPartnerBackupItem] ; Check if partner has pending gift
 	and a 
-	jr nz, .FriendNotReady
+	jr nz, .FriendNotReady ; If yes, friend isn't ready
 	ld a, [wMysteryGiftPartnerGameVersion]
 	cp POKEMON_PIKACHU_2_VERSION
-	jr z, .skip_append_save
+	jr z, .skip_append_save ; if partner is Pokémon Pikachu 2, skip saving trainer name and ID
 	call .AddMysteryGiftPartnerID
 	ld a, [wMysteryGiftPartnerGameVersion]
-	cp RESERVED_GAME_VERSION
+	cp RESERVED_GAME_VERSION ; ??? Is it a reserved/special version? When would this be relevant?
 	jr z, .skip_append_save
 	call .SaveMysteryGiftTrainerName
-	call RestoreGSBallFlag
-	call StubbedTrainerRankings_MysteryGift
-	call BackupGSBallFlag
+	call RestoreGSBallFlag ; ??? What the heck is this for?
+	call StubbedTrainerRankings_MysteryGift ; ??? This is a stubbed function, not implemented in the original game. Probably to record # of times mystery gifted for a trainer ranking system in the mobile adaptor GB?
+	call BackupGSBallFlag ; ??? What the heck is this for?
 .skip_append_save
 	ld a, [wMysteryGiftPartnerSentDeco]
 	and a

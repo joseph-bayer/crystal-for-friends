@@ -1,4 +1,5 @@
 MysteryGiftItems:
+  ; Common items (index 0-15)
 	dw BERRY          ; 0
 	dw PRZCUREBERRY   ; 1
 	dw MINT_BERRY     ; 2
@@ -15,6 +16,7 @@ MysteryGiftItems:
 	dw EON_MAIL       ; 13
 	dw MORPH_MAIL     ; 14
 	dw MUSIC_MAIL     ; 15
+  ; Uncommon items (index 16-23)
 	dw MIRACLEBERRY   ; 16
 	dw GOLD_BERRY     ; 17
 	dw REVIVE         ; 18
@@ -23,6 +25,7 @@ MysteryGiftItems:
 	dw MAX_REPEL      ; 21
 	dw ELIXER         ; 22
 	dw ETHER          ; 23
+  ; Rare items (index 24-31)
 	dw WATER_STONE    ; 24
 	dw FIRE_STONE     ; 25
 	dw LEAF_STONE     ; 26
@@ -31,6 +34,7 @@ MysteryGiftItems:
 	dw MAX_ELIXER     ; 29
 	dw MAX_REVIVE     ; 30
 	dw SCOPE_LENS     ; 31
+  ; Super rare items (index 32-33)
 	dw HP_UP          ; 32
 	dw PP_UP          ; 33
   ; These might also be intended to obtain in Stadium 2, but did not work due to the broken RNG in that game?
