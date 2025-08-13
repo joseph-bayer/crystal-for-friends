@@ -1,7 +1,7 @@
 ; NPC Mystery Gift Screen
 ; This file implements an NPC-triggered mystery gift screen that can be called from the overworld
 
-NPCMysteryGiftScreen::
+NPCMysteryGiftScreen:
 	; Stop updating Sprite positions and set all bg palettes to black/empty
 	call DisableSpriteUpdates
 	call ClearBGPalettes
