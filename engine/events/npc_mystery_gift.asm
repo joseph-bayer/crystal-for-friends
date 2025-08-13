@@ -44,6 +44,10 @@ NPCMysteryGiftScreen:
 .a_pressed
 	; For now, just play a sound and continue
 	call PlayClickSFX
+
+  ; TODO: Check if player has mystery gifted with this NPC today
+  ; TODO: Check if player has already mystery gifted with NPCs 5 times today
+
 	jr .input_loop
 
 .exit_screen
@@ -68,6 +72,30 @@ NPCMysteryGiftScreen:
 	ret
 
 .pressed_b
+  jr .MysteryGiftCanceled
+	ret
+
+.MysteryGiftCanceled:
+	ld hl, .MysteryGiftCanceledText 
+	jr .PrintTextAndExit
+
+.MysteryGiftCanceledText:
+	text_far _MysteryGiftCanceledText
+	text_end
+
+.PrintTextAndExit:
+  ; Clear screen so we can just show a textbox
+  push hl
+  call ClearTilemap
+	call WaitBGMap
+	ld b, SCGB_DIPLOMA
+	call GetSGBLayout
+	call SetDefaultBGPAndOBP
+  pop hl
+
+	call PrintText
+	ld a, LCDC_DEFAULT
+	ldh [rLCDC], a
 	scf ; set carry flag to indicate exit
 	ret
 
