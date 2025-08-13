@@ -2,15 +2,16 @@
 ; This file implements an NPC-triggered mystery gift screen that can be called from the overworld
 
 NPCMysteryGiftScreen::
-	; Save the current state
+	; Stop updating Sprite positions and set all bg palettes to black/empty
 	call DisableSpriteUpdates
 	call ClearBGPalettes
 	
 	; Clear the screen and set up the mystery gift layout
-	call ClearTilemap
-	call ClearSprites
-	call WaitBGMap
+	call ClearTilemap ; fill entire screen tilemap with blank tiles
+	call ClearSprites ; remove all sprites form the screen (NPCs, player, boulders, etc)
+	call WaitBGMap ; Wait for GB video hardware to finish drawing cleared screen
 	
+  ; Load border graphics, decorative frame, and call the CGB palette layout system.
 	call InitMysteryGiftLayout
 	
   ; Walking sprites have likely overwritten the font in VRAM, so lets load that back in
@@ -23,10 +24,10 @@ NPCMysteryGiftScreen::
 	call WaitBGMap
 
   ; Set up palettes
-	ld b, SCGB_MYSTERY_GIFT
-	call GetSGBLayout
-	call SetDefaultBGPAndOBP
-	call DelayFrame
+	ld b, SCGB_MYSTERY_GIFT ; load mystery gift layout id into B
+	call GetSGBLayout ; Applies the CGB color palette layout (sets up attribute map and loads palettes)
+	call SetDefaultBGPAndOBP ; sets default bg and object palettes for non-CGB Game Boys (is this necessary?)
+	call DelayFrame ; wait one frame for all graphic changes to take effect
 
 .input_loop
 	; Handle input
@@ -77,19 +78,19 @@ NPCMysteryGiftScreen::
 	call ClearBGPalettes
 	
 	; Restore overworld graphics and state
-	call ReloadTilesetAndPalettes
-	call LoadOverworldTilemapAndAttrmapPals
-	call UpdateSprites
-	call EnableSpriteUpdates
-	
+	call ReloadTilesetAndPalettes ; reload the map's tileset graphics and color palettes for current map data
+	call LoadOverworldTilemapAndAttrmapPals ; Rebuild overworld screen from map data (tiles, collision, attribute map)
+	call UpdateSprites ; Redraw all sprites on the screen
+	call EnableSpriteUpdates ; Reenable sprite updates
+
 	; Set proper palettes for overworld
-	ld b, SCGB_MAPPALS
-	call GetSGBLayout
-	call WaitBGMap2
-	farcall LoadOW_BGPal7
-	call UpdateTimePals
-	farcall EnableDynPalUpdates
-	call DelayFrame
+	ld b, SCGB_MAPPALSh
+	call GetSGBLayout ; apply standard overworld palette
+	call WaitBGMap2 ; wait until graphics are drawn
+	farcall LoadOW_BGPal7 ; load the standard overworld text bg palette
+	call UpdateTimePals ; update palettes based on time of day
+	farcall EnableDynPalUpdates ; re-enable automatic palette updates for things like time transitions
+	call DelayFrame 
 	
 	; Re-enable map animations
 	ld a, 1
