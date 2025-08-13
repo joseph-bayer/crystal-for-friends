@@ -79,16 +79,14 @@ NPCMysteryGiftScreen::
 	
 	; Restore overworld graphics and state
 	call ReloadTilesetAndPalettes ; reload the map's tileset graphics and color palettes for current map data
-	call LoadOverworldTilemapAndAttrmapPals ; Rebuild overworld screen from map data (tiles, collision, attribute map)
 	call UpdateSprites ; Redraw all sprites on the screen
 	call EnableSpriteUpdates ; Reenable sprite updates
 
 	; Set proper palettes for overworld
-	ld b, SCGB_MAPPALSh
+	ld b, SCGB_MAPPALS
 	call GetSGBLayout ; apply standard overworld palette
 	call WaitBGMap2 ; wait until graphics are drawn
 	farcall LoadOW_BGPal7 ; load the standard overworld text bg palette
-	call UpdateTimePals ; update palettes based on time of day
 	farcall EnableDynPalUpdates ; re-enable automatic palette updates for things like time transitions
 	call DelayFrame 
 	
