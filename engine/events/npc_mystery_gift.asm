@@ -1,3 +1,5 @@
+; TODO: pass NPC name and an MG_NPC ID to script
+
 ; NPC Mystery Gift Screen
 ; This file implements an NPC-triggered mystery gift screen that can be called from the overworld
 
@@ -130,14 +132,14 @@ NPCMysteryGiftScreen:
 	next "exit screen."
 	db   "@"
 
-; Alternative simpler version for direct NPC interaction
-SimpleNPCMysteryGift::
-	; Even simpler version - just show the screen without text prompts
-	call NPCMysteryGiftScreen
-	ret
-
 ; Special function that can be called from map scripts using "special"
 NPCMysteryGiftSpecial::
 	; This is the special function for the special pointer table
 	call NPCMysteryGiftScreen
 	ret
+
+
+
+CalculateAndGiveGift:
+  ; TODO:
+  ret
