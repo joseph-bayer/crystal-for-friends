@@ -3,7 +3,7 @@
 ; NPC Mystery Gift Screen
 ; This file implements an NPC-triggered mystery gift screen that can be called from the overworld
 
-NPCMysteryGiftScreen:
+NPCMysteryGiftScreen::
 	; Stop updating Sprite positions and set all bg palettes to black/empty
 	call DisableSpriteUpdates
 	call ClearBGPalettes
@@ -36,20 +36,7 @@ NPCMysteryGiftScreen:
 	call .GetInput
 	jr c, .exit_screen
 	
-	; Check for A button press (could add functionality here)
-	bit B_PAD_A, a
-	jr nz, .a_pressed
-	
 	; Check for other inputs as needed
-	jr .input_loop
-
-.a_pressed
-	; For now, just play a sound and continue
-	call PlayClickSFX
-
-  ; TODO: Check if player has mystery gifted with this NPC today
-  ; TODO: Check if player has already mystery gifted with NPCs 5 times today
-
 	jr .input_loop
 
 .exit_screen
@@ -68,6 +55,11 @@ NPCMysteryGiftScreen:
 	; Check for B button to exit
 	bit B_PAD_B, a
 	jr nz, .pressed_b
+
+	ldh a, [hJoyPressed]
+
+  bit B_PAD_A, a
+	jr nz, .pressed_a
 	
 	; Return the input for other processing
 	and a ; clear carry flag
@@ -75,7 +67,37 @@ NPCMysteryGiftScreen:
 
 .pressed_b
   jr .MysteryGiftCanceled
-	ret
+
+; TODO: move and rename to match pressed_b
+.pressed_a
+  ; TODO: Check if player has mystery gifted with this NPC today
+  ; TODO: Check if player has already mystery gifted with NPCs 5 times today
+
+  jr .SendGift
+
+.SendGift:
+  ld hl, MysteryGiftNPCNames ; store pointer to Mystery Gift NPC name table
+  ld a, [wScriptVar] ; get the Mystery Gift NPC ID/Index from wScriptVar
+
+  push af
+  ; Move to the correct position in the name table
+  ld bc, (NAME_LENGTH - 1)
+  rst AddNTimes
+
+  ; Copy the NPC name into wMysteryGiftPartnerName
+  ld de, wMysteryGiftPartnerName
+  ld bc, (NAME_LENGTH - 1)
+  rst CopyBytes
+  pop af
+
+  ; TODO: determine item/deco and replace BERRY
+  ld hl, BERRY
+  call GetItemIDFromIndex
+  ld [wNamedObjectIndex], a
+  call GetItemName
+
+  ld hl, .MysteryGiftSentText
+  jr .PrintTextAndExit
 
 .MysteryGiftCanceled:
 	ld hl, .MysteryGiftCanceledText 
@@ -83,6 +105,10 @@ NPCMysteryGiftScreen:
 
 .MysteryGiftCanceledText:
 	text_far _MysteryGiftCanceledText
+	text_end
+
+.MysteryGiftSentText:
+	text_far _MysteryGiftSentText
 	text_end
 
 .PrintTextAndExit:
@@ -132,14 +158,8 @@ NPCMysteryGiftScreen:
 	next "exit screen."
 	db   "@"
 
-; Special function that can be called from map scripts using "special"
-NPCMysteryGiftSpecial::
-	; This is the special function for the special pointer table
-	call NPCMysteryGiftScreen
-	ret
-
-
-
 CalculateAndGiveGift:
   ; TODO:
   ret
+
+INCLUDE "data/mystery_gift_npcs/names.asm"

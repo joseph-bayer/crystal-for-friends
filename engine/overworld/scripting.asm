@@ -235,6 +235,7 @@ ScriptCommandTable:
 	dw Script_loaditemindex              ; ac
 	dw Script_checkmaplockeditems        ; ad
 	dw Script_givepokemove               ; ae
+	dw Script_domysterygift              ; af
 	assert_table_length NUM_EVENT_COMMANDS
 
 StartScript:
@@ -2420,4 +2421,14 @@ Script_givepokemove:
 	; Set move
 	ld a, d
 	ld [hl], a
+	ret
+
+Script_domysterygift:
+	; Read NPC ID (1 byte)
+	rst GetScriptByte
+	; Store ID in wScriptVar (8-bit)
+	ld [wScriptVar], a
+	
+	; Call the enhanced mystery gift function
+	farcall NPCMysteryGiftScreen
 	ret

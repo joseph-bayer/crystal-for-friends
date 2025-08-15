@@ -306,6 +306,7 @@ INCLUDE "engine/pokegear/pokegear.asm"
 INCLUDE "engine/events/fish.asm"
 INCLUDE "engine/games/slot_machine.asm"
 INCLUDE "data/pokemon/first_stages.asm"
+INCLUDE "data/mystery_gift_npcs/mystery_gift_npcs.asm"
 
 SECTION "Phone Scripts 1", ROMX
 

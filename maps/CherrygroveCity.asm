@@ -231,7 +231,7 @@ MysteryGiftDemoNPC:
 	yesorno
 	iffalse .declined
 	closetext
-	special NPCMysteryGiftSpecial
+  domysterygift NPC_MYSTERY_GIFT_NPC_CHARLIE
 	opentext
 	writetext MysteryGiftDemoNPCExitText
 	waitbutton
