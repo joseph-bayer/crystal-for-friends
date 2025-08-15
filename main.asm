@@ -306,7 +306,6 @@ INCLUDE "engine/pokegear/pokegear.asm"
 INCLUDE "engine/events/fish.asm"
 INCLUDE "engine/games/slot_machine.asm"
 INCLUDE "data/pokemon/first_stages.asm"
-INCLUDE "data/mystery_gift_npcs/mystery_gift_npcs.asm"
 
 SECTION "Phone Scripts 1", ROMX
 
@@ -488,6 +487,7 @@ INCLUDE "gfx/emotes.asm"
 INCLUDE "engine/overworld/warp_connection.asm"
 INCLUDE "engine/link/mystery_gift.asm"
 INCLUDE "engine/events/npc_mystery_gift.asm"
+INCLUDE "data/mystery_gift_npcs/mystery_gift_npcs.asm"
 INCLUDE "engine/battle/used_move_text.asm"
 INCLUDE "mobile/mobile_41.asm"
 INCLUDE "engine/gfx/load_overworld_font.asm"
