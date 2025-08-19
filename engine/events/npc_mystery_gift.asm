@@ -68,14 +68,15 @@ NPCMysteryGiftScreen::
 .pressed_b
   jr .MysteryGiftCanceled
 
-; TODO: move and rename to match pressed_b
 .pressed_a
+  ; TODO: Check if player has a pending myster gift item with the man on the second floor of the pokecenter
   ; TODO: Check if player has mystery gifted with this NPC today
   ; TODO: Check if player has already mystery gifted with NPCs 5 times today
 
-  jr .SendGift
+; fall through
 
 .SendGift:
+; update wMysteryGiftPartnerName
   ld hl, MysteryGiftNPCNames ; store pointer to Mystery Gift NPC name table
   ld a, [wScriptVar] ; get the Mystery Gift NPC ID/Index from wScriptVar
 
@@ -90,10 +91,44 @@ NPCMysteryGiftScreen::
   rst CopyBytes
   pop af
 
-  ; TODO: determine item/deco and replace BERRY
-  ld hl, BERRY
-  call GetItemIDFromIndex
-  ld [wNamedObjectIndex], a
+  call Random
+  and 1 ; keep only 1 bit - determines item vs decoration
+	jr z, .SentItem
+; sent decoration
+	call .RandomSample
+	ld c, a
+	farcall MysteryGiftGetDecoration
+	push bc
+	farcall CheckAndSetMysteryGiftDecorationAlreadyReceived
+	pop bc
+	jr nz, .SentItem
+; keep the decoration if it wasn't already received
+	farcall GetDecorationName_c
+	ld h, d
+	ld l, e
+	ld de, wStringBuffer1
+	ld bc, ITEM_NAME_LENGTH
+	rst CopyBytes
+  ld hl, wPlayerName
+  ld bc, NAME_LENGTH
+  ld de, wMysteryGiftPlayerName
+  rst CopyBytes
+
+	ld hl, .MysteryGiftSentHomeText ; sent decoration to home TODO:
+	jr .PrintTextAndExit
+
+.SentItem
+  ; Get Item name into wStringBuffer1
+  ld a, BANK(sMysteryGiftData)
+	call OpenSRAM
+  call .RandomSample
+  ld c, a
+  farcall MysteryGiftGetItem
+  ld a, c
+	ld [sBackupMysteryGiftItem], a
+  ld [sMysteryGiftItem], a
+	ld [wNamedObjectIndex], a
+	call CloseSRAM
   call GetItemName
 
   ld hl, .MysteryGiftSentText
@@ -109,6 +144,10 @@ NPCMysteryGiftScreen::
 
 .MysteryGiftSentText:
 	text_far _MysteryGiftSentText
+	text_end
+
+.MysteryGiftSentHomeText:
+	text_far _MysteryGiftSentHomeText
 	text_end
 
 .PrintTextAndExit:
@@ -151,15 +190,49 @@ NPCMysteryGiftScreen::
 	ldh [hMapAnims], a
 	ret
 
+; Determine gift index
+; Returns Gift Index in A
+.RandomSample
+  call Random
+  and 1
+  jr z, .fiftypercent
+  ; common index - 50% chance - index 0-15 
+  call Random
+  and 15 ; keep the lower 4 bits
+  jr .done
+.fiftypercent
+  call Random
+  and 1
+  jr z, .twentyfivepercent
+  ; uncommon index - 25% chance - index 16-23
+  call Random
+  and 7 ; keep only lower 3 bits (0-7)
+  add $10 ; add 16 to A, so result with be 16-23
+  jr .done
+.twentyfivepercent
+  call Random
+  cp 20 percent - 1
+  jr z, .fivepercent
+  ; rare index - 20% chance - index (24-31)
+  call Random
+  and 7 ; keep only lower 3 bits (0-7)
+  add $18 ; add 24 to A, so result with be 24-31
+  jr .done
+.fivepercent
+  ; super rare index - 5% chance - index 32-33
+  call Random
+  and 1
+  ld a, $20 ; index 32
+  jr z, .done
+  ld a, $21 ; index 33
+.done
+  ret
+
 .NPCMysteryGiftText:
 	db   "Press A to"
 	next "MYSTERY GIFT"
 	next "Press B to"
 	next "exit screen."
 	db   "@"
-
-CalculateAndGiveGift:
-  ; TODO:
-  ret
 
 INCLUDE "data/mystery_gift_npcs/names.asm"
