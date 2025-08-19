@@ -158,6 +158,8 @@ NPCMysteryGiftScreen::
 	ld b, SCGB_DIPLOMA
 	call GetSGBLayout
 	call SetDefaultBGPAndOBP
+  ld c, 8
+	call DelayFrames
   pop hl
 
 	call PrintText
