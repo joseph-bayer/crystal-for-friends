@@ -183,6 +183,8 @@ if DEF(_DEBUG)
 	setmapscene PLAYERS_HOUSE_1F, $1
 	setevent EVENT_PLAYERS_HOUSE_MOM_1
 	clearevent EVENT_PLAYERS_HOUSE_MOM_2
+
+  special UnlockMysteryGift
   ; DEBUG: testing new rocket takeover npc placements
   ; clearevent EVENT_RADIO_TOWER_ROCKET_TAKEOVER
 	closetext
