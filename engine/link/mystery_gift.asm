@@ -1216,14 +1216,14 @@ BackupMysteryGift:
 ; Copies [sMysteryGiftItem] to [sBackupMysteryGiftItem],
 ; and [sMysteryGiftUnlocked] to [sNumDailyMysteryGiftPartnerIDs].
 	call GetMysteryGiftBank
-	ld hl, sMysteryGiftItem
-	ld de, sBackupMysteryGiftItem
-	ld a, [hli]
-	ld [de], a
-	inc de
+	ld hl, sMysteryGiftItem         ; HL = sMysteryGiftItem address.
+	ld de, sBackupMysteryGiftItem   ; DE = sBackupMysteryGiftItem address.
+	ld a, [hli]                      ; A = sMysteryGiftItem. HL = sMysteryGiftUnlocked address.
+	ld [de], a                      ; Copy value of sMysteryGiftItem to sBackupMysteryGiftItem.
+  inc de
 	assert sMysteryGiftItem + 1 == sMysteryGiftUnlocked
 	assert sBackupMysteryGiftItem + 1 == sNumDailyMysteryGiftPartnerIDs
-	ld a, [hl]
+  ld a, [hl]
 	ld [de], a
 	jmp CloseSRAM
 
@@ -1235,10 +1235,10 @@ RestoreMysteryGift:
 	ld de, sMysteryGiftItem
 	ld a, [hli]
 	ld [de], a
-	inc de
+  inc de
 	assert sBackupMysteryGiftItem + 1 == sNumDailyMysteryGiftPartnerIDs
 	assert sMysteryGiftItem + 1 == sMysteryGiftUnlocked
-	ld a, [hl]
+  ld a, [hl]
 	ld [de], a
 	jmp CloseSRAM
 
