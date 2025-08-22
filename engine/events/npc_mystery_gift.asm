@@ -219,9 +219,7 @@ DoNPCMysteryGift::
 	ld b, SCGB_DIPLOMA
 	call GetSGBLayout
 	call SetDefaultBGPAndOBP
-  ; TODO: delay frames didn't seem to fix the issue with the side-sprites replacing the border graphics.
-  ld c, 40
-	call DelayFrames
+  farcall LoadFonts_NoOAMUpdate ; load font so NPC graphics don't replace border graphics
   pop hl
 
 	call PrintText
