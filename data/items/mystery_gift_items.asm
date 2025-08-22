@@ -6,13 +6,13 @@ MysteryGiftItems:
 	dw ICE_BERRY      ; 3
 	dw BURNT_BERRY    ; 4
 	dw PSNCUREBERRY   ; 5
-	dw GUARD_SPEC     ; 6
-	dw X_DEFEND       ; 7
-	dw X_ATTACK       ; 8
+	dw GUARD_SPEC     ; 6  TODO: Replace
+	dw X_DEFEND       ; 7  TODO: Replace
+	dw X_ATTACK       ; 8  TODO: Replace
 	dw BITTER_BERRY   ; 9
-	dw DIRE_HIT       ; 10
-	dw X_SPECIAL      ; 11
-	dw X_ACCURACY     ; 12
+	dw DIRE_HIT       ; 10 TODO: Replace
+	dw X_SPECIAL      ; 11 TODO: Replace
+	dw X_ACCURACY     ; 12 TODO: Replace
 	dw EON_MAIL       ; 13
 	dw MORPH_MAIL     ; 14
 	dw MUSIC_MAIL     ; 15
@@ -20,18 +20,18 @@ MysteryGiftItems:
 	dw MIRACLEBERRY   ; 16
 	dw GOLD_BERRY     ; 17
 	dw REVIVE         ; 18
-	dw GREAT_BALL     ; 19
-	dw SUPER_REPEL    ; 20
-	dw MAX_REPEL      ; 21
+	dw WATER_STONE    ; 19
+	dw FIRE_STONE     ; 20
+	dw LEAF_STONE     ; 21
 	dw ELIXER         ; 22
-	dw ETHER          ; 23
+	dw THUNDERSTONE   ; 23
   ; Rare items (index 24-31)
-	dw WATER_STONE    ; 24
-	dw FIRE_STONE     ; 25
-	dw LEAF_STONE     ; 26
-	dw THUNDERSTONE   ; 27
-	dw MAX_ETHER      ; 28
-	dw MAX_ELIXER     ; 29
+	dw KINGS_ROCK     ; 24
+	dw METAL_COAT     ; 25
+	dw DRAGON_SCALE   ; 26
+	dw UP_GRADE       ; 27
+	dw MOON_STONE     ; 28
+	dw SUN_STONE      ; 29
 	dw MAX_REVIVE     ; 30
 	dw SCOPE_LENS     ; 31
   ; Super rare items (index 32-33)
