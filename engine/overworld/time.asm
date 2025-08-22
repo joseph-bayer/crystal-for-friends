@@ -224,7 +224,7 @@ _CheckLuckyNumberShowFlag:
 	ld hl, wLuckyNumberDayTimer
 	jmp CheckDayDependentEventHL
 
-DoMysteryGiftIfDayHasPassed:
+DoMysteryGiftIfDayHasPassed::
 	ld a, BANK(sMysteryGiftTimer)
 	call OpenSRAM
 	ld hl, sMysteryGiftTimer

@@ -1,9 +1,7 @@
-; TODO: pass NPC name and an MG_NPC ID to script
-
 ; NPC Mystery Gift Screen
 ; This file implements an NPC-triggered mystery gift screen that can be called from the overworld
 
-NPCMysteryGiftScreen::
+DoNPCMysteryGift::
 	; Stop updating Sprite positions and set all bg palettes to black/empty
 	call DisableSpriteUpdates
 	call ClearBGPalettes
@@ -66,17 +64,23 @@ NPCMysteryGiftScreen::
 	ret
 
 .pressed_b
-  jr .MysteryGiftCanceled
+  jp .MysteryGiftCanceled
 
 .pressed_a
-  ; TODO: Check if player has a pending myster gift item with the man on the second floor of the pokecenter
-  ; TODO: Check if player has mystery gifted with this NPC today
-  ; TODO: Check if player has already mystery gifted with NPCs 5 times today
-
+	call .CheckAlreadyGotAGiftFromThatPerson
+	ld hl, .MysteryGiftOneADayText ; Only one gift a day per person
+	jmp c, .PrintTextAndExit
+  ; Check if you have a pending gift
+  call GetMysteryGiftBank
+  ld a, [sMysteryGiftItem] 
+  call CloseSRAM
+	and a
+	jp nz, .GiftWaiting ; If yes, tell player to get it first
 ; fall through
-
 .SendGift:
-; update wMysteryGiftPartnerName
+  call .AddMysteryGiftPartnerID
+
+  ; update wMysteryGiftPartnerName
   ld hl, MysteryGiftNPCNames ; store pointer to Mystery Gift NPC name table
   ld a, [wScriptVar] ; get the Mystery Gift NPC ID/Index from wScriptVar
 
@@ -114,8 +118,8 @@ NPCMysteryGiftScreen::
   ld de, wMysteryGiftPlayerName
   rst CopyBytes
 
-	ld hl, .MysteryGiftSentHomeText ; sent decoration to home TODO:
-	jr .PrintTextAndExit
+	ld hl, .MysteryGiftSentHomeText ; sent decoration to home
+	jp .PrintTextAndExit
 
 .SentItem
   ; Get Item name into wStringBuffer1
@@ -126,6 +130,7 @@ NPCMysteryGiftScreen::
   farcall MysteryGiftGetItem
   ld a, c
 	ld [sBackupMysteryGiftItem], a
+	ld [wMysteryGiftPlayerBackupItem], a
   ld [sMysteryGiftItem], a
 	ld [wNamedObjectIndex], a
 	call CloseSRAM
@@ -150,6 +155,62 @@ NPCMysteryGiftScreen::
 	text_far _MysteryGiftSentHomeText
 	text_end
 
+.RetrieveMysteryGiftText:
+	text_far _RetrieveMysteryGiftText
+	text_end
+
+.MysteryGiftOneADayText:
+	text_far _MysteryGiftOneADayText
+	text_end
+
+.GiftWaiting:
+	ld hl, .RetrieveMysteryGiftText ; receive gift at counter
+	jr .PrintTextAndExit
+
+.CheckAlreadyGotAGiftFromThatPerson:
+	call GetMysteryGiftBank
+	ld a, 0
+	ld b, a
+	ld a, [wScriptVar] ; HACK: store Mystery Gift NPC ID/Index from wScriptVar in wMysteryGiftPartnerID. Could be an issue if you mystery gift with a real person with a id of 0, 1, 2, 3, etc. (low numbers)
+	ld c, a
+	ld a, [sNumDailyMysteryGiftPartnerIDs]
+	ld d, a
+	ld hl, sDailyMysteryGiftPartnerIDs
+.loop
+	ld a, d
+	and a
+	jr z, .No
+	ld a, [hli]
+	cp b
+	jr nz, .skip
+	ld a, [hl]
+	cp c
+	jr z, .Yes
+.skip
+	inc hl
+	dec d
+	jr .loop
+.Yes:
+	scf
+.No:
+	jmp CloseSRAM
+
+.AddMysteryGiftPartnerID:
+	call GetMysteryGiftBank
+  ld hl, sNumDailyMysteryGiftPartnerIDs
+	ld a, [hl]
+	inc [hl]
+	ld hl, sDailyMysteryGiftPartnerIDs ; could have done "inc hl" instead
+	ld e, a
+	ld d, 0
+	add hl, de
+	add hl, de
+	ld a, 0
+	ld [hli], a
+	ld a, [wScriptVar] ; HACK: store Mystery Gift NPC ID/Index from wScriptVar in sDailyMysteryGiftPartnerIDs. Could be an issue if you mystery gift with a real person with a id of 0, 1, 2, 3, etc. (low numbers)
+	ld [hl], a
+	jmp CloseSRAM
+
 .PrintTextAndExit:
   ; Clear screen so we can just show a textbox
   push hl
@@ -158,7 +219,8 @@ NPCMysteryGiftScreen::
 	ld b, SCGB_DIPLOMA
 	call GetSGBLayout
 	call SetDefaultBGPAndOBP
-  ld c, 8
+  ; TODO: delay frames didn't seem to fix the issue with the side-sprites replacing the border graphics.
+  ld c, 40
 	call DelayFrames
   pop hl
 

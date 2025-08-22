@@ -2424,11 +2424,13 @@ Script_givepokemove:
 	ret
 
 Script_domysterygift:
+  farcall DoMysteryGiftIfDayHasPassed
+
 	; Read NPC ID (1 byte)
 	rst GetScriptByte
 	; Store ID in wScriptVar (8-bit)
 	ld [wScriptVar], a
 	
 	; Call the enhanced mystery gift function
-	farcall NPCMysteryGiftScreen
+	farcall DoNPCMysteryGift
 	ret
