@@ -4,7 +4,7 @@
 	const CHERRYGROVECITY_TEACHER
 	const CHERRYGROVECITY_YOUNGSTER
 	const CHERRYGROVECITY_FISHER
-	const CHERRYGROVECITY_MYSTERY_GIFT_NPC
+	; const CHERRYGROVECITY_MYSTERY_GIFT_NPC
 
 CherrygroveCity_MapScripts:
 	def_scene_scripts
@@ -224,25 +224,25 @@ MysticWaterGuy:
 	closetext
 	end
 
-MysteryGiftDemoNPC:
-	faceplayer
-	opentext
-	writetext MysteryGiftDemoNPCText
-	yesorno
-	iffalse .declined
-	closetext
-  domysterygift NPC_MYSTERY_GIFT_NPC_CHARLIE
-	opentext
-	writetext MysteryGiftDemoNPCExitText
-	waitbutton
-	closetext
-	end
+; MysteryGiftDemoNPC:
+; 	faceplayer
+; 	opentext
+; 	writetext MysteryGiftDemoNPCText
+; 	yesorno
+; 	iffalse .declined
+; 	closetext
+;   domysterygift NPC_MYSTERY_GIFT_NPC_CHARLIE
+; 	opentext
+; 	writetext MysteryGiftDemoNPCExitText
+; 	waitbutton
+; 	closetext
+; 	end
 
-.declined:
-	writetext MysteryGiftDemoNPCDeclinedText
-	waitbutton
-	closetext
-	end
+; .declined:
+; 	writetext MysteryGiftDemoNPCDeclinedText
+; 	waitbutton
+; 	closetext
+; 	end
 
 CherrygroveCitySign:
 	jumptext CherrygroveCitySignText
@@ -549,32 +549,32 @@ MysticWaterGuyTextAfter:
 	line "for me, then."
 	done
 
-MysteryGiftDemoNPCText:
-	text "Hello there!"
-	line "I have something"
-	cont "special to show"
-	cont "you!"
+; MysteryGiftDemoNPCText:
+; 	text "Hello there!"
+; 	line "I have something"
+; 	cont "special to show"
+; 	cont "you!"
 
-	para "Would you like to"
-	line "see the MYSTERY"
-	cont "GIFT system?"
-	done
+; 	para "Would you like to"
+; 	line "see the MYSTERY"
+; 	cont "GIFT system?"
+; 	done
 
-MysteryGiftDemoNPCExitText:
-	text "Pretty cool,"
-	line "right?"
+; MysteryGiftDemoNPCExitText:
+; 	text "Pretty cool,"
+; 	line "right?"
 
-	para "That's how the"
-	line "MYSTERY GIFT"
-	cont "screen works!"
-	done
+; 	para "That's how the"
+; 	line "MYSTERY GIFT"
+; 	cont "screen works!"
+; 	done
 
-MysteryGiftDemoNPCDeclinedText:
-	text "Oh, okay!"
-	line "Come back anytime"
-	cont "if you want to"
-	cont "see it!"
-	done
+; MysteryGiftDemoNPCDeclinedText:
+; 	text "Oh, okay!"
+; 	line "Come back anytime"
+; 	cont "if you want to"
+; 	cont "see it!"
+; 	done
 
 CherrygroveCitySignText:
 	text "CHERRYGROVE CITY"
@@ -613,4 +613,4 @@ CherrygroveCity_MapEvents:
 	object_event 27, 12, SPRITE_TEACHER, SPRITEMOVEDATA_WALK_LEFT_RIGHT, 1, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, CherrygroveTeacherScript, -1
 	object_event 23,  7, SPRITE_YOUNGSTER, SPRITEMOVEDATA_WALK_LEFT_RIGHT, 1, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, CherrygroveYoungsterScript, -1
 	object_event  7, 12, SPRITE_FISHER, SPRITEMOVEDATA_STANDING_RIGHT, 0, 0, -1, -1, PAL_NPC_GREEN, OBJECTTYPE_SCRIPT, 0, MysticWaterGuy, -1
-	object_event 30,  6, SPRITE_SCIENTIST, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_GREEN, OBJECTTYPE_SCRIPT, 0, MysteryGiftDemoNPC, -1
+	; object_event 30,  6, SPRITE_SCIENTIST, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_GREEN, OBJECTTYPE_SCRIPT, 0, MysteryGiftDemoNPC, -1
