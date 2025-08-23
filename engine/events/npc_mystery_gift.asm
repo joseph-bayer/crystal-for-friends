@@ -72,7 +72,7 @@ DoNPCMysteryGift::
 	jmp c, .PrintTextAndExit
   ; Check if you have a pending gift
   call GetMysteryGiftBank
-  ld a, [sMysteryGiftItem] 
+  ld a, [sMysteryGiftItem]
   call CloseSRAM
 	and a
 	jp nz, .GiftWaiting ; If yes, tell player to get it first
@@ -104,6 +104,7 @@ DoNPCMysteryGift::
 	farcall MysteryGiftGetDecoration
 	push bc
 	farcall CheckAndSetMysteryGiftDecorationAlreadyReceived
+  farcall CopyMysteryGiftReceivedDecorationsToPC
 	pop bc
 	jr nz, .SentItem
 ; keep the decoration if it wasn't already received
@@ -129,7 +130,7 @@ DoNPCMysteryGift::
   ld c, a
   farcall MysteryGiftGetItem
   ld a, c
-	ld [sBackupMysteryGiftItem], a
+  ld [sBackupMysteryGiftItem], a
 	ld [wMysteryGiftPlayerBackupItem], a
   ld [sMysteryGiftItem], a
 	ld [wNamedObjectIndex], a
