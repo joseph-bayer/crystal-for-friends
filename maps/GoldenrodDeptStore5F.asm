@@ -104,18 +104,14 @@ GoldenrodDeptStore5FReceptionistScript:
 Carrie:
 	faceplayer
 	opentext
-	special GameboyCheck
-	ifnotequal GBCHECK_CGB, .NotGBC ; This is a dummy check from Gold/Silver
 	writetext GoldenrodDeptStore5FCarrieMysteryGiftExplanationText
 	waitbutton
 	closetext
-	special UnlockMysteryGift
-	end
-
-.NotGBC:
-	writetext GoldenrodDeptStore5FCarrieMysteryGiftRequiresGBCText
-	waitbutton
-	closetext
+	domysterygift NPC_MYSTERY_GIFT_NPC_CARRIE
+  opentext
+  writetext GoldenrodDeptStore5FCarrieMysteryGiftExitText
+  waitbutton
+  closetext
 	end
 
 GoldenrodDeptStore5FLassScript:
@@ -181,11 +177,12 @@ GoldenrodDeptStore5FCarrieMysteryGiftExplanationText:
 	cont "get a gift."
 	done
 
-GoldenrodDeptStore5FCarrieMysteryGiftRequiresGBCText:
-	text "The MYSTERY GIFT"
-	line "option requires a"
-	cont "Game Boy Color."
-	done
+GoldenrodDeptStore5FCarrieMysteryGiftExitText:
+  text "Get anything good?"
+
+  para "Come back again"
+  line "tomorrow!"
+  done
 
 GoldenrodDeptStore5FLassText:
 	text "On Sundays, a lady"
