@@ -11,6 +11,7 @@ DerekPhoneCalleeScript:
 	ifequal TUESDAY, .ContestToday
 	ifequal THURSDAY, .ContestToday
 	ifequal SATURDAY, .ContestToday
+	ifequal SUNDAY, .ContestToday
 
 .NoContest:
 	farsjump DerekHangUpScript
@@ -33,6 +34,7 @@ DerekPhoneCallerScript:
 	ifequal TUESDAY, .ContestToday
 	ifequal THURSDAY, .ContestToday
 	ifequal SATURDAY, .ContestToday
+	ifequal SUNDAY, .ContestToday
 
 .NoContest:
 	farscall PhoneScript_Random4

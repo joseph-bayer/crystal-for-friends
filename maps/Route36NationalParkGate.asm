@@ -49,6 +49,7 @@ Route36NationalParkGateCheckIfContestAvailableCallback:
 	ifequal TUESDAY, .SetContestOfficer
 	ifequal THURSDAY, .SetContestOfficer
 	ifequal SATURDAY, .SetContestOfficer
+  ifequal SUNDAY, .SetContestOfficer
 	checkflag ENGINE_BUG_CONTEST_TIMER
 	iftrue .SetContestOfficer
 	disappear ROUTE36NATIONALPARKGATE_OFFICER1
@@ -140,7 +141,6 @@ Route36NationalParkGateLeavingContestEarlyScript:
 
 Route36OfficerScriptContest:
 	readvar VAR_WEEKDAY
-	ifequal SUNDAY, _ContestNotOn
 	ifequal MONDAY, _ContestNotOn
 	ifequal WEDNESDAY, _ContestNotOn
 	ifequal FRIDAY, _ContestNotOn

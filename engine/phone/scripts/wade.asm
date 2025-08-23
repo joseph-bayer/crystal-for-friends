@@ -21,6 +21,7 @@ WadePhoneCalleeScript:
 	ifequal TUESDAY, .ContestToday
 	ifequal THURSDAY, .ContestToday
 	ifequal SATURDAY, .ContestToday
+	ifequal SUNDAY, .ContestToday
 
 .NoContest:
 	farsjump WadeNoBerriesScript
@@ -47,6 +48,7 @@ WadePhoneCallerScript:
 	ifequal TUESDAY, .ContestToday
 	ifequal THURSDAY, .ContestToday
 	ifequal SATURDAY, .ContestToday
+	ifequal SUNDAY, .ContestToday
 
 .NoContest:
 	checkflag ENGINE_WADE_READY_FOR_REMATCH

@@ -38,6 +38,7 @@ Route35NationalParkGateCheckIfContestAvailableCallback:
 	ifequal TUESDAY, .SetContestOfficer
 	ifequal THURSDAY, .SetContestOfficer
 	ifequal SATURDAY, .SetContestOfficer
+  ifequal SUNDAY, .SetContestOfficer
 	checkflag ENGINE_BUG_CONTEST_TIMER
 	iftrue Route35NationalParkBugContestIsRunningScript
 	disappear ROUTE35NATIONALPARKGATE_OFFICER1
@@ -79,7 +80,6 @@ Route35NationalParkGateLeavingContestEarlyScript:
 
 Route35OfficerScriptContest:
 	readvar VAR_WEEKDAY
-	ifequal SUNDAY, Route35NationalParkGate_NoContestToday
 	ifequal MONDAY, Route35NationalParkGate_NoContestToday
 	ifequal WEDNESDAY, Route35NationalParkGate_NoContestToday
 	ifequal FRIDAY, Route35NationalParkGate_NoContestToday
@@ -420,7 +420,8 @@ BugCatchingContestExplanationText:
 	line "Contest is held on"
 
 	para "Tuesday, Thursday"
-	line "and Saturday."
+	line "Saturday, and"
+  cont "Sunday."
 
 	para "Not only do you"
 	line "earn a prize just"
