@@ -80,7 +80,7 @@ SilphCoCharlieText_ExitText:
   line "invaluable!"
 
   para "Please, come back"
-  line "again tomorrow."
+  line "again tomorrow!"
   done
 
 SilphCo1F_MapEvents:

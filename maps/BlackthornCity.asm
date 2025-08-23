@@ -4,7 +4,7 @@
 	const BLACKTHORNCITY_GRAMPS1
 	const BLACKTHORNCITY_GRAMPS2
 	const BLACKTHORNCITY_BLACK_BELT
-	const BLACKTHORNCITY_COOLTRAINER_F1
+	const BLACKTHORNCITY_KIM
 	const BLACKTHORNCITY_YOUNGSTER1
 	const BLACKTHORNCITY_SANTOS
 	const BLACKTHORNCITY_COOLTRAINER_F2
@@ -76,8 +76,18 @@ BlackthornBlackBeltScript:
 	closetext
 	end
 
-BlackthornCooltrainerF1Script:
-	jumptextfaceplayer BlackthornCooltrainerF1Text
+BlackthornKimScript:
+	faceplayer
+  opentext
+  writetext BlackthornCityKim_OfferMysteryGiftText
+  waitbutton
+  closetext
+  domysterygift NPC_MYSTERY_GIFT_NPC_KIM
+  opentext
+  writetext BlackthornCityKim_ExitText
+  waitbutton
+  closetext
+  end
 
 BlackthornYoungsterScript:
 	jumptextfaceplayer BlackthornYoungsterText
@@ -212,11 +222,21 @@ BlackBeltText_VoicesInMyHead:
 	line "to my radio!"
 	done
 
-BlackthornCooltrainerF1Text:
-	text "Are you going to"
-	line "make your #MON"
-	cont "forget some moves?"
+BlackthornCityKim_OfferMysteryGiftText:
+	text "I love collecting"
+	line "#MON dolls."
+
+  para "They're so cute!"
 	done
+
+BlackthornCityKim_ExitText:
+  text "I won't stop until"
+  line "I have them all!"
+
+  para "Pretty-please come"
+  line "back again"
+  cont "tomorrow!"
+  done
 
 BlackthornYoungsterText:
 	text "Dragon masters all"
@@ -340,7 +360,7 @@ BlackthornCity_MapEvents:
 	object_event 20,  2, SPRITE_GRAMPS, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, BlackthornGramps1Script, EVENT_BLACKTHORN_CITY_GRAMPS_BLOCKS_DRAGONS_DEN
 	object_event 21,  2, SPRITE_GRAMPS, SPRITEMOVEDATA_STANDING_LEFT, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, BlackthornGramps2Script, EVENT_BLACKTHORN_CITY_GRAMPS_NOT_BLOCKING_DRAGONS_DEN
 	object_event 24, 31, SPRITE_BLACK_BELT, SPRITEMOVEDATA_WALK_LEFT_RIGHT, 1, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, BlackthornBlackBeltScript, -1
-	object_event  9, 25, SPRITE_COOLTRAINER_F, SPRITEMOVEDATA_WALK_LEFT_RIGHT, 2, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, BlackthornCooltrainerF1Script, -1
+	object_event  9, 25, SPRITE_COOLTRAINER_F, SPRITEMOVEDATA_WALK_LEFT_RIGHT, 2, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, BlackthornKimScript, -1
 	object_event 13, 15, SPRITE_YOUNGSTER, SPRITEMOVEDATA_WALK_LEFT_RIGHT, 1, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, BlackthornYoungsterScript, -1
 	object_event 22, 20, SPRITE_YOUNGSTER, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, SantosScript, EVENT_BLACKTHORN_CITY_SANTOS_OF_SATURDAY
 	object_event 35, 19, SPRITE_COOLTRAINER_F, SPRITEMOVEDATA_STANDING_UP, 0, 0, -1, -1, PAL_NPC_GREEN, OBJECTTYPE_SCRIPT, 0, BlackthornCooltrainerF2Script, -1
