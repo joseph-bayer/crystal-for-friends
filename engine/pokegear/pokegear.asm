@@ -1993,7 +1993,39 @@ _FlyMap:
 	ld a, [hl]
 	and PAD_DOWN
 	jr nz, .ScrollPrev
+
+  ; Check if you've visited KANTO to determine if LEFT/RIGHT swap maps
+  push hl
+  ld c, SPAWN_INDIGO
+  call HasVisitedSpawn
+  pop hl
+  and a
+  jr z, .done
+  
+
+  ld a, [hl]
+  and PAD_LEFT
+  jr nz, .SwapToJohtoRegionMap
+  ld a, [hl]
+  and PAD_RIGHT
+  jr nz, .SwapToKantoRegionMap
+.done
 	ret
+
+; TODO: transition between maps should be smoother
+.SwapToJohtoRegionMap
+  call ClearSprites
+  farcall ClearSpriteAnims
+  ld a, JOHTO_LANDMARK
+  jp LoadMapForRegion
+  jr .Finally
+
+.SwapToKantoRegionMap
+  call ClearSprites
+  farcall ClearSpriteAnims
+  ld a, KANTO_LANDMARK
+  jp LoadMapForRegion
+  jr .Finally
 
 .ScrollNext:
 	ld hl, wTownMapPlayerIconLandmark
@@ -2146,13 +2178,17 @@ FlyMap:
 ; If we're not in a valid location, i.e. Pokecenter floor 2F,
 ; the backup map information is used.
 	cp LANDMARK_SPECIAL
-	jr nz, .CheckRegion
+	jr nz, LoadMapForRegion
 	ld a, [wBackupMapGroup]
 	ld b, a
 	ld a, [wBackupMapNumber]
 	ld c, a
 	call GetWorldMapLocation
-.CheckRegion:
+  jr LoadMapForRegion
+  ret
+
+; a = location in region that player would like to display the map of
+LoadMapForRegion:
 ; The first 46 locations are part of Johto. The rest are in Kanto.
 	cp KANTO_LANDMARK
 	jr nc, .KantoFlyMap
@@ -2168,6 +2204,28 @@ FlyMap:
 	call FillJohtoMap
 	call .MapHud
 	pop af
+
+  ; Don't show player icon if player is in Kanto
+  call IsInJohto
+  and a
+  ret nz
+
+  ; Load Player Position on Map into A
+  ld a, [wMapGroup]
+	ld b, a
+	ld a, [wMapNumber]
+	ld c, a
+	call GetWorldMapLocation
+  ; If we're not in a valid location, i.e. Pokecenter floor 2F,
+  ; the backup map information is used.
+	cp LANDMARK_SPECIAL
+	jr nz, .DoneJohto
+	ld a, [wBackupMapGroup]
+	ld b, a
+	ld a, [wBackupMapNumber]
+	ld c, a
+	call GetWorldMapLocation
+.DoneJohto
 	jmp TownMapPlayerIcon
 
 .KantoFlyMap:
@@ -2194,6 +2252,28 @@ FlyMap:
 	call FillKantoMap
 	call .MapHud
 	pop af
+
+  ; Don't show player icon if player is in Johto
+  call IsInJohto
+  and a
+  ret z
+
+  ; Load Player Position on Map into A
+  ld a, [wMapGroup]
+	ld b, a
+	ld a, [wMapNumber]
+	ld c, a
+	call GetWorldMapLocation
+  ; If we're not in a valid location, i.e. Pokecenter floor 2F,
+  ; the backup map information is used.
+	cp LANDMARK_SPECIAL
+	jr nz, .DoneKanto
+	ld a, [wBackupMapGroup]
+	ld b, a
+	ld a, [wBackupMapNumber]
+	ld c, a
+	call GetWorldMapLocation
+.DoneKanto
 	jmp TownMapPlayerIcon
 
 .NoKanto:

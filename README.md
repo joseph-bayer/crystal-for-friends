@@ -55,6 +55,17 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
     |----------------|-------------------|
     | Same species | 50% |
     | Different species | 25% |
+- Mystery Gift with various NPCs
+  - Improved rarity distribution - Uncommon, rare, and super rare items appear more often
+  - All evolution items can be obtained from Mystery Gifting with NPCs
+  - Locations
+    - Carrie (Goldenrod Dept. Store 5f)
+    - Kim (Blackthorn City)
+    - Charlie (Silph Co. 1f)
+    - TODO: Pocky
+  - Limit once per day, per NPC
+- Bug Catching Contest now appears on Sundays as well (on top of Tuesdays, Thursdays, and Saturdays)
+- Turn around after healing in the Pokecenter so you don't accidentally heal again
 - Minor update to Goldenrod layout so it's easier to get to the underground and the bike shop
 
 Below, you will find the original readme for the CrystalShireEngine
