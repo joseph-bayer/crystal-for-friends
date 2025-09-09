@@ -800,8 +800,8 @@ OTString:
 	db "OT/@"
 
 StatsScreen_PlaceFrontpic:
-	ld hl, wTempMonDVs
-	predef GetUnownLetter
+	ld a, [wTempMonForm]
+	ld [wForm], a
 	call StatsScreen_GetAnimationParam
 	jr c, .egg
 	and a
@@ -840,7 +840,7 @@ StatsScreen_PlaceFrontpic:
 		cp HIGH(UNOWN)
 	endc
 	jmp nz, PrepMonFrontpic
-	xor a
+	xor a ; box alignment is 0 for unown
 	ld [wBoxAlignment], a
 	jmp _PrepMonFrontpic
 

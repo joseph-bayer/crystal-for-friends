@@ -1873,26 +1873,35 @@ Script_checkphonecall:
 	ret
 
 Script_givepoke:
+	; Load species
 	call LoadScriptPokemonID
 	ld [wCurPartySpecies], a
+	; Load level
 	rst GetScriptByte
 	ld [wCurPartyLevel], a
+	; Load item
 	rst GetScriptByte
 	ld l, a
 	rst GetScriptByte
 	ld h, a
 	call GetItemIDFromIndex
 	ld [wCurItem], a
+	; Check if Trainer flag is set to TRUE (1) or FALSE (0)
 	rst GetScriptByte
 	and a
 	ld b, a
-	jr z, .ok
-	ld hl, wScriptPos
+	jr z, .ok ; if false, skip next part
+
+	; Trainer data is present. Save pointer to
+	ld hl, wScriptPos 
 	ld a, [hli]
 	ld d, [hl]
 	ld e, a
+
+	; Walk over the nickname pointer (two bytes)
 	rst GetScriptByte
 	rst GetScriptByte
+	; Walk over the ot name pointer (two bytes)
 	rst GetScriptByte
 	rst GetScriptByte
 .ok

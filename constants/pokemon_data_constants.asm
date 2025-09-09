@@ -86,7 +86,8 @@ DEF MON_DEF_EV             rb
 DEF MON_SPD_EV             rb
 DEF MON_SAT_EV             rb
 DEF MON_SDF_EV             rb
-                           rb_skip 3
+                           rb_skip 2
+DEF MON_FORM               rb    ; new byte for pokemon form
 DEF MON_CAUGHTBALL         rb    ; new byte for pokeball type
 DEF MON_DVS                rw
 DEF MON_PP                 rb NUM_MOVES
@@ -133,7 +134,8 @@ DEF SAVEMON_DEF_EV             rb
 DEF SAVEMON_SPD_EV             rb
 DEF SAVEMON_SAT_EV             rb
 DEF SAVEMON_SDF_EV             rb
-                               rb_skip 3
+                               rb_skip 2
+DEF SAVEMON_FORM               rb    ; new byte for pokemon form
 DEF SAVEMON_CAUGHTBALL         rb    ; new byte for pokeball type
 DEF SAVEMON_DVS                rw
 ; savemon_struct is identical to party_struct before this point
@@ -215,8 +217,8 @@ DEF MIN_MONDB_SLACK EQU 10
 DEF NUM_BOXES       EQU (MONDB_ENTRIES * 2 - MIN_MONDB_SLACK) / MONS_PER_BOX ; 15
 
 ; hall of fame
-; hof_mon: species, id, dvs, level, nicknames
-DEF HOF_MON_LENGTH EQU 2 + 2 + 2 + 1 + (MON_NAME_LENGTH - 1)
+; hof_mon: species, id, form, dvs, level, nicknames
+DEF HOF_MON_LENGTH EQU 2 + 2 + 1 + 2 + 1 + (MON_NAME_LENGTH - 1)
 ; hall_of_fame: win count, party, terminator
 DEF HOF_LENGTH EQU 1 + HOF_MON_LENGTH * PARTY_LENGTH + 2
 DEF NUM_HOF_TEAMS EQU 30

@@ -494,6 +494,9 @@ PokeBallEffect:
 	ld [wCurPartySpecies], a
 	ld a, [wEnemyMonLevel]
 	ld [wCurPartyLevel], a
+	ld a, [wEnemyMonForm]
+	ld [wForm], a
+
 	farcall LoadEnemyMon
 
 	pop af
@@ -510,6 +513,10 @@ PokeBallEffect:
 	dec hl
 	pop af
 	ld [hl], a
+
+	; Reapply form since LoadEnemyMon 0'd it out
+	ld a, [wForm]
+	ld [wEnemyMonForm], a
 
 	ld hl, wEnemySubStatus5
 	bit SUBSTATUS_TRANSFORMED, [hl]

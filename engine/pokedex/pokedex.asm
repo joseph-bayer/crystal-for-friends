@@ -1418,7 +1418,7 @@ Pokedex_DrawUnownModeBG:
 	ld hl, wUnownDex
 	add hl, de
 	ld a, [hl]
-	and a
+	cp -1
 	jr z, .done
 	push af
 	ld hl, UnownModeLetterAndCursorCoords
@@ -1429,7 +1429,7 @@ endr
 	ld h, [hl]
 	ld l, a
 	pop af
-	add FIRST_UNOWN_CHAR - 1 ; Unown A
+	add FIRST_UNOWN_CHAR ; Unown A
 	ld [hl], a
 	inc de
 	inc b
@@ -2634,8 +2634,9 @@ Pokedex_LoadSelectedMonTiles:
 	call Pokedex_GetSelectedMon
 	call Pokedex_CheckSeen
 	jr z, .QuestionMark
-	ld a, [wFirstUnownSeen]
-	ld [wUnownLetter], a
+	; ld a, [wFirstUnownSeen] ; TODO: show first unown seen in dex
+	xor a
+	ld [wForm], a
 	ld a, [wTempSpecies]
 	ld [wCurPartySpecies], a
 	call GetBaseData
@@ -2753,7 +2754,7 @@ Pokedex_LoadUnownFont:
 	jmp CloseSRAM
 
 Pokedex_LoadUnownFrontpicTiles:
-	ld a, [wUnownLetter]
+	ld a, [wForm]
 	push af
 	ld a, [wDexCurUnownIndex]
 	ld e, a
@@ -2761,7 +2762,7 @@ Pokedex_LoadUnownFrontpicTiles:
 	ld hl, wUnownDex
 	add hl, de
 	ld a, [hl]
-	ld [wUnownLetter], a
+	ld [wForm], a
 	ld hl, UNOWN
 	call GetPokemonIDFromIndex
 	ld [wCurPartySpecies], a
@@ -2771,7 +2772,7 @@ Pokedex_LoadUnownFrontpicTiles:
 	ld de, vTiles2 tile $00
 	predef GetMonFrontpic
 	pop af
-	ld [wUnownLetter], a
+	ld [wForm], a
 	ret
 
 _NewPokedexEntry:

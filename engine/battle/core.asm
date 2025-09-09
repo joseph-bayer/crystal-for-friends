@@ -3316,6 +3316,9 @@ LoadEnemyMonToSwitchTo:
 	ld [wCurPartySpecies], a
 	call LoadEnemyMon
 
+	ld a, [wEnemyMonForm]
+	ld [wForm], a
+
 	ld a, [wCurPartySpecies]
 	call GetPokemonIndexFromID
 	ld a, l
@@ -3333,11 +3336,10 @@ LoadEnemyMonToSwitchTo:
 	endc
 	jr nz, .skip_unown
 	ld a, [wFirstUnownSeen]
-	and a
+	cp -1
 	jr nz, .skip_unown
-	ld hl, wEnemyMonDVs
-	predef GetUnownLetter
-	ld a, [wUnownLetter]
+	ld a, [wEnemyMonForm]
+	ld [wForm], a
 	ld [wFirstUnownSeen], a
 .skip_unown
 
@@ -3741,14 +3743,29 @@ TryToRunAwayFromBattle:
 InitBattleMon:
 	ld a, MON_SPECIES
 	call GetPartyParamLocation
+
+	; Copy Species, item, and moves to battlemon
 	ld de, wBattleMonSpecies
 	ld bc, MON_OT_ID
 	rst CopyBytes
-	ld bc, MON_DVS - MON_OT_ID
+
+	; Skip EVs and padding to get to form
+	ld bc, MON_FORM - MON_OT_ID
 	add hl, bc
+	
+	; Copy form
+	ld a, [hl]
+	ld [wBattleMonForm], a
+	
+	; Advance to DVs
+	ld bc, MON_DVS - MON_FORM
+	add hl, bc
+	
+	; Copy from DVs to pokerus into battlemon
 	ld de, wBattleMonDVs
 	ld bc, MON_POKERUS - MON_DVS
 	rst CopyBytes
+
 	inc hl
 	inc hl
 	inc hl
@@ -3895,8 +3912,6 @@ SwitchPlayerMon:
 	ret
 
 SendOutPlayerMon:
-	ld hl, wBattleMonDVs
-	predef GetUnownLetter
 	hlcoord 1, 5
 	lb bc, 7, 8
 	call ClearBox
@@ -6023,6 +6038,7 @@ LoadEnemyMon:
 
 ; Species-specfic:
 
+; TODO: move this to the form section of this function
 ; Unown
 	ld a, [wTempEnemyMonSpecies]
 	call GetPokemonIndexFromID ; will be preserved for the Magikarp check
@@ -6043,11 +6059,16 @@ LoadEnemyMon:
 
 ; Get letter based on DVs
 	ld hl, wEnemyMonDVs
-	predef GetUnownLetter
+	predef GetUnownLetter ; Generate Random Unown Letter 0-25
 ; Can't use any letters that haven't been unlocked
 ; If combined with forced shiny battletype, causes an infinite loop
 	call CheckUnownLetter
 	jr c, .GenerateDVs ; try again
+
+	; Form is acceptable, store it
+	ld a, [wForm]
+	ld [wEnemyMonForm], a
+
 	jr .Happiness ; skip the Magikarp check
 
 .Magikarp:
@@ -6116,7 +6137,7 @@ LoadEnemyMon:
 ; Try again if length < 1024 mm (i.e. if HIGH(length) < 3 feet)
 	ld a, [wMagikarpLength]
 	cp 3
-	jr c, .GenerateDVs ; try again
+	jp c, .GenerateDVs ; try again
 
 ; Finally done with DVs
 
@@ -6207,6 +6228,9 @@ LoadEnemyMon:
 	dec hl
 	ld a, [hl] ; OTPartyMonStatus
 	ld [wEnemyMonStatus], a
+
+.Form:
+	; TODO: move the unown form generation here
 
 .Moves:
 	ld hl, wBaseType1
@@ -6367,7 +6391,7 @@ CheckUnownLetter:
 	ld l, a
 
 	push de
-	ld a, [wUnownLetter]
+	ld a, [wForm]
 	ld de, 1
 	push bc
 	call IsInArray
@@ -7847,8 +7871,8 @@ DropPlayerSub:
 	push af
 	ld a, [wBattleMonSpecies]
 	ld [wCurPartySpecies], a
-	ld hl, wBattleMonDVs
-	predef GetUnownLetter
+	ld a, [wBattleMonForm]
+	ld [wForm], a
 	ld de, vTiles2 tile $31
 	predef GetMonBackpic
 	pop af
@@ -7884,8 +7908,8 @@ DropEnemySub:
 	ld [wCurSpecies], a
 	ld [wCurPartySpecies], a
 	call GetBaseData
-	ld hl, wEnemyMonDVs
-	predef GetUnownLetter
+	ld a, [wEnemyMonForm]
+	ld [wForm], a
 	ld de, vTiles2
 	predef GetAnimatedFrontpic
 	pop af
@@ -8066,8 +8090,10 @@ InitEnemyWildmon:
 	ld de, wWildMonPP
 	ld bc, NUM_MOVES
 	rst CopyBytes
-	ld hl, wEnemyMonDVs
-	predef GetUnownLetter
+
+	ld a, [wEnemyMonForm]
+	ld [wForm], a
+
 	ld a, [wCurPartySpecies]
 	call GetPokemonIndexFromID
 	ld a, l
@@ -8085,9 +8111,9 @@ InitEnemyWildmon:
 	endc
 	jr nz, .skip_unown
 	ld a, [wFirstUnownSeen]
-	and a
+	cp -1
 	jr nz, .skip_unown
-	ld a, [wUnownLetter]
+	ld a, [wForm]
 	ld [wFirstUnownSeen], a
 .skip_unown
 	ld de, vTiles2

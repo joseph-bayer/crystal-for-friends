@@ -625,7 +625,9 @@ GetEggFrontpic:
 	call GetBaseData
 	ld a, MON_DVS
 	call GetPartyParamLocation
-	predef GetUnownLetter
+	; predef GetUnownLetter ; TODO: handle form passing when breeding
+	xor a
+	ld [wForm], a
 	pop de
 	predef_jump GetMonFrontpic
 
@@ -636,7 +638,9 @@ GetHatchlingFrontpic:
 	call GetBaseData
 	ld a, MON_DVS
 	call GetPartyParamLocation
-	predef GetUnownLetter
+	; predef GetUnownLetter ; TODO: handle form passing when breeding
+	xor a
+	ld [wForm], a
 	pop de
 	predef_jump GetAnimatedFrontpic
 

@@ -293,31 +293,44 @@ endc
 ; - UnownAnimationIdlePointers (see gfx/pokemon/unown_idle_pointers.asm)
 ; - UnownBitmasksPointers (see gfx/pokemon/unown_bitmask_pointers.asm)
 ; - UnownFramesPointers (see gfx/pokemon/unown_frame_pointers.asm)
-	const_def 1
-	const UNOWN_A ;  1
-	const UNOWN_B ;  2
-	const UNOWN_C ;  3
-	const UNOWN_D ;  4
-	const UNOWN_E ;  5
-	const UNOWN_F ;  6
-	const UNOWN_G ;  7
-	const UNOWN_H ;  8
-	const UNOWN_I ;  9
-	const UNOWN_J ; 10
-	const UNOWN_K ; 11
-	const UNOWN_L ; 12
-	const UNOWN_M ; 13
-	const UNOWN_N ; 14
-	const UNOWN_O ; 15
-	const UNOWN_P ; 16
-	const UNOWN_Q ; 17
-	const UNOWN_R ; 18
-	const UNOWN_S ; 19
-	const UNOWN_T ; 20
-	const UNOWN_U ; 21
-	const UNOWN_V ; 22
-	const UNOWN_W ; 23
-	const UNOWN_X ; 24
-	const UNOWN_Y ; 25
-	const UNOWN_Z ; 26
-DEF NUM_UNOWN EQU const_value - 1 ; 26
+	const_def 0 ; Note that forms are now 0-indexed
+	const UNOWN_A ;  0
+	const UNOWN_B ;  1
+	const UNOWN_C ;  2
+	const UNOWN_D ;  3
+	const UNOWN_E ;  4
+	const UNOWN_F ;  5
+	const UNOWN_G ;  6
+	const UNOWN_H ;  7
+	const UNOWN_I ;  8
+	const UNOWN_J ;  9
+	const UNOWN_K ; 10
+	const UNOWN_L ; 11
+	const UNOWN_M ; 12
+	const UNOWN_N ; 13
+	const UNOWN_O ; 14
+	const UNOWN_P ; 15
+	const UNOWN_Q ; 16
+	const UNOWN_R ; 17
+	const UNOWN_S ; 18
+	const UNOWN_T ; 19
+	const UNOWN_U ; 20
+	const UNOWN_V ; 21
+	const UNOWN_W ; 22
+	const UNOWN_X ; 23
+	const UNOWN_Y ; 24
+	const UNOWN_Z ; 25
+DEF NUM_UNOWN EQU const_value ; 26
+
+; Pikachu forms
+; indexes for:
+; - PikachuPicPointers (see data/pokemon/pikachu_pic_pointers.asm)
+; - PikachuAnimationPointers (see gfx/pokemon/pikachu_anim_pointers.asm)
+; - PikachuAnimationIdlePointers (see gfx/pokemon/pikachu_idle_pointers.asm)
+; - PikachuBitmasksPointers (see gfx/pokemon/pikachu_bitmask_pointers.asm)
+; - PikachuFramesPointers (see gfx/pokemon/pikachu_frame_pointers.asm)
+; - PikachuDimensionsPointers (see gfx/pokemon/pikachu_dimensions_pointers.asm)
+  const_def 0 ; Note that forms are now 0-indexed
+  const PIKACHU_PLAIN_FORM  ; 0
+  const PIKACHU_SURF_FORM   ; 1
+DEF NUM_PIKACHU_FORMS EQU const_value ; 2

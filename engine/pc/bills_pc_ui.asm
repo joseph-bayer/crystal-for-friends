@@ -999,8 +999,9 @@ _GetCursorMon:
 	; Prepare frontpic. Split into decompression + loading to make sure we
 	; refresh the pokepic and the palette in a single frame (decompression
 	; is unpredictable, but bpp copy can be relied upon).
-	ld hl, wBufferMonDVs
-	predef GetUnownLetter
+	ld a, [wBufferMonForm]
+	ld [wForm], a
+
 	ld a, [wBufferMonAltSpecies]
 	ld [wCurPartySpecies], a
 	ld [wCurSpecies], a

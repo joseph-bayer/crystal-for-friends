@@ -865,8 +865,8 @@ BattleAnimCmd_Transform:
 
 	ld a, [wTempBattleMonSpecies]
 	ld [wCurPartySpecies], a
-	ld hl, wBattleMonDVs
-	predef GetUnownLetter
+	ld a, [wBattleMonForm]
+	ld [wForm], a
 	ld de, vTiles0 tile $00
 	predef GetMonFrontpic
 	jr .done
@@ -874,8 +874,8 @@ BattleAnimCmd_Transform:
 .player
 	ld a, [wTempEnemyMonSpecies]
 	ld [wCurPartySpecies], a
-	ld hl, wEnemyMonDVs
-	predef GetUnownLetter
+	ld a, [wEnemyMonForm]
+	ld [wForm], a
 	ld de, vTiles0 tile $00
 	predef GetMonBackpic
 
@@ -1168,6 +1168,7 @@ BattleAnimCmd_DropSub:
 	ldh [rWBK], a
 	ret
 
+; Why does beat up needs its own command?
 BattleAnimCmd_BeatUp:
 	ldh a, [rWBK]
 	push af
@@ -1184,15 +1185,16 @@ BattleAnimCmd_BeatUp:
 	and a
 	jr z, .player
 
-	ld hl, wBattleMonDVs
-	predef GetUnownLetter
+	;
+	ld a, [wBattleMonForm]
+	ld [wForm], a
 	ld de, vTiles2 tile $00
 	predef GetMonFrontpic
 	jr .done
 
 .player
-	ld hl, wEnemyMonDVs
-	predef GetUnownLetter
+	ld a, [wEnemyMonForm]
+	ld [wForm], a
 	ld de, vTiles2 tile $31
 	predef GetMonBackpic
 

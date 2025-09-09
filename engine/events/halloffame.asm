@@ -179,6 +179,12 @@ GetHallOfFameParty:
 	ld [de], a
 	inc de
 
+	ld hl, MON_FORM
+	add hl, bc
+	ld a, [hl]
+	ld [de], a
+	inc de
+
 	ld hl, MON_DVS
 	add hl, bc
 	ld a, [hli]
@@ -234,14 +240,15 @@ AnimateHOFMonEntrance:
 	inc hl
 	ld [wTempMonSpecies], a
 	ld [wCurPartySpecies], a
-	inc hl
-	inc hl
+	inc hl ; skip ID byte one
+	inc hl ; skip ID byte two
+	ld a, [hli]
+	ld [wTempMonForm], a
+	ld [wForm], a
 	ld a, [hli]
 	ld [wTempMonDVs], a
 	ld a, [hl]
 	ld [wTempMonDVs + 1], a
-	ld hl, wTempMonDVs
-	predef GetUnownLetter
 	hlcoord 0, 0
 	ld bc, SCREEN_AREA
 	ld a, " "
@@ -452,6 +459,9 @@ DisplayHOFMon:
 	ld a, [hli]
 	ld [wTempMonID + 1], a
 	ld a, [hli]
+	ld [wTempMonForm], a
+	ld [wForm], a
+	ld a, [hli]
 	ld [wTempMonDVs], a
 	ld a, [hli]
 	ld [wTempMonDVs + 1], a
@@ -474,8 +484,8 @@ DisplayHOFMon:
 	call Textbox
 	ld a, [wTempMonSpecies]
 	ld [wCurPartySpecies], a
-	ld hl, wTempMonDVs
-	predef GetUnownLetter
+	ld a, [wTempMonForm]
+	ld [wForm], a
 	xor a
 	ld [wBoxAlignment], a
 	hlcoord 6, 5

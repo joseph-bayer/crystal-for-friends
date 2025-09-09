@@ -128,7 +128,7 @@ _GetVarAction::
 	ld b, 0
 .loop
 	ld a, [hli]
-	and a
+	cp -1
 	ret z
 	inc b
 	ld a, b

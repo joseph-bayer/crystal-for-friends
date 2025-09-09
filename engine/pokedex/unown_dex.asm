@@ -1,11 +1,68 @@
 UpdateUnownDex:
-	ld a, [wUnownLetter]
+	; DEBUG: complete unown dex
+	; ld hl, wUnownDex
+	; ld a, 0
+	; ld [hli], a
+	; ld a, 1
+	; ld [hli], a
+	; ld a, 2
+	; ld [hli], a
+	; ld a, 3
+	; ld [hli], a
+	; ld a, 4
+	; ld [hli], a
+	; ld a, 5
+	; ld [hli], a
+	; ld a, 6
+	; ld [hli], a
+	; ld a, 7
+	; ld [hli], a
+	; ld a, 8
+	; ld [hli], a
+	; ld a, 9
+	; ld [hli], a
+	; ld a, 10
+	; ld [hli], a
+	; ld a, 11
+	; ld [hli], a
+	; ld a, 12
+	; ld [hli], a
+	; ld a, 13
+	; ld [hli], a
+	; ld a, 14
+	; ld [hli], a
+	; ld a, 15
+	; ld [hli], a
+	; ld a, 16
+	; ld [hli], a
+	; ld a, 17
+	; ld [hli], a
+	; ld a, 18
+	; ld [hli], a
+	; ld a, 19
+	; ld [hli], a
+	; ld a, 20
+	; ld [hli], a
+	; ld a, 21
+	; ld [hli], a
+	; ld a, 22
+	; ld [hli], a
+	; ld a, 23
+	; ld [hli], a
+	; ld a, 24
+	; ld [hli], a
+	; ld a, 25
+	; ld [hli], a
+	; ld a, -1
+	; ld [hl], a
+
+	ld a, [wForm]
 	ld c, a
 	ld b, NUM_UNOWN
 	ld hl, wUnownDex
 .loop
 	ld a, [hli]
-	and a
+	cp -1
 	jr z, .done
 	cp c
 	ret z
@@ -16,6 +73,8 @@ UpdateUnownDex:
 .done
 	dec hl
 	ld [hl], c
+	inc hl
+	ld [hl], -1 ; terminator for counting caught unown. (0 used to be terminator, but now 0 means Unown A is caught after we changed forms to be 0-indexed)
 	ret
 
 PrintUnownWord:

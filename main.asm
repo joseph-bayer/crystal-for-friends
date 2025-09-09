@@ -429,6 +429,15 @@ INCLUDE "gfx/pokemon/bitmask_pointers.asm"
 INCLUDE "gfx/pokemon/bitmasks.asm"
 INCLUDE "gfx/pokemon/unown_bitmask_pointers.asm"
 INCLUDE "gfx/pokemon/unown_bitmasks.asm"
+INCLUDE "gfx/pokemon/pikachu_anim_pointers.asm"
+INCLUDE "gfx/pokemon/pikachu_anims.asm"
+INCLUDE "gfx/pokemon/pikachu_idle_pointers.asm"
+INCLUDE "gfx/pokemon/pikachu_idles.asm"
+INCLUDE "gfx/pokemon/pikachu_bitmask_pointers.asm"
+INCLUDE "gfx/pokemon/pikachu_bitmasks.asm"
+INCLUDE "gfx/pokemon/pikachu_frame_pointers.asm"
+INCLUDE "gfx/pokemon/pikachu_frames.asm"
+INCLUDE "gfx/pokemon/pikachu_dimensions.asm"
 
 
 SECTION "Pic Animations 2", ROMX

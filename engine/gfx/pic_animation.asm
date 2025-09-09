@@ -266,13 +266,13 @@ PokeAnim_InitPicAttributes:
 	call GetFarWRAMByte
 	ld [wPokeAnimSpecies], a
 
-	ld a, BANK(wUnownLetter)
-	ld hl, wUnownLetter
+	ld a, BANK(wForm)
+	ld hl, wForm
 	call GetFarWRAMByte
-	ld [wPokeAnimUnownLetter], a
+	ld [wPokeAnimForm], a
 
-	call PokeAnim_GetSpeciesOrUnown
-	ld [wPokeAnimSpeciesOrUnown], a
+	call PokeAnim_GetSpeciesOrMonWithForm
+	ld [wPokeAnimSpeciesOrMonWithForm], a
 
 	call PokeAnim_GetFrontpicDims
 	ld a, c
@@ -412,6 +412,24 @@ PokeAnim_IsUnown:
 		dec a
 	else
 		cp HIGH(UNOWN)
+	endc
+	ret
+
+PokeAnim_IsPikachu:
+	ld a, [wPokeAnimSpecies]
+	push hl
+	call GetPokemonIndexFromID
+	ld a, l
+	cp LOW(PIKACHU)
+	ld a, h
+	pop hl
+	ret nz
+	if HIGH(PIKACHU) == 0
+		and a
+	elif HIGH(PIKACHU) == 1
+		dec a
+	else
+		cp HIGH(PIKACHU)
 	endc
 	ret
 
@@ -834,28 +852,50 @@ GetMonAnimPointer:
 	call PokeAnim_IsEgg
 	jr z, .egg
 
+  	; handle Unown
 	ld c, BANK(UnownAnimationPointers) ; aka BANK(UnownAnimationIdlePointers)
-	ld hl, UnownAnimationPointers - 2
-	ld de, UnownAnimationIdlePointers - 2
+	ld hl, UnownAnimationPointers
+	ld de, UnownAnimationIdlePointers
 	call PokeAnim_IsUnown
 	jr z, .unown
+
+	; handle Pikachu
+	ld c, BANK(PikachuAnimationPointers)
+	ld hl, PikachuAnimationPointers
+	ld de, PikachuAnimationIdlePointers
+	call PokeAnim_IsPikachu
+	jr z, .pikachu
+
+  	; handle all other Pokemon
+	; NOTE: other Pokemon aren't 0 indexed, so we have to -2 the pointers
 	ld c, BANK(AnimationPointers) ; aka BANK(AnimationIdlePointers)
 	ld hl, AnimationPointers - 2
 	ld de, AnimationIdlePointers - 2
-.unown
 
+.pikachu
+.unown
 	ld a, [wPokeAnimIdleFlag]
 	and a
 	jr nz, .got_pointer
 	ld d, h
 	ld e, l
-.got_pointer
 
+.got_pointer
 	call PokeAnim_IsUnown
-	ld a, [wPokeAnimSpeciesOrUnown]
+	jr z, .pokemon_with_cosmetic_form
+	call PokeAnim_IsPikachu
+	jr nz, .regular_pokemon
+.pokemon_with_cosmetic_form
+	ld a, [wPokeAnimSpeciesOrMonWithForm]
 	ld l, a
 	ld h, 0
-	call nz, GetPokemonIndexFromID
+	jr .got_index
+.regular_pokemon
+	ld a, [wPokeAnimSpeciesOrMonWithForm]
+	ld l, a
+	ld h, 0
+	call GetPokemonIndexFromID
+.got_index
 	add hl, hl
 	add hl, de
 	ld a, c
@@ -892,8 +932,27 @@ PokeAnim_GetFrontpicDims:
 	ldh [rWBK], a
 	ld a, [wCurPartySpecies]
 	ld [wCurSpecies], a
+  	ld [wPokeAnimSpecies], a
 	call GetBaseData
+	push hl
+	push bc
+	; handle Pikachu
+	call PokeAnim_IsPikachu
+	jr z, .pikachu
+	; handle everybody else
 	ld a, [wBasePicSize]
+	jr .done_getting_pic_size
+.pikachu
+	ld a, [wForm]
+	ld hl, PikachuDimensions
+	ld c, a
+	ld b, 0
+	add hl, bc
+	ld a, BANK(PikachuDimensions)
+	call GetFarByte
+.done_getting_pic_size
+	pop bc
+	pop hl
 	and $f
 	ld c, a
 	pop af
@@ -903,22 +962,34 @@ PokeAnim_GetFrontpicDims:
 GetMonFramesPointer:
 	call PokeAnim_IsEgg
 	jr z, .egg
-
+	; handle Unown
 	call PokeAnim_IsUnown
+	jr z, .unown
+	; handle Pikachu
+	call PokeAnim_IsPikachu
+	jr z, .pikachu
+	; handle other Pokemon
 	ld hl, FramesPointers - 3
 	ld a, BANK(FramesPointers)
 	ld c, 3
 	jr nz, .got_frames
+.unown
 	ld a, BANK(UnownsFrames)
 	ld [wPokeAnimFramesBank], a
-	ld hl, UnownFramesPointers - 2
+	ld hl, UnownFramesPointers
 	ld a, BANK(UnownFramesPointers)
 	ld c, 2
+	jr .got_frames
+.pikachu
+	ld a, BANK(PikachuFramesBank)
+	ld [wPokeAnimFramesBank], a
+	ld hl, PikachuFramesPointers
+	ld a, BANK(PikachuFramesPointers)
+	ld c, 2
 .got_frames
-
 	push af
 	push hl
-	ld a, [wPokeAnimSpeciesOrUnown]
+	ld a, [wPokeAnimSpeciesOrMonWithForm]
 	ld l, a
 	ld h, 0
 	call nz, GetPokemonIndexFromID
@@ -956,15 +1027,26 @@ GetMonBitmaskPointer:
 	jr z, .egg
 
 	call PokeAnim_IsUnown
-	ld a, BANK(UnownBitmasksPointers)
-	ld de, UnownBitmasksPointers - 2
 	jr z, .unown
+	call PokeAnim_IsPikachu
+	jr z, .pikachu
+
 	ld a, BANK(BitmasksPointers)
 	ld de, BitmasksPointers - 2
+	jr .got_bitmask
+
 .unown
+	ld a, BANK(UnownBitmasksPointers)
+	ld de, UnownBitmasksPointers
+	jr .got_bitmask
+.pikachu
+	ld a, BANK(PikachuBitmasksPointers)
+	ld de, PikachuBitmasksPointers
+
+.got_bitmask
 	ld [wPokeAnimBitmaskBank], a
 
-	ld a, [wPokeAnimSpeciesOrUnown]
+	ld a, [wPokeAnimSpeciesOrMonWithForm]
 	ld l, a
 	ld h, 0
 	call nz, GetPokemonIndexFromID
@@ -989,14 +1071,21 @@ GetMonBitmaskPointer:
 	ld [wPokeAnimBitmaskAddr + 1], a
 	ret
 
-PokeAnim_GetSpeciesOrUnown:
+PokeAnim_GetSpeciesOrMonWithForm:
 	call PokeAnim_IsUnown
 	jr z, .unown
+	call PokeAnim_IsPikachu
+	jr z, .pikachu
 	ld a, [wPokeAnimSpecies]
 	ret
 
 .unown
-	ld a, [wPokeAnimUnownLetter]
+	ld a, [wPokeAnimForm]
+	jr .done
+
+.pikachu
+  	ld a, [wPokeAnimForm]
+.done
 	ret
 
 Unused_HOF_AnimateAlignedFrontpic:

@@ -1,10 +1,13 @@
 GetTrademonFrontpic:
 	ld a, [wOTTrademonSpecies]
-	ld hl, wOTTrademonDVs
+	ld hl, wOTTrademonDVs ; TODO: Remove after adding form support when trading
 	ld de, vTiles2
 	push de
 	push af
-	predef GetUnownLetter
+	predef GetUnownLetter ; TODO: Remove after adding form support when trading
+	; ; TODO: Implement Form Support for Trading.
+	; ld a, [wOTTrademonForm]
+	; ld [wForm], a
 	pop af
 	ld [wCurPartySpecies], a
 	ld [wCurSpecies], a

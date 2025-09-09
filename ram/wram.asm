@@ -2408,7 +2408,7 @@ wForcedSwitch:: db
 
 wTrainerClass:: db
 
-wUnownLetter:: db
+wForm:: db
 
 wMoveSelectionMenuType:: db
 
@@ -3025,7 +3025,7 @@ wEndPokedexCaught::
 wPokedexSeen:: flag_array NUM_POKEMON
 wEndPokedexSeen::
 
-wUnownDex:: ds NUM_UNOWN
+wUnownDex:: ds NUM_UNOWN + 1 ; Space for each unown number and 1 for the terminator ; TODO: this could be a bit array to save space
 wUnlockedUnowns:: db
 wFirstUnownSeen:: db
 
@@ -3095,8 +3095,8 @@ wPokeAnimStruct::
 wPokeAnimSceneIndex:: db
 wPokeAnimPointer:: dw
 wPokeAnimSpecies:: db
-wPokeAnimUnownLetter:: db
-wPokeAnimSpeciesOrUnown:: db
+wPokeAnimForm:: db
+wPokeAnimSpeciesOrMonWithForm:: db
 wPokeAnimGraphicStartTile:: db
 wPokeAnimCoord:: dw
 wPokeAnimFrontpicHeight:: db

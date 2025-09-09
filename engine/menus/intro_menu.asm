@@ -110,6 +110,13 @@ _ResetWRAM:
 	xor a
 	rst ByteFill
 
+	; Initialize wUnownDex with -1 terminator at start
+	ld hl, wUnownDex
+	ld [hl], -1
+	; Initialize wFirstUnownSeen with -1 terminator to indicate no Unown seen yet
+	ld hl, wFirstUnownSeen
+	ld [hl], -1
+
 	ldh a, [rLY]
 	ldh [hUnusedBackup], a
 	call DelayFrame

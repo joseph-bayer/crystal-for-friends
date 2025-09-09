@@ -3,7 +3,7 @@ DEF UNOWNSTAMP_BOLD_B EQU "♀" ; $f5
 
 _UnownPrinter:
 	ld a, [wUnownDex]
-	and a
+	cp -1
 	ret z
 
 	ldh a, [hInMenu]
@@ -135,8 +135,7 @@ endc
 	ld a, [wJumptableIndex]
 	cp NUM_UNOWN
 	jr z, .vacant
-	inc a
-	ld [wUnownLetter], a
+	ld [wForm], a
 	ld hl, UNOWN
 	call GetPokemonIDFromIndex
 	ld [wCurPartySpecies], a

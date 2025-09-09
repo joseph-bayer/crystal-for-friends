@@ -163,14 +163,26 @@ endr
 	ld [de], a
 	inc de
 
-	; Initialize stat experience.
+	; Initialize EVs and two padding bytes to 0.
 	xor a
-	ld b, MON_DVS - MON_EVS
+	ld b, MON_FORM - MON_EVS
 .loop
 	ld [de], a
 	inc de
 	dec b
 	jr nz, .loop
+
+	; Initialize Form
+	ld a, [wEnemyMonForm]
+	ld [de], a
+	inc de
+
+	; 0 out CaughtBall - will be set later
+	xor a
+	ld [de], a
+	inc de
+
+
 
 	pop hl
 	push hl
@@ -360,12 +372,13 @@ endr
 		endc
 	endc
 	jr nz, .done
-	ld hl, wPartyMon1DVs
+	ld hl, wPartyMon1Form
 	ld a, [wPartyCount]
 	dec a
 	ld bc, PARTYMON_STRUCT_LENGTH
 	rst AddNTimes
-	predef GetUnownLetter
+	ld a, [hl]
+	ld [wForm], a
 	farcall UpdateUnownDex
 
 .done
@@ -476,17 +489,18 @@ AddTempmonToParty:
 		endc
 	endc
 	jr nz, .done
-	ld hl, wPartyMon1DVs
+	ld hl, wPartyMon1Form
 	ld a, [wPartyCount]
 	dec a
 	ld bc, PARTYMON_STRUCT_LENGTH
 	rst AddNTimes
-	predef GetUnownLetter
+	ld a, [hl]
+	ld [wForm], a
 	farcall UpdateUnownDex
 	ld a, [wFirstUnownSeen]
-	and a
+	cp -1
 	jr nz, .done
-	ld a, [wUnownLetter]
+	ld a, [wForm]
 	ld [wFirstUnownSeen], a
 .done
 
@@ -705,12 +719,15 @@ SendMonIntoBox:
 	ld bc, 1 + 1 + NUM_MOVES ; species + item + moves
 	rst CopyBytes
 
+	; Copy Player OT into box_struct ID
 	ld hl, wPlayerID
 	ld a, [hli]
 	ld [de], a
 	inc de
 	ld a, [hl]
 	ld [de], a
+
+	; Calc and apply Exp
 	inc de
 	push de
 	ld a, [wCurPartyLevel]
@@ -727,15 +744,27 @@ SendMonIntoBox:
 	ld [de], a
 	inc de
 
-	; Set all 5 Experience Values to 0
+	; Set all 6 EVs and two padding bytes to 0
 	xor a
-	ld b, 2 * NUM_EXP_STATS
+	ld b, NUM_STATS + 2
 .loop2
+	
 	ld [de], a
 	inc de
 	dec b
 	jr nz, .loop2
 
+	; Copy Form
+	ld a, [wEnemyMonForm]
+	ld [de], a
+	inc de
+
+	; Set caught ball to 0 - will be set later
+	xor a
+	ld [de], a
+	inc de
+
+	; Copy DVs and PP
 	ld hl, wEnemyMonDVs
 	ld b, 2 + NUM_MOVES ; DVs and PP ; wEnemyMonHappiness - wEnemyMonDVs
 .loop3
@@ -773,8 +802,8 @@ SendMonIntoBox:
 		cp HIGH(UNOWN)
 	endc
 	jr nz, .not_unown
-	ld hl, wBufferMonDVs
-	predef GetUnownLetter
+	ld a, [wBufferMonForm]
+	ld [wForm], a
 	farcall UpdateUnownDex
 
 .not_unown
@@ -1367,20 +1396,20 @@ GivePoke::
 	ld a, b
 	and a
 	jr z, .party
-  push hl
-  ld hl, POKE_BALL
+	push hl
+	ld hl, POKE_BALL
 	call GetItemIDFromIndex
 	ld [wCurItem], a ; set mon's caught ball to POKE_BALL
-  pop hl
+  	pop hl
 	farcall SetBoxMonCaughtData
 	jr .set_caught_data
 
 .party
-  push hl
-  ld hl, POKE_BALL
+	push hl
+	ld hl, POKE_BALL
 	call GetItemIDFromIndex
 	ld [wCurItem], a ; set mon's caught ball to POKE_BALL
-  pop hl
+  	pop hl
 	farcall SetCaughtData
 .set_caught_data
 	farcall GiveANickname_YesNo

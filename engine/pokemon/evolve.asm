@@ -302,8 +302,10 @@ EvolveAfterBattle_MasterLoop:
 		endc
 	endc
 	jr nz, .skip_unown
-	ld hl, wTempMonDVs
-	predef GetUnownLetter
+	; TODO: Assuming this works. Please verify through testing at a later point.
+	; TODO: Will Unown ever even be called?? They don't evolve or get evolved into.
+	ld a, [wTempMonForm]
+	ld [wForm], a
 	farcall UpdateUnownDex
 
 .skip_unown

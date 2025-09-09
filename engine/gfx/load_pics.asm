@@ -1,51 +1,11 @@
+; TODO: this no longer belongs in load_pics.asm, since it's now used to generate a form once.
 GetUnownLetter:
-; Return Unown letter in wUnownLetter based on DVs at hl
-
-; Take the middle 2 bits of each DV and place them in order:
-;	atk  def  spd  spc
-;	.ww..xx.  .yy..zz.
-
-	; atk
-	ld a, [hl]
-	and %01100000
-	add a
-	ld b, a
-	; def
-	ld a, [hli]
-	and %00000110
-	swap a
-	srl a
-	or b
-	ld b, a
-
-	; spd
-	ld a, [hl]
-	and %01100000
-	swap a
-	add a
-	or b
-	ld b, a
-	; spc
-	ld a, [hl]
-	and %00000110
-	srl a
-	or b
-
-; Divide by 10 to get 0-25
-	ldh [hDividend + 3], a
-	xor a
-	ldh [hDividend], a
-	ldh [hDividend + 1], a
-	ldh [hDividend + 2], a
-	ld a, $ff / NUM_UNOWN + 1
-	ldh [hDivisor], a
-	ld b, 4
-	call Divide
-
-; Increment to get 1-26
-	ldh a, [hQuotient + 3]
-	inc a
-	ld [wUnownLetter], a
+; Return Unown letter 0-25 and store in wForm.
+	ld a, NUM_UNOWN        ; or use NUM_UNOWN constant
+	call RandomRange
+	; a now contains 0-25 with equal probability
+	; ld a, 1
+	ld [wForm], a
 	ret
 
 GetMonFrontpic:
@@ -92,7 +52,40 @@ _PrepareFrontpic:
 	call OpenSRAM
 	push de
 	call GetBaseData
+	push hl
+	push bc
+	; handle pikachu
+	ld a, [wCurSpecies]
+	call GetPokemonIndexFromID
+	ld a, l
+	sub LOW(PIKACHU)
+	if HIGH(PIKACHU) == 0
+		or h
+	else
+		jr nz, .not_pikachu
+		if HIGH(PIKACHU) == 1
+			dec h
+		else
+			ld a, h
+			cp HIGH(PIKACHU)
+		endc
+	endc
+	jr z, .pikachu
+.not_pikachu
+	; handle everybody else
 	ld a, [wBasePicSize]
+	jr .done_getting_pic_size
+.pikachu
+	ld a, [wForm]
+	ld hl, PikachuDimensions
+	ld c, a
+	ld b, 0
+	add hl, bc
+	ld a, BANK(PikachuDimensions)
+	call GetFarByte
+.done_getting_pic_size
+	pop bc
+	pop hl
 	and $f
 	ld b, a
 	push bc
@@ -134,6 +127,7 @@ GetPicIndirectPointer:
 	call GetPokemonIndexFromID
 	ld b, h
 	ld c, l
+	; handle unown
 	ld a, l
 	sub LOW(UNOWN)
 	if HIGH(UNOWN) == 0
@@ -149,6 +143,22 @@ GetPicIndirectPointer:
 	endc
 	jr z, .unown
 .not_unown
+	; handle pikachu
+	ld a, l
+	sub LOW(PIKACHU)
+	if HIGH(PIKACHU) == 0
+		or h
+	else
+		jr nz, .not_pikachu
+		if HIGH(PIKACHU) == 1
+			dec h
+	else
+	ld a, h
+	cp HIGH(PIKACHU)
+		endc
+	endc
+	jr z, .pikachu
+.not_pikachu
 	ld hl, PokemonPicPointers
 	ld d, BANK(PokemonPicPointers)
 .done
@@ -156,12 +166,20 @@ GetPicIndirectPointer:
 	jmp AddNTimes
 
 .unown
-	ld a, [wUnownLetter]
+	ld a, [wForm]
 	ld c, a
 	ld b, 0
-	ld hl, UnownPicPointers - 6
+	ld hl, UnownPicPointers
 	ld d, BANK(UnownPicPointers)
 	jr .done
+
+.pikachu
+  	ld a, [wForm]
+	ld c, a
+	ld b, 0
+	ld hl, PikachuPicPointers
+	ld d, BANK(PikachuPicPointers)
+  	jr .done
 
 GetFrontpicPointer:
 	call GetPicIndirectPointer
@@ -185,9 +203,44 @@ GetAnimatedEnemyFrontpic:
 	ld de, 7 * 7 tiles
 	add hl, de
 	push hl
+	push bc
+	; TODO: make a reusable function isPikachu just like in the pic_anim
+	; handle pikachu
+	ld a, [wCurSpecies]
+	call GetPokemonIndexFromID
+	ld a, l
+	sub LOW(PIKACHU)
+	if HIGH(PIKACHU) == 0
+		or h
+	else
+		jr nz, .not_pikachu
+		if HIGH(PIKACHU) == 1
+			dec h
+	else
+	ld a, h
+	cp HIGH(PIKACHU)
+		endc
+	endc
+	jr z, .pikachu
+.not_pikachu
+	; handle everybody else
 	ld a, BANK(wBasePicSize)
 	ld hl, wBasePicSize
 	call GetFarWRAMByte
+	jr .done_getting_pic_size
+.pikachu
+	ld a, BANK(wForm)
+	ld hl, wForm
+	call GetFarWRAMByte
+	ld hl, PikachuDimensions
+	ld c, a
+	ld b, 0
+	add hl, bc
+	ld a, BANK(PikachuDimensions)
+	call GetFarByte
+  
+.done_getting_pic_size
+  	pop bc
 	pop hl
 	and $f
 	ld de, wDecompressScratch + 5 * 5 tiles
