@@ -101,14 +101,36 @@ MoveDeletion:
 	ld bc, MON_FORM
 	add hl, bc
 	ld a, [hl]
+
+	cp PIKACHU_PLAIN_FORM
+	jr z, .check_for_new_pikachu_form  ; Plain form, check if it should change
+
+.should_revert_surf_form
+	ld a, [hl]
 	cp PIKACHU_SURF_FORM  ; Surfing form
-	ret nz  ; Not in Surf form, nothing to do
+	jr nz, .should_revert_fly_form  ; Not in Surf form, check if fly form should be reverted
 
 	; Pikachu is in surfing form, check if it still knows Surf
 	ld hl, SURF
 	farcall CheckPokemonKnowsMove
-	ret z  ; Still knows Surf, keep surfing form
+	ret z ; Still knows Surf, keep surfing form
 
+	call .revert_pikachu_to_plain_form
+	jr .check_for_new_pikachu_form
+
+.should_revert_fly_form
+	ld a, [hl]
+	cp PIKACHU_FLY_FORM  ; Flying form
+	ret nz ; Not Plain form, not Surf form, not fly form... What are you??
+
+	ld hl, FLY
+	farcall CheckPokemonKnowsMove
+	ret z ; Still knows Fly, keep flying form
+
+	call .revert_pikachu_to_plain_form
+	jr .check_for_new_pikachu_form
+
+.revert_pikachu_to_plain_form
 	; Pikachu no longer knows Surf, revert to plain form
 	ld hl, wPartyMon1Species
 	ld a, [wCurPartyMon]
@@ -116,6 +138,37 @@ MoveDeletion:
 	ld bc, MON_FORM
 	add hl, bc
 	xor a  ; Plain form (0)
+	ld [hl], a
+	ret
+
+.check_for_new_pikachu_form
+	ld hl, SURF
+	farcall CheckPokemonKnowsMove
+	jr nz, .check_flying_pikachu
+
+	; Pikachu knows Surf and is in its default form
+	; Set its form to SURFING_PIKACHU (form 1)
+	ld hl, wPartyMon1Species
+	ld a, [wCurPartyMon]
+	call GetPartyLocation
+	ld bc, MON_FORM
+	add hl, bc
+	ld a, PIKACHU_SURF_FORM  ; Surfing Pikachu form
+	ld [hl], a
+	ret
+
+.check_flying_pikachu
+	ld hl, FLY
+	farcall CheckPokemonKnowsMove
+	ret nz  ; Doesn't know Fly, nothing to do
+
+	; Pikachu knows Fly, set its form to FLYING_PIKACHU (form 2)
+	ld hl, wPartyMon1Species
+	ld a, [wCurPartyMon]
+	call GetPartyLocation
+	ld bc, MON_FORM
+	add hl, bc
+	ld a, PIKACHU_FLY_FORM  ; Flying Pikachu form
 	ld [hl], a
 	ret
 

@@ -111,17 +111,54 @@ LearnMove:
 	ld hl, LearnedMoveText
 	call PrintText
 	
+; Update Pokemon forms based on updated movepool
+; - If the Pokemon can change form based on know moves...
+;   - First, we'll check if any existing move forms should be reverted
+;   - Then we'll check if any new move forms should be applied
+
 	; Check if the Pokemon is Pikachu using 16-bit index
 	ld hl, PIKACHU
 	farcall CheckPokemonIsSpecies
 	jr nz, .done
 
+	; Get Form
+	ld hl, wPartyMon1Species
+	ld a, [wCurPartyMon]
+	call GetPartyLocation
+	ld bc, MON_FORM
+	add hl, bc
+	ld a, [hl]
+
+	cp PIKACHU_PLAIN_FORM
+	jr z, .check_for_new_pikachu_form  ; Plain form, check if it should change
+
+
+.should_revert_surf_form
+	; If in surf form, check if it still knows Surf and revert if not
+	ld a, [hl]
+	cp PIKACHU_SURF_FORM  
+	jr nz, .should_revert_fly_form
 	ld hl, SURF
 	farcall CheckPokemonKnowsMove
-	jr nz, .check_pikachu_revert
+	jr z, .done  ; Still knows Surf, keep surf form
+	call .reset_pikachu_to_plain_form
+	jr .check_for_new_pikachu_form ; Check if it should change to fly form
 
-	farcall CheckPokemonFormIsPlain
-	jr nz, .check_pikachu_revert
+.should_revert_fly_form
+	; If in fly form, check if it still knows Fly and revert if not
+	ld a, [hl]
+	cp PIKACHU_FLY_FORM  ; Fly form
+	jr nz, .done ; Not Plain form, not Surf form, not fly form... What are you??
+	ld hl, FLY
+	farcall CheckPokemonKnowsMove
+	jr z, .done  ; Still knows Fly, keep fly form
+	call .reset_pikachu_to_plain_form
+	; fallthrough to check if it should change to a new form
+
+.check_for_new_pikachu_form
+	ld hl, SURF
+	farcall CheckPokemonKnowsMove
+	jr nz, .check_flying_pikachu
 
 	; Pikachu knows Surf and is in its default form
 	; Set its form to SURFING_PIKACHU (form 1)
@@ -130,31 +167,26 @@ LearnMove:
 	call GetPartyLocation
 	ld bc, MON_FORM
 	add hl, bc
-	ld a, 1  ; Surfing Pikachu form
+	ld a, PIKACHU_SURF_FORM  ; Surfing Pikachu form
 	ld [hl], a
 	jr .done
 
-.check_pikachu_revert
-	; Check if we need to revert Pikachu from surfing form
-	ld hl, PIKACHU
-	farcall CheckPokemonIsSpecies
-	jr nz, .done
+.check_flying_pikachu
+	ld hl, FLY
+	farcall CheckPokemonKnowsMove
+	jr nz, .done  ; Doesn't know Fly, nothing to do
 
-	; Check if Pikachu is in surfing form (form 1)
+	; Pikachu knows Fly, set its form to FLYING_PIKACHU (form 2)
 	ld hl, wPartyMon1Species
 	ld a, [wCurPartyMon]
 	call GetPartyLocation
 	ld bc, MON_FORM
 	add hl, bc
-	ld a, [hl]
-	cp PIKACHU_SURF_FORM  ; Surfing form
-	jr nz, .done
+	ld a, PIKACHU_FLY_FORM  ; Flying Pikachu form
+	ld [hl], a
+	jr .done
 
-	; Pikachu is in surfing form, check if it still knows Surf
-	ld hl, SURF
-	farcall CheckPokemonKnowsMove
-	jr z, .done  ; Still knows Surf, keep surfing form
-
+.reset_pikachu_to_plain_form
 	; Pikachu no longer knows Surf, revert to plain form
 	ld hl, wPartyMon1Species
 	ld a, [wCurPartyMon]

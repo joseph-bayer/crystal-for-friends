@@ -719,6 +719,8 @@ SECTION "Pics 19", ROMX
 
 PikachuSurfFrontpic: INCBIN "gfx/pokemon/pikachu_surf/front.animated.2bpp.lz"
 PikachuSurfBackpic:  INCBIN "gfx/pokemon/pikachu_surf/back.2bpp.lz"
+PikachuFlyFrontpic:  INCBIN "gfx/pokemon/pikachu_fly/front.animated.2bpp.lz"
+PikachuFlyBackpic:   INCBIN "gfx/pokemon/pikachu_fly/back.2bpp.lz"
 
 
 SECTION "Pics 20", ROMX

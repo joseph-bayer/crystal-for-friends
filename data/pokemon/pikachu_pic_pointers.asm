@@ -5,4 +5,6 @@ PikachuPicPointers::
   dba PikachuBackpic
   dba PikachuSurfFrontpic
   dba PikachuSurfBackpic
+  dba PikachuFlyFrontpic
+  dba PikachuFlyBackpic
   assert_table_length NUM_PIKACHU_FORMS
