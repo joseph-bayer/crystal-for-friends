@@ -39,7 +39,7 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   |----------------|-------------------|
   | **40%** *(+17%)* | **10%** *(+8%)* |
 - Hidden Power
-  - Base Power is always 60
+  - Base Power is always 60 Credits: [Grate Oracle Lewot](https://github.com/Grate-Oracle-Lewot)
 - Headbutt Tree encounters simplified
   - Headbutting a headbutt tree always results in a Pokemon appearing
   - Each area type has one encounter table instead of a common and uncommon table
@@ -47,7 +47,7 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Fewer step cycles required to hatch eggs
   - Update "hatching soon" and egg animation logic to scale down with the new step cycles
   - Egg has blue spots when shiny
-  - Breeding man stands outside fence when egg is ready 
+  - Daycare man stands outside fence when egg is ready 
   - Updated Route 34 map to remove grass patch in egg hatching path
   - Removed trainer ID penalty (same trainer IDs no longer reduce compatibility)
   - Improved egg generation rates:
@@ -67,6 +67,9 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
 - Bug Catching Contest now appears on Sundays as well (on top of Tuesdays, Thursdays, and Saturdays)
 - Turn around after healing in the Pokecenter so you don't accidentally heal again
 - Minor update to Goldenrod layout so it's easier to get to the underground and the bike shop
+- Cosmetic Forms
+  - Pikachu
+    - Surfing Pikachu when it learns Surf
 
 Below, you will find the original readme for the CrystalShireEngine
 
