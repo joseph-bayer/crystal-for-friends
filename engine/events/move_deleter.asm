@@ -41,7 +41,14 @@ MoveDeletion:
 	call PlaySFX
 	call WaitSFX
 	ld hl, .DeleterForgotMoveText
-	jmp PrintText
+	call PrintText
+
+	; Revert Pikachu to normal form it it is in Surf form and no longer knows Surf
+	ld hl, PIKACHU
+	farcall CheckPokemonIsSpecies
+	jr z, .RevertPikachuFormIfNecessary
+
+	ret
 
 .egg
 	ld hl, .MailEggText
@@ -86,6 +93,31 @@ MoveDeletion:
 .DeleterAskWhichMonText:
 	text_far _DeleterAskWhichMonText
 	text_end
+
+.RevertPikachuFormIfNecessary
+	ld hl, wPartyMon1Species
+	ld a, [wCurPartyMon]
+	call GetPartyLocation
+	ld bc, MON_FORM
+	add hl, bc
+	ld a, [hl]
+	cp PIKACHU_SURF_FORM  ; Surfing form
+	ret nz  ; Not in Surf form, nothing to do
+
+	; Pikachu is in surfing form, check if it still knows Surf
+	ld hl, SURF
+	farcall CheckPokemonKnowsMove
+	ret z  ; Still knows Surf, keep surfing form
+
+	; Pikachu no longer knows Surf, revert to plain form
+	ld hl, wPartyMon1Species
+	ld a, [wCurPartyMon]
+	call GetPartyLocation
+	ld bc, MON_FORM
+	add hl, bc
+	xor a  ; Plain form (0)
+	ld [hl], a
+	ret
 
 .DeleteMove:
 	ld a, b

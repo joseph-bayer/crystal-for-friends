@@ -71,6 +71,7 @@ INCLUDE "engine/events/bug_contest/judging.asm"
 INCLUDE "engine/events/pokerus/apply_pokerus_tick.asm"
 INCLUDE "engine/events/bug_contest/contest_2.asm"
 INCLUDE "engine/math/get_square_root.asm"
+INCLUDE "engine/pokemon/reusable_mon_checks.asm"
 
 
 SECTION "bank5", ROMX

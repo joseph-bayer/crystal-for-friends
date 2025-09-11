@@ -1,3 +1,4 @@
+; Checks if pokemon knows move - used for TMs/HMs and Move Tutors
 KnowsMove:
 	ld a, MON_MOVES
 	call GetPartyParamLocation

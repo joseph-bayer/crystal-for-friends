@@ -110,6 +110,61 @@ LearnMove:
 .learned
 	ld hl, LearnedMoveText
 	call PrintText
+	
+	; Check if the Pokemon is Pikachu using 16-bit index
+	ld hl, PIKACHU
+	farcall CheckPokemonIsSpecies
+	jr nz, .done
+
+	ld hl, SURF
+	farcall CheckPokemonKnowsMove
+	jr nz, .check_pikachu_revert
+
+	farcall CheckPokemonFormIsPlain
+	jr nz, .check_pikachu_revert
+
+	; Pikachu knows Surf and is in its default form
+	; Set its form to SURFING_PIKACHU (form 1)
+	ld hl, wPartyMon1Species
+	ld a, [wCurPartyMon]
+	call GetPartyLocation
+	ld bc, MON_FORM
+	add hl, bc
+	ld a, 1  ; Surfing Pikachu form
+	ld [hl], a
+	jr .done
+
+.check_pikachu_revert
+	; Check if we need to revert Pikachu from surfing form
+	ld hl, PIKACHU
+	farcall CheckPokemonIsSpecies
+	jr nz, .done
+
+	; Check if Pikachu is in surfing form (form 1)
+	ld hl, wPartyMon1Species
+	ld a, [wCurPartyMon]
+	call GetPartyLocation
+	ld bc, MON_FORM
+	add hl, bc
+	ld a, [hl]
+	cp PIKACHU_SURF_FORM  ; Surfing form
+	jr nz, .done
+
+	; Pikachu is in surfing form, check if it still knows Surf
+	ld hl, SURF
+	farcall CheckPokemonKnowsMove
+	jr z, .done  ; Still knows Surf, keep surfing form
+
+	; Pikachu no longer knows Surf, revert to plain form
+	ld hl, wPartyMon1Species
+	ld a, [wCurPartyMon]
+	call GetPartyLocation
+	ld bc, MON_FORM
+	add hl, bc
+	xor a  ; Plain form (0)
+	ld [hl], a
+.done
+	
 	ld b, 1
 	ret
 
