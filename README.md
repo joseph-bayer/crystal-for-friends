@@ -3,8 +3,9 @@
 This is a version of Pokemon Crystal meant for me and my friends. It is built upon the CrystalShireEngine.
 
 ## Changes
-- Built upon the CrystalShireEngine. See section below titled "CrystalShireEngine" to see the README for that project
-- Many changes converted from or based heavily upon Crystal Legacy
+- **Built upon the CrystalShireEngine** See section below titled "CrystalShireEngine" to see the README for that project
+
+- **Rebalances based heavily upon Crystal Legacy** Credits: [Crystal Legacy Team](https://github.com/cRz-Shadows/Pokemon_Crystal_Legacy)
   - Trainer Teams
   - Dynamic teams for CHUCK, PRYCE, and JASMINE depending on the order you face them in
   - Wild Encounters
@@ -20,32 +21,47 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Reduced hatch cycles
   - Hatch Cycles
   - Move updates
-- TODO: All Pokemon available
-  - TODO: Gift
-  - TODO: Articuno
-  - TODO: Zapdos
-  - TODO: Moltres
-  - TODO: Mewtwo
-  - TODO: Mew
-- Dark type moves are now Physical
-- Ghost type moves are now Special
-- Odd Egg Changes
+
+- **All 251 Pokemon Available**
+  - TODO: All Pokemon available
+    - TODO: Articuno
+    - TODO: Zapdos
+    - TODO: Moltres
+    - TODO: Mewtwo
+    - TODO: Mew
+
+- **Type Rebalance**
+  - Dark type moves are now Physical
+  - Ghost type moves are now Special
+
+- **Odd Egg Upgrades**
   - Always Shiny
   - Odds of getting each kind of mon is more even
-- The ball that a Pokemon is caught in is displayed on the stats screen
-- Only Roaming Legendaries flee wild battles
-- Wild Pokemon are more likely to hold items
-  | Common Item | Rare Item |
-  |----------------|-------------------|
-  | **40%** *(+17%)* | **10%** *(+8%)* |
-- Hidden Power
+
+- **Track Caught Ball**
+  - The ball that a Pokemon is caught in is displayed on the stats screen
+
+- **Wild Held Item Rebalance**
+	- Wild Pokemon are more likely to hold items
+
+	| Common Item | Rare Item |
+	|----------------|-------------------|
+	| **40%** *(+17%)* | **10%** *(+8%)* |
+
+- **Flee Mechanic Upgrades**
+	- Only Roaming Legendaries flee wild battles
+
+- **Hidden Power Upgrades**
   - Base Power is always 60 Credits: [Grate Oracle Lewot](https://github.com/Grate-Oracle-Lewot)
-- Headbutt Tree encounters simplified
+  - TODO: Display Hidden Power type on Stats Screen
+
+- **Headbutt Tree Encounters Simplified**
   - Headbutting a headbutt tree always results in a Pokemon appearing
   - Each area type has one encounter table instead of a common and uncommon table
-- Breeding. 
+
+- **Breeding Upgrades** 
   - Fewer step cycles required to hatch eggs
-  - Update "hatching soon" and egg animation logic to scale down with the new step cycles
+  - Update "hatching soon" and egg animation logic to scale down with the lower overall cycles
   - Egg has blue spots when shiny
   - Daycare man stands outside fence when egg is ready 
   - Updated Route 34 map to remove grass patch in egg hatching path
@@ -55,7 +71,8 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
     |----------------|-------------------|
     | Same species | 50% |
     | Different species | 25% |
-- Mystery Gift with various NPCs
+
+- **Mystery Gift with various NPCs**
   - Improved rarity distribution - Uncommon, rare, and super rare items appear more often
   - All evolution items can be obtained from Mystery Gifting with NPCs
   - Locations
@@ -64,14 +81,21 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
     - Charlie (Silph Co. 1f)
     - TODO: Pocky
   - Limit once per day, per NPC
-- Bug Catching Contest now appears on Sundays as well (on top of Tuesdays, Thursdays, and Saturdays)
-- Turn around after healing in the Pokecenter so you don't accidentally heal again
-- Minor update to Goldenrod layout so it's easier to get to the underground and the bike shop
-- Cosmetic Forms
-  - Pikachu
-    - Surfing Pikachu when it learns Surf
 
-Below, you will find the original readme for the CrystalShireEngine
+- **New and Updated Daily Events**
+  - Bug Catching Contest now appears on Sundays as well (on top of Tuesdays, Thursdays, and Saturdays)
+
+- **New Cosmetic Forms**
+  - Cosmetic Forms
+    - Pikachu
+      - Unlocked by Learning Surf
+
+- **Misc.**
+  - Turn around after healing in the Pokecenter so you don't accidentally heal again
+  - Minor update to Goldenrod layout so it's easier to get to the underground and the bike shop
+
+
+## Below, you will find the original readme for the CrystalShireEngine
 
 ---
 
