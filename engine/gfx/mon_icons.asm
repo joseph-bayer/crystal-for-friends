@@ -1,9 +1,34 @@
 LoadOverworldMonIcon:
 	ld a, e
+	ld b, d
 	ld [wCurIcon], a
+	; Is it a Breedmon?
+	ld a, b
+	and a
+	jr z, _LoadOverworldMonIcon ; not a Breedmon, should already have wForm set
+	push af
+	ld a, [wBreedMon1Form]
+	ld [wForm], a
+	pop af
+	; Check which Breedmon we're using
+	dec a
+	jr z, _LoadOverworldMonIcon
+	ld a, [wBreedMon2Form]
+	ld [wForm], a
 	; fallthrough
 _LoadOverworldMonIcon:
+	ld a, [wCurIcon]
 	call GetPokemonIndexFromID
+	ld bc, UNOWN
+
+	; Compare with target species (hl now contains the Pokemon's index)
+	ld a, l
+	cp c          ; Compare low byte
+	jr nz, .not_unown
+	ld a, h
+	cp b          ; Compare high byte
+	jr z, .is_unown
+.not_unown
 	add hl, hl
 	ld de, IconPointers
 	add hl, de
@@ -11,6 +36,18 @@ _LoadOverworldMonIcon:
 	ld d, [hl]
 	ld e, a
 	jmp GetIconBank
+.is_unown
+	ld a, [wForm]
+	ld l, a
+	ld h, 0
+	add hl,hl
+	ld de, UnownIconPointers
+	add hl, de
+	ld a, [hli]
+	ld e, a
+	ld d, [hl]
+	lb bc, BANK("Unown Icons"), 8
+	ret
 
 SetMenuMonIconColor:
 	push hl
@@ -298,6 +335,12 @@ InitPartyMenuIcon:
 	add hl, de
 	ld a, [hl]
 	ld [wCurIcon], a
+
+	ld a, MON_FORM
+	call GetPartyParamLocation
+	ld a, [hl]
+	ld [wForm], a
+
 	call GetMemIconGFX
 	ldh a, [hObjectStructIndex]
 ; y coord
@@ -355,6 +398,8 @@ NamingScreen_InitAnimatedMonIcon:
 	call SetMenuMonIconColor
 	ld a, [wTempIconSpecies]
 	ld [wCurIcon], a
+	ld a, [wTempMonForm]
+	ld [wForm], a
 	xor a
 	call GetIconGFX
 	depixel 4, 4, 4, 0
@@ -371,6 +416,11 @@ MoveList_InitAnimatedMonIcon:
 	call SetMenuMonIconColor
 	ld a, [wTempIconSpecies]
 	ld [wCurIcon], a
+	; Put the mon's form in wForm
+	ld a, MON_FORM
+	call GetPartyParamLocation
+	ld a, [hl]
+	ld [wForm], a
 	xor a
 	call GetIconGFX
 	lb de, 3 * TILE_WIDTH + 2, 4 * TILE_WIDTH + 4
@@ -381,6 +431,7 @@ MoveList_InitAnimatedMonIcon:
 	ld [hl], SPRITE_ANIM_FUNC_NULL
 	ret
 
+; TODO: update trademon to populate form
 Trade_LoadMonIconGFX:
 	; hl = wPlayerTrademonDVs or wOTTrademonDVs
 	ld h, b
@@ -406,6 +457,12 @@ GetSpeciesIcon:
 	call SetMenuMonIconColor
 	ld a, [wTempIconSpecies]
 	ld [wCurIcon], a
+
+	; Put the mon's form in wForm
+	ld a, MON_FORM
+	call GetPartyParamLocation
+	ld a, [hl]
+	ld [wForm], a
 	pop de
 	ld a, e
 	jr GetIconGFX
@@ -414,7 +471,14 @@ FlyFunction_GetMonIcon:
 	push de
 	ld a, [wTempIconSpecies]
 	ld [wCurIcon], a
+
+	; Put the mon's form in wForm
+	ld a, MON_FORM
+	call GetPartyParamLocation
+	ld a, [hl]
+	ld [wForm], a
 	pop de
+
 	ld a, e
 	call GetIcon_a
 ; todo: made up this label location... fix this!
@@ -448,12 +512,6 @@ HeldItemIcons:
 INCBIN "gfx/stats/mail.2bpp"
 INCBIN "gfx/stats/item.2bpp"
 
-GetIcon_de:
-; Load icon graphics into VRAM starting from tile de.
-	ld l, e
-	ld h, d
-	jr GetIcon
-
 GetIcon_a:
 ; Load icon graphics into VRAM starting from tile a.
 	ld l, a
@@ -476,6 +534,25 @@ endr
 	push hl
 	ld hl, IconPointers - (3 * 2)
 	jr z, .is_egg
+	; check if unown
+	ld a, [wCurIcon]
+	push hl
+	push bc
+	ld bc, UNOWN
+	call GetPokemonIndexFromID ; icon mon 16bit index now in hl
+
+	; Compare with target species (hl now contains the Pokemon's index)
+	ld a, l
+	cp c          ; Compare low byte
+	jr nz, .not_unown
+	ld a, h
+	cp b          ; Compare high byte
+
+	jr z, .is_unown
+.not_unown
+	pop bc
+	pop hl
+	ld a, [wCurIcon]
 	call GetPokemonIndexFromID
 	add hl, hl
 	ld de, IconPointers
@@ -487,6 +564,23 @@ endr
 	pop hl
 
 	call GetIconBank
+	jr .continue
+.is_unown
+	pop bc
+	pop hl
+	ld a, [wForm]
+	ld l, a
+	ld h, 0
+	add hl, hl
+	ld de, UnownIconPointers
+	add hl, de
+	ld a, [hli]
+	ld e, a
+	ld d, [hl]
+	lb bc, BANK("Unown Icons"), 8
+	pop hl
+
+.continue
 	call GetGFXUnlessMobile
 
 	pop hl
@@ -614,3 +708,5 @@ HoldSwitchmonIcon:
 INCLUDE "data/pokemon/menu_icon_pals.asm"
 
 INCLUDE "data/pokemon/icon_pointers.asm"
+
+INCLUDE "data/unown_icon_pointers.asm"

@@ -329,6 +329,7 @@ TradeAnim_TubeToOT1:
 	ld a, [wLinkTradeSendmonSpecies]
 	ld [wTempIconSpecies], a
 	ld hl, wPlayerTrademonDVs
+	; TODO: load wForm
 	xor a
 	depixel 5, 11, 4, 0
 	ld b, $0
@@ -340,6 +341,7 @@ TradeAnim_TubeToPlayer1:
 	ld a, [wLinkTradeGetmonSpecies]
 	ld [wTempIconSpecies], a
 	ld hl, wOTTrademonDVs
+	; TODO: load wForm
 	ld a, TRADEANIMSTATE_2
 	depixel 9, 18, 4, 4
 	ld b, $4
