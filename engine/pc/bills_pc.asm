@@ -1378,12 +1378,12 @@ NextStorageBoxMon:
 	pop bc
 	ret
 
-GetStorageBoxMon:
 ; Reads storage bank+entry from box b slot c and put it in wBufferMon.
 ; This function supports handling the OT party by setting b to $80.
 ; If there is a checksum error, put Bad Egg data in wBufferMon instead.
 ; Returns c in case of a Bad Egg, z if the requested mon doesn't exist,
 ; nz|nc otherwise. If b==0, read from party list. c is 1-indexed.
+GetStorageBoxMon:
 	xor a
 	ld [wBufferMonSlot], a
 	; Check if we're reading party or box data.

@@ -49,15 +49,15 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Egg has blue spots when shiny
   - Breeding man stands outside fence when egg is ready 
   - Updated Route 34 map to remove grass patch in egg hatching path
-  - Removed trainer ID penalty (same trainer IDs no longer reduce compatibility)
-  - Improved egg generation rates:
+  - Removed trainer ID penalty (same trainer IDs no longer reduce egg generation chance)
+  - Simplified & Improved egg generation rates:
     | Pokemon Pairing | Egg Generation Chance |
-    |----------------|-------------------|
+    |-----------------|-----------------------|
     | Same species | 50% |
     | Different species | 25% |
 - Mystery Gift with various NPCs
   - Improved rarity distribution - Uncommon, rare, and super rare items appear more often
-  - All evolution items can be obtained from Mystery Gifting with NPCs
+  - Upgraded rewards - All evolution items can be obtained by Mystery Gifting with NPCs
   - Locations
     - Carrie (Goldenrod Dept. Store 5f)
     - Kim (Blackthorn City)
@@ -68,7 +68,28 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
 - Turn around after healing in the Pokecenter so you don't accidentally heal again
 - Minor update to Goldenrod layout so it's easier to get to the underground and the bike shop
 
-Below, you will find the original readme for the CrystalShireEngine
+- **New and Updated Daily Events**
+  - Bug Catching Contest now appears on Sundays as well (on top of Tuesdays, Thursdays, and Saturdays)
+
+- **New Cosmetic Forms**
+	| Species | Form | How to Obtain |
+	|---------|------|---------------|
+	| Pikachu | Surfing Pikachu | Teach it Surf |
+	| Pikachu | Flying Pikachu  | Teach it Fly |
+
+- **Misc.**
+  - Turn around after healing in the Pokecenter so you don't accidentally heal again
+  - Minor update to Goldenrod layout so it's easier to get to the underground and the bike shop
+
+- **Art Credits**
+  - SCMidna for Surfing Pikachu front sprites
+  - bloodless for Flying Pikachu back sprite
+  - Kuroko Aizawa, bloodless, and metalflygon08 for Flying Pikachu front sprites 
+  - Unown party menu icons from [Polished Crystal](https://github.com/Rangi42/polishedcrystal)
+    - I could not find specific artist credits for these icons. If you made them, please let me know and I'll update this!
+
+
+## Below, you will find the original readme for the CrystalShireEngine
 
 ---
 

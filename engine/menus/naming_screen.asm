@@ -89,16 +89,22 @@ NamingScreenJumptable:
 	; Is it a PartyMon or a BoxMon?
 	ld a, [wMonType]
 	and a
-	ld hl, wBufferMonDVs
+	ld hl, wBufferMonForm
 	jr nz, .start
-	ld a, MON_DVS
+	ld a, MON_FORM
 	call GetPartyParamLocation
 .start
-	ld de, wTempMonDVs
-	ld a, [hli]
+	ld de, wTempMonForm
+	ld a, [hli] ; Put form in A, inc hl to caughtball
 	ld [de], a
 	inc de
-	ld a, [hl]
+	inc de ; skip over tempmon caughtball to DVs
+	inc hl
+	inc hl ; skip over party/boxmon caughtball to DVs
+	ld a, [hli] ; load first DV byte
+	ld [de], a
+	inc de
+	ld a, [hl] ; load second DV byte
 	ld [de], a
 
 	ld hl, LoadMenuMonIcon

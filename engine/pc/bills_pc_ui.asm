@@ -628,6 +628,8 @@ PCIconLoop:
 .not_holding
 	call GetStorageBoxMon
 	jr z, .blank
+	ld a, [wBufferMonForm]
+	ld [wForm], a
 	ld a, [wBufferMonAltSpecies]
 	ld [wCurIcon], a
 	ld [hli], a
@@ -900,6 +902,22 @@ CheckPartyShift:
 	; Found icon to swap
 	push de
 	push bc
+	
+	; make sure mons with form use the correct icon as they shift
+	push bc
+	ld b, d
+	ld c, e
+	call GetStorageBoxMon
+	jr z, .no_form_data_shift
+	ld a, [wBufferMonForm]
+	ld [wForm], a
+	jr .got_form_data_shift
+.no_form_data_shift:
+	xor a
+	ld [wForm], a
+.got_form_data_shift:
+	pop bc
+	
 	call BillsPC_PerformQuickAnim
 	pop bc
 	pop de
@@ -1853,6 +1871,19 @@ BillsPC_Switch:
 	call BillsPC_CursorPick1
 	pop bc
 
+	; make sure mons with form use the correct icon when they're picked up by cursor
+	push bc
+	call GetStorageBoxMon
+	jr z, .no_boxmon_data_pickup
+	ld a, [wBufferMonForm]
+	ld [wForm], a
+	jr .got_boxmon_data_pickup
+.no_boxmon_data_pickup:
+	xor a
+	ld [wForm], a
+.got_boxmon_data_pickup:
+	pop bc
+
 	; Update pal for the cursor icon, in case we pick it up.
 	lb de, -1, 0
 	call BillsPC_MoveIconData
@@ -1995,7 +2026,7 @@ BillsPC_GetXYFromStorageBox:
 	ld d, a
 	pop bc
 	ret
-
+ 
 BillsPC_PerformQuickAnim:
 ; Performs a synchronous quickmove animation. Used when aborting a selection or
 ; when doing a party shift (otherwise it's asynchronous).
@@ -2026,6 +2057,22 @@ BillsPC_FinishQuickAnim:
 	inc a
 	cp d
 .ok
+	push af
+	push bc
+	ld b, d
+	ld c, e
+	call GetStorageBoxMon
+	jr z, .no_boxmon_data_quick_anim
+	ld a, [wBufferMonForm]
+	ld [wForm], a
+	jr .got_boxmon_data_quick_anim
+.no_boxmon_data_quick_anim:
+	xor a
+	ld [wForm], a
+.got_boxmon_data_quick_anim:
+	pop bc
+	pop af
+
 	lb bc, -1, 1
 	call z, BillsPC_MoveIconData
 
@@ -2698,6 +2745,19 @@ BillsPC_ReleaseAll:
 	inc d
 	push de
 	call RemoveStorageBoxMon
+	
+	push bc
+	call GetStorageBoxMon
+	jr z, .no_boxmon_data_release_all
+	ld a, [wBufferMonForm]
+	ld [wForm], a
+	jr .got_boxmon_data_release_all
+.no_boxmon_data_release_all:
+	xor a
+	ld [wForm], a
+.got_boxmon_data_release_all:
+	pop bc
+	
 	lb de, -1, -1
 	push bc
 	call BillsPC_MoveIconData
@@ -2806,6 +2866,19 @@ BillsPC_Release:
 
 	call .done
 	pop bc
+	
+	push bc
+	call GetStorageBoxMon
+	jr z, .no_boxmon_data_release
+	ld a, [wBufferMonForm]
+	ld [wForm], a
+	jr .got_boxmon_data_release
+.no_boxmon_data_release:
+	xor a
+	ld [wForm], a
+.got_boxmon_data_release:
+	pop bc
+	
 	lb de, -1, -1
 	call BillsPC_MoveIconData
 	call CheckPartyShift
@@ -3265,6 +3338,16 @@ BillsPC_PlaceHeldMon:
 	; Get source in de and destination in bc.
 	call BillsPC_GetCursorFromTo
 
+	; Make sure the mon your moving uses the correct form icon
+	push bc
+	call GetStorageBoxMon
+	ld a, 0
+	jr z, .no_dest_mon
+	ld a, [wBufferMonForm]
+.no_dest_mon:
+	ld [wForm], a
+	pop bc
+
 	; Try to swap slots bc and de and interpret result.
 	call BillsPC_SwapStorage
 	ret nz ; failed
@@ -3322,6 +3405,19 @@ BillsPC_PlaceHeldMon:
 
 	call BillsPC_CursorPick1
 	pop de
+
+	; make sure the mon that shifts to the other's old location uses the correct form icon
+	push bc
+	ld b, d
+	ld c, e
+	call GetStorageBoxMon
+	ld a, 0
+	jr z, .no_dest_mon2
+	ld a, [wBufferMonForm]
+.no_dest_mon2:
+	ld [wForm], a
+	pop bc
+
 	lb bc, -1, 0
 	call BillsPC_MoveIconData
 	call BillsPC_IsHoldingItem
