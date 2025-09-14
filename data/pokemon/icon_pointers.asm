@@ -283,3 +283,6 @@ IconPointers:
 	dw UnownXIcon
 	dw UnownYIcon
 	dw UnownZIcon
+
+	dw PikachuSurfIcon
+	dw PikachuFlyIcon

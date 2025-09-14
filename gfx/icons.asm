@@ -205,7 +205,7 @@ UmbreonIcon::    INCBIN "gfx/icons/umbreon.2bpp"
 MurkrowIcon::    INCBIN "gfx/icons/murkrow.2bpp"
 SlowkingIcon::   INCBIN "gfx/icons/slowking.2bpp"
 MisdreavusIcon:: INCBIN "gfx/icons/misdreavus.2bpp"
-UnownIcon::      INCBIN "gfx/icons/unown.2bpp"
+UnownIcon::      INCBIN "gfx/icons/unown_a.2bpp"
 WobbuffetIcon::  INCBIN "gfx/icons/wobbuffet.2bpp"
 GirafarigIcon::  INCBIN "gfx/icons/girafarig.2bpp"
 PinecoIcon::     INCBIN "gfx/icons/pineco.2bpp"
@@ -287,3 +287,10 @@ UnownWIcon::       INCBIN "gfx/icons/unown_w.2bpp"
 UnownXIcon::       INCBIN "gfx/icons/unown_x.2bpp"
 UnownYIcon::       INCBIN "gfx/icons/unown_y.2bpp"
 UnownZIcon::       INCBIN "gfx/icons/unown_z.2bpp"
+
+
+SECTION "Pikachu Icons", ROMX
+
+PikachuPlainIcon:: INCBIN "gfx/icons/pikachu.2bpp"
+PikachuSurfIcon::  INCBIN "gfx/icons/pikachu_surf.2bpp"
+PikachuFlyIcon::   INCBIN "gfx/icons/pikachu_fly.2bpp"

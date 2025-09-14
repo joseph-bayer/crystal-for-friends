@@ -19,16 +19,26 @@ LoadOverworldMonIcon:
 _LoadOverworldMonIcon:
 	ld a, [wCurIcon]
 	call GetPokemonIndexFromID
+.check_unown
 	ld bc, UNOWN
 
 	; Compare with target species (hl now contains the Pokemon's index)
 	ld a, l
 	cp c          ; Compare low byte
-	jr nz, .not_unown
+	jr nz, .check_pikachu
 	ld a, h
 	cp b          ; Compare high byte
 	jr z, .is_unown
-.not_unown
+.check_pikachu
+	ld bc, PIKACHU
+
+	ld a, l
+	cp c          ; Compare low byte
+	jr nz, .is_formless_mon
+	ld a, h
+	cp b          ; Compare high byte
+	jr z, .is_pikachu
+.is_formless_mon
 	add hl, hl
 	ld de, IconPointers
 	add hl, de
@@ -47,6 +57,18 @@ _LoadOverworldMonIcon:
 	ld e, a
 	ld d, [hl]
 	lb bc, BANK("Unown Icons"), 8
+	ret
+.is_pikachu
+	ld a, [wForm]
+	ld l, a
+	ld h, 0
+	add hl, hl
+	ld de, PikachuIconPointers
+	add hl, de
+	ld a, [hli]
+	ld e, a
+	ld d, [hl]
+	lb bc, BANK("Pikachu Icons"), 8
 	ret
 
 SetMenuMonIconColor:
@@ -535,6 +557,7 @@ endr
 	ld hl, IconPointers - (3 * 2)
 	jr z, .is_egg
 	; check if unown
+.check_unown
 	ld a, [wCurIcon]
 	push hl
 	push bc
@@ -544,12 +567,24 @@ endr
 	; Compare with target species (hl now contains the Pokemon's index)
 	ld a, l
 	cp c          ; Compare low byte
-	jr nz, .not_unown
+	jr nz, .check_pikachu
 	ld a, h
 	cp b          ; Compare high byte
 
 	jr z, .is_unown
-.not_unown
+.check_pikachu
+	ld a, [wCurIcon]
+	ld bc, PIKACHU
+	call GetPokemonIndexFromID ; icon mon 16bit index now in hl
+
+	; Compare with target species (hl now contains the Pokemon's index)
+	ld a, l
+	cp c          ; Compare low byte
+	jr nz, .is_formless_mon
+	ld a, h
+	cp b          ; Compare high byte
+	jr z, .is_pikachu
+.is_formless_mon
 	pop bc
 	pop hl
 	ld a, [wCurIcon]
@@ -578,6 +613,21 @@ endr
 	ld e, a
 	ld d, [hl]
 	lb bc, BANK("Unown Icons"), 8
+	pop hl
+	jr .continue
+.is_pikachu
+	pop bc
+	pop hl
+	ld a, [wForm]
+	ld l, a
+	ld h, 0
+	add hl, hl
+	ld de, PikachuIconPointers
+	add hl, de
+	ld a, [hli]
+	ld e, a
+	ld d, [hl]
+	lb bc, BANK("Pikachu Icons"), 8
 	pop hl
 
 .continue
@@ -710,3 +760,5 @@ INCLUDE "data/pokemon/menu_icon_pals.asm"
 INCLUDE "data/pokemon/icon_pointers.asm"
 
 INCLUDE "data/unown_icon_pointers.asm"
+
+INCLUDE "data/pikachu_icon_pointers.asm"
