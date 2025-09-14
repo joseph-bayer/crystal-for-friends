@@ -6230,7 +6230,17 @@ LoadEnemyMon:
 	ld [wEnemyMonStatus], a
 
 .Form:
+	; TODO: if wild battle, perform unown form generation
 	; TODO: move the unown form generation here
+	
+	; TODO: If trainer battle, get form from party struct
+	; Get form from the party struct
+	ld de, wEnemyMonForm
+	ld hl, wOTPartyMon1Form
+	ld a, [wCurPartyMon]
+	call GetPartyLocation
+	ld a, [hl]
+	ld [de], a
 
 .Moves:
 	ld hl, wBaseType1

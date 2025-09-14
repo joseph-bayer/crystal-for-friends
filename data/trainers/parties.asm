@@ -1,18 +1,15 @@
 ; Trainer data structure:
 ; - db "NAME@", TRAINERTYPE_* constant
 ; - 1 to 6 Pokémon:
-;    * for TRAINERTYPE_NORMAL:     db level
-;                                  dw species
-;    * for TRAINERTYPE_MOVES:      db level
-;                                  dw species
-;                                  dw 4 moves
-;    * for TRAINERTYPE_ITEM:       db level
-;                                  dw species
-;                                  dw item
-;    * for TRAINERTYPE_ITEM_MOVES: db level
-;                                  dw species
-;                                  dw item
-;                                  dw 4 moves
+;    * for TRAINERTYPE_NORMAL:    	db level
+;                                  	dw species
+;    Optional fields, based on whether the TRAINERTYPE_* bits are set:
+;    * If TRAINERTYPE_FORM is present:  db form
+;    * If TRAINERTYPE_ITEM is present	dw item
+;    * If TRAINERTYPE_MOVES is present: dw move 1
+;                                  	dw move 2
+;                                  	dw move 3
+;                                  	dw move 4
 ; - db -1 ; end
 
 
@@ -20,7 +17,7 @@ SECTION "Falkner Trainer Party", ROMX
 
 FalknerGroup:
 	next_list_item ; FALKNER (1)
-	db "FALKNER@", TRAINERTYPE_ITEM_MOVES
+	db "FALKNER@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 8
 	dw PIDGEY
 	dw NO_ITEM
@@ -37,7 +34,7 @@ SECTION "Whitney Trainer Party", ROMX
 
 WhitneyGroup:
 	next_list_item ; WHITNEY (1)
-	db "WHITNEY@", TRAINERTYPE_ITEM_MOVES
+	db "WHITNEY@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 20
 	dw CLEFAIRY
 	dw NO_ITEM
@@ -58,7 +55,7 @@ SECTION "Bugsy Trainer Party", ROMX
 
 BugsyGroup:
 	next_list_item ; BUGSY (1)
-	db "BUGSY@", TRAINERTYPE_ITEM_MOVES
+	db "BUGSY@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 15
 	dw PINECO
 	dw NO_ITEM
@@ -79,7 +76,7 @@ SECTION "Morty Trainer Party", ROMX
 
 MortyGroup:
 	next_list_item ; MORTY (1)
-	db "MORTY@", TRAINERTYPE_ITEM_MOVES
+	db "MORTY@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 24
 	dw HAUNTER
 	dw NO_ITEM
@@ -104,7 +101,7 @@ SECTION "Pryce Trainer Party", ROMX
 
 PryceGroup:
 	next_list_item ; PRYCE (1): If you battle Pryce first
-	db "PRYCE@", TRAINERTYPE_ITEM_MOVES
+	db "PRYCE@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 31
 	dw DEWGONG
 	dw NO_ITEM
@@ -124,7 +121,7 @@ PryceGroup:
 	db -1 ; end
 
 	next_list_item ; PRYCE (2): If you battle Pryce second
-	db "PRYCE@", TRAINERTYPE_ITEM_MOVES
+	db "PRYCE@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 33
 	dw CLOYSTER
 	dw NO_ITEM
@@ -148,7 +145,7 @@ PryceGroup:
 	db -1 ; end
 
 	next_list_item ; PRYCE (3): If you battle Pryce third
-	db "PRYCE@", TRAINERTYPE_ITEM_MOVES
+	db "PRYCE@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 37
 	dw CLOYSTER
 	dw NO_ITEM
@@ -177,7 +174,7 @@ SECTION "Jasmine Trainer Party", ROMX
 
 JasmineGroup:
 	next_list_item ; JASMINE (1): If you battle Jasmine first
-	db "JASMINE@", TRAINERTYPE_ITEM_MOVES
+	db "JASMINE@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 35
 	dw SKARMORY
 	dw NO_ITEM
@@ -201,7 +198,7 @@ JasmineGroup:
 	db -1 ; end
 
 	next_list_item ; JASMINE (2): If you battle Jasmine second
-	db "JASMINE@", TRAINERTYPE_ITEM_MOVES
+	db "JASMINE@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 35
 	dw SKARMORY
 	dw NO_ITEM
@@ -225,7 +222,7 @@ JasmineGroup:
 	db -1 ; end
 
 	next_list_item ; JASMINE (3): If you battle Jasmine third
-	db "JASMINE@", TRAINERTYPE_ITEM_MOVES
+	db "JASMINE@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 37
 	dw SKARMORY
 	dw NO_ITEM
@@ -255,7 +252,7 @@ SECTION "Chuck Trainer Party", ROMX
 
 ChuckGroup:
 	next_list_item ; CHUCK (1): If you battle Chuck first
-	db "CHUCK@", TRAINERTYPE_ITEM_MOVES
+	db "CHUCK@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 30
 	dw HITMONTOP
 	dw NO_ITEM
@@ -275,7 +272,7 @@ ChuckGroup:
 	db -1 ; end
 
 	next_list_item ; CHUCK (2): If you battle Chuck second
-	db "CHUCK@", TRAINERTYPE_ITEM_MOVES
+	db "CHUCK@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 35
 	dw HITMONTOP
 	dw NO_ITEM
@@ -299,7 +296,7 @@ ChuckGroup:
 	db -1 ; end
 
 	next_list_item ; CHUCK (3): If you battle Chuck third
-	db "CHUCK@", TRAINERTYPE_ITEM_MOVES
+	db "CHUCK@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 37
 	dw HITMONTOP
 	dw NO_ITEM
@@ -328,7 +325,7 @@ SECTION "Clair Trainer Party", ROMX
 
 ClairGroup:
 	next_list_item ; CLAIR (1)
-	db "CLAIR@", TRAINERTYPE_ITEM_MOVES
+	db "CLAIR@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 42
 	dw DRAGONAIR
 	dw NO_ITEM
@@ -510,7 +507,7 @@ Rival1Group:
 	db -1 ; end
 
 	next_list_item ; RIVAL1 (13)
-	db "?@", TRAINERTYPE_ITEM_MOVES
+	db "?@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 45
 	dw URSARING
 	dw MIRACLEBERRY
@@ -538,7 +535,7 @@ Rival1Group:
 	db -1 ; end
 
 	next_list_item ; RIVAL1 (14)
-	db "?@", TRAINERTYPE_ITEM_MOVES
+	db "?@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 45
 	dw URSARING
 	dw MIRACLEBERRY
@@ -566,7 +563,7 @@ Rival1Group:
 	db -1 ; end
 
 	next_list_item ; RIVAL1 (15)
-	db "?@", TRAINERTYPE_ITEM_MOVES
+	db "?@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 45
 	dw URSARING
 	dw MIRACLEBERRY
@@ -602,7 +599,7 @@ SECTION "Will Trainer Party", ROMX
 
 WillGroup:
 	next_list_item ; WILL (1)
-	db "WILL@", TRAINERTYPE_ITEM_MOVES
+	db "WILL@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 48
 	dw GIRAFARIG
 	dw NO_ITEM
@@ -666,7 +663,7 @@ SECTION "Bruno Trainer Party", ROMX
 
 BrunoGroup:
 	next_list_item ; BRUNO (1)
-	db "BRUNO@", TRAINERTYPE_ITEM_MOVES
+	db "BRUNO@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 53
 	dw HITMONCHAN
 	dw SCOPE_LENS
@@ -695,7 +692,7 @@ SECTION "Karen Trainer Party", ROMX
 
 KarenGroup:
 	next_list_item ; KAREN (1)
-	db "KAREN@", TRAINERTYPE_ITEM_MOVES
+	db "KAREN@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 54
 	dw UMBREON
 	dw MIRACLEBERRY
@@ -724,7 +721,7 @@ SECTION "Koga Trainer Party", ROMX
 
 KogaGroup:
 	next_list_item ; KOGA (1)
-	db "KOGA@", TRAINERTYPE_ITEM_MOVES
+	db "KOGA@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 50
 	dw ARIADOS
 	dw KINGS_ROCK
@@ -753,7 +750,7 @@ SECTION "Champion Trainer Party", ROMX
 
 ChampionGroup:
 	next_list_item ; CHAMPION (1)
-	db "LANCE@", TRAINERTYPE_ITEM_MOVES
+	db "LANCE@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 54
 	dw GYARADOS
 	dw LEFTOVERS
@@ -786,7 +783,7 @@ SECTION "Brock Trainer Party", ROMX
 
 BrockGroup:
 	next_list_item ; BROCK (1)
-	db "BROCK@", TRAINERTYPE_ITEM_MOVES
+	db "BROCK@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 66
 	dw GOLEM
 	dw QUICK_CLAW
@@ -819,7 +816,7 @@ SECTION "Misty Trainer Party", ROMX
 
 MistyGroup:
 	next_list_item ; MISTY (1)
-	db "MISTY@", TRAINERTYPE_ITEM_MOVES
+	db "MISTY@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 62
 	dw GOLDUCK
 	dw NO_ITEM
@@ -852,7 +849,7 @@ SECTION "Lt Surge Trainer Party", ROMX
 
 LtSurgeGroup:
 	next_list_item ; LT_SURGE (1)
-	db "LT.SURGE@", TRAINERTYPE_ITEM_MOVES
+	db "LT.SURGE@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 57
 	dw ELECTRODE
 	dw FOCUS_BAND
@@ -925,7 +922,7 @@ SECTION "Erika Trainer Party", ROMX
 
 ErikaGroup:
 	next_list_item ; ERIKA (1)
-	db "ERIKA@", TRAINERTYPE_ITEM_MOVES
+	db "ERIKA@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 61
 	dw JUMPLUFF
 	dw FOCUS_BAND
@@ -1004,7 +1001,7 @@ YoungsterGroup:
 	db -1 ; end
 
 	next_list_item ; YOUNGSTER (7)
-	db "JOEY@", TRAINERTYPE_ITEM_MOVES
+	db "JOEY@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 27
 	dw RATTATA
 	dw PINK_BOW
@@ -1012,7 +1009,7 @@ YoungsterGroup:
 	db -1 ; end
 
 	next_list_item ; YOUNGSTER (8)
-	db "JOEY@", TRAINERTYPE_ITEM_MOVES
+	db "JOEY@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 30
 	dw RATTATA
 	dw PINK_BOW
@@ -1048,7 +1045,7 @@ YoungsterGroup:
 	db -1 ; end
 
 	next_list_item ; YOUNGSTER (13)
-	db "JOEY@", TRAINERTYPE_ITEM_MOVES
+	db "JOEY@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 40
 	dw RATTATA
 	dw PINK_BOW
@@ -1056,7 +1053,7 @@ YoungsterGroup:
 	db -1 ; end
 
 	next_list_item ; YOUNGSTER (14)
-	db "JOEY@", TRAINERTYPE_ITEM_MOVES
+	db "JOEY@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 65
 	dw RATTATA
 	dw PINK_BOW
@@ -1626,7 +1623,7 @@ SECTION "Janine Trainer Party", ROMX
 
 JanineGroup:
 	next_list_item ; JANINE (1)
-	db "JANINE@", TRAINERTYPE_ITEM_MOVES
+	db "JANINE@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 63
 	dw WEEZING
 	dw LEFTOVERS
@@ -2735,7 +2732,7 @@ GentlemanGroup:
 	db -1 ; end
 
 	next_list_item ; GENTLEMAN (3)
-	db "GREGORY@", TRAINERTYPE_ITEM_MOVES
+	db "GREGORY@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 57
 	dw PIKACHU
 	dw LIGHT_BALL
@@ -2808,7 +2805,7 @@ SECTION "Sabrina Trainer Party", ROMX
 
 SabrinaGroup:
 	next_list_item ; SABRINA (1)
-	db "SABRINA@", TRAINERTYPE_ITEM_MOVES
+	db "SABRINA@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 65
 	dw MR__MIME
 	dw QUICK_CLAW
@@ -3825,7 +3822,7 @@ SECTION "Rival2 Trainer Party", ROMX
 
 Rival2Group:
 	next_list_item ; RIVAL2 (1)
-	db "?@", TRAINERTYPE_ITEM_MOVES
+	db "?@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 64
 	dw URSARING
 	dw SCOPE_LENS
@@ -3853,7 +3850,7 @@ Rival2Group:
 	db -1 ; end
 
 	next_list_item ; RIVAL2 (2)
-	db "?@", TRAINERTYPE_ITEM_MOVES
+	db "?@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 64
 	dw URSARING
 	dw PINK_BOW
@@ -3881,7 +3878,7 @@ Rival2Group:
 	db -1 ; end
 
 	next_list_item ; RIVAL2 (3)
-	db "?@", TRAINERTYPE_ITEM_MOVES
+	db "?@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 64
 	dw URSARING
 	dw PINK_BOW
@@ -3909,7 +3906,7 @@ Rival2Group:
 	db -1 ; end
 
 	next_list_item ; RIVAL2 (4)
-	db "?@", TRAINERTYPE_ITEM_MOVES
+	db "?@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 68
 	dw URSARING
 	dw SCOPE_LENS
@@ -3937,7 +3934,7 @@ Rival2Group:
 	db -1 ; end
 
 	next_list_item ; RIVAL2 (5)
-	db "?@", TRAINERTYPE_ITEM_MOVES
+	db "?@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 68
 	dw URSARING
 	dw PINK_BOW
@@ -3965,7 +3962,7 @@ Rival2Group:
 	db -1 ; end
 
 	next_list_item ; RIVAL2 (6)
-	db "?@", TRAINERTYPE_ITEM_MOVES
+	db "?@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 68
 	dw URSARING
 	dw PINK_BOW
@@ -4334,7 +4331,7 @@ SECTION "Blaine Trainer Party", ROMX
 
 BlaineGroup:
 	next_list_item ; BLAINE (1)
-	db "BLAINE@", TRAINERTYPE_ITEM_MOVES
+	db "BLAINE@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 66
 	dw RAPIDASH
 	dw QUICK_CLAW
@@ -5878,7 +5875,7 @@ SECTION "Red Trainer Party", ROMX
 
 RedGroup:
 	next_list_item ; RED (1)
-	db "RED@", TRAINERTYPE_ITEM_MOVES
+	db "RED@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 93
 	dw PIKACHU
 	dw LIGHT_BALL
@@ -5911,7 +5908,7 @@ SECTION "Blue Trainer Party", ROMX
 
 BlueGroup:
 	next_list_item ; BLUE (1)
-	db "BLUE@", TRAINERTYPE_ITEM_MOVES
+	db "BLUE@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 69
 	dw PIDGEOT
 	dw MIRACLEBERRY
