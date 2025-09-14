@@ -70,6 +70,7 @@ ReadTrainerParty:
 .done
 	jmp ComputeTrainerReward
 
+; Fighting the Myster Gift Trainer (Cal2)
 .cal2
 	ld a, BANK(sMysteryGiftTrainer)
 	call OpenSRAM
@@ -80,26 +81,34 @@ ReadTrainerParty:
 	call CloseSRAM
 	jr .done
 
+
 ReadTrainerPartyPieces:
 	ld h, d
 	ld l, e
+	; hl = pointer to level
 
 .loop
+	; Check if we're done reading this trainer's party
 	call GetNextTrainerDataByte
-	cp $ff
+	cp -1 ; Trainer party terminator
 	ret z
 
+	; Store level in wCurPartyLevel
 	ld [wCurPartyLevel], a
+
+	; hl = pointer to species low byte
 	call GetNextTrainerDataByte
 	push hl
 	push af
+	; hl = pointer to species high byte
 	call GetNextTrainerDataByte
-	ld h, a
+	ld h, a ; high byte of species
 	pop af
-	ld l, a
+	ld l, a ; low byte of species
 	call GetPokemonIDFromIndex
 	ld [wCurPartySpecies], a
 
+	; Add mon to party
 	ld a, OTPARTYMON
 	ld [wMonType], a
 	predef TryAddMonToParty
@@ -107,8 +116,34 @@ ReadTrainerPartyPieces:
 	inc hl ;because hl was pushed before the last call to GetNextTrainerDataByte
 
 	ld a, [wOtherTrainerType]
+	and TRAINERTYPE_FORM
+	jr z, .no_form
+	; Has a form, update it in the party data
+	; Start by getting the location of this mon's form from the party data into de
+	push hl
+	ld a, [wOTPartyCount]
+	dec a
+	ld hl, wOTPartyMon1Form
+	call GetPartyLocation
+	ld d, h
+	ld e, l
+	pop hl
+
+	; hl = pointer to form byte from party data
+	; de = pointer to mon's form in ot party
+	push hl
+	call GetNextTrainerDataByte
+	; a = form byte from trainer data
+	ld [de], a
+	pop hl
+	inc hl
+
+.no_form
+	; Check if this mon has an item
+	ld a, [wOtherTrainerType]
 	and TRAINERTYPE_ITEM
 	jr z, .no_item
+	; Has an item, update it in the party data
 	push hl
 	ld a, [wOTPartyCount]
 	dec a
@@ -118,22 +153,26 @@ ReadTrainerPartyPieces:
 	ld e, l
 	pop hl
 	push hl
+	; hl = pointer to item low byte
 	call GetNextTrainerDataByte
 	push af
+	; hl = pointer to item high byte
 	call GetNextTrainerDataByte
-	ld h, a
+	ld h, a ; high byte of item
 	pop af
-	ld l, a
+	ld l, a ; low byte of item
 	call GetItemIDFromIndex
 	pop hl
-	ld [de], a
+	ld [de], a ; de = pointer to mon's held item in ot party
 	inc hl
 	inc hl
 .no_item
 
+	; Check if this mon has moves
 	ld a, [wOtherTrainerType]
 	rra ; TRAINERTYPE_MOVES_F == 0
 	jr nc, .no_moves
+	; Has moves, update them in the party data
 	push hl
 	ld a, [wOTPartyCount]
 	dec a
@@ -196,7 +235,7 @@ ReadTrainerPartyPieces:
 
 	pop hl
 .no_moves
-
+	; Move to the next mon in the party OR the -1 terminator
 	jmp .loop
 
 ComputeTrainerReward:
@@ -290,7 +329,8 @@ CopyTrainerName:
 	call FarCopyBytes
 	pop de
 	ret
-
+; Get the byte in hl and store it in a
+; move hl forward so it's ready for the next byte
 GetNextTrainerDataByte:
 	ld a, [wTrainerGroupBank]
 	call GetFarByte
