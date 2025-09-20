@@ -697,6 +697,57 @@ DayCare_InitBreeding:
 	ld [hl], a
 	ld a, [wCurPartyLevel]
 	ld [wEggMonLevel], a
+.Shininess:
+	; Check if both parents are shiny
+	ld a, [wBreedMon1Form]
+	and SHINY_MASK
+	ld b, a
+	ld a, [wBreedMon2Form]
+	and SHINY_MASK
+	or b
+	jr z, .no_shiny_parent ; Neither parent is shiny
+	
+	; At least one parent is shiny
+	ld a, [wBreedMon1Form]
+	and SHINY_MASK
+	ld b, a
+	ld a, [wBreedMon2Form]
+	and SHINY_MASK
+	and b
+	jr z, .one_parent_shiny ; Only one parent is shiny
+	
+	; Both parents are shiny
+	call Random
+	cp SHINY_EGG_TWO_SHINY_PARENTS_NUMERATOR ; 8/256 = 1/32 chance
+	jr nc, .not_shiny
+	ld a, [wEggMonForm]
+	or SHINY_MASK
+	ld [wEggMonForm], a
+	ret
+	
+.one_parent_shiny:
+	; One parent is shiny - higher chance for shiny offspring
+	call Random
+	cp SHINY_EGG_TWO_SHINY_PARENTS_NUMERATOR ; 4/256 = 1/64 chance
+	jr nc, .not_shiny
+	ld a, [wEggMonForm]
+	or SHINY_MASK
+	ld [wEggMonForm], a
+	ret
+	
+.no_shiny_parent:
+	call Random
+	and a 
+	jr nz, .not_shiny ; 255/256 chance of not being shiny
+	call Random
+	cp SHINY_EGG_NUMERATOR ; 240/256 chance of not being shiny
+	jr nc, .not_shiny
+	ld a, [wEggMonForm]
+	or SHINY_MASK
+	ld [wEggMonForm], a
+.not_shiny
+	xor a
+	ld [wEggMonForm], a
 	ret
 
 .String_EGG:

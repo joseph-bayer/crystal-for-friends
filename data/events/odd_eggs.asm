@@ -56,8 +56,9 @@ OddEggs:
 	dw 00256 ; OT ID
 	bigdt 125 ; Exp
 	db 0, 0, 0, 0, 0, 0 ; EVs
-	db 0, 0, 0 ; padding
-  db %00000011 ; caught ball TODO: change to something fun!
+	db 0, 0; padding
+	db %10000000 ; form - shiny
+	db %00000011 ; caught ball TODO: change to something fun!
 	dn 2, 10, 10, 10 ; DVs
 	db 30, 20, 10, 0 ; PP
 	db 4 ; Step cycles to hatch
@@ -80,8 +81,9 @@ OddEggs:
 	dw 00768 ; OT ID
 	bigdt 125 ; Exp
 	db 0, 0, 0, 0, 0, 0 ; EVs
-	db 0, 0, 0 ; padding
-  db %00000011 ; caught ball TODO: change to something fun!
+	db 0, 0; padding
+	db %10000000 ; form byte - shiny
+	db %00000011 ; caught ball TODO: change to something fun!
 	dn 2, 10, 10, 10 ; DVs
 	db 35, 20, 10, 0 ; PP
 	db 4 ; Step cycles to hatch
@@ -104,8 +106,9 @@ OddEggs:
 	dw 00768 ; OT ID
 	bigdt 125 ; Exp
 	db 0, 0, 0, 0, 0, 0 ; EVs
-	db 0, 0, 0 ; padding
-  db %00000011 ; caught ball TODO: change to something fun!
+	db 0, 0; padding
+	db %10000000 ; form - shiny
+	db %00000011 ; caught ball TODO: change to something fun!
 	dn 2, 10, 10, 10 ; DVs
 	db 15, 20, 10, 0 ; PP
 	db 4 ; Step cycles to hatch
@@ -128,8 +131,9 @@ OddEggs:
 	dw 00512 ; OT ID
 	bigdt 125 ; Exp
 	db 0, 0, 0, 0, 0, 0 ; EVs
-	db 0, 0, 0 ; padding
-  db %00000011 ; caught ball TODO: change to something fun!
+	db 0, 0; padding
+	db %10000000 ; form - shiny
+	db %00000011 ; caught ball TODO: change to something fun!
 	dn 2, 10, 10, 10 ; DVs
 	db 35, 30, 10, 0 ; PP
 	db 4 ; Step cycles to hatch
@@ -152,8 +156,9 @@ OddEggs:
 	dw 00512 ; OT ID
 	bigdt 125 ; Exp
 	db 0, 0, 0, 0, 0, 0 ; EVs
-	db 0, 0, 0 ; padding
-  db %00000011 ; caught ball TODO: change to something fun!
+	db 0, 0; padding
+	db %10000000 ; form - shiny
+	db %00000011 ; caught ball TODO: change to something fun!
 	dn 2, 10, 10, 10 ; DVs
 	db 25, 10, 0, 0 ; PP
 	db 4 ; Step cycles to hatch
@@ -176,8 +181,9 @@ OddEggs:
 	dw 00512 ; OT ID
 	bigdt 125 ; Exp
 	db 0, 0, 0, 0, 0, 0 ; EVs
-	db 0, 0, 0 ; padding
-  db %00000011 ; caught ball TODO: change to something fun!
+	db 0, 0; padding
+	db %10000000 ; form - shiny
+	db %00000011 ; caught ball TODO: change to something fun!
 	dn 2, 10, 10, 10 ; DVs
 	db 30, 30, 10, 0 ; PP
 	db 4 ; Step cycles to hatch
@@ -200,8 +206,9 @@ OddEggs:
 	dw 00256 ; OT ID
 	bigdt 125 ; Exp
 	db 0, 0, 0, 0, 0, 0 ; EVs
-	db 0, 0, 0 ; padding
-  db %00000011 ; caught ball TODO: change to something fun!
+	db 0, 0; padding
+	db %10000000 ; form - shiny
+	db %00000011 ; caught ball TODO: change to something fun!
 	dn 2, 10, 10, 10 ; DVs
 	db 35, 10, 0, 0 ; PP
 	db 4 ; Step cycles to hatch

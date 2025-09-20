@@ -182,8 +182,6 @@ endr
 	ld [de], a
 	inc de
 
-
-
 	pop hl
 	push hl
 	ld a, [wMonType]
@@ -501,6 +499,7 @@ AddTempmonToParty:
 	cp -1
 	jr nz, .done
 	ld a, [wForm]
+	and FORM_MASK ; only care about form bits, not shiny bit
 	ld [wFirstUnownSeen], a
 .done
 
@@ -1269,12 +1268,30 @@ GivePoke::
 	push af
 	ld a, [wCurItem]
 	and a
-	jr z, .done
+	jr z, .party_check_form ; skip party mon item
 	ld a, [wCurPartyMon]
 	ld hl, wPartyMon1Item
 	ld bc, PARTYMON_STRUCT_LENGTH
 	rst AddNTimes
 	ld a, [wCurItem]
+	ld [hl], a
+.party_check_form
+
+	ld a, [wCurPartyMon]
+	ld hl, wPartyMon1Form
+	ld bc, PARTYMON_STRUCT_LENGTH
+	rst AddNTimes
+	; party mon's form at hl
+
+	; apply cosmetic form
+	ld a, [wForm]
+	ld [hl], a
+
+	; check if shininess should be applied
+	call .check_shiny
+	jr nc, .done ; not shiny or forced shiny
+	ld a, [wForm]
+	or SHINY_MASK
 	ld [hl], a
 	jr .done
 
@@ -1297,10 +1314,43 @@ GivePoke::
 	push af
 	ld a, [wCurItem]
 	and a
-	jr z, .done
+	jr z, .box_check_form ; skip boxmon item
 	ld a, [wCurItem]
 	ld [wBufferMonItem], a
 	farcall UpdateStorageBoxMonFromTemp
+.box_check_form
+	; apply cosmetic form
+	ld a, [wForm]
+	ld [wBufferMonForm], a
+	farcall UpdateStorageBoxMonFromTemp
+
+	; check if shininess should be applied
+	call .check_shiny
+	jr nc, .done ; not shiny or forced shiny
+	ld a, [wForm]
+	or SHINY_MASK
+	ld [wBufferMonForm], a
+.update_storage_box_mon_from_temp
+	farcall UpdateStorageBoxMonFromTemp
+	jr .done
+
+; 1/512 chance of being shiny (when not forced shiny)
+.check_shiny
+	ld a, [wForm]
+	and SHINY_MASK
+	jr nz, .skip_shiny ; already shiny
+
+	call Random
+	and a
+	jr nz, .skip_shiny ; 255/256 not shiny
+	call Random
+	cp GIFT_SHINY_NUMERATOR ; 128/256 still not shiny
+	ret nc ; not shiny
+	; It's shiny!
+	ret
+.skip_shiny
+	xor a ; clear carry flag
+	ret
 
 .done
 	ld a, [wCurPartySpecies]

@@ -119,7 +119,7 @@ LearnMove:
 	; Check if the Pokemon is Pikachu using 16-bit index
 	ld hl, PIKACHU
 	farcall CheckPokemonIsSpecies
-	jr nz, .done
+	jp nz, .done
 
 	; Get Form
 	ld hl, wPartyMon1Species
@@ -128,6 +128,7 @@ LearnMove:
 	ld bc, MON_FORM
 	add hl, bc
 	ld a, [hl]
+	and FORM_MASK ; only care about form bits, not shiny bit
 
 	cp PIKACHU_PLAIN_FORM
 	jr z, .check_for_new_pikachu_form  ; Plain form, check if it should change
@@ -136,22 +137,29 @@ LearnMove:
 .should_revert_surf_form
 	; If in surf form, check if it still knows Surf and revert if not
 	ld a, [hl]
+	and FORM_MASK ; only care about form bits, not shiny bit
 	cp PIKACHU_SURF_FORM  
 	jr nz, .should_revert_fly_form
+
+	; Pikachu is in surfing form, check if it still knows Surf
 	ld hl, SURF
 	farcall CheckPokemonKnowsMove
 	jr z, .done  ; Still knows Surf, keep surf form
+
 	call .reset_pikachu_to_plain_form
 	jr .check_for_new_pikachu_form ; Check if it should change to fly form
 
 .should_revert_fly_form
 	; If in fly form, check if it still knows Fly and revert if not
 	ld a, [hl]
+	and FORM_MASK ; only care about form bits, not shiny bit
 	cp PIKACHU_FLY_FORM  ; Fly form
 	jr nz, .done ; Not Plain form, not Surf form, not fly form... What are you??
+
 	ld hl, FLY
 	farcall CheckPokemonKnowsMove
 	jr z, .done  ; Still knows Fly, keep fly form
+
 	call .reset_pikachu_to_plain_form
 	; fallthrough to check if it should change to a new form
 
@@ -168,6 +176,7 @@ LearnMove:
 	ld bc, MON_FORM
 	add hl, bc
 	ld a, PIKACHU_SURF_FORM  ; Surfing Pikachu form
+	or [hl] ; preserve shiny bit
 	ld [hl], a
 	jr .done
 
@@ -183,6 +192,7 @@ LearnMove:
 	ld bc, MON_FORM
 	add hl, bc
 	ld a, PIKACHU_FLY_FORM  ; Flying Pikachu form
+	or [hl] ; preserve shiny bit
 	ld [hl], a
 	jr .done
 
@@ -193,7 +203,8 @@ LearnMove:
 	call GetPartyLocation
 	ld bc, MON_FORM
 	add hl, bc
-	xor a  ; Plain form (0)
+	ld a, [hl]
+	and SHINY_MASK ; only preserve shiny bit. Clear everything else.
 	ld [hl], a
 .done
 	

@@ -36,12 +36,33 @@ GiveShuckle:
 	pop af
 
 ; OT ID.
+	push af
+	push bc
 	ld hl, wPartyMon1ID
 	rst AddNTimes
 	ld a, HIGH(MANIA_OT_ID)
 	ld [hli], a
 	ld [hl], LOW(MANIA_OT_ID)
+	pop bc
+	pop af
 
+; Check for Shininess (1/512 chance for gift mon).
+	ld hl, wPartyMon1Form
+	rst AddNTimes
+	form at hl
+	call Random
+	and a
+	jr nz, .nickname ; not shiny
+	call Random
+	cp GIFT_SHINY_NUMERATOR ; 128/256 chance not shiny
+	jr nc, .nickname ; not shiny
+
+	; Make shiny
+	ld a, [hl]
+	or SHINY_MASK
+	ld [hl], a
+
+.nickname
 ; Nickname.
 	ld a, [wPartyCount]
 	dec a

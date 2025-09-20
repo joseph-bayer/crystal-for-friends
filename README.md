@@ -59,6 +59,19 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Headbutting a headbutt tree always results in a Pokemon appearing
   - Each area type has one encounter table instead of a common and uncommon table
 
+- **Shininess**
+  - Shiny Pokemon no longer tied to specific DV spreads
+	- Unown can be shiny in any form - not just "I" and "V"
+	- You can get shinies that are super weak, super strong, and everywhere in between
+  - Standard Odds **1/8192**
+  - Gift Mon **1/512**
+  - Eggs
+  	| Parent Shininess | Odds |
+  	|------------------|------------|
+  	| No shiny parents | **1/4096** |
+  	| One shiny parent | **1/64** |
+  	| Two shiny parents | **1/32** |
+
 - **Breeding Upgrades** 
   - Fewer step cycles required to hatch eggs
   - Update "hatching soon" and egg animation logic to scale down with the lower overall cycles
@@ -98,6 +111,8 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
 - **Code Credits**
   - Please See the Crystal Shire Engine in the Crystal Shire Engine README that has been pasted below. The Crystal Shire Engine is a great base with code from many talented developers.
   - Parts of the [Add a new party menu icon](https://github.com/pret/pokecrystal/wiki/Add-a-new-party-menu-icon) tutorial were used and modified for cosmetic form party menu/daycare overworld/box icons. Credits to [Rangi42](https://github.com/Rangi42) for writing the original tutorial and [Cherryello](https://github.com/Cherryello), [mid-kid](https://github.com/mid-kid), [aaaaaa123456789](https://github.com/aaaaaa123456789), [Idain](https://github.com/Idain), [FrenchOrange](https://github.com/FrenchOrange), [SonicRay100](https://github.com/SonicRay100), and [Brianum](https://github.com/Brianum) for their updates to it.
+  - Untying shininess from DVs partially based on a similar implementation in [Polished Crystal](https://github.com/Rangi42/polishedcrystal)
+  - New shiny check algorithm [Polished Crystal](https://github.com/Rangi42/polishedcrystal)
 - **Art Credits**
   - SCMidna for Surfing Pikachu front sprites
   - bloodless for Flying Pikachu back sprite

@@ -57,6 +57,7 @@ UpdateUnownDex:
 	; ld [hl], a
 
 	ld a, [wForm]
+	and FORM_MASK ; only care about form bits, not shiny bit
 	ld c, a
 	ld b, NUM_UNOWN
 	ld hl, wUnownDex

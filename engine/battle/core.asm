@@ -3340,6 +3340,7 @@ LoadEnemyMonToSwitchTo:
 	jr nz, .skip_unown
 	ld a, [wEnemyMonForm]
 	ld [wForm], a
+	and FORM_MASK ; only care about form bits, not shiny bit
 	ld [wFirstUnownSeen], a
 .skip_unown
 
@@ -3795,16 +3796,38 @@ InitBattleMon:
 	jmp BadgeStatBoosts
 
 BattleCheckPlayerShininess:
-	call GetPartyMonDVs
+	call GetPartyMonForm
 	jr BattleCheckShininess
 
 BattleCheckEnemyShininess:
-	call GetEnemyMonDVs
+	call GetEnemyMonForm
 
 BattleCheckShininess:
 	ld b, h
 	ld c, l
 	farjp CheckShininess
+
+GetPartyMonForm:
+	ld hl, wBattleMonForm
+	ld a, [wPlayerSubStatus5]
+	bit SUBSTATUS_TRANSFORMED, a
+	ret z
+	ld hl, wPartyMon1Form
+	ld a, [wCurBattleMon]
+	jmp GetPartyLocation
+
+GetEnemyMonForm:
+	ld hl, wEnemyMonForm
+	ld a, [wEnemySubStatus5]
+	bit SUBSTATUS_TRANSFORMED, a
+	ret z
+	ld hl, wForm
+	ld a, [wBattleMode]
+	dec a
+	ret z
+	ld hl, wOTPartyMon1Form
+	ld a, [wCurOTMon]
+	jmp GetPartyLocation
 
 GetPartyMonDVs:
 	ld hl, wBattleMonDVs
@@ -5881,7 +5904,7 @@ LoadEnemyMon:
 	dec a
 	jr z, .WildItem
 
-; If we're in a trainer battle, the item is in the party struct
+; If we're in a trainer battle or giftmon, the item is in the party struct
 	ld a, [wCurPartyMon]
 	ld hl, wOTPartyMon1Item
 	call GetPartyLocation ; bc = PartyMon[wCurPartyMon] - wPartyMons
@@ -5935,10 +5958,12 @@ LoadEnemyMon:
 ; Initialize DVs
 
 ; If we're in a trainer battle, DVs are predetermined
+	; Overworld ex: givepoke. Does that also mean like Lugia/Ho-Oh?
 	ld a, [wBattleMode]
 	and a
 	jr z, .InitDVs
 
+	; Game Freak hack where SUBSTATUS_TRANSFORMED is used to indicate a CAUGHT wild mon, which skips over regenerating DVs
 	ld a, [wEnemySubStatus5]
 	bit SUBSTATUS_TRANSFORMED, a
 	jr z, .InitDVs
@@ -5962,7 +5987,7 @@ LoadEnemyMon:
 ; These are the DVs we'll use if we're actually in a trainer battle
 	ld a, [wBattleMode]
 	dec a
-	jr nz, .UpdateDVs
+	jr nz, .UpdateDVs ; not a trainer battle
 
 ; Wild DVs
 ; Here's where the fun starts
@@ -5971,7 +5996,7 @@ LoadEnemyMon:
 ; They have their own structs, which are shorter than normal
 	ld a, [wBattleType]
 	cp BATTLETYPE_ROAMING
-	jr nz, .NotRoaming
+	jr nz, .GenerateDVs
 
 ; Grab HP
 	call GetRoamMonHP
@@ -6006,17 +6031,6 @@ LoadEnemyMon:
 ; We're done with DVs
 	jr .UpdateDVs
 
-.NotRoaming:
-; Register a contains wBattleType
-
-; Forced shiny battle type
-; Used by Red Gyarados at Lake of Rage
-	cp BATTLETYPE_FORCESHINY
-	jr nz, .GenerateDVs
-
-	lb bc, ATKDEFDV_SHINY, SPDSPCDV_SHINY ; $ea / $aa
-	jr .UpdateDVs
-
 .GenerateDVs:
 ; Generate new random DVs
 	call BattleRandom
@@ -6037,40 +6051,6 @@ LoadEnemyMon:
 	jr nz, .Happiness
 
 ; Species-specfic:
-
-; TODO: move this to the form section of this function
-; Unown
-	ld a, [wTempEnemyMonSpecies]
-	call GetPokemonIndexFromID ; will be preserved for the Magikarp check
-	ld a, l
-	sub LOW(UNOWN)
-	if HIGH(UNOWN) == 0
-		or h
-	else
-		jr nz, .Magikarp
-		ld a, h
-		if HIGH(UNOWN) == 1
-			dec a
-		else
-			cp HIGH(UNOWN)
-		endc
-	endc
-	jr nz, .Magikarp
-
-; Get letter based on DVs
-	ld hl, wEnemyMonDVs
-	predef GetUnownLetter ; Generate Random Unown Letter 0-25
-; Can't use any letters that haven't been unlocked
-; If combined with forced shiny battletype, causes an infinite loop
-	call CheckUnownLetter
-	jr c, .GenerateDVs ; try again
-
-	; Form is acceptable, store it
-	ld a, [wForm]
-	ld [wEnemyMonForm], a
-
-	jr .Happiness ; skip the Magikarp check
-
 .Magikarp:
 ; These filters are untranslated.
 ; They expect at wMagikarpLength a 2-byte value in mm,
@@ -6080,6 +6060,8 @@ LoadEnemyMon:
 ; by targeting those 1600 mm (= 5'3") or larger.
 ; After the conversion to feet, it is unable to target any,
 ; since the largest possible Magikarp is 5'3", and $0503 = 1283 mm.
+	ld a, [wTempEnemyMonSpecies]
+	call GetPokemonIndexFromID
 	ld a, l
 	sub LOW(MAGIKARP)
 	if HIGH(MAGIKARP) == 0
@@ -6229,19 +6211,6 @@ LoadEnemyMon:
 	ld a, [hl] ; OTPartyMonStatus
 	ld [wEnemyMonStatus], a
 
-.Form:
-	; TODO: if wild battle, perform unown form generation
-	; TODO: move the unown form generation here
-	
-	; TODO: If trainer battle, get form from party struct
-	; Get form from the party struct
-	ld de, wEnemyMonForm
-	ld hl, wOTPartyMon1Form
-	ld a, [wCurPartyMon]
-	call GetPartyLocation
-	ld a, [hl]
-	ld [de], a
-
 .Moves:
 	ld hl, wBaseType1
 	ld de, wEnemyMonType1
@@ -6288,7 +6257,7 @@ LoadEnemyMon:
 	ld hl, wEnemyMonMoves
 	ld de, wEnemyMonPP
 	predef FillPP
-	jr .Finish
+	jr .FormByte
 
 .TrainerPP:
 ; Copy PP from the party struct
@@ -6298,6 +6267,87 @@ LoadEnemyMon:
 	ld de, wEnemyMonPP
 	ld bc, NUM_MOVES
 	rst CopyBytes
+
+; Form Mask:  00011111
+; Shiny Mask: 10000000
+.FormByte
+	ld a, [wBattleMode]
+	and a
+	jr z, .check_unown
+
+	ld a, [wBattleMode]
+	dec a
+	jr nz, .TrainerForm ; not a wild battle
+
+	; TODO: could avoid this goofy check by moving this code right before .happiness
+	; Game Freak hack where SUBSTATUS_TRANSFORMED is used to indicate a CAUGHT wild mon, which skips over running certain functions
+	bit SUBSTATUS_TRANSFORMED, a
+	jr z, .check_unown
+
+; Mon is already caught, so keep its form
+	ld a, [wForm]
+	ld [wEnemyMonForm], a
+	jmp .Finish
+
+.check_unown
+; Wild Form Generation
+	; If Unown, generate form
+	ld a, [wTempEnemyMonSpecies]
+	call GetPokemonIndexFromID
+	ld a, l
+	sub LOW(UNOWN)
+	if HIGH(UNOWN) == 0
+		or h
+	else
+		jr nz, .generate_shininess
+		ld a, h
+		if HIGH(UNOWN) == 1
+			dec a
+		else
+			cp HIGH(UNOWN)
+		endc
+	endc
+	jr nz, .generate_shininess
+
+.generate_unown_form
+	predef GetUnownLetter ; Generate Random Unown Letter 0-25
+	; Can't use any letters that haven't been unlocked
+	call CheckUnownLetter
+	jr c, .generate_unown_form ; try again
+
+	; Form is acceptable, store it
+	ld a, [wForm]
+	ld [wEnemyMonForm], a
+
+.generate_shininess
+	ld a, [wBattleType]
+	cp BATTLETYPE_FORCESHINY
+	jr nz, .generate_wild_shininess
+	ld a, [wEnemyMonForm]
+	or SHINY_MASK ; set shiny bit
+	ld [wEnemyMonForm], a
+	jr .Finish
+
+.generate_wild_shininess
+	call Random
+	and a
+	jr nz, .Finish ; 255/256 not shiny
+	call Random
+	cp SHINY_NUMERATOR
+	jr nc, .Finish ; 248/256 still not shiny
+	; It's shiny!
+	ld a, [wEnemyMonForm]
+	or SHINY_MASK ; set shiny bit
+	ld [wEnemyMonForm], a
+	jr .Finish
+.TrainerForm:
+	; Get form from the party struct
+	ld de, wEnemyMonForm
+	ld hl, wOTPartyMon1Form
+	ld a, [wCurPartyMon]
+	call GetPartyLocation
+	ld a, [hl]
+	ld [de], a
 
 .Finish:
 ; Copy the first five base stats (the enemy mon's base Sp. Atk
@@ -6402,6 +6452,7 @@ CheckUnownLetter:
 
 	push de
 	ld a, [wForm]
+	and FORM_MASK ; only care about form bits, not shiny bit
 	ld de, 1
 	push bc
 	call IsInArray
@@ -8124,6 +8175,7 @@ InitEnemyWildmon:
 	cp -1
 	jr nz, .skip_unown
 	ld a, [wForm]
+	and FORM_MASK ; only care about form bits, not shiny bit
 	ld [wFirstUnownSeen], a
 .skip_unown
 	ld de, vTiles2

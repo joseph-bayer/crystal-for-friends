@@ -101,12 +101,14 @@ MoveDeletion:
 	ld bc, MON_FORM
 	add hl, bc
 	ld a, [hl]
+	and FORM_MASK ; only care about form bits, not shiny bit
 
 	cp PIKACHU_PLAIN_FORM
 	jr z, .check_for_new_pikachu_form  ; Plain form, check if it should change
 
 .should_revert_surf_form
 	ld a, [hl]
+	and FORM_MASK ; only care about form bits, not shiny bit
 	cp PIKACHU_SURF_FORM  ; Surfing form
 	jr nz, .should_revert_fly_form  ; Not in Surf form, check if fly form should be reverted
 
@@ -120,6 +122,7 @@ MoveDeletion:
 
 .should_revert_fly_form
 	ld a, [hl]
+	and FORM_MASK ; only care about form bits, not shiny bit
 	cp PIKACHU_FLY_FORM  ; Flying form
 	ret nz ; Not Plain form, not Surf form, not fly form... What are you??
 
@@ -137,7 +140,8 @@ MoveDeletion:
 	call GetPartyLocation
 	ld bc, MON_FORM
 	add hl, bc
-	xor a  ; Plain form (0)
+	ld a, [hl]
+	and SHINY_MASK ; only preserve shiny bit. Clear everything else.
 	ld [hl], a
 	ret
 
@@ -154,6 +158,7 @@ MoveDeletion:
 	ld bc, MON_FORM
 	add hl, bc
 	ld a, PIKACHU_SURF_FORM  ; Surfing Pikachu form
+	or [hl] ; preserve shiny bit
 	ld [hl], a
 	ret
 
@@ -169,6 +174,7 @@ MoveDeletion:
 	ld bc, MON_FORM
 	add hl, bc
 	ld a, PIKACHU_FLY_FORM  ; Flying Pikachu form
+	or [hl] ; preserve shiny bit
 	ld [hl], a
 	ret
 

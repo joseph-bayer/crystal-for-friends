@@ -269,6 +269,7 @@ PokeAnim_InitPicAttributes:
 	ld a, BANK(wForm)
 	ld hl, wForm
 	call GetFarWRAMByte
+	and FORM_MASK ; only care about form bits, not shiny bit
 	ld [wPokeAnimForm], a
 
 	call PokeAnim_GetSpeciesOrMonWithForm
@@ -944,6 +945,7 @@ PokeAnim_GetFrontpicDims:
 	jr .done_getting_pic_size
 .pikachu
 	ld a, [wForm]
+	and FORM_MASK ; only care about form bits, not shiny bit
 	ld hl, PikachuDimensions
 	ld c, a
 	ld b, 0

@@ -297,20 +297,23 @@ ENDM
 	const givepoke_command ; $2d
 MACRO givepoke
 	if _NARG == 2
-		givepoke \1, \2, NO_ITEM, FALSE
+		givepoke \1, \2, NO_ITEM, PLAIN_FORM, FALSE
 	elif _NARG == 3
-		givepoke \1, \2, \3, FALSE
-	elif _NARG == 5
-		givepoke \1, \2, \3, TRUE, \4, \5
+		givepoke \1, \2, \3, PLAIN_FORM, FALSE
+	elif _NARG == 4
+		givepoke \1, \2, \3, \4, FALSE
+	elif _NARG == 6
+		givepoke \1, \2, \3, \4, TRUE, \5, \6
 	else
 		db givepoke_command
 		dw \1 ; pokemon
 		db \2 ; level
 		dw \3 ; item
-		db \4 ; trainer
-		if \4
-			dw \5 ; nickname_pointer
-			dw \6 ; ot_name_pointer
+		db \4 ; form
+		db \5 ; trainer
+		if \5
+			dw \6 ; nickname_pointer
+			dw \7 ; ot_name_pointer
 		endc
 	endc
 ENDM

@@ -1886,13 +1886,17 @@ Script_givepoke:
 	ld h, a
 	call GetItemIDFromIndex
 	ld [wCurItem], a
+	; Load form
+	rst GetScriptByte
+	ld [wForm], a
+
 	; Check if Trainer flag is set to TRUE (1) or FALSE (0)
 	rst GetScriptByte
 	and a
 	ld b, a
 	jr z, .ok ; if false, skip next part
 
-	; Trainer data is present. Save pointer to
+	; Trainer data is present. Save pointer to de
 	ld hl, wScriptPos 
 	ld a, [hli]
 	ld d, [hl]

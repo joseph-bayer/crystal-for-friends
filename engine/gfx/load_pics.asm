@@ -4,8 +4,7 @@ GetUnownLetter:
 	ld a, NUM_UNOWN        ; or use NUM_UNOWN constant
 	call RandomRange
 	; a now contains 0-25 with equal probability
-	; ld a, 1
-	ld [wForm], a
+	ld [wForm], a ; no chance of clearing shiny bit, since shiny generation happens after this function is called.
 	ret
 
 GetMonFrontpic:
@@ -77,6 +76,7 @@ _PrepareFrontpic:
 	jr .done_getting_pic_size
 .pikachu
 	ld a, [wForm]
+	and FORM_MASK ; only care about form bits, not shiny bit
 	ld hl, PikachuDimensions
 	ld c, a
 	ld b, 0
@@ -167,6 +167,7 @@ GetPicIndirectPointer:
 
 .unown
 	ld a, [wForm]
+	and FORM_MASK ; only care about form bits, not shiny bit
 	ld c, a
 	ld b, 0
 	ld hl, UnownPicPointers
@@ -175,6 +176,7 @@ GetPicIndirectPointer:
 
 .pikachu
   	ld a, [wForm]
+	and FORM_MASK ; only care about form bits, not shiny bit
 	ld c, a
 	ld b, 0
 	ld hl, PikachuPicPointers
@@ -232,6 +234,7 @@ GetAnimatedEnemyFrontpic:
 	ld a, BANK(wForm)
 	ld hl, wForm
 	call GetFarWRAMByte
+	and FORM_MASK ; only care about form bits, not shiny bit
 	ld hl, PikachuDimensions
 	ld c, a
 	ld b, 0

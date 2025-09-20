@@ -2755,6 +2755,7 @@ Pokedex_LoadUnownFont:
 
 Pokedex_LoadUnownFrontpicTiles:
 	ld a, [wForm]
+	and FORM_MASK ; only care about form bits, not shiny bit
 	push af
 	ld a, [wDexCurUnownIndex]
 	ld e, a

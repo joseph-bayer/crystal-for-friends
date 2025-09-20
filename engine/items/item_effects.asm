@@ -514,10 +514,6 @@ PokeBallEffect:
 	pop af
 	ld [hl], a
 
-	; Reapply form since LoadEnemyMon 0'd it out
-	ld a, [wForm]
-	ld [wEnemyMonForm], a
-
 	ld hl, wEnemySubStatus5
 	bit SUBSTATUS_TRANSFORMED, [hl]
 	jr nz, .Transformed

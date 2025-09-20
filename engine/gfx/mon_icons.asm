@@ -48,6 +48,7 @@ _LoadOverworldMonIcon:
 	jmp GetIconBank
 .is_unown
 	ld a, [wForm]
+	and FORM_MASK ; only care about form bits, not shiny bit
 	ld l, a
 	ld h, 0
 	add hl,hl
@@ -60,6 +61,7 @@ _LoadOverworldMonIcon:
 	ret
 .is_pikachu
 	ld a, [wForm]
+	and FORM_MASK ; only care about form bits, not shiny bit
 	ld l, a
 	ld h, 0
 	add hl, hl
@@ -117,7 +119,7 @@ LoadPartyMenuMonIconColors:
 	add hl, de
 	ld a, [hl]
 	ld [wCurPartySpecies], a
-	ld a, MON_DVS
+	ld a, MON_FORM
 	call GetPartyParamLocation
 	call GetMenuMonIconPalette
 	ld hl, wShadowOAMSprite00Attributes
@@ -416,7 +418,7 @@ SetPartyMonIconAnimSpeed:
 	db $80 ; HP_RED
 
 NamingScreen_InitAnimatedMonIcon:
-	ld hl, wTempMonDVs
+	ld hl, wTempMonForm
 	call SetMenuMonIconColor
 	ld a, [wTempIconSpecies]
 	ld [wCurIcon], a
@@ -433,7 +435,7 @@ NamingScreen_InitAnimatedMonIcon:
 	ret
 
 MoveList_InitAnimatedMonIcon:
-	ld a, MON_DVS
+	ld a, MON_FORM
 	call GetPartyParamLocation
 	call SetMenuMonIconColor
 	ld a, [wTempIconSpecies]
@@ -474,7 +476,7 @@ Trade_LoadMonIconGFX:
 GetSpeciesIcon:
 ; Load species icon into VRAM at tile a
 	push de
-	ld a, MON_DVS
+	ld a, MON_FORM
 	call GetPartyParamLocation
 	call SetMenuMonIconColor
 	ld a, [wTempIconSpecies]
@@ -507,7 +509,7 @@ FlyFunction_GetMonIcon:
 ; fallthrough
 SetOWFlyMonColor:
 	; Edit the OBJ 0 palette so that the cursor Pokémon has the right colors.
-	ld a, MON_DVS
+	ld a, MON_FORM
 	call GetPartyParamLocation
 	call GetMenuMonIconPalette
 	add a
@@ -604,6 +606,7 @@ endr
 	pop bc
 	pop hl
 	ld a, [wForm]
+	and FORM_MASK ; only care about form bits, not shiny bit
 	ld l, a
 	ld h, 0
 	add hl, hl
@@ -619,6 +622,7 @@ endr
 	pop bc
 	pop hl
 	ld a, [wForm]
+	and FORM_MASK ; only care about form bits, not shiny bit
 	ld l, a
 	ld h, 0
 	add hl, hl

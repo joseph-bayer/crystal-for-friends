@@ -143,21 +143,22 @@ CheckBreedmonCompatibility:
 
 DoEggStep::
 	ld de, wPartySpecies
-	ld hl, wPartyMon1Happiness
+	ld hl, wPartyMon1Happiness ; eggs use happiness byte for egg cycles
 	ld c, 0
 .loop
-	ld a, [de]
-	inc de
-	cp -1
-	ret z
-	cp EGG
-	jr nz, .next
-	dec [hl]
-	jr nz, .next
-	ld a, 1
-	and a
+	ld a, [de] ; a = species of current mon
+	inc de ; de = species of next mon
+	cp -1 ; end of party?
+	ret z 
+	cp EGG ; is it an egg?
+	jr nz, .next ; if not, skip
+	dec [hl] ; decrease egg cycles
+	jr nz, .next ; if it didn't reach 0, skip next instruction
+	ld a, 1 
+	and a ; set nz flag to indicate it's time to hatch
 	ret
 
+; move to next mon
 .next
 	push de
 	ld de, PARTYMON_STRUCT_LENGTH
