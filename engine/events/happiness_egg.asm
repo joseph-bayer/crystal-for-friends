@@ -139,9 +139,9 @@ ChangeHappiness:
 	rst AddNTimes
 	ld a, [hl] ; a = form
 	and FORM_MASK
-	cp SHUCKLE_SHUCKY_NEUTRAL_FORM ; Is it shucky in his neutral form?
-	ret nz ; not shucky neutral form, so do nothing
-	ld a, SHUCKLE_SHUCKY_HAPPY_FORM
+	cp SHUCKLE_SHUCKIE_NEUTRAL_FORM ; Is it shuckie in his neutral form?
+	ret nz ; not shuckie neutral form, so do nothing
+	ld a, SHUCKLE_SHUCKIE_HAPPY_FORM
 	and [hl] ; preserve shiny bit
 	ld [hl], a
 	ret
