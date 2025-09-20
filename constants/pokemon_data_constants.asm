@@ -180,6 +180,7 @@ DEF PLAIN_FORM EQU 0
 ; These numerators are used after a 1/256 check, resulting in a denominator of 65536.
 DEF SHINY_NUMERATOR EQU 8 ; 8/65536 = 1/8192
 DEF GIFT_SHINY_NUMERATOR EQU 128 ; 128/65536 = 1/512
+DEF LEGENDARY_SHINY_NUMERATOR EQU 128 ; 128/65536 = 1/512
 DEF SHINY_EGG_NUMERATOR EQU 16 ; 16/65536 = 1/4096  
 
 ; These numerators do not have a preceding 1/256 check, resulting in a denominator of 256.

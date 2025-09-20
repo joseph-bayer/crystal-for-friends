@@ -6322,10 +6322,36 @@ LoadEnemyMon:
 .generate_shininess
 	ld a, [wBattleType]
 	cp BATTLETYPE_FORCESHINY
-	jr nz, .generate_wild_shininess
+	jr nz, .generate_roam_mon_shininess
 	ld a, [wEnemyMonForm]
 	or SHINY_MASK ; set shiny bit
 	ld [wEnemyMonForm], a
+	jr .Finish
+
+.generate_roam_mon_shininess
+	ld a, [wBattleType]
+	cp BATTLETYPE_ROAMING
+	jr nz, .generate_wild_shininess
+	; Roam mon have a 1/512 chance of being shiny
+	; This is rolled every time they are encountered
+	; If they are shiny, they stay shiny for all future encounters
+	call GetRoamMonForm
+	ld a, [hl]
+	ld [wEnemyMonForm], a
+	and SHINY_MASK
+	jr nz, .Finish ; already shiny
+	call Random
+	and a
+	jr nz, .Finish ; 255/256 not shiny
+	call Random
+	cp LEGENDARY_SHINY_NUMERATOR
+	jr nc, .Finish ; 128/256 still not shiny
+	; It's shiny!
+	ld a, [hl]
+	or SHINY_MASK ; set shiny bit
+	ld [hl], a
+	ld [wEnemyMonForm], a
+
 	jr .Finish
 
 .generate_wild_shininess
@@ -8553,17 +8579,36 @@ GetRoamMonHP:
 
 GetRoamMonDVs:
 ; output: hl = wRoamMonDVs
+	; does the species match roam mon 1?
 	ld a, [wTempEnemyMonSpecies]
 	ld b, a
 	ld a, [wRoamMon1Species]
 	cp b
 	ld hl, wRoamMon1DVs
 	ret z
+	; does the species match roam mon 2?
 	ld a, [wRoamMon2Species]
 	cp b
 	ld hl, wRoamMon2DVs
 	ret z
+	; The species must match roam mon 3
+	; There is no third roam mon in Crystal, this code will never run
 	ld hl, wRoamMon3DVs
+	ret
+
+GetRoamMonForm:
+; output: hl = wRoamMonForm
+	ld a, [wTempEnemyMonSpecies]
+	ld b, a
+	ld a, [wRoamMon1Species]
+	cp b
+	ld hl, wRoamMon1Form
+	ret z
+	ld a, [wRoamMon2Species]
+	cp b
+	ld hl, wRoamMon2Form
+	ret z
+	ld hl, wRoamMon3Form
 	ret
 
 GetRoamMonSpecies:
