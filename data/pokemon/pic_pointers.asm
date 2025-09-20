@@ -443,8 +443,11 @@ PokemonPicPointers::
 	dba QwilfishBackpic
 	dba ScizorFrontpic
 	dba ScizorBackpic
-	dba ShuckleFrontpic
-	dba ShuckleBackpic
+
+	; Shuckle pics have their own table. See ShucklePicPointers
+	dbw -1, -1
+	dbw -1, -1
+
 	dba HeracrossFrontpic
 	dba HeracrossBackpic
 	dba SneaselFrontpic

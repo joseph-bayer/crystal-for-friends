@@ -434,6 +434,24 @@ PokeAnim_IsPikachu:
 	endc
 	ret
 
+PokeAnim_IsShuckle:
+	ld a, [wPokeAnimSpecies]
+	push hl
+	call GetPokemonIndexFromID
+	ld a, l
+	cp LOW(SHUCKLE)
+	ld a, h
+	pop hl
+	ret nz
+	if HIGH(SHUCKLE) == 0
+		and a
+	elif HIGH(SHUCKLE) == 1
+		dec a
+	else
+		cp HIGH(SHUCKLE)
+	endc
+	ret
+
 PokeAnim_IsEgg:
 	ld a, [wPokeAnimSpecies]
 	cp EGG
@@ -858,14 +876,21 @@ GetMonAnimPointer:
 	ld hl, UnownAnimationPointers
 	ld de, UnownAnimationIdlePointers
 	call PokeAnim_IsUnown
-	jr z, .unown
+	jr z, .pointers_ready
 
 	; handle Pikachu
 	ld c, BANK(PikachuAnimationPointers)
 	ld hl, PikachuAnimationPointers
 	ld de, PikachuAnimationIdlePointers
 	call PokeAnim_IsPikachu
-	jr z, .pikachu
+	jr z, .pointers_ready
+
+	; handle Shuckle
+	ld c, BANK(ShuckleAnimationPointers)
+	ld hl, ShuckleAnimationPointers
+	ld de, ShuckleAnimationIdlePointers
+	call PokeAnim_IsShuckle
+	jr z, .pointers_ready
 
   	; handle all other Pokemon
 	; NOTE: other Pokemon aren't 0 indexed, so we have to -2 the pointers
@@ -873,8 +898,7 @@ GetMonAnimPointer:
 	ld hl, AnimationPointers - 2
 	ld de, AnimationIdlePointers - 2
 
-.pikachu
-.unown
+.pointers_ready
 	ld a, [wPokeAnimIdleFlag]
 	and a
 	jr nz, .got_pointer
@@ -885,6 +909,8 @@ GetMonAnimPointer:
 	call PokeAnim_IsUnown
 	jr z, .pokemon_with_cosmetic_form
 	call PokeAnim_IsPikachu
+	jr z, .pokemon_with_cosmetic_form
+	call PokeAnim_IsShuckle
 	jr nz, .regular_pokemon
 .pokemon_with_cosmetic_form
 	ld a, [wPokeAnimSpeciesOrMonWithForm]
@@ -970,6 +996,9 @@ GetMonFramesPointer:
 	; handle Pikachu
 	call PokeAnim_IsPikachu
 	jr z, .pikachu
+	; handle Shuckle
+	call PokeAnim_IsShuckle
+	jr z, .shuckle
 	; handle other Pokemon
 	ld hl, FramesPointers - 3
 	ld a, BANK(FramesPointers)
@@ -987,6 +1016,13 @@ GetMonFramesPointer:
 	ld [wPokeAnimFramesBank], a
 	ld hl, PikachuFramesPointers
 	ld a, BANK(PikachuFramesPointers)
+	ld c, 2
+	jr .got_frames
+.shuckle
+	ld a, BANK(ShuckleFramesBank)
+	ld [wPokeAnimFramesBank], a
+	ld hl, ShuckleFramesPointers
+	ld a, BANK(ShuckleFramesPointers)
 	ld c, 2
 .got_frames
 	push af
@@ -1032,6 +1068,8 @@ GetMonBitmaskPointer:
 	jr z, .unown
 	call PokeAnim_IsPikachu
 	jr z, .pikachu
+	call PokeAnim_IsShuckle
+	jr z, .shuckle
 
 	ld a, BANK(BitmasksPointers)
 	ld de, BitmasksPointers - 2
@@ -1044,6 +1082,10 @@ GetMonBitmaskPointer:
 .pikachu
 	ld a, BANK(PikachuBitmasksPointers)
 	ld de, PikachuBitmasksPointers
+	jr .got_bitmask
+.shuckle
+	ld a, BANK(ShuckleBitmasksPointers)
+	ld de, ShuckleBitmasksPointers
 
 .got_bitmask
 	ld [wPokeAnimBitmaskBank], a
@@ -1075,19 +1117,16 @@ GetMonBitmaskPointer:
 
 PokeAnim_GetSpeciesOrMonWithForm:
 	call PokeAnim_IsUnown
-	jr z, .unown
+	jr z, .mon_with_form
 	call PokeAnim_IsPikachu
-	jr z, .pikachu
+	jr z, .mon_with_form
+	call PokeAnim_IsShuckle
+	jr z, .mon_with_form
 	ld a, [wPokeAnimSpecies]
 	ret
 
-.unown
+.mon_with_form
 	ld a, [wPokeAnimForm]
-	jr .done
-
-.pikachu
-  	ld a, [wPokeAnimForm]
-.done
 	ret
 
 Unused_HOF_AnimateAlignedFrontpic:

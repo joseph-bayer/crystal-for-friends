@@ -53,6 +53,7 @@ _PrepareFrontpic:
 	call GetBaseData
 	push hl
 	push bc
+	; cosmetic forms with different dimensions from plain form
 	; handle pikachu
 	ld a, [wCurSpecies]
 	call GetPokemonIndexFromID
@@ -159,6 +160,22 @@ GetPicIndirectPointer:
 	endc
 	jr z, .pikachu
 .not_pikachu
+	; handle shuckle
+	ld a, l
+	sub LOW(SHUCKLE)
+	if HIGH(SHUCKLE) == 0
+		or h
+	else
+		jr nz, .not_shucklele
+		if HIGH(SHUCKLE) == 1
+			dec h
+	else
+	ld a, h
+	cp HIGH(SHUCKLE)
+		endc
+	endc
+	jr z, .shuckle
+.not_shuckle
 	ld hl, PokemonPicPointers
 	ld d, BANK(PokemonPicPointers)
 .done
@@ -182,6 +199,14 @@ GetPicIndirectPointer:
 	ld hl, PikachuPicPointers
 	ld d, BANK(PikachuPicPointers)
   	jr .done
+.shuckle
+	ld a, [wForm]
+	and FORM_MASK ; only care about form bits, not shiny bit
+	ld c, a
+	ld b, 0
+	ld hl, ShucklePicPointers
+	ld d, BANK(ShucklePicPointers)
+	jr .done
 
 GetFrontpicPointer:
 	call GetPicIndirectPointer
@@ -207,6 +232,7 @@ GetAnimatedEnemyFrontpic:
 	push hl
 	push bc
 	; TODO: make a reusable function isPikachu just like in the pic_anim
+	; cosmetic forms with different dimensions from plain form
 	; handle pikachu
 	ld a, [wCurSpecies]
 	call GetPokemonIndexFromID

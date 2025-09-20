@@ -89,7 +89,10 @@ ChangeHappiness:
 	xor a
 
 .done
-	ld [de], a
+	ld [de], a ; update happiness
+
+	call .update_shuckle_form
+
 	ld a, [wBattleMode]
 	and a
 	ret z
@@ -101,6 +104,7 @@ ChangeHappiness:
 	ld a, [de]
 	ld [wBattleMonHappiness], a
 
+.update_shuckle_form
 ; check if pokemon is shuckle
 	ld hl, wPartyMon1Species
 	ld bc, PARTYMON_STRUCT_LENGTH
@@ -132,7 +136,7 @@ ChangeHappiness:
 	cp 150
 	ret c
 
-	; happiness is 150 or more, set form to happy
+	; happiness is 150 or more, set form to happy if it's Shuckie in neutral form
 	ld a, [wCurPartyMon]
 	ld hl, wPartyMon1Form
 	ld bc, PARTYMON_STRUCT_LENGTH
@@ -141,8 +145,11 @@ ChangeHappiness:
 	and FORM_MASK
 	cp SHUCKLE_SHUCKIE_NEUTRAL_FORM ; Is it shuckie in his neutral form?
 	ret nz ; not shuckie neutral form, so do nothing
+	ld a, [hl]
+	and SHINY_MASK
+	ld b, a
 	ld a, SHUCKLE_SHUCKIE_HAPPY_FORM
-	and [hl] ; preserve shiny bit
+	or b ; preserve shiny bit
 	ld [hl], a
 	ret
 

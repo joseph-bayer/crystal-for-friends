@@ -439,6 +439,14 @@ INCLUDE "gfx/pokemon/pikachu_bitmasks.asm"
 INCLUDE "gfx/pokemon/pikachu_frame_pointers.asm"
 INCLUDE "gfx/pokemon/pikachu_frames.asm"
 INCLUDE "gfx/pokemon/pikachu_dimensions.asm"
+INCLUDE "gfx/pokemon/shuckle_anim_pointers.asm"
+INCLUDE "gfx/pokemon/shuckle_anims.asm"
+INCLUDE "gfx/pokemon/shuckle_idle_pointers.asm"
+INCLUDE "gfx/pokemon/shuckle_idles.asm"
+INCLUDE "gfx/pokemon/shuckle_bitmask_pointers.asm"
+INCLUDE "gfx/pokemon/shuckle_bitmasks.asm"
+INCLUDE "gfx/pokemon/shuckle_frame_pointers.asm"
+INCLUDE "gfx/pokemon/shuckle_frames.asm"
 
 
 SECTION "Pic Animations 2", ROMX

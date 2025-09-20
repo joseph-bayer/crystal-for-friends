@@ -1,0 +1,6 @@
+ShuckleAnimationIdlePointers:
+	table_width 2
+	dw ShucklePlainAnimationIdle
+	dw ShuckleShuckieNeutralAnimationIdle
+	dw ShuckleShuckieHappyAnimationIdle
+	assert_table_length NUM_SHUCKLE_FORMS

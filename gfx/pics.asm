@@ -15,6 +15,9 @@ SECTION "Pikachu Pic Pointers", ROMX
 
 INCLUDE "data/pokemon/pikachu_pic_pointers.asm"
 
+SECTION "Shuckle Pic Pointers", ROMX
+
+INCLUDE "data/pokemon/shuckle_pic_pointers.asm"
 
 SECTION "Trainer Pic Pointers", ROMX
 
@@ -717,10 +720,14 @@ SECTION "Pics 19", ROMX
 
 ; Seems to be an accidental copy of the previous bank
 
-PikachuSurfFrontpic: INCBIN "gfx/pokemon/pikachu_surf/front.animated.2bpp.lz"
-PikachuSurfBackpic:  INCBIN "gfx/pokemon/pikachu_surf/back.2bpp.lz"
-PikachuFlyFrontpic:  INCBIN "gfx/pokemon/pikachu_fly/front.animated.2bpp.lz"
-PikachuFlyBackpic:   INCBIN "gfx/pokemon/pikachu_fly/back.2bpp.lz"
+PikachuSurfFrontpic: 		INCBIN "gfx/pokemon/pikachu_surf/front.animated.2bpp.lz"
+PikachuSurfBackpic:  		INCBIN "gfx/pokemon/pikachu_surf/back.2bpp.lz"
+PikachuFlyFrontpic:  		INCBIN "gfx/pokemon/pikachu_fly/front.animated.2bpp.lz"
+PikachuFlyBackpic:   		INCBIN "gfx/pokemon/pikachu_fly/back.2bpp.lz"
+ShuckleShuckieNeutralFrontpic:	INCBIN "gfx/pokemon/shuckle/front.animated.2bpp.lz"
+ShuckleShuckieNeutralBackpic:	INCBIN "gfx/pokemon/shuckle/back.2bpp.lz"
+ShuckleShuckieHappyFrontpic:	INCBIN "gfx/pokemon/shuckle_shuckie_happy/front.animated.2bpp.lz"
+ShuckleShuckieHappyBackpic:	INCBIN "gfx/pokemon/shuckle_shuckie_happy/back.2bpp.lz"
 
 
 SECTION "Pics 20", ROMX
