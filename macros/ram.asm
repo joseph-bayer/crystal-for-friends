@@ -274,6 +274,7 @@ MACRO roam_struct
 \1MapNumber:: db
 \1HP::        db
 \1DVs::       dw
+\1Form::      db
 ENDM
 
 MACRO bugcontestwinner

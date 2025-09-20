@@ -71,6 +71,9 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   	| No shiny parents | **1/4096** |
   	| One shiny parent | **1/64** |
   	| Two shiny parents | **1/32** |
+  - Roaming Legendarys
+    - Every time you encounter one, it has a **1/512** chance to be shiny
+    - Once you encounter a shiny roaming mon, it will remain shiny for all subsequent encounters
 
 - **Breeding Upgrades** 
   - Fewer step cycles required to hatch eggs
