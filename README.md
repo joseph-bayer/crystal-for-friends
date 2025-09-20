@@ -106,13 +106,14 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
 	|---------|------|---------------|
 	| Pikachu | Surfing Pikachu | Teach it Surf |
 	| Pikachu | Flying Pikachu  | Teach it Fly |
+	| Shuckle | Happy Shuckie | Reach 150 happiness with Shuckie |
 
 - **Misc.**
   - Turn around after healing in the Pokecenter so you don't accidentally heal again
   - Minor update to Goldenrod layout so it's easier to get to the underground and the bike shop
   - Happiness
     - Happiness goes up by 2 points every other step cycle instead of 1
-    - Haircuts, Daisy grooming, and battling gym leaders give more happiness.
+    - Leveling up, Haircuts, Daisy grooming, and battling gym leaders give more happiness.
 
 - **Code Credits**
   - Please See the Crystal Shire Engine in the Crystal Shire Engine README that has been pasted below. The Crystal Shire Engine is a great base with code from many talented developers.
