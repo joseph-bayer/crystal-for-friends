@@ -336,3 +336,16 @@ DEF NUM_UNOWN EQU const_value ; 26
   const PIKACHU_FLY_FORM    ; 2
   ; TODO: const PIKACHU_PARTY_HAT_FORM ; 3
 DEF NUM_PIKACHU_FORMS EQU const_value ; 3
+
+; Shuckle forms
+; indexes for:
+; - ShucklePicPointers (see data/pokemon/shuckle_pic_pointers.asm)
+; - ShuckleAnimationPointers (see gfx/pokemon/shuckle_anim_pointers.asm)
+; - ShuckleAnimationIdlePointers (see gfx/pokemon/shuckle_idle_pointers.asm)
+; - ShuckleBitmasksPointers (see gfx/pokemon/shuckle_bitmask_pointers.asm)
+; - ShuckleFramesPointers (see gfx/pokemon/shuckle_frame_pointers.asm)
+  const_def 0 ; Note that forms are now 0-indexed
+  const SHUCKLE_PLAIN_FORM    	    ; 0
+  const SHUCKLE_SHUCKY_NEUTRAL_FORM ; 1
+  const SHUCKLE_SHUCKY_HAPPY_FORM   ; 2
+DEF NUM_SHUCKLE_FORMS EQU const_value ; 3

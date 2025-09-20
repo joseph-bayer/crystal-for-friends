@@ -46,10 +46,14 @@ GiveShuckle:
 	pop bc
 	pop af
 
-; Check for Shininess (1/512 chance for gift mon).
+; Apply Shuckie Neutral Form
 	ld hl, wPartyMon1Form
-	rst AddNTimes
-	form at hl
+	rst AddNTimes ; form at hl
+
+	ld a, SHUCKLE_SHUCKY_NEUTRAL_FORM
+	ld [hl], a
+
+; Check for Shininess (1/512 chance for gift mon).
 	call Random
 	and a
 	jr nz, .nickname ; not shiny

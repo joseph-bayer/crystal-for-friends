@@ -100,6 +100,50 @@ ChangeHappiness:
 	ret nz
 	ld a, [de]
 	ld [wBattleMonHappiness], a
+
+; check if pokemon is shuckle
+	ld hl, wPartyMon1Species
+	ld bc, PARTYMON_STRUCT_LENGTH
+	ld a, [wCurPartyMon]
+	rst AddNTimes
+	ld a, [hl] ; a = species
+	call GetPokemonIndexFromID
+	ld a, l
+	sub LOW(SHUCKLE)
+	if HIGH(SHUCKLE) == 0
+		or h
+	else
+		ret nz
+		ld a, h
+		if HIGH(SHUCKLE) == 1
+			dec a
+		else
+			cp HIGH(SHUCKLE)
+		endc
+	endc
+	ret nz
+	
+	; it is shuckle, check if happiness is 150 or more
+	ld a, [wCurPartyMon]
+	ld hl, wPartyMon1Happiness
+	ld bc, PARTYMON_STRUCT_LENGTH
+	rst AddNTimes
+	ld a, [hl] ; a = happiness
+	cp 150
+	ret c
+
+	; happiness is 150 or more, set form to happy
+	ld a, [wCurPartyMon]
+	ld hl, wPartyMon1Form
+	ld bc, PARTYMON_STRUCT_LENGTH
+	rst AddNTimes
+	ld a, [hl] ; a = form
+	and FORM_MASK
+	cp SHUCKLE_SHUCKY_NEUTRAL_FORM ; Is it shucky in his neutral form?
+	ret nz ; not shucky neutral form, so do nothing
+	ld a, SHUCKLE_SHUCKY_HAPPY_FORM
+	and [hl] ; preserve shiny bit
+	ld [hl], a
 	ret
 
 INCLUDE "data/events/happiness_changes.asm"
@@ -107,6 +151,7 @@ INCLUDE "data/events/happiness_changes.asm"
 StepHappiness::
 ; Raise the party's happiness by 1 point every other step cycle.
 
+	; Check if this is the step cycle to raise happiness
 	ld hl, wHappinessStepCount
 	ld a, [hl]
 	inc a
@@ -114,29 +159,35 @@ StepHappiness::
 	ld [hl], a
 	ret nz
 
+	; If we have no Pokémon, don't do anything
 	ld de, wPartyCount
 	ld a, [de]
 	and a
 	ret z
 
-	ld c, a
-	ld hl, wPartyMon1Happiness
+	ld c, a ; c = party count
+	ld hl, wPartyMon1Happiness ; hl = happiness of first mon
 .loop
-	inc de
-	ld a, [de]
+	inc de ; de = species of current mon
+	ld a, [de] ; a = species of current mon
 	cp EGG
-	jr z, .next
-	inc [hl]
-	jr nz, .next
-	ld [hl], $ff
+	jr z, .next ; if it's an egg, don't increase happiness
+	inc [hl] ; increase happiness
+	jr nz, .increase_happiness_again ; if it didn't overflow, skip next instruction
+	ld [hl], $ff ; if it overflowed, set to max happiness (255)
+	jr .next
+.increase_happiness_again
+	inc [hl] ; increase happiness again
+	jr nz, .next ; if it didn't overflow, skip next instruction
+	ld [hl], $ff ; if it overflowed, set to max happiness (255)
 
 .next
 	push de
-	ld de, PARTYMON_STRUCT_LENGTH
-	add hl, de
+	ld de, PARTYMON_STRUCT_LENGTH ; de = size of one mon's data
+	add hl, de ; hl = happiness of next mon
 	pop de
-	dec c
-	jr nz, .loop
+	dec c ; decrement party count
+	jr nz, .loop ; if we still have mons, repeat
 	ret
 
 DayCareStep::
