@@ -49,7 +49,7 @@ GiveShuckle:
 ; Check for Shininess (1/512 chance for gift mon).
 	ld hl, wPartyMon1Form
 	rst AddNTimes
-	form at hl
+	; form at hl
 	call Random
 	and a
 	jr nz, .nickname ; not shiny
