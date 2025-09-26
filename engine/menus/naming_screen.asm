@@ -94,6 +94,7 @@ NamingScreenJumptable:
 	ld a, MON_FORM
 	call GetPartyParamLocation
 .start
+	; TODO: we may need to do more here
 	ld de, wTempMonForm
 	ld a, [hli] ; Put form in A, inc hl to caughtball
 	ld [de], a

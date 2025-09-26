@@ -1,0 +1,16 @@
+{
+    "files.associations": {
+	"*.asm": "gbz80",
+	"*.inc": "rgbds-z80",
+	"*.s": "rgbds-z80"
+},
+    "editor.tabSize": 8,
+    "editor.insertSpaces": false,
+    "rgbds-z80.includePaths": [
+        "${workspaceFolder}",
+        "${workspaceFolder}/constants",
+        "${workspaceFolder}/macros"
+    ],
+    "emulicious-debugger.port": 58870,
+    "emulicious-debugger.launch.emuliciousPath": ""
+}

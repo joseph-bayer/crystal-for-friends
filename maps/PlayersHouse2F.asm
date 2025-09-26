@@ -57,6 +57,7 @@ if DEF(_DEBUG)
 	setflag ENGINE_EXPN_CARD
 	; pokedex
 	setflag ENGINE_POKEDEX
+	; setflag ENGINE_UNOWN_DEX
 	; useful items
 	giveitem RARE_CANDY, 99
 	giveitem MAX_REPEL, 99
@@ -77,6 +78,9 @@ if DEF(_DEBUG)
 	giveitem KINGS_ROCK
 	giveitem AMULET_COIN
 	giveitem SCOPE_LENS
+	giveitem HM_SURF
+	giveitem HM_FLY
+	giveitem HM_STRENGTH
 	; all badges
 	setflag ENGINE_ZEPHYRBADGE
 	setflag ENGINE_HIVEBADGE
@@ -136,6 +140,12 @@ if DEF(_DEBUG)
 	setflag ENGINE_FLYPOINT_FUCHSIA
 	setflag ENGINE_FLYPOINT_SAFFRON
 	setflag ENGINE_FLYPOINT_CINNABAR
+	; unown
+	; setflag ENGINE_UNLOCKED_UNOWNS_A_TO_K
+	; setevent EVENT_RUINS_OF_ALPH_INNER_CHAMBER_TOURISTS
+	; setevent EVENT_SOLVED_KABUTO_PUZZLE
+	; setevent EVENT_RUINS_OF_ALPH_KABUTO_CHAMBER_RECEPTIONIST
+	; setmapscene RUINS_OF_ALPH_INNER_CHAMBER, SCENE_RUINSOFALPHINNERCHAMBER_STRANGE_PRESENCE
 	; post-e4
 	setflag ENGINE_CREDITS_SKIP
 	; good party
@@ -152,31 +162,32 @@ if DEF(_DEBUG)
 	givepokemove HEADBUTT,   wPartyMon3, 2
 	givepokemove WATERFALL,  wPartyMon3, 3
 
-  ; DEBUG: CHECK If two Pokemon with same DEF and SPEC DVs can breed
-  ; change lanturn's DVs
-  ; loadmem wPartyMon3DVs+0, %00000000 ; 0 Atk (FEMALE), 0 Def
-  ; loadmem wPartyMon3DVs+1, %00000000 ; 0 Speed, 0 Special
-  ; givepoke LANTURN, 100, LEFTOVERS
-  ; ; change lanturn 2's DVs
-  ; loadmem wPartyMon4DVs+0, %11110000 ; 15 Atk (MALE), 0 Def
-  ; loadmem wPartyMon4DVs+1, %00000000 ; 0 Speed, 0 Special
+	; DEBUG: CHECK If two Pokemon with same DEF and SPEC DVs can breed
+	; change lanturn's DVs
+	; loadmem wPartyMon3DVs+0, %00000000 ; 0 Atk (FEMALE), 0 Def
+	; loadmem wPartyMon3DVs+1, %00000000 ; 0 Speed, 0 Special
+	; givepoke LANTURN, 100, LEFTOVERS
+	; ; change lanturn 2's DVs
+	; loadmem wPartyMon4DVs+0, %11110000 ; 15 Atk (MALE), 0 Def
+	; loadmem wPartyMon4DVs+1, %00000000 ; 0 Speed, 0 Special
 
 	; misc pokemon for testing
 	givepoke AMPHAROS, 50
-	givepoke GENGAR, 50
+	; givepoke GENGAR, 50
 	givepoke DITTO, 50
+  	givepoke PIKACHU, 5, NO_ITEM, PIKACHU_SURF_FORM
 
-  ; DEBUG: Test new evolution items
-  ; giveitem KINGS_ROCK, 2
-  ; giveitem METAL_COAT, 2
-  ; giveitem DRAGON_SCALE, 1
-  ; giveitem UP_GRADE, 1
-  ; givepoke PORYGON, 50, LEFTOVERS
-  ; givepoke POLIWHIRL, 50, LEFTOVERS
-  ; givepoke SLOWPOKE, 50, LEFTOVERS
-  ; givepoke SCYTHER, 50, LEFTOVERS
-  ; givepoke ONIX, 50, LEFTOVERS
-  ; givepoke SEADRA, 50, LEFTOVERS
+	; DEBUG: Test new evolution items
+	; giveitem KINGS_ROCK, 2
+	; giveitem METAL_COAT, 2
+	; giveitem DRAGON_SCALE, 1
+	; giveitem UP_GRADE, 1
+	; givepoke PORYGON, 50, LEFTOVERS
+	; givepoke POLIWHIRL, 50, LEFTOVERS
+	; givepoke SLOWPOKE, 50, LEFTOVERS
+	; givepoke SCYTHER, 50, LEFTOVERS
+	; givepoke ONIX, 50, LEFTOVERS
+	; givepoke SEADRA, 50, LEFTOVERS
 
 	; intro events
 	addcellnum PHONE_MOM
@@ -184,9 +195,9 @@ if DEF(_DEBUG)
 	setevent EVENT_PLAYERS_HOUSE_MOM_1
 	clearevent EVENT_PLAYERS_HOUSE_MOM_2
 
-  special UnlockMysteryGift
-  ; DEBUG: testing new rocket takeover npc placements
-  ; clearevent EVENT_RADIO_TOWER_ROCKET_TAKEOVER
+	special UnlockMysteryGift
+	; DEBUG: testing new rocket takeover npc placements
+	; clearevent EVENT_RADIO_TOWER_ROCKET_TAKEOVER
 	closetext
 	end
 else

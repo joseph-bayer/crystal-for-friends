@@ -223,6 +223,30 @@ HandleMapBackground:
 	farcall ScrollScreen
 	farjp PlaceMapNameSign
 
+GetFollowerDirectionFromPlayer::
+	ld a, [wObject1MapX]
+	ld b, a
+	ld a, [wPlayerMapX]
+	cp b
+	jr z, .check_y
+	ld c, RIGHT
+	ret c
+	ld c, LEFT
+	ret
+
+.check_y
+	ld a, [wObject1MapY]
+	ld b, a
+	ld a, [wPlayerMapY]
+	cp b
+	ld c, STANDING
+	ret z
+	ld c, DOWN
+	ret c
+; nc
+	ld c, UP
+	ret
+
 CheckPlayerState:
 	ld a, [wPlayerStepFlags]
 	bit PLAYERSTEP_CONTINUE_F, a

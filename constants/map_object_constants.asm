@@ -36,7 +36,7 @@ DEF OBJECT_RANGE            rb ; 20
 DEF OBJECT_PAL_INDEX        rb ; 21
                             rb_skip 6
 DEF OBJECT_LENGTH EQU _RS
-DEF NUM_OBJECT_STRUCTS EQU 13 ; see wObjectStructs
+DEF NUM_OBJECT_STRUCTS EQU 14 ; see wObjectStructs
 DEF FIRST_VRAM1_OBJECT_STRUCT EQU 8
 
 ; object_struct OBJECT_DIRECTION values
@@ -150,6 +150,7 @@ DEF MAPOBJECT_SCREEN_HEIGHT EQU (SCREEN_HEIGHT / 2) + 2
 	const SPRITEMOVEDATA_BOULDERDUST          ; 22
 	const SPRITEMOVEDATA_GRASS                ; 23
 	const SPRITEMOVEDATA_SWIM_WANDER          ; 24
+	const SPRITEMOVEDATA_FOLLOWEROBJ          ; 25
 DEF NUM_SPRITEMOVEDATA EQU const_value
 
 ; StepFunction_FromMovement.Pointers indexes (see engine/overworld/map_objects.asm)
@@ -182,6 +183,7 @@ DEF NUM_SPRITEMOVEDATA EQU const_value
 	const SPRITEMOVEFN_SPIN_COUNTERCLOCKWISE ; 19
 	const SPRITEMOVEFN_BOULDERDUST           ; 1a
 	const SPRITEMOVEFN_GRASS                 ; 1b
+	const SPRITEMOVEFN_FOLLOWER_OBJ          ; 1c
 DEF NUM_SPRITEMOVEFN EQU const_value
 
 ; StepTypesJumptable indexes (see engine/overworld/map_objects.asm)
@@ -285,3 +287,13 @@ DEF NUM_FACINGS EQU const_value
 	const STEP_BACK_LEDGE    ; 7
 	const STEP_WALK_IN_PLACE ; 8
 DEF NUM_STEPS EQU const_value
+
+
+; MovementFunction_FollowerObj arguments (engine/overworld/map_objects.asm)
+	const_def
+	const FOLLOWERMOVE_NORMAL       ; 0
+	const FOLLOWERMOVE_SLIDE        ; 1
+	const FOLLOWERMOVE_BIG_STEP     ; 2
+	const FOLLOWERMOVE_STILL        ; 3
+	const FOLLOWERMOVE_PREPARE_JUMP ; 4
+DEF FOLLOWERMOVE_NUM_TYPES EQU const_value

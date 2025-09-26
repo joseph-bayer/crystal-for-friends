@@ -34,6 +34,8 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Dark type moves are now Physical
   - Ghost type moves are now Special
 
+- **Following Mon**
+
 - **Odd Egg Upgrades**
   - Always Shiny
   - Odds of getting each kind of mon is more even

@@ -236,6 +236,10 @@ ScriptCommandTable:
 	dw Script_checkmaplockeditems        ; ad
 	dw Script_givepokemove               ; ae
 	dw Script_domysterygift              ; af
+	dw Script_freezefollower             ; b0
+	dw Script_unfreezefollower           ; b1
+	dw Script_getfollowerdirection       ; b2
+	dw Script_followcry                  ; b3
 	assert_table_length NUM_EVENT_COMMANDS
 
 StartScript:
@@ -1182,7 +1186,7 @@ Script_memcall:
 	ld d, [hl]
 	ld e, a
 	; fallthrough
-ScriptCall:
+ScriptCall::
 	ld hl, wScriptStackSize
 	ld a, [hl]
 	cp 5
@@ -2130,9 +2134,6 @@ Script_warpcheck:
 	ret nc
 	jmp EnableEvents
 
-Script_enableevents: ; unreferenced
-	jmp EnableEvents
-
 Script_newloadmap:
 	rst GetScriptByte
 	ldh [hMapEntryMethod], a
@@ -2447,3 +2448,33 @@ Script_domysterygift:
 	; Call the enhanced mystery gift function
 	farcall DoNPCMysteryGift
 	ret
+
+Script_freezefollower:
+	ld bc, wObject1Struct
+	call DoesObjectHaveASprite
+	ret z
+	ld hl, OBJECT_FLAGS2
+	add hl, bc
+	set FROZEN_F, [hl]
+	ld hl, wFollowerFlags
+	set FOLLOWER_FROZEN_F, [hl]
+	ret
+
+Script_unfreezefollower:
+	ld bc, wObject1Struct
+	call DoesObjectHaveASprite
+	ret z
+	ld hl, OBJECT_FLAGS2
+	add hl, bc
+	res FROZEN_F, [hl]
+	ld hl, wFollowerFlags
+	res FOLLOWER_FROZEN_F, [hl]
+	ret
+
+Script_getfollowerdirection:
+	farcall Script_GetFollowerDirectionFromPlayer
+	ret
+
+Script_followcry:
+	ld a, [wFollowerSpriteID]
+	jp PlayMonCry

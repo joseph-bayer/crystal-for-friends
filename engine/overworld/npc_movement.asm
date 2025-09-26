@@ -272,7 +272,17 @@ WillObjectBumpIntoSomeoneElse:
 	ld hl, OBJECT_MAP_Y
 	add hl, bc
 	ld e, [hl]
-; fallthrough
+	jr IsNPCAtCoord
+
+IsObjectStandingOnSomeoneElse:
+	ld hl, OBJECT_LAST_MAP_X
+	add hl, bc
+	ld d, [hl]
+	ld hl, OBJECT_LAST_MAP_Y
+	add hl, bc
+	ld e, [hl]
+	jr IsNPCAtCoord
+
 IsNPCAtCoord:
 	ld bc, wObjectStructs
 	xor a

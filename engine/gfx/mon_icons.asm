@@ -1,79 +1,6 @@
-LoadOverworldMonIcon:
-	ld a, e
-	ld b, d
-	ld [wCurIcon], a
-	; Is it a Breedmon?
-	ld a, b
-	and a
-	jr z, _LoadOverworldMonIcon ; not a Breedmon, should already have wForm set
-	push af
-	ld a, [wBreedMon1Form]
-	ld [wForm], a
-	pop af
-	; Check which Breedmon we're using
-	dec a
-	jr z, _LoadOverworldMonIcon
-	ld a, [wBreedMon2Form]
-	ld [wForm], a
-	; fallthrough
-_LoadOverworldMonIcon:
-	ld a, [wCurIcon]
-	call GetPokemonIndexFromID
-.check_unown
-	ld bc, UNOWN
+; TODO: LoadOverworldMonIcon is gone. It had updated logic for cosmetic forms. We'll need to find where that needs to be reimplemented.
 
-	; Compare with target species (hl now contains the Pokemon's index)
-	ld a, l
-	cp c          ; Compare low byte
-	jr nz, .check_pikachu
-	ld a, h
-	cp b          ; Compare high byte
-	jr z, .is_unown
-.check_pikachu
-	ld bc, PIKACHU
-
-	ld a, l
-	cp c          ; Compare low byte
-	jr nz, .is_formless_mon
-	ld a, h
-	cp b          ; Compare high byte
-	jr z, .is_pikachu
-.is_formless_mon
-	add hl, hl
-	ld de, IconPointers
-	add hl, de
-	ld a, [hli]
-	ld d, [hl]
-	ld e, a
-	jmp GetIconBank
-.is_unown
-	ld a, [wForm]
-	and FORM_MASK ; only care about form bits, not shiny bit
-	ld l, a
-	ld h, 0
-	add hl,hl
-	ld de, UnownIconPointers
-	add hl, de
-	ld a, [hli]
-	ld e, a
-	ld d, [hl]
-	lb bc, BANK("Unown Icons"), 8
-	ret
-.is_pikachu
-	ld a, [wForm]
-	and FORM_MASK ; only care about form bits, not shiny bit
-	ld l, a
-	ld h, 0
-	add hl, hl
-	ld de, PikachuIconPointers
-	add hl, de
-	ld a, [hli]
-	ld e, a
-	ld d, [hl]
-	lb bc, BANK("Pikachu Icons"), 8
-	ret
-
-SetMenuMonIconColor:
+SetMenuMonColor:
 	push hl
 	push de
 	push bc
@@ -81,11 +8,11 @@ SetMenuMonIconColor:
 
 	ld a, [wTempIconSpecies]
 	ld [wCurPartySpecies], a
-	call GetMenuMonIconPalette
+	call GetMenuMonPalette
 	ld hl, wShadowOAMSprite00Attributes
-	jr _ApplyMenuMonIconColor
+	jr _ApplyMenuMonColor
 
-SetMenuMonIconColor_NoShiny:
+SetMenuMonColor_NoShiny:
 	push hl
 	push de
 	push bc
@@ -94,11 +21,11 @@ SetMenuMonIconColor_NoShiny:
 	ld a, [wTempIconSpecies]
 	ld [wCurPartySpecies], a
 	and a
-	call GetMenuMonIconPalette_PredeterminedShininess
+	call GetMenuMonPalette_PredeterminedShininess
 	ld hl, wShadowOAMSprite00Attributes
-	jr _ApplyMenuMonIconColor
+	jr _ApplyMenuMonColor
 
-LoadPartyMenuMonIconColors:
+LoadPartyMenuMonColors:
 	push hl
 	push de
 	push bc
@@ -121,7 +48,7 @@ LoadPartyMenuMonIconColors:
 	ld [wCurPartySpecies], a
 	ld a, MON_FORM
 	call GetPartyParamLocation
-	call GetMenuMonIconPalette
+	call GetMenuMonPalette
 	ld hl, wShadowOAMSprite00Attributes
 	push af
 	ld a, [wCurPartyMon]
@@ -148,9 +75,9 @@ LoadPartyMenuMonIconColors:
 	ld a, d
 .ok
 	ld [hl], a ; bottom left
-	jr _FinishMenuMonIconColor
+	jr _FinishMenuMonColor
 
-_ApplyMenuMonIconColor:
+_ApplyMenuMonColor:
 	ld c, 4
 	ld de, 4
 .loop
@@ -159,7 +86,7 @@ _ApplyMenuMonIconColor:
 	dec c
 	jr nz, .loop
 	; fallthrough
-_FinishMenuMonIconColor:
+_FinishMenuMonColor:
 	jmp PopAFBCDEHL
 
 GetMonPalInBCDE:
@@ -202,11 +129,11 @@ GetMonPalInBCDE:
 	ld e, l
 	ret
 
-GetMenuMonIconPalette:
+GetMenuMonPalette:
 	ld c, l
 	ld b, h
 	farcall CheckShininess
-GetMenuMonIconPalette_PredeterminedShininess:
+GetMenuMonPalette_PredeterminedShininess:
 	push af
 	ld a, [wCurPartySpecies]
 	call GetPokemonIndexFromID
@@ -349,7 +276,7 @@ PartyMenu_InitAnimatedMonIcon:
 	ret
 
 InitPartyMenuIcon:
-	call LoadPartyMenuMonIconColors
+	call LoadPartyMenuMonColors
 	ld a, [wCurIconTile]
 	push af
 	ldh a, [hObjectStructIndex]
@@ -419,7 +346,7 @@ SetPartyMonIconAnimSpeed:
 
 NamingScreen_InitAnimatedMonIcon:
 	ld hl, wTempMonForm
-	call SetMenuMonIconColor
+	call SetMenuMonColor
 	ld a, [wTempIconSpecies]
 	ld [wCurIcon], a
 	ld a, [wTempMonForm]
@@ -437,7 +364,7 @@ NamingScreen_InitAnimatedMonIcon:
 MoveList_InitAnimatedMonIcon:
 	ld a, MON_FORM
 	call GetPartyParamLocation
-	call SetMenuMonIconColor
+	call SetMenuMonColor
 	ld a, [wTempIconSpecies]
 	ld [wCurIcon], a
 	; Put the mon's form in wForm
@@ -463,7 +390,7 @@ Trade_LoadMonIconGFX:
 	ld a, [wTempIconSpecies]
 	ld [wCurPartySpecies], a
 	ld [wCurIcon], a
-	call GetMenuMonIconPalette
+	call GetMenuMonPalette
 	add a
 	add a
 	add a
@@ -478,7 +405,7 @@ GetSpeciesIcon:
 	push de
 	ld a, MON_FORM
 	call GetPartyParamLocation
-	call SetMenuMonIconColor
+	call SetMenuMonColor
 	ld a, [wTempIconSpecies]
 	ld [wCurIcon], a
 
@@ -511,7 +438,7 @@ SetOWFlyMonColor:
 	; Edit the OBJ 0 palette so that the cursor Pokémon has the right colors.
 	ld a, MON_FORM
 	call GetPartyParamLocation
-	call GetMenuMonIconPalette
+	call GetMenuMonPalette
 	add a
 	add a
 	add a
@@ -541,126 +468,101 @@ GetIcon_a:
 	ld l, a
 	ld h, 0
 
+; TODO: handle eggs
+; TODO: handle unown
+; TODO: handle pikachu
 GetIcon:
 ; Load icon graphics into VRAM starting from tile hl.
 
 ; One tile is 16 bytes long.
+; Multiply hl by 16 (2^4) by shifting left 4 times
+; This converts tile number to byte offset
 rept 4
-	add hl, hl
+	add hl, hl          ; Shift left once (multiply by 2)
 endr
 
-	ld de, vTiles0
-	add hl, de
-	push hl
+	ld de, vTiles0      ; Load base address of VRAM tile data
+	add hl, de          ; Add offset to get final VRAM destination
+	push hl             ; Save VRAM destination address
+	ld a, [wCurIcon]    ; Load current icon species number
+	push hl             ; Save VRAM destination again
 
-	ld a, [wCurIcon]
-	cp EGG
-	push hl
-	ld hl, IconPointers - (3 * 2)
-	jr z, .is_egg
-	; check if unown
-.check_unown
-	ld a, [wCurIcon]
-	push hl
-	push bc
-	ld bc, UNOWN
-	call GetPokemonIndexFromID ; icon mon 16bit index now in hl
+	push af             ; Save species number
+	dec a               ; Convert species number to 0-based index
 
-	; Compare with target species (hl now contains the Pokemon's index)
-	ld a, l
-	cp c          ; Compare low byte
-	jr nz, .check_pikachu
-	ld a, h
-	cp b          ; Compare high byte
+	ld hl, FollowingSpritePointers  ; Point to sprite pointer table
 
-	jr z, .is_unown
-.check_pikachu
-	ld a, [wCurIcon]
-	ld bc, PIKACHU
-	call GetPokemonIndexFromID ; icon mon 16bit index now in hl
+	ld d, 0             ; Clear high byte of index
+	ld e, a             ; Put icon index in e
+	add hl, de          ; Add index to pointer table base
+	add hl, de          ; Each entry is 3 bytes, so add index twice more
+	add hl, de          ; (total: index * 3)
+	; TODO: do we actually need to assert this anymore?
+	assert BANK(FollowingSpritePointers) == BANK(UnownFollowingSpritePointers), \
+			"FollowingSpritePointers Bank is not equal to UnownFollowingSpritePointers"
+	ld a, BANK(FollowingSpritePointers)  ; Load bank containing sprite pointers
+	push af             ; Save bank number
+	call GetFarByte     ; Read first byte (bank of compressed data)
+	ld b, a             ; Store bank in b
+	inc hl              ; Move to next byte
+	pop af              ; Restore pointer table bank
+	call GetFarWord     ; Read 2-byte address of compressed data
 
-	; Compare with target species (hl now contains the Pokemon's index)
-	ld a, l
-	cp c          ; Compare low byte
-	jr nz, .is_formless_mon
-	ld a, h
-	cp b          ; Compare high byte
-	jr z, .is_pikachu
-.is_formless_mon
-	pop bc
-	pop hl
-	ld a, [wCurIcon]
-	call GetPokemonIndexFromID
-	add hl, hl
-	ld de, IconPointers
-	add hl, de
-.is_egg
-	ld a, [hli]
-	ld d, [hl]
-	ld e, a
-	pop hl
+	ldh a, [rSVBK]      ; Save current WRAM bank
+	push af             ; Save it on stack
+	ld a, BANK(wDecompressScratch)  ; Switch to decompression buffer bank
+	ldh [rSVBK], a      ; Set new WRAM bank
 
-	call GetIconBank
-	jr .continue
-.is_unown
-	pop bc
-	pop hl
-	ld a, [wForm]
-	and FORM_MASK ; only care about form bits, not shiny bit
-	ld l, a
-	ld h, 0
-	add hl, hl
-	ld de, UnownIconPointers
-	add hl, de
-	ld a, [hli]
-	ld e, a
-	ld d, [hl]
-	lb bc, BANK("Unown Icons"), 8
-	pop hl
-	jr .continue
-.is_pikachu
-	pop bc
-	pop hl
-	ld a, [wForm]
-	and FORM_MASK ; only care about form bits, not shiny bit
-	ld l, a
-	ld h, 0
-	add hl, hl
-	ld de, PikachuIconPointers
-	add hl, de
-	ld a, [hli]
-	ld e, a
-	ld d, [hl]
-	lb bc, BANK("Pikachu Icons"), 8
-	pop hl
+	push bc             ; Save compressed data bank
+	ld a, b             ; Get compressed data bank
+	ld de, wDecompressScratch  ; Point to decompression buffer
+	call FarDecompress  ; Decompress sprite data
+	pop bc              ; Restore registers
+	ld de, wDecompressScratch  ; Point to decompressed data
 
-.continue
-	call GetGFXUnlessMobile
+	pop af              ; Restore original WRAM bank
+	ldh [rSVBK], a      ; Set it back
 
-	pop hl
-	ret
+	ld c, 4             ; Load 4 tiles worth of data
+	pop af              ; Restore original species number
 
-GetIconBank:
-	push hl
-	ld a, [wCurIcon]
-	call GetPokemonIndexFromID
-	ld a, h
-	cp HIGH(MAGIKARP) ; first species in "Mon Icons 2"
-	lb bc, BANK("Mon Icons 1"), 8
-	jr c, .return
-	ld a, l
-	cp LOW(MAGIKARP)
-	jr c, .return
-	ld b, BANK("Mon Icons 2")
-.return
-	pop hl
-	ret
+	pop hl              ; Restore VRAM destination address
+
+	push bc             ; Save tile count
+	call GetGFXUnlessMobile  ; Copy first 4 tiles to VRAM
+	ld bc, 16 * 4       ; Calculate size of 4 tiles (64 bytes)
+	add hl, bc          ; Move VRAM pointer to next position
+	push hl             ; Save new VRAM position
+	ld h, d             ; Copy decompressed data pointer to hl
+	ld l, e
+	ld de, 16 * 4 * 3   ; Skip 3 frames worth of tiles in source data
+	add hl, de          ; Move to 4th frame of animation
+	ld d, h             ; Copy new source pointer back to de
+	ld e, l
+	pop hl              ; Restore VRAM destination
+	pop bc              ; Restore tile count
+	call GetGFXUnlessMobile  ; Copy another 4 tiles to VRAM
+
+	pop hl              ; Clean up stack (restore original hl)
+	ret                 ; Return to caller
 
 GetGFXUnlessMobile:
 	ld a, [wLinkMode]
 	cp LINK_MOBILE
-	jmp nz, Request2bpp
-	jmp Get2bppViaHDMA
+	jp nz, .not_mobile
+	jp Get2bppViaHDMA
+
+.not_mobile
+	ldh a, [rSVBK]
+	push af
+	ld a, BANK(wDecompressScratch)
+	ldh [rSVBK], a
+
+	call Request2bpp
+
+	pop af
+	ldh [rSVBK], a
+	ret
 
 
 GetStorageIcon_a:
@@ -759,10 +661,4 @@ HoldSwitchmonIcon:
 	jr nz, .loop
 	ret
 
-INCLUDE "data/pokemon/menu_icon_pals.asm"
-
-INCLUDE "data/pokemon/icon_pointers.asm"
-
-INCLUDE "data/unown_icon_pointers.asm"
-
-INCLUDE "data/pikachu_icon_pointers.asm"
+INCLUDE "data/pokemon/menu_mon_pals.asm"

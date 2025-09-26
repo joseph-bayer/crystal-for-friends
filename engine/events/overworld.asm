@@ -611,6 +611,7 @@ FlyFunction:
 	special WarpToSpawnPoint
 	callasm SkipUpdateMapSprites
 	loadvar VAR_MOVEMENT, PLAYER_NORMAL
+	loadvar VAR_FOLLOWERSTATE, PLAYER_NORMAL
 	newloadmap MAPSETUP_FLY
 	callasm CopyBGGreenToOBPal7
 	callasm FlyToAnim
@@ -619,6 +620,8 @@ FlyFunction:
 	end
 
 .ReturnFromFly:
+	ld e, PAL_OW_RED
+	farcall SetFirstOBJPalette
 	farcall RespawnPlayer
 	farcall ClearSavedObjPals
 	farcall CheckForUsedObjPals
