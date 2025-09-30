@@ -2457,11 +2457,11 @@ GruntMGroup:
 	next_list_item ; GRUNTM (2)
 	db "GRUNT@", TRAINERTYPE_NORMAL
 	db 11
-	dw ELEKID
+	dw RATTATA 
 	db 11
-	dw MAGBY
+	dw EKANS
 	db 11
-	dw SMOOCHUM
+	dw GRIMER
 	db -1 ; end
 
 	next_list_item ; GRUNTM (3)
@@ -2544,7 +2544,7 @@ GruntMGroup:
 	dw MUK
 	db -1 ; end
 
-	next_list_item ; GRUNTM (12)
+	next_list_item ; GRUNTM (12) - UNUSED
 	db "EXECUTIVE@", TRAINERTYPE_NORMAL
 	db 33
 	dw HOUNDOOM
@@ -2571,15 +2571,13 @@ GruntMGroup:
 	next_list_item ; GRUNTM (15)
 	db "GRUNT@", TRAINERTYPE_NORMAL
 	db 36
-	dw POLIWRATH
+	dw RATICATE
 	db 36
-	dw MAGMAR
+	dw ARBOK
 	db 36
-	dw JYNX
+	dw MUK
 	db 36
-	dw ELECTABUZZ
-	db 36
-	dw RHYDON
+	dw GOLBAT
 	db -1 ; end
 
 	next_list_item ; GRUNTM (16)
@@ -2628,13 +2626,13 @@ GruntMGroup:
 	dw RATICATE
 	db -1 ; end
 
-	next_list_item ; GRUNTM (22)
+	next_list_item ; GRUNTM (22) - UNUSED
 	db "EXECUTIVE@", TRAINERTYPE_NORMAL
 	db 36
 	dw GOLBAT
 	db -1 ; end
 
-	next_list_item ; GRUNTM (23)
+	next_list_item ; GRUNTM (23) - UNUSED
 	db "EXECUTIVE@", TRAINERTYPE_NORMAL
 	db 30
 	dw KOFFING
@@ -2654,7 +2652,7 @@ GruntMGroup:
 	dw ARBOK
 	db -1 ; end
 
-	next_list_item ; GRUNTM (26)
+	next_list_item ; GRUNTM (26) - UNUSED
 	db "GRUNT@", TRAINERTYPE_NORMAL
 	db 15
 	dw RATTATA
@@ -2662,7 +2660,7 @@ GruntMGroup:
 	dw RATTATA
 	db -1 ; end
 
-	next_list_item ; GRUNTM (27)
+	next_list_item ; GRUNTM (27) - UNUSED
 	db "EXECUTIVE@", TRAINERTYPE_NORMAL
 	db 22
 	dw ZUBAT
@@ -2671,13 +2669,11 @@ GruntMGroup:
 	next_list_item ; GRUNTM (28)
 	db "GRUNT@", TRAINERTYPE_NORMAL
 	db 28
-	dw JYNX
+	dw RATICATE
 	db 28
-	dw POLIWHIRL
+	dw ARBOK
 	db 28
-	dw MAGMAR
-	db 28
-	dw ELECTABUZZ
+	dw MUK
 	db -1 ; end
 
 	next_list_item ; GRUNTM (29)
@@ -2688,7 +2684,7 @@ GruntMGroup:
 	dw ZUBAT
 	db -1 ; end
 
-	next_list_item ; GRUNTM (30)
+	next_list_item ; GRUNTM (30) - UNUSED
 	db "GRUNT@", TRAINERTYPE_NORMAL
 	db 25
 	dw GOLBAT
