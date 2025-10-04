@@ -57,32 +57,32 @@ _PrepareFrontpic:
 	; handle pikachu
 	ld a, [wCurSpecies]
 	call GetPokemonIndexFromID
-	ld a, l
-	sub LOW(PIKACHU)
-	if HIGH(PIKACHU) == 0
-		or h
-	else
-		jr nz, .not_pikachu
-		if HIGH(PIKACHU) == 1
-			dec h
-		else
-			ld a, h
-			cp HIGH(PIKACHU)
-		endc
-	endc
-	jr z, .pikachu
+	; hl now contains the Pokemon index
+	dec hl ; The animation form pointers table is 0-indexed, so decrement by 1
+	add hl, hl ; multiply by 2 for table_width 2
+
+	; Load the base address of the form pointer table
+	ld de, CosmeticFormDimensionsPointersTable
+
+	; HL = mon index * 4 + base address of form animation pointer table. It now points to the form animation pointer for this mon
+	add hl, de
+	ld a, BANK(CosmeticFormDimensionsPointersTable)
+	call GetFarWord
+	; hl now has pointer to form animation pointer table
+	ld a, h
+	or l
+	jr nz, .cosmetic_form_with_multiple_dims ; handle cosmetic forms with multiple dimensions
 .not_pikachu
 	; handle everybody else
 	ld a, [wBasePicSize]
 	jr .done_getting_pic_size
-.pikachu
+.cosmetic_form_with_multiple_dims
 	ld a, [wForm]
 	and FORM_MASK ; only care about form bits, not shiny bit
-	ld hl, PikachuDimensions
 	ld c, a
 	ld b, 0
 	add hl, bc
-	ld a, BANK(PikachuDimensions)
+	ld a, BANK(CosmeticFormDimensionsPointersTable) ; The table and all dimensions pointers are in the same bank
 	call GetFarByte
 .done_getting_pic_size
 	pop bc
@@ -128,84 +128,37 @@ GetPicIndirectPointer:
 	call GetPokemonIndexFromID
 	ld b, h
 	ld c, l
-	; handle unown
-	ld a, l
-	sub LOW(UNOWN)
-	if HIGH(UNOWN) == 0
-		or h
-	else
-		jr nz, .not_unown
-		if HIGH(UNOWN) == 1
-			dec h
-		else
-			ld a, h
-			cp HIGH(UNOWN)
-		endc
-	endc
-	jr z, .unown
-.not_unown
-	; handle pikachu
-	ld a, l
-	sub LOW(PIKACHU)
-	if HIGH(PIKACHU) == 0
-		or h
-	else
-		jr nz, .not_pikachu
-		if HIGH(PIKACHU) == 1
-			dec h
-	else
+
+	; Check for cosmetic forms
+	dec hl ; The frames pointers table is 0-indexed, so decrement by 1
+	add hl, hl ; multiply by 2 for table_width 2
+
+	ld de, CosmeticFormPicPointersTable
+
+	; HL = mon index * 4 + base address of form frame pointer table. It now points to the form frame pointer for this mon
+	add hl, de
+	ld a, BANK(CosmeticFormPicPointersTable)
+	call GetFarWord
+	; hl now has pointer to form frame pointer table
+
 	ld a, h
-	cp HIGH(PIKACHU)
-		endc
-	endc
-	jr z, .pikachu
-.not_pikachu
-	; handle shuckle
-	ld a, l
-	sub LOW(SHUCKLE)
-	if HIGH(SHUCKLE) == 0
-		or h
-	else
-		jr nz, .not_shucklele
-		if HIGH(SHUCKLE) == 1
-			dec h
-	else
-	ld a, h
-	cp HIGH(SHUCKLE)
-		endc
-	endc
-	jr z, .shuckle
-.not_shuckle
+	or l
+
+	jr nz, .cosmetic_forms
+	
+.no_cosmetic_forms
 	ld hl, PokemonPicPointers
 	ld d, BANK(PokemonPicPointers)
 .done
 	ld a, 6
 	jmp AddNTimes
 
-.unown
+.cosmetic_forms
 	ld a, [wForm]
 	and FORM_MASK ; only care about form bits, not shiny bit
 	ld c, a
 	ld b, 0
-	ld hl, UnownPicPointers
-	ld d, BANK(UnownPicPointers)
-	jr .done
-
-.pikachu
-  	ld a, [wForm]
-	and FORM_MASK ; only care about form bits, not shiny bit
-	ld c, a
-	ld b, 0
-	ld hl, PikachuPicPointers
-	ld d, BANK(PikachuPicPointers)
-  	jr .done
-.shuckle
-	ld a, [wForm]
-	and FORM_MASK ; only care about form bits, not shiny bit
-	ld c, a
-	ld b, 0
-	ld hl, ShucklePicPointers
-	ld d, BANK(ShucklePicPointers)
+	ld d, BANK(CosmeticFormPicPointersTable) ; The  table, frame pointers, and frames are all in the same bank
 	jr .done
 
 GetFrontpicPointer:
@@ -231,41 +184,42 @@ GetAnimatedEnemyFrontpic:
 	add hl, de
 	push hl
 	push bc
-	; TODO: make a reusable function isPikachu just like in the pic_anim
-	; cosmetic forms with different dimensions from plain form
-	; handle pikachu
+
+	; handle cosmetic forms with different dimensions from plain form
+	; Get species ID and convert to index for table lookup
 	ld a, [wCurSpecies]
 	call GetPokemonIndexFromID
-	ld a, l
-	sub LOW(PIKACHU)
-	if HIGH(PIKACHU) == 0
-		or h
-	else
-		jr nz, .not_pikachu
-		if HIGH(PIKACHU) == 1
-			dec h
-	else
+	; hl now contains the Pokemon index
+	dec hl ; The animation form pointers table is 0-indexed, so decrement by 1
+	add hl, hl ; multiply by 2 for table_width 2
+
+	; Load the base address of the form pointer table
+	ld de, CosmeticFormDimensionsPointersTable
+
+	; HL = mon index * 4 + base address of form animation pointer table. It now points to the form animation pointer for this mon
+	add hl, de
+	ld a, BANK(CosmeticFormDimensionsPointersTable)
+	call GetFarWord
+	; hl now has pointer to form animation pointer table
 	ld a, h
-	cp HIGH(PIKACHU)
-		endc
-	endc
-	jr z, .pikachu
-.not_pikachu
+	or l
+	jr nz, .cosmetic_form_with_multiple_dims ; handle cosmetic forms with multiple dimensions
 	; handle everybody else
 	ld a, BANK(wBasePicSize)
 	ld hl, wBasePicSize
 	call GetFarWRAMByte
 	jr .done_getting_pic_size
-.pikachu
+.cosmetic_form_with_multiple_dims
 	ld a, BANK(wForm)
+	push hl
 	ld hl, wForm
 	call GetFarWRAMByte
+	pop hl
 	and FORM_MASK ; only care about form bits, not shiny bit
-	ld hl, PikachuDimensions
 	ld c, a
 	ld b, 0
 	add hl, bc
-	ld a, BANK(PikachuDimensions)
+	ld a, BANK(CosmeticFormDimensionsPointersTable) ; The table and all dimensions pointers are in the same bank
 	call GetFarByte
   
 .done_getting_pic_size

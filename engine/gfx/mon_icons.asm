@@ -19,26 +19,28 @@ LoadOverworldMonIcon:
 _LoadOverworldMonIcon:
 	ld a, [wCurIcon]
 	call GetPokemonIndexFromID
-.check_unown
-	ld bc, UNOWN
+	push hl
+	; hl now contains the Pokemon index
+	dec hl ; The animation form pointers table is 0-indexed, so decrement by 1
+	add hl, hl ; multiply by 2 for table_width 2
 
-	; Compare with target species (hl now contains the Pokemon's index)
-	ld a, l
-	cp c          ; Compare low byte
-	jr nz, .check_pikachu
-	ld a, h
-	cp b          ; Compare high byte
-	jr z, .is_unown
-.check_pikachu
-	ld bc, PIKACHU
+	; Load the base address of the form pointer table
+	ld de, CosmeticFormIconPointersTable
 
-	ld a, l
-	cp c          ; Compare low byte
-	jr nz, .is_formless_mon
+	; HL = mon index * 4 + base address of form animation pointer table. It now points to the form animation pointer for this mon
+	add hl, de
+	ld a, BANK(CosmeticFormIconPointersTable)
+	call GetFarWord
+	; hl now has pointer to form animation pointer table
+	
+	; Check if we got a null pointer (0) - means no cosmetic forms
 	ld a, h
-	cp b          ; Compare high byte
-	jr z, .is_pikachu
+	or l
+	jr nz, .has_cosmetic_form_with_alternate_icons
+
+
 .is_formless_mon
+	pop hl
 	add hl, hl
 	ld de, IconPointers
 	add hl, de
@@ -46,31 +48,21 @@ _LoadOverworldMonIcon:
 	ld d, [hl]
 	ld e, a
 	jmp GetIconBank
-.is_unown
+.has_cosmetic_form_with_alternate_icons
+	ld d, h
+	ld e, l
+
 	ld a, [wForm]
 	and FORM_MASK ; only care about form bits, not shiny bit
 	ld l, a
 	ld h, 0
 	add hl,hl
-	ld de, UnownIconPointers
 	add hl, de
 	ld a, [hli]
 	ld e, a
 	ld d, [hl]
-	lb bc, BANK("Unown Icons"), 8
-	ret
-.is_pikachu
-	ld a, [wForm]
-	and FORM_MASK ; only care about form bits, not shiny bit
-	ld l, a
-	ld h, 0
-	add hl, hl
-	ld de, PikachuIconPointers
-	add hl, de
-	ld a, [hli]
-	ld e, a
-	ld d, [hl]
-	lb bc, BANK("Pikachu Icons"), 8
+	lb bc, BANK(CosmeticFormIconPointersTable), 8  ; The table, icon pointers, and icons are all in the same bank
+	pop hl
 	ret
 
 SetMenuMonIconColor:
@@ -540,7 +532,6 @@ GetIcon_a:
 ; Load icon graphics into VRAM starting from tile a.
 	ld l, a
 	ld h, 0
-
 GetIcon:
 ; Load icon graphics into VRAM starting from tile hl.
 
@@ -558,36 +549,28 @@ endr
 	push hl
 	ld hl, IconPointers - (3 * 2)
 	jr z, .is_egg
-	; check if unown
-.check_unown
+.check_cosmetic_form
 	ld a, [wCurIcon]
 	push hl
-	push bc
-	ld bc, UNOWN
 	call GetPokemonIndexFromID ; icon mon 16bit index now in hl
+	; hl now contains the Pokemon index
+	dec hl ; The animation form pointers table is 0-indexed, so decrement by 1
+	add hl, hl ; multiply by 2 for table_width 2
 
-	; Compare with target species (hl now contains the Pokemon's index)
-	ld a, l
-	cp c          ; Compare low byte
-	jr nz, .check_pikachu
+	; Load the base address of the form pointer table
+	ld de, CosmeticFormIconPointersTable
+
+	; HL = mon index * 4 + base address of form animation pointer table. It now points to the form animation pointer for this mon
+	add hl, de
+	ld a, BANK(CosmeticFormIconPointersTable)
+	call GetFarWord
+	; hl now has pointer to form animation pointer table
+	
+	; Check if we got a null pointer (0) - means no cosmetic forms
 	ld a, h
-	cp b          ; Compare high byte
-
-	jr z, .is_unown
-.check_pikachu
-	ld a, [wCurIcon]
-	ld bc, PIKACHU
-	call GetPokemonIndexFromID ; icon mon 16bit index now in hl
-
-	; Compare with target species (hl now contains the Pokemon's index)
-	ld a, l
-	cp c          ; Compare low byte
-	jr nz, .is_formless_mon
-	ld a, h
-	cp b          ; Compare high byte
-	jr z, .is_pikachu
+	or l
+	jr nz, .has_cosmetic_form_with_alternate_icons
 .is_formless_mon
-	pop bc
 	pop hl
 	ld a, [wCurIcon]
 	call GetPokemonIndexFromID
@@ -602,36 +585,20 @@ endr
 
 	call GetIconBank
 	jr .continue
-.is_unown
-	pop bc
+.has_cosmetic_form_with_alternate_icons
+	ld d, h
+	ld e, l
 	pop hl
 	ld a, [wForm]
 	and FORM_MASK ; only care about form bits, not shiny bit
 	ld l, a
 	ld h, 0
 	add hl, hl
-	ld de, UnownIconPointers
 	add hl, de
 	ld a, [hli]
 	ld e, a
 	ld d, [hl]
-	lb bc, BANK("Unown Icons"), 8
-	pop hl
-	jr .continue
-.is_pikachu
-	pop bc
-	pop hl
-	ld a, [wForm]
-	and FORM_MASK ; only care about form bits, not shiny bit
-	ld l, a
-	ld h, 0
-	add hl, hl
-	ld de, PikachuIconPointers
-	add hl, de
-	ld a, [hli]
-	ld e, a
-	ld d, [hl]
-	lb bc, BANK("Pikachu Icons"), 8
+	lb bc, BANK(CosmeticFormIconPointersTable), 8
 	pop hl
 
 .continue
@@ -762,7 +729,3 @@ HoldSwitchmonIcon:
 INCLUDE "data/pokemon/menu_icon_pals.asm"
 
 INCLUDE "data/pokemon/icon_pointers.asm"
-
-INCLUDE "data/unown_icon_pointers.asm"
-
-INCLUDE "data/pikachu_icon_pointers.asm"

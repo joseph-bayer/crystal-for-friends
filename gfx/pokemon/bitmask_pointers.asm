@@ -24,7 +24,7 @@ BitmasksPointers:
 	dw FearowBitmasks
 	dw EkansBitmasks
 	dw ArbokBitmasks
-	dw PikachuBitmasks
+	dw 0
 	dw RaichuBitmasks
 	dw SandshrewBitmasks
 	dw SandslashBitmasks
@@ -200,7 +200,7 @@ BitmasksPointers:
 	dw MurkrowBitmasks
 	dw SlowkingBitmasks
 	dw MisdreavusBitmasks
-	dw UnownBitmasks
+	dw 0
 	dw WobbuffetBitmasks
 	dw GirafarigBitmasks
 	dw PinecoBitmasks
@@ -212,7 +212,7 @@ BitmasksPointers:
 	dw GranbullBitmasks
 	dw QwilfishBitmasks
 	dw ScizorBitmasks
-	dw ShuckleBitmasks
+	dw 0
 	dw HeracrossBitmasks
 	dw SneaselBitmasks
 	dw TeddiursaBitmasks

@@ -298,6 +298,10 @@ INCLUDE "engine/battle/battlestart_copytilemapatonce.asm"
 INCLUDE "engine/sprite_anims/core.asm"
 INCLUDE "engine/gfx/mon_icons.asm"
 
+INCLUDE "data/pokemon/cosmetic_form_icon_pointers_table.asm"
+INCLUDE "data/pokemon/cosmetic_icon_pointers.asm"
+INCLUDE "gfx/cosmetic_icons.asm"
+
 
 SECTION "bank24", ROMX
 
@@ -422,32 +426,8 @@ INCLUDE "gfx/pokemon/anim_pointers.asm"
 INCLUDE "gfx/pokemon/anims.asm"
 INCLUDE "gfx/pokemon/idle_pointers.asm"
 INCLUDE "gfx/pokemon/idles.asm"
-INCLUDE "gfx/pokemon/unown_anim_pointers.asm"
-INCLUDE "gfx/pokemon/unown_anims.asm"
-INCLUDE "gfx/pokemon/unown_idle_pointers.asm"
-INCLUDE "gfx/pokemon/unown_idles.asm"
 INCLUDE "gfx/pokemon/bitmask_pointers.asm"
 INCLUDE "gfx/pokemon/bitmasks.asm"
-INCLUDE "gfx/pokemon/unown_bitmask_pointers.asm"
-INCLUDE "gfx/pokemon/unown_bitmasks.asm"
-INCLUDE "gfx/pokemon/pikachu_anim_pointers.asm"
-INCLUDE "gfx/pokemon/pikachu_anims.asm"
-INCLUDE "gfx/pokemon/pikachu_idle_pointers.asm"
-INCLUDE "gfx/pokemon/pikachu_idles.asm"
-INCLUDE "gfx/pokemon/pikachu_bitmask_pointers.asm"
-INCLUDE "gfx/pokemon/pikachu_bitmasks.asm"
-INCLUDE "gfx/pokemon/pikachu_frame_pointers.asm"
-INCLUDE "gfx/pokemon/pikachu_frames.asm"
-INCLUDE "gfx/pokemon/pikachu_dimensions.asm"
-INCLUDE "gfx/pokemon/shuckle_anim_pointers.asm"
-INCLUDE "gfx/pokemon/shuckle_anims.asm"
-INCLUDE "gfx/pokemon/shuckle_idle_pointers.asm"
-INCLUDE "gfx/pokemon/shuckle_idles.asm"
-INCLUDE "gfx/pokemon/shuckle_bitmask_pointers.asm"
-INCLUDE "gfx/pokemon/shuckle_bitmasks.asm"
-INCLUDE "gfx/pokemon/shuckle_frame_pointers.asm"
-INCLUDE "gfx/pokemon/shuckle_frames.asm"
-
 
 SECTION "Pic Animations 2", ROMX
 
@@ -458,8 +438,35 @@ INCLUDE "gfx/pokemon/kanto_frames.asm"
 SECTION "Pic Animations 3", ROMX
 
 INCLUDE "gfx/pokemon/johto_frames.asm"
-INCLUDE "gfx/pokemon/unown_frame_pointers.asm"
-INCLUDE "gfx/pokemon/unown_frames.asm"
+
+
+SECTION "Cosmetic Forms Anims", ROMX
+
+INCLUDE "gfx/pokemon/cosmetic_form_anim_pointers_table.asm"
+INCLUDE "gfx/pokemon/cosmetic_anim_pointers.asm"
+INCLUDE "gfx/pokemon/cosmetic_anims.asm"
+INCLUDE "gfx/pokemon/cosmetic_idle_pointers.asm"
+INCLUDE "gfx/pokemon/cosmetic_idles.asm"
+
+
+SECTION "Cosmetic Forms Bitmasks", ROMX
+
+INCLUDE "gfx/pokemon/cosmetic_form_bitmask_pointers_table.asm"
+INCLUDE "gfx/pokemon/cosmetic_bitmask_pointers.asm"
+INCLUDE "gfx/pokemon/cosmetic_bitmasks.asm"
+
+
+SECTION "Cosmetic Forms Dimensions", ROMX
+
+INCLUDE "gfx/pokemon/cosmetic_form_dimensions_pointers_table.asm"
+INCLUDE "gfx/pokemon/cosmetic_dimensions.asm"
+
+
+SECTION "Cosmetic Forms Frames", ROMX
+
+INCLUDE "gfx/pokemon/cosmetic_form_frame_pointers_table.asm"
+INCLUDE "gfx/pokemon/cosmetic_frame_pointers.asm"
+INCLUDE "gfx/pokemon/cosmetic_frames.asm"
 
 
 SECTION "bank38", ROMX

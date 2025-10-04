@@ -1,6 +1,0 @@
-ShuckleFramesPointers:
-	table_width 2
-	dw ShucklePlainFrames
-	dw ShuckleShuckieNeutralFrames
-	dw ShuckleShuckieHappyFrames
-	assert_table_length NUM_SHUCKLE_FORMS

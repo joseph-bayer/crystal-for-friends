@@ -24,7 +24,7 @@ AnimationPointers:
 	dw FearowAnimation
 	dw EkansAnimation
 	dw ArbokAnimation
-	dw PikachuAnimation
+	dw 0
 	dw RaichuAnimation
 	dw SandshrewAnimation
 	dw SandslashAnimation
@@ -200,7 +200,7 @@ AnimationPointers:
 	dw MurkrowAnimation
 	dw SlowkingAnimation
 	dw MisdreavusAnimation
-	dw UnownAnimation
+	dw 0
 	dw WobbuffetAnimation
 	dw GirafarigAnimation
 	dw PinecoAnimation
@@ -212,7 +212,7 @@ AnimationPointers:
 	dw GranbullAnimation
 	dw QwilfishAnimation
 	dw ScizorAnimation
-	dw ShuckleAnimation
+	dw 0
 	dw HeracrossAnimation
 	dw SneaselAnimation
 	dw TeddiursaAnimation

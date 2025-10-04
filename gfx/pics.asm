@@ -7,17 +7,10 @@ SECTION "Pic Pointers", ROMX
 INCLUDE "data/pokemon/pic_pointers.asm"
 
 
-SECTION "Unown Pic Pointers", ROMX
+SECTION "Cosmetic Form Pic Pointers", ROMX
 
-INCLUDE "data/pokemon/unown_pic_pointers.asm"
-
-SECTION "Pikachu Pic Pointers", ROMX
-
-INCLUDE "data/pokemon/pikachu_pic_pointers.asm"
-
-SECTION "Shuckle Pic Pointers", ROMX
-
-INCLUDE "data/pokemon/shuckle_pic_pointers.asm"
+INCLUDE "data/pokemon/cosmetic_form_pic_pointers_table.asm"
+INCLUDE "data/pokemon/cosmetic_pic_pointers.asm"
 
 SECTION "Trainer Pic Pointers", ROMX
 

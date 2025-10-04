@@ -1,6 +1,0 @@
-ShuckleAnimationPointers:
-	table_width 2
-	dw ShucklePlainAnimation
-	dw ShuckleShuckieNeutralAnimation
-	dw ShuckleShuckieHappyAnimation
-	assert_table_length NUM_SHUCKLE_FORMS

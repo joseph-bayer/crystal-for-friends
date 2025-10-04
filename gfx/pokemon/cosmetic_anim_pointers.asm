@@ -1,3 +1,17 @@
+PikachuAnimationPointers:
+	table_width 2
+	dw PikachuPlainAnimation
+	dw PikachuSurfAnimation
+	dw PikachuFlyAnimation
+	assert_table_length NUM_PIKACHU_FORMS
+
+ShuckleAnimationPointers:
+	table_width 2
+	dw ShucklePlainAnimation
+	dw ShuckleShuckieNeutralAnimation
+	dw ShuckleShuckieHappyAnimation
+	assert_table_length NUM_SHUCKLE_FORMS
+
 UnownAnimationPointers:
 	table_width 2
 	dw UnownAAnimation

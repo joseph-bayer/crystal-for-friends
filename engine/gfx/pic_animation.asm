@@ -398,60 +398,6 @@ PokeAnim_StopWaitAnim:
 	dec [hl]
 	ret
 
-PokeAnim_IsUnown:
-	ld a, [wPokeAnimSpecies]
-	push hl
-	call GetPokemonIndexFromID
-	ld a, l
-	cp LOW(UNOWN)
-	ld a, h
-	pop hl
-	ret nz
-	if HIGH(UNOWN) == 0
-		and a
-	elif HIGH(UNOWN) == 1
-		dec a
-	else
-		cp HIGH(UNOWN)
-	endc
-	ret
-
-PokeAnim_IsPikachu:
-	ld a, [wPokeAnimSpecies]
-	push hl
-	call GetPokemonIndexFromID
-	ld a, l
-	cp LOW(PIKACHU)
-	ld a, h
-	pop hl
-	ret nz
-	if HIGH(PIKACHU) == 0
-		and a
-	elif HIGH(PIKACHU) == 1
-		dec a
-	else
-		cp HIGH(PIKACHU)
-	endc
-	ret
-
-PokeAnim_IsShuckle:
-	ld a, [wPokeAnimSpecies]
-	push hl
-	call GetPokemonIndexFromID
-	ld a, l
-	cp LOW(SHUCKLE)
-	ld a, h
-	pop hl
-	ret nz
-	if HIGH(SHUCKLE) == 0
-		and a
-	elif HIGH(SHUCKLE) == 1
-		dec a
-	else
-		cp HIGH(SHUCKLE)
-	endc
-	ret
-
 PokeAnim_IsEgg:
 	ld a, [wPokeAnimSpecies]
 	cp EGG
@@ -871,47 +817,60 @@ GetMonAnimPointer:
 	call PokeAnim_IsEgg
 	jr z, .egg
 
-  	; handle Unown
-	ld c, BANK(UnownAnimationPointers) ; aka BANK(UnownAnimationIdlePointers)
-	ld hl, UnownAnimationPointers
-	ld de, UnownAnimationIdlePointers
-	call PokeAnim_IsUnown
-	jr z, .pointers_ready
+	; Get species ID and convert to index for table lookup
+	ld a, [wPokeAnimSpecies]
+	call GetPokemonIndexFromID
+	; hl now contains the Pokemon index
+	dec hl ; The animation form pointers table is 0-indexed, so decrement by 1
+	add hl, hl ; multiply by 2 for table_width 2
 
-	; handle Pikachu
-	ld c, BANK(PikachuAnimationPointers)
-	ld hl, PikachuAnimationPointers
-	ld de, PikachuAnimationIdlePointers
-	call PokeAnim_IsPikachu
-	jr z, .pointers_ready
+	; Load the base address of the form pointer table
+	ld de, CosmeticFormAnimationPointerTable
 
-	; handle Shuckle
-	ld c, BANK(ShuckleAnimationPointers)
-	ld hl, ShuckleAnimationPointers
-	ld de, ShuckleAnimationIdlePointers
-	call PokeAnim_IsShuckle
-	jr z, .pointers_ready
+	push hl
+	; HL = mon index * 4 + base address of form animation pointer table. It now points to the form animation pointer for this mon
+	add hl, de
+	ld a, BANK(CosmeticFormAnimationPointerTable)
+	ld c, a
+	call GetFarWord
+	; hl now has pointer to form animation pointer table
+	
+	; Check if we got a null pointer (0) - means no cosmetic forms
+	ld a, h
+	or l
+	jr z, .use_default_pointers
+	
+	ld d, h
+	ld e, l
+	pop hl
+	; hl contains the index for a mon in any 2-byte table organized by species index
 
-  	; handle all other Pokemon
-	; NOTE: other Pokemon aren't 0 indexed, so we have to -2 the pointers
+	; c already contains bank with animation pointers
+	; hl already points to the form pointer table
+	ld a, [wPokeAnimIdleFlag]
+	and a
+	jr z, .pokemon_with_cosmetic_form
+	; Using idle animation. Move to the idle pointer table
+	ld de, CosmeticFormIdleAnimationPointers
+	add hl, de
+	ld a, BANK(CosmeticFormAnimationPointerTable)
+	call GetFarWord
+	ld d, h
+	ld e, l
+	jr .pokemon_with_cosmetic_form
+	
+	; We have a form-specific pointer table, use it
+.use_default_pointers
+	pop hl
 	ld c, BANK(AnimationPointers) ; aka BANK(AnimationIdlePointers)
 	ld hl, AnimationPointers - 2
 	ld de, AnimationIdlePointers - 2
-
-.pointers_ready
 	ld a, [wPokeAnimIdleFlag]
 	and a
-	jr nz, .got_pointer
+	jr nz, .regular_pokemon
 	ld d, h
 	ld e, l
-
-.got_pointer
-	call PokeAnim_IsUnown
-	jr z, .pokemon_with_cosmetic_form
-	call PokeAnim_IsPikachu
-	jr z, .pokemon_with_cosmetic_form
-	call PokeAnim_IsShuckle
-	jr nz, .regular_pokemon
+	jr .regular_pokemon
 .pokemon_with_cosmetic_form
 	ld a, [wPokeAnimSpeciesOrMonWithForm]
 	ld l, a
@@ -963,20 +922,35 @@ PokeAnim_GetFrontpicDims:
 	call GetBaseData
 	push hl
 	push bc
-	; handle Pikachu
-	call PokeAnim_IsPikachu
-	jr z, .pikachu
+
+	; Get species ID and convert to index for table lookup
+	ld a, [wPokeAnimSpecies]
+	call GetPokemonIndexFromID
+	; hl now contains the Pokemon index
+	dec hl ; The animation form pointers table is 0-indexed, so decrement by 1
+	add hl, hl ; multiply by 2 for table_width 2
+
+	; Load the base address of the form pointer table
+	ld de, CosmeticFormDimensionsPointersTable
+
+	; HL = mon index * 4 + base address of form animation pointer table. It now points to the form animation pointer for this mon
+	add hl, de
+	ld a, BANK(CosmeticFormDimensionsPointersTable)
+	call GetFarWord
+	; hl now has pointer to form animation pointer table
+	ld a, h
+	or l
+	jr nz, .cosmetic_form_with_multiple_dims ; handle cosmetic forms with multiple dimensions
 	; handle everybody else
 	ld a, [wBasePicSize]
 	jr .done_getting_pic_size
-.pikachu
+.cosmetic_form_with_multiple_dims
 	ld a, [wForm]
 	and FORM_MASK ; only care about form bits, not shiny bit
-	ld hl, PikachuDimensions
 	ld c, a
 	ld b, 0
 	add hl, bc
-	ld a, BANK(PikachuDimensions)
+	ld a, BANK(CosmeticFormDimensionsPointersTable) ; The table and all dimensions pointers are in the same bank
 	call GetFarByte
 .done_getting_pic_size
 	pop bc
@@ -990,47 +964,46 @@ PokeAnim_GetFrontpicDims:
 GetMonFramesPointer:
 	call PokeAnim_IsEgg
 	jr z, .egg
-	; handle Unown
-	call PokeAnim_IsUnown
-	jr z, .unown
-	; handle Pikachu
-	call PokeAnim_IsPikachu
-	jr z, .pikachu
-	; handle Shuckle
-	call PokeAnim_IsShuckle
-	jr z, .shuckle
-	; handle other Pokemon
+
+	; Get species ID and convert to index for table lookup
+	ld a, [wPokeAnimSpecies]
+	call GetPokemonIndexFromID
+	; hl now contains the Pokemon index
+	dec hl ; The frames pointers table is 0-indexed, so decrement by 1
+	add hl, hl ; multiply by 2 for table_width 2
+
+	ld de, CosmeticFormFramePointersTable
+
+	; HL = mon index * 4 + base address of form frame pointer table. It now points to the form frame pointer for this mon
+	add hl, de
+	ld a, BANK(CosmeticFormFramePointersTable)
+	call GetFarWord
+	; hl now has pointer to form frame pointer table
+
+	ld a, h
+	or l
+	
+	jr z, .use_default_frames
+
+	xor a ; we're not using the default frames. Set Z flag.
+	ld a, BANK(CosmeticFormFramePointersTable) ; The  table, frame pointers, and frames are all in the same bank
+	ld [wPokeAnimFramesBank], a
+	ld c, 2 ; Cosmetic form frame pointer tables are 2 bytes per row
+	jr .got_frames
+
+.use_default_frames
+	or 1 ; we're using the default frames. Clear Z flag.
 	ld hl, FramesPointers - 3
 	ld a, BANK(FramesPointers)
-	ld c, 3
-	jr nz, .got_frames
-.unown
-	ld a, BANK(UnownsFrames)
-	ld [wPokeAnimFramesBank], a
-	ld hl, UnownFramesPointers
-	ld a, BANK(UnownFramesPointers)
-	ld c, 2
-	jr .got_frames
-.pikachu
-	ld a, BANK(PikachuFramesBank)
-	ld [wPokeAnimFramesBank], a
-	ld hl, PikachuFramesPointers
-	ld a, BANK(PikachuFramesPointers)
-	ld c, 2
-	jr .got_frames
-.shuckle
-	ld a, BANK(ShuckleFramesBank)
-	ld [wPokeAnimFramesBank], a
-	ld hl, ShuckleFramesPointers
-	ld a, BANK(ShuckleFramesPointers)
-	ld c, 2
+	ld c, 3 ; FramesPointers tables are 3 bytes per row
+
 .got_frames
 	push af
 	push hl
 	ld a, [wPokeAnimSpeciesOrMonWithForm]
 	ld l, a
 	ld h, 0
-	call nz, GetPokemonIndexFromID
+	call nz, GetPokemonIndexFromID ; z flag is set if using form as index. Otherwise, get species index.
 	ld a, c
 	ld c, l
 	ld b, h
@@ -1064,36 +1037,43 @@ GetMonBitmaskPointer:
 	call PokeAnim_IsEgg
 	jr z, .egg
 
-	call PokeAnim_IsUnown
-	jr z, .unown
-	call PokeAnim_IsPikachu
-	jr z, .pikachu
-	call PokeAnim_IsShuckle
-	jr z, .shuckle
+	; Get species ID and convert to index for table lookup
+	ld a, [wPokeAnimSpecies]
+	call GetPokemonIndexFromID
+	; hl now contains the Pokemon index
+	dec hl ; The bitmask pointers table is 0-indexed, so decrement by 1
+	add hl, hl ; multiply by 2 for table_width 2
 
+	ld de, CosmeticFormBitmaskPointersTable
+
+	; HL = mon index * 4 + base address of form frame pointer table. It now points to the form frame pointer for this mon
+	add hl, de
+	ld a, BANK(CosmeticFormBitmaskPointersTable)
+	call GetFarWord
+	; hl now has pointer to form frame pointer table
+
+	ld a, h
+	or l
+	jr z, .use_default_bitmask
+
+	; It's a cosmetic form. Use the cosmetic form bitmask table
+	xor a ; we're not using the default frames. Set Z flag.
+	ld a, BANK(CosmeticFormBitmaskPointersTable)
+	ld d, h
+	ld e, l
+	jr .got_bitmask
+
+.use_default_bitmask
+	or 1 ; we're using the default frames. Clear Z flag.
 	ld a, BANK(BitmasksPointers)
 	ld de, BitmasksPointers - 2
-	jr .got_bitmask
-
-.unown
-	ld a, BANK(UnownBitmasksPointers)
-	ld de, UnownBitmasksPointers
-	jr .got_bitmask
-.pikachu
-	ld a, BANK(PikachuBitmasksPointers)
-	ld de, PikachuBitmasksPointers
-	jr .got_bitmask
-.shuckle
-	ld a, BANK(ShuckleBitmasksPointers)
-	ld de, ShuckleBitmasksPointers
-
 .got_bitmask
 	ld [wPokeAnimBitmaskBank], a
 
 	ld a, [wPokeAnimSpeciesOrMonWithForm]
 	ld l, a
 	ld h, 0
-	call nz, GetPokemonIndexFromID
+	call nz, GetPokemonIndexFromID  ; z flag is set if using form as index. Otherwise, get species index.
 	add hl, hl
 	add hl, de
 	ld a, [wPokeAnimBitmaskBank]
@@ -1116,17 +1096,30 @@ GetMonBitmaskPointer:
 	ret
 
 PokeAnim_GetSpeciesOrMonWithForm:
-	call PokeAnim_IsUnown
-	jr z, .mon_with_form
-	call PokeAnim_IsPikachu
-	jr z, .mon_with_form
-	call PokeAnim_IsShuckle
-	jr z, .mon_with_form
+	; Get species ID and convert to index for table lookup
 	ld a, [wPokeAnimSpecies]
+	call GetPokemonIndexFromID
+	; hl now contains the Pokemon index
+	dec hl ; The bitmask pointers table is 0-indexed, so decrement by 1
+	add hl, hl ; multiply by 2 for table_width 2
+
+	; NOTE: We are using whether or not a cosmetic form has an animation as a proxy for whether or not is has cosmetic forms
+	ld de, CosmeticFormAnimationPointerTable
+
+	; HL = mon index * 4 + base address of form frame pointer table. It now points to the form frame pointer for this mon
+	add hl, de
+	ld a, BANK(CosmeticFormAnimationPointerTable)
+	call GetFarWord
+	; hl now has pointer to form frame pointer table
+
+	ld a, h
+	or l
+	ld a, [wPokeAnimForm]
+	jr z, .pokemon_without_cosmetic_form
 	ret
 
-.mon_with_form
-	ld a, [wPokeAnimForm]
+.pokemon_without_cosmetic_form
+	ld a, [wPokeAnimSpecies]
 	ret
 
 Unused_HOF_AnimateAlignedFrontpic:

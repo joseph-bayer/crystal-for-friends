@@ -1,3 +1,17 @@
+PikachuBitmasksPointers:
+	table_width 2
+	dw PikachuPlainBitmask
+	dw PikachuSurfBitmask
+	dw PikachuFlyBitmask
+	assert_table_length NUM_PIKACHU_FORMS
+
+ShuckleBitmasksPointers:
+	table_width 2
+	dw ShucklePlainBitmasks
+	dw ShuckleShuckieNeutralBitmasks
+	dw ShuckleShuckieHappyBitmasks
+	assert_table_length NUM_SHUCKLE_FORMS
+
 UnownBitmasksPointers:
 	table_width 2
 	dw UnownABitmasks

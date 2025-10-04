@@ -1,6 +1,0 @@
-ShuckleBitmasksPointers:
-	table_width 2
-	dw ShuckleBitmasks
-	dw ShuckleShuckieNeutralBitmasks
-	dw ShuckleShuckieHappyBitmasks
-	assert_table_length NUM_SHUCKLE_FORMS

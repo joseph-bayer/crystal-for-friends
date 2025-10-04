@@ -29,7 +29,7 @@ IconPointers:
 	dw FearowIcon
 	dw EkansIcon
 	dw ArbokIcon
-	dw PikachuIcon
+	dw 0
 	dw RaichuIcon
 	dw SandshrewIcon
 	dw SandslashIcon
@@ -205,7 +205,7 @@ IconPointers:
 	dw MurkrowIcon
 	dw SlowkingIcon
 	dw MisdreavusIcon
-	dw UnownAIcon
+	dw 0
 	dw WobbuffetIcon
 	dw GirafarigIcon
 	dw PinecoIcon
