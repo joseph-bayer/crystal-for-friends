@@ -6272,15 +6272,16 @@ LoadEnemyMon:
 ; Shiny Mask: 10000000
 .FormByte
 	ld a, [wBattleMode]
-	and a
+	and a 
 	jr z, .check_unown
 
 	ld a, [wBattleMode]
 	dec a
-	jr nz, .TrainerForm ; not a wild battle
+	jr nz, .TrainerForm
 
 	; TODO: could avoid this goofy check by moving this code right before .happiness
 	; Game Freak hack where SUBSTATUS_TRANSFORMED is used to indicate a CAUGHT wild mon, which skips over running certain functions
+	ld a, [wEnemySubStatus5]
 	bit SUBSTATUS_TRANSFORMED, a
 	jr z, .check_unown
 
