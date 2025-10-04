@@ -2,6 +2,10 @@
 ; Each entry corresponds to a Pokemon species (indexed by species ID)
 ; Entries for Pokemon with cosmetic forms point to their form-specific pointer tables
 ; Entries for Pokemon without cosmetic forms or have cosmetic forms with all the same dimensions are null (0)
+	dw 0					; EGG
+	dw 0					; NULL
+	dw 0					; NULL
+	dw 0					; NULL
 CosmeticFormDimensionsPointersTable:
 	table_width 2
 	dw 0					; BULBASAUR (01)

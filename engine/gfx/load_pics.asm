@@ -72,7 +72,7 @@ _PrepareFrontpic:
 	ld a, h
 	or l
 	jr nz, .cosmetic_form_with_multiple_dims ; handle cosmetic forms with multiple dimensions
-.not_pikachu
+.formless_mon
 	; handle everybody else
 	ld a, [wBasePicSize]
 	jr .done_getting_pic_size
