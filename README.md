@@ -107,6 +107,8 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
 	| Pikachu | Surfing Pikachu | Teach it Surf |
 	| Pikachu | Flying Pikachu  | Teach it Fly |
 	| Shuckle | Happy Shuckie | Reach 150 happiness with Shuckie |
+	| Magikarp | Extra Small | Wild Magikarp that's less than 2 feet |
+	| Magikarp | Extra Large | Wild Magikarp that's larger than 4 feet 5 inches |
 
 - **Misc.**
   - Turn around after healing in the Pokecenter so you don't accidentally heal again

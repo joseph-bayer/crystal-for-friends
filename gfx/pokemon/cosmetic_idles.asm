@@ -32,3 +32,7 @@ UnownWAnimationIdle:			INCLUDE "gfx/pokemon/unown_w/anim_idle.asm"
 UnownXAnimationIdle:			INCLUDE "gfx/pokemon/unown_x/anim_idle.asm"
 UnownYAnimationIdle:			INCLUDE "gfx/pokemon/unown_y/anim_idle.asm"
 UnownZAnimationIdle:			INCLUDE "gfx/pokemon/unown_z/anim_idle.asm"
+
+MagikarpPlainAnimationIdle:		INCLUDE "gfx/pokemon/magikarp/anim_idle.asm"
+MagikarpXSAnimationIdle:		INCLUDE "gfx/pokemon/magikarp_xs/anim_idle.asm"
+MagikarpXLAnimationIdle:		INCLUDE "gfx/pokemon/magikarp_xl/anim_idle.asm"

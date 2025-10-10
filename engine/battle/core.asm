@@ -6048,9 +6048,9 @@ LoadEnemyMon:
 ; We've still got more to do if we're dealing with a wild monster
 	ld a, [wBattleMode]
 	dec a
-	jr nz, .Happiness
+	jp nz, .Happiness
 
-; Species-specfic:
+; Species-specfic: 
 .Magikarp:
 ; These filters are untranslated.
 ; They expect at wMagikarpLength a 2-byte value in mm,
@@ -6082,16 +6082,18 @@ LoadEnemyMon:
 	ld bc, wPlayerID
 	farcall CalcMagikarpLength
 
-; No reason to keep going if length > 1536 mm (i.e. if HIGH(length) > 6 feet)
+	; No reason to keep going if length is less than 5 feet
+	; Also no reason to keep going if length is 6 feet or more. I don't think it's possible to get a Magikarp that's 6ft
 	ld a, [wMagikarpLength]
 	cp 5
 	jr nz, .CheckMagikarpArea
 
-; 5% chance of skipping both size checks
+	; Magikarp is between 5 and 6 feet
+	; 5% chance of skipping both size checks
 	call Random
 	cp 5 percent
 	jr c, .CheckMagikarpArea
-; Try again if length >= 1616 mm (i.e. if LOW(length) >= 4 inches)
+; If length is 5'4" or more, try again
 	ld a, [wMagikarpLength + 1]
 	cp 4
 	jr nc, .GenerateDVs
@@ -6100,7 +6102,7 @@ LoadEnemyMon:
 	call Random
 	cp 20 percent - 1
 	jr c, .CheckMagikarpArea
-; Try again if length >= 1600 mm (i.e. if LOW(length) >= 3 inches)
+;If length is 5'3" or more, try again
 	ld a, [wMagikarpLength + 1]
 	cp 3
 	jr nc, .GenerateDVs
@@ -6108,14 +6110,14 @@ LoadEnemyMon:
 .CheckMagikarpArea:
 	ld a, [wMapGroup]
 	cp GROUP_LAKE_OF_RAGE
-	jr nz, .Happiness
+	jr nz, .AssignMagikarpForm
 	ld a, [wMapNumber]
 	cp MAP_LAKE_OF_RAGE
-	jr nz, .Happiness
+	jr nz, .AssignMagikarpForm
 ; 40% chance of not flooring
 	call Random
 	cp 39 percent + 1
-	jr c, .Happiness
+	jr c, .AssignMagikarpForm
 ; Try again if length < 1024 mm (i.e. if HIGH(length) < 3 feet)
 	ld a, [wMagikarpLength]
 	cp 3
@@ -6123,6 +6125,33 @@ LoadEnemyMon:
 
 ; Finally done with DVs
 
+.AssignMagikarpForm
+	; If Magikarp is less than 2', it should have the XS form
+	ld a, [wMagikarpLength]
+	cp 2
+	jr nc, .CheckXLForm
+	; Magikarp is less than 2 feet
+	ld a, MAGIKARP_XS_FORM
+	ld [wForm], a
+	ld [wEnemyMonForm], a
+	jr .Happiness
+.CheckXLForm
+	; If Magikarp is larger than 4'5", it should have the XL form
+	ld a, [wMagikarpLength]
+	cp 5
+	jr nc, .AssignXLForm ; 5 feet or taller - assign XL form
+	ld a, [wMagikarpLength]
+	cp 4
+	jr c, .Happiness ; less than 4 feet - regular form
+	ld a, [wMagikarpLength + 1]
+	cp 6
+	jr c, .Happiness ; 4'5" or shorter - regular form
+	; fallthrough
+.AssignXLForm
+	ld a, MAGIKARP_XL_FORM
+	ld [wForm], a
+	ld [wEnemyMonForm], a
+	; fallthrough
 .Happiness:
 ; Set happiness
 	ld a, BASE_HAPPINESS

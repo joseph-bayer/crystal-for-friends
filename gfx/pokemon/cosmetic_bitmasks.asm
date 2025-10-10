@@ -32,3 +32,7 @@ UnownWBitmasks:			INCLUDE "gfx/pokemon/unown_w/bitmask.asm"
 UnownXBitmasks:			INCLUDE "gfx/pokemon/unown_x/bitmask.asm"
 UnownYBitmasks:			INCLUDE "gfx/pokemon/unown_y/bitmask.asm"
 UnownZBitmasks:			INCLUDE "gfx/pokemon/unown_z/bitmask.asm"
+
+MagikarpPlainBitmasks:		INCLUDE "gfx/pokemon/magikarp/bitmask.asm"
+MagikarpXSBitmasks:		INCLUDE "gfx/pokemon/magikarp_xs/bitmask.asm"
+MagikarpXLBitmasks:		INCLUDE "gfx/pokemon/magikarp_xl/bitmask.asm"

@@ -62,7 +62,7 @@ PokemonPicPointers::
 	dba ArbokFrontpic
 	dba ArbokBackpic
 
-  ; Pikachu pics have their own table. See PikachuPicPointers
+  	; Pikachu pics have their own table. See PikachuPicPointers
 	dbw -1, -1
 	dbw -1, -1
 
@@ -272,8 +272,11 @@ PokemonPicPointers::
 	dba PinsirBackpic
 	dba TaurosFrontpic
 	dba TaurosBackpic
-	dba MagikarpFrontpic
-	dba MagikarpBackpic
+
+	; Magikarp pics have their own table. See MagikarpPicPointers
+	dbw -1, -1
+	dbw -1, -1
+	
 	dba GyaradosFrontpic
 	dba GyaradosBackpic
 	dba LaprasFrontpic

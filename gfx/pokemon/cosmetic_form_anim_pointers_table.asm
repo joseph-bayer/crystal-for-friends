@@ -136,7 +136,7 @@ CosmeticFormAnimationPointerTable:
 	dw 0					; MAGMAR (7e) - no cosmetic forms
 	dw 0					; PINSIR (7f) - no cosmetic forms
 	dw 0					; TAUROS (80) - no cosmetic forms
-	dw 0					; MAGIKARP (81) - no cosmetic forms
+	dw MagikarpAnimationPointers		; MAGIKARP (81) - has cosmetic forms
 	dw 0					; GYARADOS (82) - no cosmetic forms
 	dw 0					; LAPRAS (83) - no cosmetic forms
 	dw 0					; DITTO (84) - no cosmetic forms
@@ -392,7 +392,7 @@ CosmeticFormIdleAnimationPointers:
 	dw 0                           		; MAGMAR (7e) - no cosmetic forms
 	dw 0                           		; PINSIR (7f) - no cosmetic forms
 	dw 0                           		; TAUROS (80) - no cosmetic forms
-	dw 0                           		; MAGIKARP (81) - no cosmetic forms
+	dw MagikarpAnimationIdlePointers        ; MAGIKARP (81) - no cosmetic forms
 	dw 0                           		; GYARADOS (82) - no cosmetic forms
 	dw 0                           		; LAPRAS (83) - no cosmetic forms
 	dw 0                           		; DITTO (84) - no cosmetic forms

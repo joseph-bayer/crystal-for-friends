@@ -32,3 +32,7 @@ UnownWAnimation: 		INCLUDE "gfx/pokemon/unown_w/anim.asm"
 UnownXAnimation: 		INCLUDE "gfx/pokemon/unown_x/anim.asm"
 UnownYAnimation: 		INCLUDE "gfx/pokemon/unown_y/anim.asm"
 UnownZAnimation: 		INCLUDE "gfx/pokemon/unown_z/anim.asm"
+
+MagikarpPlainAnimation:		INCLUDE "gfx/pokemon/magikarp/anim.asm"
+MagikarpXSAnimation:		INCLUDE "gfx/pokemon/magikarp_xs/anim.asm"
+MagikarpXLAnimation:		INCLUDE "gfx/pokemon/magikarp_xl/anim.asm"

@@ -128,7 +128,7 @@ AnimationPointers:
 	dw MagmarAnimation
 	dw PinsirAnimation
 	dw TaurosAnimation
-	dw MagikarpAnimation
+	dw 0
 	dw GyaradosAnimation
 	dw LaprasAnimation
 	dw DittoAnimation

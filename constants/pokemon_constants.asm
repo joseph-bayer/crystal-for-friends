@@ -286,13 +286,6 @@ if NUM_POKEMON > 999
 endc
 
 ; Unown forms
-; indexes for:
-; - UnownWords (see data/pokemon/unown_words.asm)
-; - UnownPicPointers (see data/pokemon/unown_pic_pointers.asm)
-; - UnownAnimationPointers (see gfx/pokemon/unown_anim_pointers.asm)
-; - UnownAnimationIdlePointers (see gfx/pokemon/unown_idle_pointers.asm)
-; - UnownBitmasksPointers (see gfx/pokemon/unown_bitmask_pointers.asm)
-; - UnownFramesPointers (see gfx/pokemon/unown_frame_pointers.asm)
 	const_def 0 ; Note that forms are now 0-indexed
 	const UNOWN_A ;  0
 	const UNOWN_B ;  1
@@ -323,13 +316,6 @@ endc
 DEF NUM_UNOWN EQU const_value ; 26
 
 ; Pikachu forms
-; indexes for:
-; - PikachuPicPointers (see data/pokemon/pikachu_pic_pointers.asm)
-; - PikachuAnimationPointers (see gfx/pokemon/pikachu_anim_pointers.asm)
-; - PikachuAnimationIdlePointers (see gfx/pokemon/pikachu_idle_pointers.asm)
-; - PikachuBitmasksPointers (see gfx/pokemon/pikachu_bitmask_pointers.asm)
-; - PikachuFramesPointers (see gfx/pokemon/pikachu_frame_pointers.asm)
-; - PikachuDimensionsPointers (see gfx/pokemon/pikachu_dimensions_pointers.asm)
   const_def 0 ; Note that forms are now 0-indexed
   const PIKACHU_PLAIN_FORM  ; 0
   const PIKACHU_SURF_FORM   ; 1
@@ -338,14 +324,15 @@ DEF NUM_UNOWN EQU const_value ; 26
 DEF NUM_PIKACHU_FORMS EQU const_value ; 3
 
 ; Shuckle forms
-; indexes for:
-; - ShucklePicPointers (see data/pokemon/shuckle_pic_pointers.asm)
-; - ShuckleAnimationPointers (see gfx/pokemon/shuckle_anim_pointers.asm)
-; - ShuckleAnimationIdlePointers (see gfx/pokemon/shuckle_idle_pointers.asm)
-; - ShuckleBitmasksPointers (see gfx/pokemon/shuckle_bitmask_pointers.asm)
-; - ShuckleFramesPointers (see gfx/pokemon/shuckle_frame_pointers.asm)
   const_def 0 ; Note that forms are now 0-indexed
   const SHUCKLE_PLAIN_FORM    	    ; 0
   const SHUCKLE_SHUCKIE_NEUTRAL_FORM ; 1
   const SHUCKLE_SHUCKIE_HAPPY_FORM   ; 2
 DEF NUM_SHUCKLE_FORMS EQU const_value ; 3
+
+; Magikarp forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const MAGIKARP_PLAIN_FORM	; 0
+  const MAGIKARP_XS_FORM	; 1
+  const MAGIKARP_XL_FORM   	; 2
+DEF NUM_MAGIKARP_FORMS EQU const_value ; 3

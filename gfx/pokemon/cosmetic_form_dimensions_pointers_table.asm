@@ -136,7 +136,7 @@ CosmeticFormDimensionsPointersTable:
 	dw 0					; MAGMAR (7e)
 	dw 0					; PINSIR (7f)
 	dw 0					; TAUROS (80)
-	dw 0					; MAGIKARP (81)
+	dw MagikarpDimensions			; MAGIKARP (81)
 	dw 0					; GYARADOS (82)
 	dw 0					; LAPRAS (83)
 	dw 0					; DITTO (84)

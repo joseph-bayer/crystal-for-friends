@@ -136,7 +136,7 @@ CosmeticFormPicPointersTable::
 	dw 0					; MAGMAR (7e) - no cosmetic forms
 	dw 0					; PINSIR (7f) - no cosmetic forms
 	dw 0					; TAUROS (80) - no cosmetic forms
-	dw 0					; MAGIKARP (81) - no cosmetic forms
+	dw MagikarpPicPointers			; MAGIKARP (81) - no cosmetic forms
 	dw 0					; GYARADOS (82) - no cosmetic forms
 	dw 0					; LAPRAS (83) - no cosmetic forms
 	dw 0					; DITTO (84) - no cosmetic forms

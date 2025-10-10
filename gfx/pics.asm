@@ -721,6 +721,10 @@ ShuckleShuckieNeutralFrontpic:	INCBIN "gfx/pokemon/shuckle/front.animated.2bpp.l
 ShuckleShuckieNeutralBackpic:	INCBIN "gfx/pokemon/shuckle/back.2bpp.lz"
 ShuckleShuckieHappyFrontpic:	INCBIN "gfx/pokemon/shuckle_shuckie_happy/front.animated.2bpp.lz"
 ShuckleShuckieHappyBackpic:	INCBIN "gfx/pokemon/shuckle_shuckie_happy/back.2bpp.lz"
+MagikarpXSFrontpic: 		INCBIN "gfx/pokemon/magikarp_xs/front.animated.2bpp.lz"
+MagikarpXSBackpic:  		INCBIN "gfx/pokemon/magikarp_xs/back.2bpp.lz"
+MagikarpXLFrontpic: 		INCBIN "gfx/pokemon/magikarp_xl/front.animated.2bpp.lz"
+MagikarpXLBackpic:  		INCBIN "gfx/pokemon/magikarp_xl/back.2bpp.lz"
 
 
 SECTION "Pics 20", ROMX

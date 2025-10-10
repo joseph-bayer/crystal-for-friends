@@ -76,3 +76,14 @@ UnownPicPointers::
 	dba UnownZFrontpic
 	dba UnownZBackpic
 	assert_table_length NUM_UNOWN
+
+MagikarpPicPointers::
+; entries correspond to Magikarp's forms, two apiece
+	table_width 3 * 2
+	dba MagikarpFrontpic
+	dba MagikarpBackpic
+	dba MagikarpXSFrontpic
+	dba MagikarpXSBackpic
+	dba MagikarpXLFrontpic
+	dba MagikarpXLBackpic
+	assert_table_length NUM_MAGIKARP_FORMS

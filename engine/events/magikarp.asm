@@ -282,7 +282,7 @@ CalcMagikarpLength:
 .BCLessThanDE:
 	ld a, b
 	cp d
-	ret c
+	ret nz
 	ld a, c
 	cp e
 	ret

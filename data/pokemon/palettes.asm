@@ -540,3 +540,8 @@ INCLUDE "gfx/pokemon/celebi/shiny.pal"
 
 INCBIN "gfx/pokemon/shuckle_shuckie_happy/normal.gbcpal", middle_colors
 INCLUDE "gfx/pokemon/shuckle_shuckie_happy/shiny.pal"
+
+INCBIN "gfx/pokemon/magikarp_xs/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/magikarp_xs/shiny.pal"
+INCBIN "gfx/pokemon/magikarp_xl/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/magikarp_xl/shiny.pal"

@@ -32,3 +32,7 @@ UnownWFrames:			INCLUDE "gfx/pokemon/unown_w/frames.asm"
 UnownXFrames:			INCLUDE "gfx/pokemon/unown_x/frames.asm"
 UnownYFrames:			INCLUDE "gfx/pokemon/unown_y/frames.asm"
 UnownZFrames:			INCLUDE "gfx/pokemon/unown_z/frames.asm"
+
+MagikarpPlainFrames:		INCLUDE "gfx/pokemon/magikarp/frames.asm"
+MagikarpXSFrames:		INCLUDE "gfx/pokemon/magikarp_xs/frames.asm"
+MagikarpXLFrames:		INCLUDE "gfx/pokemon/magikarp_xl/frames.asm"

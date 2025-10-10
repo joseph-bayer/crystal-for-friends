@@ -41,3 +41,10 @@ UnownBitmasksPointers:
 	dw UnownYBitmasks
 	dw UnownZBitmasks
 	assert_table_length NUM_UNOWN
+
+MagikarpBitmasksPointers:
+	table_width 2
+	dw MagikarpPlainBitmasks
+	dw MagikarpXSBitmasks
+	dw MagikarpXLBitmasks
+	assert_table_length NUM_MAGIKARP_FORMS

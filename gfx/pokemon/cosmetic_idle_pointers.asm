@@ -41,3 +41,10 @@ UnownAnimationIdlePointers:
 	dw UnownYAnimationIdle
 	dw UnownZAnimationIdle
 	assert_table_length NUM_UNOWN
+
+MagikarpAnimationIdlePointers:
+	table_width 2
+	dw MagikarpPlainAnimationIdle
+	dw MagikarpXSAnimationIdle
+	dw MagikarpXLAnimationIdle
+	assert_table_length NUM_MAGIKARP_FORMS

@@ -41,3 +41,10 @@ UnownFramesPointers:
 	dw UnownYFrames
 	dw UnownZFrames
 	assert_table_length NUM_UNOWN
+
+MagikarpFramesPointers:
+	table_width 2
+	dw MagikarpPlainFrames
+	dw MagikarpXSFrames
+	dw MagikarpXLFrames
+	assert_table_length NUM_MAGIKARP_FORMS
