@@ -558,17 +558,67 @@ INCLUDE "gfx/battle_anims/battle_anims.pal"
 
 GetMonPalettePointer:
 	call GetPokemonIndexFromID
-	add hl, hl
-	add hl, hl
-	add hl, hl
+	; palettes are 8 bytes each (2 normal colors, 2 shiny colors. Each color is 2 bytes)
+	add hl, hl ; * 2
+	add hl, hl ; * 4
+	add hl, hl ; * 8
 	ld bc, PokemonPalettes
 	add hl, bc
 	ret
 
+; a = 8bit mon species id
+; bc = form address
 GetMonNormalOrShinyPalettePointer:
+	push af
+	push de
+	call GetPokemonIndexFromID
+	; hl now contains the Pokemon index
+	dec hl ; The palette form pointers table is 0-indexed, so decrement by 1
+	add hl, hl ; multiply by 2 for table_width 2
+
+	; Load the base address of the form pointer table
+	ld de, CosmeticFormPalettePointersTable
+
+	; HL = mon index * 4 + base address of form palette pointer table. It now points to the form palette pointer for this mon
+	add hl, de
+	ld a, BANK(CosmeticFormPalettePointersTable)
+	call GetFarWord
+	; hl now has pointer to form palette pointer table
+
+	; Check if we got a null pointer (0) - means no cosmetic forms
+	ld a, h
+	or l
+	jr nz, .has_cosmetic_form_with_alternate_palette
+
+	; fallthrough
+.is_formless_mon
+	pop de
+	pop af
 	push bc
 	call GetMonPalettePointer
 	pop bc
+	jr .done
+.has_cosmetic_form_with_alternate_palette
+	pop de
+	pop af
+	push bc
+	push de
+	ld d, h
+	ld e, l
+
+	ld a, [bc]
+	and FORM_MASK
+	ld l, a
+	ld h, 0
+	; palettes are 8 bytes each (2 normal colors, 2 shiny colors. Each color is 2 bytes)
+	add hl, hl ; * 2
+	add hl, hl ; * 4
+	add hl, hl ; * 8
+	add hl, de ; add base address of form palette table
+	pop de
+	pop bc
+
+.done
 	push hl
 	call CheckShininess
 	pop hl
@@ -971,6 +1021,10 @@ INCLUDE "gfx/battle/exp_bar.pal"
 INCLUDE "data/pokemon/palettes.asm"
 
 INCLUDE "data/trainers/palettes.asm"
+
+INCLUDE "data/pokemon/cosmetic_palette_pointers.asm"
+
+INCLUDE "data/pokemon/cosmetic_form_palette_pointers_table.asm"
 
 LoadMapPals:
 	farcall LoadSpecialMapPalette

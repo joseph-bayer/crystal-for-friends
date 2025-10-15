@@ -244,7 +244,7 @@ MonMenuIconPals:
 	icon_pals GRAY,   BROWN  ; DONPHAN
 	icon_pals BLUE,   BLUE   ; PORYGON2
 	icon_pals BROWN,  GREEN  ; STANTLER
-	icon_pals BROWN,  GREEN  ; SMEARGLE
+	icon_pals BROWN,  TEAL   ; SMEARGLE
 	icon_pals BROWN,  BLUE   ; TYROGUE
 	icon_pals BROWN,  PURPLE ; HITMONTOP
 	icon_pals PURPLE, PINK   ; SMOOCHUM

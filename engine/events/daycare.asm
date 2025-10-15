@@ -697,6 +697,207 @@ DayCare_InitBreeding:
 	ld [hl], a
 	ld a, [wCurPartyLevel]
 	ld [wEggMonLevel], a
+
+; Species-specific
+.Smeargle
+; Check if egg is Smeargle
+	ld a, [wEggMonSpecies]
+	call GetPokemonIndexFromID
+	ld a, l
+	sub LOW(SMEARGLE)
+	if HIGH(SMEARGLE) == 0
+		or h
+	else
+		jr nz, .Shininess
+		if HIGH(SMEARGLE) == 1
+			dec h
+		else
+			ld a, h
+			cp HIGH(SMEARGLE)
+		endc
+	endc
+	jp nz, .Shininess
+
+; Baby is a Smeargle!
+
+; We will set b to 0 if parent 1 is Smeargle.
+; We will set c to 0 if parent 2 is Smeargle.
+.check_parent_1
+	ld a, [wBreedMon1Species]
+	call GetPokemonIndexFromID
+	ld a, l
+	sub LOW(SMEARGLE)
+	if HIGH(SMEARGLE) == 0
+		or h
+	else
+		ld b, a
+		jr nz, .check_parent_2
+		if HIGH(SMEARGLE) == 1
+			dec h
+		else
+			ld a, h
+			cp HIGH(SMEARGLE)
+		endc
+	endc
+	ld b, a
+	; fallthrough
+
+.check_parent_2
+	ld a, [wBreedMon2Species]
+	call GetPokemonIndexFromID
+	ld a, l
+	sub LOW(SMEARGLE)
+	if HIGH(SMEARGLE) == 0
+		or h
+	else
+		ld c, a
+		jr nz, .determine_form_passing_function
+		if HIGH(SMEARGLE) == 1
+			dec h
+		else
+			ld a, h
+			cp HIGH(SMEARGLE)
+		endc
+	endc
+	ld c, a
+	; fallthrough
+
+.determine_form_passing_function
+	ld a, b
+	or c
+	jr z, .both_parents_smeargle
+	; only one parent is Smeargle
+	ld a, b
+	or a
+	jr z, .only_parent_1_smeargle
+	jr .only_parent_2_smeargle
+
+.both_parents_smeargle
+; We will set b to 0 if parent 1 is a primary color form. Otherwise 1.
+; We will set c to 0 if parent 2 is a primary color form. Otherwise 1.
+; Primary color Smeargles are 0 (Red), 1 (Blue), and 2 (Yellow)
+
+; check parent 1 primary color
+	xor a
+	ld b, a
+	ld a, [wBreedMon1Form]
+	and FORM_MASK
+	cp 3
+	jr c, .check_parent_2_primary_color
+	; not primary color
+	or 1 ; set a to 1
+	ld b, a
+.check_parent_2_primary_color
+	xor a
+	ld c, a
+	ld a, [wBreedMon2Form]
+	and FORM_MASK
+	cp 3
+	jr c, .determine_primary_color_function
+	; not primary color
+	or 1 ; set a to 1
+	ld c, a
+
+.determine_primary_color_function
+; b = 0 if parent 1 is primary color, else 1
+; c = 0 if parent 2 is primary color, else 1
+	ld a, b
+	or c
+	jr z, .both_parents_primary_color
+	; only one parent is primary color
+	ld a, b
+	or a
+	jr z, .only_parent_1_primary_color
+	ld a, c
+	or a
+	jr z, .only_parent_2_primary_color
+	; fallthrough
+
+.neither_parent_primary_color
+	; neither parent is primary color, so flip a coin for which parent passes its form
+	ld a, [wBreedMon1Form]
+	and FORM_MASK
+	ld [wEggMonForm], a
+	ld [wTempMonForm], a
+	call Random
+	cp 128
+	jr c, .Shininess
+	ld a, [wBreedMon2Form]
+	and FORM_MASK
+	ld [wEggMonForm], a
+	ld [wTempMonForm], a
+	jr .Shininess
+
+.only_parent_1_smeargle
+	; Pass form without any special logic
+	ld a, [wBreedMon1Form]
+	and FORM_MASK
+	ld [wEggMonForm], a
+	ld [wTempMonForm], a
+	jr .Shininess
+.only_parent_2_smeargle
+	ld a, [wBreedMon2Form]
+	and FORM_MASK
+	ld [wEggMonForm], a
+	ld [wTempMonForm], a
+	jr .Shininess
+
+.both_parents_primary_color
+	; Both parents are primary colors. We need to verify that they are different colors.
+	ld a, [wBreedMon1Form]
+	and FORM_MASK
+	ld b, a
+	ld a, [wBreedMon2Form]
+	and FORM_MASK
+	cp b
+	ld [wEggMonForm], a
+	ld [wTempMonForm], a
+	jr z, .Shininess ; same color, so just pass that color
+	; Both parents are primary colors and different colors, so let's mix them to produce secondary colors!
+	; Primary colors form values are 0 (Red), 1 (Blue), and 2 (Yellow)
+	; Adding these colors' form values together give us unique results in all combinations:
+	; Red + Blue = 0 + 1 = 1 (Purple)
+	; Red + Yellow = 0 + 2 = 2 (Orange)
+	; Blue + Yellow = 1 + 2 = 3 (Green)
+	; So if the result is 1, we'll assign form 3 (Purple)
+	; If the result is 2, we'll assign form 4 (Orange)
+	; If the result is 3, we'll assign form 5 (Green)
+	add b
+	ld b, a
+	cp 1
+	ld a, SMEARGLE_PURPLE_FORM
+	ld [wEggMonForm], a
+	ld [wTempMonForm], a
+	jr z, .Shininess
+	ld a, b
+	cp 2
+	ld a, SMEARGLE_ORANGE_FORM
+	ld [wEggMonForm], a
+	ld [wTempMonForm], a
+	jr z, .Shininess
+	; must be 3
+	ld a, SMEARGLE_GREEN_FORM
+	ld [wEggMonForm], a
+	ld [wTempMonForm], a
+	jr .Shininess
+
+.only_parent_1_primary_color
+	; if parent 1 is primary color, that means parent 2 is a secondary color
+	; secondary colors take precedence over primary colors
+	ld a, [wBreedMon2Form]
+	and FORM_MASK
+	ld [wEggMonForm], a
+	ld [wTempMonForm], a
+	jr .Shininess
+.only_parent_2_primary_color
+	; if parent 2 is primary color, that means parent 1 is a secondary color
+	; secondary colors take precedence over primary colors
+	ld a, [wBreedMon1Form]
+	and FORM_MASK
+	ld [wEggMonForm], a
+	ld [wTempMonForm], a
+	; fallthrough
+
 .Shininess:
 	; Check if both parents are shiny
 	ld a, [wBreedMon1Form]
@@ -719,35 +920,35 @@ DayCare_InitBreeding:
 	; Both parents are shiny
 	call Random
 	cp SHINY_EGG_TWO_SHINY_PARENTS_NUMERATOR ; 8/256 = 1/32 chance
-	jr nc, .not_shiny
+	ret nc
 	ld a, [wEggMonForm]
 	or SHINY_MASK
 	ld [wEggMonForm], a
+	ld [wTempMonForm], a
 	ret
 	
 .one_parent_shiny:
 	; One parent is shiny - higher chance for shiny offspring
 	call Random
 	cp SHINY_EGG_TWO_SHINY_PARENTS_NUMERATOR ; 4/256 = 1/64 chance
-	jr nc, .not_shiny
+	ret nc
 	ld a, [wEggMonForm]
 	or SHINY_MASK
 	ld [wEggMonForm], a
+	ld [wTempMonForm], a
 	ret
 	
 .no_shiny_parent:
 	call Random
 	and a 
-	jr nz, .not_shiny ; 255/256 chance of not being shiny
+	ret nz ; 255/256 chance of not being shiny
 	call Random
 	cp SHINY_EGG_NUMERATOR ; 240/256 chance of not being shiny
-	jr nc, .not_shiny
+	ret nc
 	ld a, [wEggMonForm]
 	or SHINY_MASK
 	ld [wEggMonForm], a
-.not_shiny
-	xor a
-	ld [wEggMonForm], a
+	ld [wTempMonForm], a
 	ret
 
 .String_EGG:

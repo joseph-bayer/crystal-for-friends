@@ -336,3 +336,12 @@ DEF NUM_SHUCKLE_FORMS EQU const_value ; 3
   const MAGIKARP_XS_FORM	; 1
   const MAGIKARP_XL_FORM   	; 2
 DEF NUM_MAGIKARP_FORMS EQU const_value ; 3
+
+; Smeargle forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const SMEARGLE_PLAIN_FORM	; 0
+  const SMEARGLE_BLUE_FORM	; 1
+  const SMEARGLE_YELLOW_FORM	; 2
+  const SMEARGLE_PURPLE_FORM	; 3
+  const SMEARGLE_GREEN_FORM	; 4
+  const SMEARGLE_ORANGE_FORM	; 5

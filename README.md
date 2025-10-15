@@ -106,9 +106,15 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
 	|---------|------|---------------|
 	| Pikachu | Surfing Pikachu | Teach it Surf |
 	| Pikachu | Flying Pikachu  | Teach it Fly |
-	| Shuckle | Happy Shuckie | Reach 150 happiness with Shuckie |
+	| Shuckle | Happy Shuckie | Reach 150 happiness with Mania's Shuckle, "Shuckie" |
 	| Magikarp | Extra Small | Wild Magikarp that's less than 2 feet |
 	| Magikarp | Extra Large | Wild Magikarp that's larger than 4 feet 5 inches |
+	| Smeargle | Red	| Found in the wild |
+	| Smeargle | Blue	| Found in the wild |
+	| Smeargle | Yellow	| Found in the wild |
+	| Smeargle | Purple	| Bred from a Red and Blue Smeargle |
+	| Smeargle | Orange	| Bred from a Red and Yellow Smeargle |
+	| Smeargle | Green	| Bred from a Blue and Yellow Smeargle |
 
 - **Misc.**
   - Turn around after healing in the Pokecenter so you don't accidentally heal again

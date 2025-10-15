@@ -6075,7 +6075,7 @@ LoadEnemyMon:
 			cp HIGH(MAGIKARP)
 		endc
 	endc
-	jr nz, .Happiness
+	jr nz, .Smeargle
 
 ; Get Magikarp's length
 	ld de, wEnemyMonDVs
@@ -6151,7 +6151,34 @@ LoadEnemyMon:
 	ld a, MAGIKARP_XL_FORM
 	ld [wForm], a
 	ld [wEnemyMonForm], a
-	; fallthrough
+	jr .Happiness
+
+.Smeargle
+; Smeargle can be red (form 0), blue (form 1) or green (form 2) in the wild.
+; Other colors are available through breeding these colors together.
+	ld a, [wTempEnemyMonSpecies]
+	call GetPokemonIndexFromID
+	ld a, l
+	sub LOW(SMEARGLE)
+	if HIGH(SMEARGLE) == 0
+		or h
+	else
+		jr nz, .Happiness
+		if HIGH(SMEARGLE) == 1
+			dec h
+		else
+			ld a, h
+			cp HIGH(SMEARGLE)
+		endc
+	endc
+	jr nz, .Happiness
+
+	ld a, 3
+	call RandomRange
+	; a = 0, 1 or 2
+	ld [wForm], a
+	ld [wEnemyMonForm], a
+
 .Happiness:
 ; Set happiness
 	ld a, BASE_HAPPINESS

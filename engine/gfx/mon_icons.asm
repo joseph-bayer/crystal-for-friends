@@ -21,17 +21,17 @@ _LoadOverworldMonIcon:
 	call GetPokemonIndexFromID
 	push hl
 	; hl now contains the Pokemon index
-	dec hl ; The animation form pointers table is 0-indexed, so decrement by 1
+	dec hl ; The icon form pointers table is 0-indexed, so decrement by 1
 	add hl, hl ; multiply by 2 for table_width 2
 
 	; Load the base address of the form pointer table
 	ld de, CosmeticFormIconPointersTable
 
-	; HL = mon index * 4 + base address of form animation pointer table. It now points to the form animation pointer for this mon
+	; HL = mon index * 4 + base address of form icon pointer table. It now points to the form icon pointer for this mon
 	add hl, de
 	ld a, BANK(CosmeticFormIconPointersTable)
 	call GetFarWord
-	; hl now has pointer to form animation pointer table
+	; hl now has pointer to form icon pointer table
 	
 	; Check if we got a null pointer (0) - means no cosmetic forms
 	ld a, h
@@ -194,6 +194,7 @@ GetMonPalInBCDE:
 	ld e, l
 	ret
 
+; TODO: 
 GetMenuMonIconPalette:
 	ld c, l
 	ld b, h
