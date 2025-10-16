@@ -698,7 +698,10 @@ DayCare_InitBreeding:
 	ld a, [wCurPartyLevel]
 	ld [wEggMonLevel], a
 
-; Species-specific
+; Species-specific form inheritance
+	call CheckMultiFormEggInheritance
+	jr nc, .Smeargle ; Not a multi-form Pokémon, continue to Smeargle
+
 .Smeargle
 ; Check if egg is Smeargle
 	ld a, [wEggMonSpecies]
@@ -717,12 +720,11 @@ DayCare_InitBreeding:
 		endc
 	endc
 	jp nz, .Shininess
-
 ; Baby is a Smeargle!
 
 ; We will set b to 0 if parent 1 is Smeargle.
 ; We will set c to 0 if parent 2 is Smeargle.
-.check_parent_1
+.smeargle_check_parent_1
 	ld a, [wBreedMon1Species]
 	call GetPokemonIndexFromID
 	ld a, l
@@ -731,7 +733,7 @@ DayCare_InitBreeding:
 		or h
 	else
 		ld b, a
-		jr nz, .check_parent_2
+		jr nz, .smeargle_check_parent_2
 		if HIGH(SMEARGLE) == 1
 			dec h
 		else
@@ -742,7 +744,7 @@ DayCare_InitBreeding:
 	ld b, a
 	; fallthrough
 
-.check_parent_2
+.smeargle_check_parent_2
 	ld a, [wBreedMon2Species]
 	call GetPokemonIndexFromID
 	ld a, l
@@ -751,7 +753,7 @@ DayCare_InitBreeding:
 		or h
 	else
 		ld c, a
-		jr nz, .determine_form_passing_function
+		jr nz, .determine_smeargle_form_passing_function
 		if HIGH(SMEARGLE) == 1
 			dec h
 		else
@@ -762,7 +764,7 @@ DayCare_InitBreeding:
 	ld c, a
 	; fallthrough
 
-.determine_form_passing_function
+.determine_smeargle_form_passing_function
 	ld a, b
 	or c
 	jr z, .both_parents_smeargle
@@ -885,14 +887,14 @@ DayCare_InitBreeding:
 	; if parent 1 is primary color, that means parent 2 is a secondary color
 	; secondary colors take precedence over primary colors
 	ld a, [wBreedMon2Form]
-	and FORM_MASK
-	ld [wEggMonForm], a
-	ld [wTempMonForm], a
-	jr .Shininess
+	jr .done_smeargle_inheritance
 .only_parent_2_primary_color
 	; if parent 2 is primary color, that means parent 1 is a secondary color
 	; secondary colors take precedence over primary colors
 	ld a, [wBreedMon1Form]
+	; fallthrough
+
+.done_smeargle_inheritance
 	and FORM_MASK
 	ld [wEggMonForm], a
 	ld [wTempMonForm], a
@@ -987,3 +989,126 @@ Daycare_CheckAlternateOffspring:
 .alternate_offspring_table
 	dw NIDORAN_F, NIDORAN_M
 	dw -1
+
+; Check if egg species requires special form inheritance (Scyther/Pinsir)
+; Input: wEggMonSpecies set
+; Output: carry = found and handled, no carry = not found
+; Clobbers: a, bc, de, hl
+CheckMultiFormEggInheritance:
+	ld a, [wEggMonSpecies]
+	call GetPokemonIndexFromID
+	; hl = pokemon index
+	
+	; Check table for matching species
+	ld de, MultiFormEggTable
+.loop:
+	ld a, [de] ; Load low byte of species ID
+	inc de
+	ld c, a
+	ld a, [de] ; Load high byte of species ID
+	inc de
+	ld b, a
+	; Check for end marker
+	or c ; TODO: will the low byte ever be 0 for a valid species?
+	jr z, .not_found
+	
+	; Compare bc (table entry) with hl (egg species)
+	ld a, c
+	cp l
+	jr nz, .next_entry
+	ld a, b
+	cp h
+	jr nz, .next_entry
+	
+	; Found match! Now handle form inheritance
+	call HandleSimpleFormInheritance
+	scf ; Set carry to indicate we handled it
+	ret
+
+.next_entry:
+	jr .loop
+
+.not_found:
+	and a ; Clear carry to indicate not found
+	ret
+
+; Handle simple form inheritance for Scyther/Pinsir
+; If both parents are the species: 50% chance to inherit from each parent
+; If only one parent is the species: inherit its form
+HandleSimpleFormInheritance:
+	; First check if both parents are the same species as the egg
+	ld a, [wEggMonSpecies]
+	call GetPokemonIndexFromID
+	ld b, h
+	ld c, l ; bc = egg species index
+	
+	; Check parent 1 - convert to lowest evolution stage first
+	ld a, [wBreedMon1Species]
+	ld [wCurPartySpecies], a
+	push bc
+	farcall GetLowestEvolutionStage
+	pop bc
+	call GetPokemonIndexFromID
+	ld a, l
+	cp c
+	jr nz, .check_parent2_only
+	ld a, h
+	cp b
+	jr nz, .check_parent2_only
+	
+	; Parent 1 matches, check parent 2 - convert to lowest evolution stage first
+	ld a, [wBreedMon2Species]
+	ld [wCurPartySpecies], a
+	push bc
+	farcall GetLowestEvolutionStage
+	pop bc
+	call GetPokemonIndexFromID
+	ld a, l
+	cp c
+	jr nz, .inherit_parent1
+	ld a, h
+	cp b
+	jr nz, .inherit_parent1
+	
+	; Both parents match - 50% chance for each
+	call Random
+	cp 128
+	jr c, .inherit_parent1
+	jr .inherit_parent2
+
+.check_parent2_only:
+	; Check if parent 2 matches - convert to lowest evolution stage first
+	ld a, [wBreedMon2Species]
+	ld [wCurPartySpecies], a
+	push bc
+	farcall GetLowestEvolutionStage
+	pop bc
+	call GetPokemonIndexFromID
+	ld a, l
+	cp c
+	ret nz
+	ld a, h
+	cp b
+	ret nz
+	jr .inherit_parent2
+
+	; Only parent 1 matches
+.inherit_parent1:
+	ld a, [wBreedMon1Form]
+	jr .done
+
+.inherit_parent2:
+	ld a, [wBreedMon2Form]
+	; fallthrough
+.done
+	and FORM_MASK
+	ld [wTempMonForm], a
+	ld [wEggMonForm], a
+	ret
+
+; Table for Pokémon with form inheritance
+; Format: species_id (word)
+MultiFormEggTable:
+	dw SCYTHER
+	dw PINSIR
+	dw $0000 ; end marker

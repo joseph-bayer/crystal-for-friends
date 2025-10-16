@@ -346,24 +346,24 @@ JohtoGrassWildMons:
 	dbw 17, SUNKERN
 	dbw 10, WEEDLE
 	dbw 10, CATERPIE
-	dbw 16, SCYTHER
-	dbw 16, SCYTHER
+	dbw 16, LEDYBA
+	dbw 16, PIDGEY
 	; day
 	dbw 15, NIDORAN_F
 	dbw 14, NIDORAN_M
 	dbw 10, WEEDLE
 	dbw 13, SUNKERN
 	dbw 10, CATERPIE
-	dbw 16, SCYTHER
-	dbw 16, SCYTHER
+	dbw 16, PIDGEY
+	dbw 16, PIDGEY
 	; nite
 	dbw 13, PSYDUCK
 	dbw 17, MURKROW
 	dbw 14, SPINARAK
 	dbw 15, HOOTHOOT
 	dbw 14, VENONAT
-	dbw 16, SCYTHER
-	dbw 16, SCYTHER
+	dbw 16, VENONAT
+	dbw 16, VENONAT
 	end_grass_wildmons
 
 	def_grass_wildmons RUINS_OF_ALPH_OUTSIDE

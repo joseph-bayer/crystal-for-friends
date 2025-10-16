@@ -6051,6 +6051,19 @@ LoadEnemyMon:
 	jp nz, .Happiness
 
 ; Species-specfic: 
+.CheckMultipleWildFormPokemon:
+; Check if this Pokémon has multiple forms using the table
+	ld a, [wTempEnemyMonSpecies]
+	call GetPokemonIndexFromID
+	; hl = pokemon index
+	call CheckForMultipleWildForms
+	jr nc, .Magikarp ; not in table, continue with original logic
+
+	; Pokémon found in table, assign random form
+	ld [wForm], a
+	ld [wEnemyMonForm], a
+	jp .Happiness
+
 .Magikarp:
 ; These filters are untranslated.
 ; They expect at wMagikarpLength a 2-byte value in mm,
@@ -6075,7 +6088,7 @@ LoadEnemyMon:
 			cp HIGH(MAGIKARP)
 		endc
 	endc
-	jr nz, .Smeargle
+	jr nz, .Happiness ; Skip Smeargle section since it's now handled above
 
 ; Get Magikarp's length
 	ld de, wEnemyMonDVs
@@ -6152,32 +6165,6 @@ LoadEnemyMon:
 	ld [wForm], a
 	ld [wEnemyMonForm], a
 	jr .Happiness
-
-.Smeargle
-; Smeargle can be red (form 0), blue (form 1) or green (form 2) in the wild.
-; Other colors are available through breeding these colors together.
-	ld a, [wTempEnemyMonSpecies]
-	call GetPokemonIndexFromID
-	ld a, l
-	sub LOW(SMEARGLE)
-	if HIGH(SMEARGLE) == 0
-		or h
-	else
-		jr nz, .Happiness
-		if HIGH(SMEARGLE) == 1
-			dec h
-		else
-			ld a, h
-			cp HIGH(SMEARGLE)
-		endc
-	endc
-	jr nz, .Happiness
-
-	ld a, 3
-	call RandomRange
-	; a = 0, 1 or 2
-	ld [wForm], a
-	ld [wEnemyMonForm], a
 
 .Happiness:
 ; Set happiness
@@ -9153,3 +9140,54 @@ GetWeatherImage:
 	db $88, $14 ; y/x - bottom left
 	db $80, $1c ; y/x - top right
 	db $80, $14 ; y/x - top left
+
+; Check if a Pokémon has multiple forms and assign random form
+; Input: hl = pokemon index
+; Output: a = random form number (if carry set), carry = found in table
+; Clobbers: bc, de, hl
+CheckForMultipleWildForms:
+	push hl ; Save pokemon index
+	ld de, WildFormTable
+.loop:
+	ld a, [de] ; Load low byte of species ID
+	inc de
+	ld c, a   ; Save low byte in c
+	ld a, [de] ; Load high byte of species ID
+	inc de
+	ld b, a   ; Save high byte in b
+	; Check for end marker (both bytes zero)
+	or c ; TODO: will the low byte ever be zero for a valid species?
+	jr z, .not_found
+	
+	; Compare bc (table entry) with hl (current pokemon)
+	ld a, c
+	cp l
+	jr nz, .next_entry
+	ld a, b
+	cp h
+	jr nz, .next_entry
+	
+	; Found match! Get number of forms and generate random form
+	ld a, [de] ; num_forms (current position after dwb)
+	call RandomRange
+	pop hl ; Clean up stack
+	scf ; Set carry to indicate success
+	ret
+
+.next_entry:
+	inc de ; Skip num_forms, move to next entry
+	jr .loop
+
+.not_found:
+	pop hl ; Clean up stack
+	and a ; Clear carry to indicate not found
+	ret
+
+; Table for Pokémon with multiple random forms
+; Format: species_id (word), num_forms (byte)
+WildFormTable:
+	dwb SMEARGLE,	NUM_SMEARGLE_WILD_FORMS ; 3 forms for wild encounters
+	dwb SCYTHER,	NUM_SCYTHER_FORMS       ; 3
+	dwb SCIZOR,	NUM_SCIZOR_FORMS        ; 3
+	dwb PINSIR,	NUM_PINSIR_FORMS        ; 3
+	dw $0000 ; end marker

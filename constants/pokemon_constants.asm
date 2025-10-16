@@ -345,3 +345,26 @@ DEF NUM_MAGIKARP_FORMS EQU const_value ; 3
   const SMEARGLE_PURPLE_FORM	; 3
   const SMEARGLE_GREEN_FORM	; 4
   const SMEARGLE_ORANGE_FORM	; 5
+DEF NUM_SMEARGLE_FORMS EQU const_value ; 6
+DEF NUM_SMEARGLE_WILD_FORMS EQU 3 ; Wild Smeargle only get first 3 forms
+
+; Scyther forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const SCYTHER_PLAIN_FORM		; 0
+  const SCYTHER_FOREST_GREEN_FORM	; 1
+  const SCYTHER_TEAL_FORM		; 2
+DEF NUM_SCYTHER_FORMS EQU const_value 	; 3
+
+; Scizor forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const SCIZOR_PLAIN_FORM	; 0
+  const SCIZOR_CRIMSON_FORM	; 1
+  const SCIZOR_DUSTY_ROSE_FORM	; 2
+DEF NUM_SCIZOR_FORMS EQU const_value ; 3
+
+; Pinsir forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const PINSIR_PLAIN_FORM	; 0
+  const PINSIR_VINE_FORM	; 1
+  const PINSIR_SLATE_FORM	; 2
+DEF NUM_PINSIR_FORMS EQU const_value ; 3
