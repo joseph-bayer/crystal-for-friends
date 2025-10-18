@@ -354,6 +354,7 @@ DEF NUM_SMEARGLE_WILD_FORMS EQU 3 ; Wild Smeargle only get first 3 forms
   const SCYTHER_FOREST_GREEN_FORM	; 1
   const SCYTHER_TEAL_FORM		; 2
 DEF NUM_SCYTHER_FORMS EQU const_value 	; 3
+DEF NUM_SCYTHER_WILD_FORMS EQU 3
 
 ; Scizor forms
   const_def 0 ; Note that forms are now 0-indexed

@@ -65,6 +65,7 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
 	- You can get shinies that are super weak, super strong, and everywhere in between
   - Standard Odds **1/8192**
   - Gift Mon **1/512**
+  - Bug Catching Contest **1/512**
   - Eggs
   	| Parent Shininess | Odds |
   	|------------------|------------|
@@ -102,23 +103,30 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Bug Catching Contest now appears on Sundays as well (on top of Tuesdays, Thursdays, and Saturdays)
 
 - **New Cosmetic Forms**
-	| Species | Form | How to Obtain |
-	|---------|------|---------------|
-	| Pikachu | Surfing Pikachu | Teach it Surf |
-	| Pikachu | Flying Pikachu  | Teach it Fly |
-	| Shuckle | Happy Shuckie | Reach 150 happiness with Mania's Shuckle, "Shuckie" |
-	| Magikarp | Extra Small | Wild Magikarp that's less than 2 feet |
-	| Magikarp | Extra Large | Wild Magikarp that's larger than 4 feet 5 inches |
-	| Smeargle | Red	| Found in the wild |
-	| Smeargle | Blue	| Found in the wild |
-	| Smeargle | Yellow	| Found in the wild |
-	| Smeargle | Purple	| Bred from a Red and Blue Smeargle |
-	| Smeargle | Orange	| Bred from a Red and Yellow Smeargle |
-	| Smeargle | Green	| Bred from a Blue and Yellow Smeargle |
+	| Species	| Form			| How to Obtain |
+	|---------------|-----------------------|---------------|
+	| Pikachu	| Surfing Pikachu	| Teach it Surf |
+	| Pikachu	| Flying Pikachu	| Teach it Fly |
+	| Shuckle	| Happy Shuckie		| Reach 150 happiness with Mania's Shuckle, "Shuckie" |
+	| Magikarp	| Extra Small		| Wild Magikarp that's less than 2 feet |
+	| Magikarp	| Extra Large		| Wild Magikarp that's larger than 4 feet 5 inches |
+	| Smeargle	| Red			| Found in the wild |
+	| Smeargle	| Blue			| Found in the wild |
+	| Smeargle	| Yellow		| Found in the wild |
+	| Smeargle	| Purple		| Bred from a Red and Blue Smeargle |
+	| Smeargle	| Orange		| Bred from a Red and Yellow Smeargle |
+	| Smeargle	| Green			| Bred from a Blue and Yellow Smeargle |
+	| Scyther	| Forest Green		| Bug Catching Contest |
+	| Scyther	| Teal			| Bug Catching Contest |
+	| Scizor	| Crimson		| Evolve Forest Green Scyther |
+	| Scizor	| Dusty Rose		| Evolve Teal Scyther |
+	| Pinsir	| Vine Green		| Bug Catching Contest |
+	| Scizor	| Slate Gray		| Bug Catching Contest |
 
 - **Misc.**
   - Turn around after healing in the Pokecenter so you don't accidentally heal again
   - Minor update to Goldenrod layout so it's easier to get to the underground and the bike shop
+  - Bug Catching Contest rebalanced
   - Happiness
     - Happiness goes up by 2 points every other step cycle instead of 1
     - Leveling up, Haircuts, Daisy grooming, and battling gym leaders give more happiness.

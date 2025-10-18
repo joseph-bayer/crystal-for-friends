@@ -6320,7 +6320,7 @@ LoadEnemyMon:
 
 	ld a, [wBattleMode]
 	dec a
-	jr nz, .TrainerForm
+	jp nz, .TrainerForm
 
 	; TODO: could avoid this goofy check by moving this code right before .happiness
 	; Game Freak hack where SUBSTATUS_TRANSFORMED is used to indicate a CAUGHT wild mon, which skips over running certain functions
@@ -6375,7 +6375,7 @@ LoadEnemyMon:
 .generate_roam_mon_shininess
 	ld a, [wBattleType]
 	cp BATTLETYPE_ROAMING
-	jr nz, .generate_wild_shininess
+	jr nz, .generate_bug_catching_contest_shininess
 	; Roam mon have a 1/512 chance of being shiny
 	; This is rolled every time they are encountered
 	; If they are shiny, they stay shiny for all future encounters
@@ -6396,6 +6396,26 @@ LoadEnemyMon:
 	ld [hl], a
 	ld [wEnemyMonForm], a
 
+	jr .Finish
+
+.generate_bug_catching_contest_shininess
+	ld a, [wMapGroup]
+	cp GROUP_NATIONAL_PARK_BUG_CONTEST
+	jr nz, .generate_wild_shininess
+	ld a, [wMapNumber]
+	cp MAP_NATIONAL_PARK_BUG_CONTEST
+	jr nz, .generate_wild_shininess
+	; We're in the bug catching contest!
+	call Random
+	and a
+	jr nz, .Finish ; 255/256 not shiny
+	call Random
+	cp BUG_CATCHING_CONTEST_SHINY_NUMERATOR
+	jr nc, .Finish ; 128/256 still not shiny
+	; It's shiny!
+	ld a, [wEnemyMonForm]
+	or SHINY_MASK ; set shiny bit
+	ld [wEnemyMonForm], a
 	jr .Finish
 
 .generate_wild_shininess

@@ -33,9 +33,9 @@ BugContestant_BugCatcherEd:
 
 BugContestant_CooltrainerMNick:
 	db COOLTRAINERM, NICK
-	dw SCYTHER,    357
-	dw BUTTERFREE, 349
-	dw PINSIR,     368
+	dw SCYTHER,    337
+	dw BUTTERFREE, 329
+	dw PINSIR,     338
 
 BugContestant_PokefanMWilliam:
 	db POKEFANM, WILLIAM
@@ -51,13 +51,13 @@ BugContestant_BugCatcherBenny:
 
 BugContestant_CamperBarry:
 	db CAMPER, BARRY
-	dw PINSIR,     366
+	dw PINSIR,     336
 	dw VENONAT,    329
 	dw KAKUNA,     314
 
 BugContestant_PicnickerCindy:
 	db PICNICKER, CINDY
-	dw BUTTERFREE, 341
+	dw BUTTERFREE, 321
 	dw METAPOD,    301
 	dw CATERPIE,   264
 

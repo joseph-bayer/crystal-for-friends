@@ -314,6 +314,7 @@ ContestScore:
 	call .AddContestStat
 
 	; DVs
+	; Defense
 	ld a, [wContestMonDVs + 0]
 	ld b, a
 	and %0010
@@ -321,6 +322,7 @@ ContestScore:
 	add a
 	ld c, a
 
+	; Attack
 	swap b
 	ld a, b
 	and %0010
@@ -328,15 +330,18 @@ ContestScore:
 	add c
 	ld d, a
 
+	; Special
 	ld a, [wContestMonDVs + 1]
 	ld b, a
 	and %0010
 	ld c, a
 
+	; Speed
 	swap b
 	ld a, b
 	and %0010
 	srl a
+
 	add c
 	add c
 	add d
@@ -355,8 +360,25 @@ ContestScore:
 	; Whether it's holding an item
 	ld a, [wContestMonItem]
 	and a
-	ret z
+	jr z, .shiny_check
 	ld a, 1
+	call .AddContestStat
+
+; + 200 if it's shiny
+.shiny_check
+	ld a, [wContestMonForm]
+	and SHINY_MASK
+	jr z, .check_alt_form
+	ld a, 200
+	jr .AddContestStat
+
+; + 10 if it's an alternate form (Scyther/Pinsir have alt palettes)
+.check_alt_form
+	ld a, [wContestMonForm]
+	and FORM_MASK
+	ret z
+	ld a, 10
+
 ; fallthrough
 .AddContestStat:
 	ld hl, hMultiplicand
