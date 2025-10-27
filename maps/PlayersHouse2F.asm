@@ -152,31 +152,64 @@ if DEF(_DEBUG)
 	givepokemove HEADBUTT,   wPartyMon3, 2
 	givepokemove WATERFALL,  wPartyMon3, 3
 
-  ; DEBUG: CHECK If two Pokemon with same DEF and SPEC DVs can breed
-  ; change lanturn's DVs
-  ; loadmem wPartyMon3DVs+0, %00000000 ; 0 Atk (FEMALE), 0 Def
-  ; loadmem wPartyMon3DVs+1, %00000000 ; 0 Speed, 0 Special
-  ; givepoke LANTURN, 100, LEFTOVERS
-  ; ; change lanturn 2's DVs
-  ; loadmem wPartyMon4DVs+0, %11110000 ; 15 Atk (MALE), 0 Def
-  ; loadmem wPartyMon4DVs+1, %00000000 ; 0 Speed, 0 Special
-
-	; misc pokemon for testing
-	givepoke AMPHAROS, 50
+	givepoke AMPHAROS, 50, NO_ITEM, SHINY_MASK
 	givepoke GENGAR, 50
 	givepoke DITTO, 50
 
-  ; DEBUG: Test new evolution items
-  ; giveitem KINGS_ROCK, 2
-  ; giveitem METAL_COAT, 2
-  ; giveitem DRAGON_SCALE, 1
-  ; giveitem UP_GRADE, 1
-  ; givepoke PORYGON, 50, LEFTOVERS
-  ; givepoke POLIWHIRL, 50, LEFTOVERS
-  ; givepoke SLOWPOKE, 50, LEFTOVERS
-  ; givepoke SCYTHER, 50, LEFTOVERS
-  ; givepoke ONIX, 50, LEFTOVERS
-  ; givepoke SEADRA, 50, LEFTOVERS
+	; DEBUG: CHECK If two Pokemon with same DEF and SPEC DVs can breed
+	; change lanturn's DVs
+	; loadmem wPartyMon3DVs+0, %00000000 ; 0 Atk (FEMALE), 0 Def
+	; loadmem wPartyMon3DVs+1, %00000000 ; 0 Speed, 0 Special
+	; givepoke LANTURN, 100, LEFTOVERS
+	; ; change lanturn 2's DVs
+	; loadmem wPartyMon4DVs+0, %11110000 ; 15 Atk (MALE), 0 Def
+	; loadmem wPartyMon4DVs+1, %00000000 ; 0 Speed, 0 Special
+
+	; misc pokemon for testing
+	; givepoke UNOWN, 50
+	; givepoke MAGIKARP, 50
+	; givepoke MAGIKARP, 50, NO_ITEM, MAGIKARP_XL_FORM
+	; givepoke MAGIKARP, 50, NO_ITEM, MAGIKARP_XS_FORM
+	; givepoke PIKACHU, 50
+	; givepoke SMEARGLE, 50, NO_ITEM, SMEARGLE_BLUE_FORM | SHINY_MASK
+	; givepoke SMEARGLE, 50
+	; givepoke SMEARGLE, 50, NO_ITEM, SMEARGLE_BLUE_FORM
+	; givepoke SMEARGLE, 50, NO_ITEM, SMEARGLE_YELLOW_FORM
+	; givepoke SMEARGLE, 50, NO_ITEM, SMEARGLE_PURPLE_FORM
+	; givepoke SMEARGLE, 50, NO_ITEM, SMEARGLE_GREEN_FORM
+	; givepoke SMEARGLE, 50, NO_ITEM, SMEARGLE_ORANGE_FORM
+	; givepoke SMEARGLE, 50, NO_ITEM, 0 | SHINY_MASK
+	; givepoke SCYTHER, 50
+	; givepoke SCYTHER, 50, NO_ITEM, SCYTHER_FOREST_GREEN_FORM
+	; givepoke SCYTHER, 50, NO_ITEM, SCYTHER_TEAL_FORM
+	; givepoke SCYTHER, 50, NO_ITEM, SCYTHER_TEAL_FORM | SHINY_MASK
+	; givepoke SCIZOR, 50
+	; givepoke SCIZOR, 50, NO_ITEM, SCIZOR_CRIMSON_FORM
+	; givepoke SCIZOR, 50, NO_ITEM, SCIZOR_DUSTY_ROSE_FORM
+	; givepoke SCIZOR, 50, NO_ITEM, SCIZOR_DUSTY_ROSE_FORM | SHINY_MASK
+	; givepoke PINSIR, 50
+	; givepoke PINSIR, 50, NO_ITEM, PINSIR_VINE_FORM
+	; givepoke PINSIR, 50, NO_ITEM, PINSIR_SLATE_FORM
+	; givepoke PINSIR, 50, NO_ITEM, PINSIR_SLATE_FORM | SHINY_MASK
+
+
+
+
+
+	giveitem HM_SURF
+	giveitem HM_FLY
+
+	; DEBUG: Test new evolution items
+	; giveitem KINGS_ROCK, 2
+	; giveitem METAL_COAT, 3
+	; giveitem DRAGON_SCALE, 1
+	; giveitem UP_GRADE, 1
+	; givepoke PORYGON, 50, LEFTOVERS
+	; givepoke POLIWHIRL, 50, LEFTOVERS
+	; givepoke SLOWPOKE, 50, LEFTOVERS
+	; givepoke SCYTHER, 50, LEFTOVERS
+	; givepoke ONIX, 50, LEFTOVERS
+	; givepoke SEADRA, 50, LEFTOVERS
 
 	; intro events
 	addcellnum PHONE_MOM
