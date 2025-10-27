@@ -397,6 +397,7 @@ StatsScreen_InitUpperHalf:
 	call StatsScreen_PlacePageSwitchArrows
 	call StatsScreen_PlaceShinyIcon
 	call PlaceCaughtBall
+	call PlaceCosmeticFormSymbol
 	ret
 
 .PlaceHPBar:
@@ -479,7 +480,7 @@ PlaceCaughtBall:
 	ld a, [hl]
 	and CAUGHT_BALL_MASK
 	hlcoord 8, 6
-  ld [hl], $32 ; pokeball tile
+  	ld [hl], $32 ; pokeball tile
 
 ; Uncomment to debug ball type being assigned correctly
 ; 	; Convert ball type (0-11) to display character
@@ -508,6 +509,43 @@ PlaceCaughtBall:
 	
 ; .display:
 ; 	ld [hl], a
+	ret
+
+PlaceCosmeticFormSymbol:
+	ld a, [wTempMonSpecies]
+	call GetPokemonIndexFromID
+	; hl = Pokemon Index
+	dec hl ; the table is 0 indexed
+	add hl, hl ; mult by 2 for table_width 2
+
+	ld de, CosmeticFormSymbols
+	add hl, de
+	ld a, BANK(CosmeticFormSymbols)
+	call GetFarWord
+	; hl now has a pointer to to form symbol table
+
+	ld a, h
+	or l
+
+	ret z ; return if mon has no forms with symbols
+
+	ld a, [wTempMonForm]
+	and FORM_MASK
+
+	ld d, 0
+	ld e, a
+	add hl, de
+	ld a, BANK(CosmeticFormSymbols)
+	call GetFarWord
+	; hl now has form symbol tile or 0 if none
+
+	ld a, l
+	or l
+	ret z ; return if no symbol for this form
+
+	hlcoord 8, 4
+	ld [hl], a
+	
 	ret
 
 StatsScreen_LoadGFX:

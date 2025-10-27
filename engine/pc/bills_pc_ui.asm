@@ -1218,6 +1218,42 @@ _GetCursorMon:
 	ld [hl], $40 ; Rs
 .did_pokerus
 
+	; Cosmetic Form Symbol
+	ld a, [wBufferMonSpecies]
+	call GetPokemonIndexFromID
+	; hl = Pokemon Index
+	dec hl ; the table is 0 indexed
+	add hl, hl ; mult by 2 for table_width 2
+
+	ld de, CosmeticFormSymbols
+	add hl, de
+	ld a, BANK(CosmeticFormSymbols)
+	call GetFarWord
+	; hl now has a pointer to to form symbol table
+
+	ld a, h
+	or l
+
+	jr z, .item ; move on if mon has no forms with symbols
+
+	ld a, [wBufferMonForm]
+	and FORM_MASK
+
+	ld d, 0
+	ld e, a
+	add hl, de
+	ld a, BANK(CosmeticFormSymbols)
+	call GetFarWord
+	; hl now has form symbol tile or 0 if none
+
+	ld a, l
+	or l
+	jr z, .item ; move on if no symbol for this form
+
+	hlcoord 0, 7
+	ld [hl], a
+
+.item
 	; Item
 	ld c, 2
 	hlcoord 10, 3

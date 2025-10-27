@@ -63,6 +63,7 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Shiny Pokemon no longer tied to specific DV spreads
 	- Unown can be shiny in any form - not just "I" and "V"
 	- You can get shinies that are super weak, super strong, and everywhere in between
+  - A shiny symbol appears below the mon's name when it's shiny
   - Standard Odds **1/8192**
   - Gift Mon **1/512**
   - Bug Catching Contest **1/512**
@@ -122,6 +123,7 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
 	| Scizor	| Dusty Rose		| Evolve Teal Scyther |
 	| Pinsir	| Vine Green		| Bug Catching Contest |
 	| Scizor	| Slate Gray		| Bug Catching Contest |
+  - *NOTE:* Some forms will have a symbol that goes along with them to indicate that they're different. Not all forms will have this.
 
 - **Misc.**
   - Turn around after healing in the Pokecenter so you don't accidentally heal again

@@ -469,6 +469,11 @@ INCLUDE "gfx/pokemon/cosmetic_frame_pointers.asm"
 INCLUDE "gfx/pokemon/cosmetic_frames.asm"
 
 
+SECTION "Cosmetic Forms Symbols", ROMX
+
+INCLUDE "data/pokemon/cosmetic_form_symbols.asm"
+
+
 SECTION "bank38", ROMX
 
 INCLUDE "engine/events/print_unown_2.asm"

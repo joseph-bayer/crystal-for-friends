@@ -50,8 +50,8 @@
 
 	charmap " ",         $7f ; gfx/frames/space.png
 
-	; needed for StatsScreen_PlaceShinyIcon and PrintPartyMonPage1
-	charmap "⁂",         $3f ; gfx/stats/stats_tiles.png, tile 14
+	; moved to font.png - now blank
+	; charmap "⁂",         $3f ; gfx/stats/stats_tiles.png, tile 14
 
 ; Actual characters (from gfx/font/font.png)
 
@@ -122,6 +122,14 @@
 	charmap "│",         $bd
 	charmap "└",         $be
 	charmap "┘",         $bf
+
+	charmap "⁂",			$c0 ; shiny icon
+	charmap "<ALT_SHINY>",		$c1 ; alternate shiny icon
+	charmap "<XS>",			$c2 ; XS form icon
+	charmap "<XL>",			$c3 ; XL form icon
+	charmap "<ROCKET_LOGO>",	$c4 ; Team Rocket logo icon
+	charmap "★",			$c5 ; Star icon
+	charmap "<BUG>",		$c6 ; Bug catching contest alt form icon
 
 	charmap "′",         $ce
 	charmap "″",         $cf

@@ -4600,7 +4600,7 @@ PrintPlayerHUD:
 	predef PlaceNonFaintStatus
 	pop hl
 	pop bc
-	ret nz
+	jr nz, .add_shiny_symbol
 	ld a, b
 	cp " "
 	jr nz, .copy_level ; male or female
@@ -4609,7 +4609,53 @@ PrintPlayerHUD:
 .copy_level
 	ld a, [wBattleMonLevel]
 	ld [wTempMonLevel], a
-	jmp PrintLevel
+	call PrintLevel
+
+.add_shiny_symbol
+	ld a, [wBattleMonForm]
+	and SHINY_MASK
+	or a
+	jr z, .add_form_symbol
+	hlcoord 12, 8
+	ld a, "⁂"
+	ld [hl], a
+
+.add_form_symbol
+	ld a, [wBattleMonSpecies]
+	call GetPokemonIndexFromID
+	; hl = Pokemon Index
+	dec hl ; the table is 0 indexed
+	add hl, hl ; mult by 2 for table_width 2
+
+	ld de, CosmeticFormSymbols
+	add hl, de
+	ld a, BANK(CosmeticFormSymbols)
+	call GetFarWord
+	; hl now has a pointer to to form symbol table
+
+	ld a, h
+	or l
+
+	ret z ; return if mon has no forms with symbols
+
+	ld a, [wBattleMonForm]
+	and FORM_MASK
+
+	ld d, 0
+	ld e, a
+	add hl, de
+	ld a, BANK(CosmeticFormSymbols)
+	call GetFarWord
+	; hl now has form symbol tile or 0 if none
+
+	ld a, l
+	or l
+	ret z ; return if no symbol for this form
+
+	hlcoord 10, 8
+	ld [hl], a
+	
+	ret
 
 UpdateEnemyHUD::
 	push hl
@@ -4747,7 +4793,60 @@ DrawEnemyHUD:
 	ld [wWhichHPBar], a
 	hlcoord 2, 2
 	ld b, 0
-	jmp DrawBattleHPBar
+	call DrawBattleHPBar
+
+.add_shiny_symbol
+	push hl
+	push bc
+	push de
+	ld a, [wEnemyMonForm]
+	and SHINY_MASK
+	or a
+	jr z, .add_form_symbol
+	hlcoord 3, 1
+	ld a, "⁂"
+	ld [hl], a
+
+.add_form_symbol
+	ld a, [wEnemyMonSpecies]
+	call GetPokemonIndexFromID
+	; hl = Pokemon Index
+	dec hl ; the table is 0 indexed
+	add hl, hl ; mult by 2 for table_width 2
+
+	ld de, CosmeticFormSymbols
+	add hl, de
+	ld a, BANK(CosmeticFormSymbols)
+	call GetFarWord
+	; hl now has a pointer to to form symbol table
+
+	ld a, h
+	or l
+
+	jr z, .done ; return if mon has no forms with symbols
+
+	ld a, [wEnemyMonForm]
+	and FORM_MASK
+
+	ld d, 0
+	ld e, a
+	add hl, de
+	ld a, BANK(CosmeticFormSymbols)
+	call GetFarWord
+	; hl now has form symbol tile or 0 if none
+
+	ld a, l
+	or l
+	jr z, .done ; return if no symbol for this form
+
+	hlcoord 1, 1
+	ld [hl], a
+
+.done
+	pop de
+	pop bc
+	pop hl
+	ret
 
 UpdateEnemyHPPal:
 	ld hl, wEnemyHPPal
