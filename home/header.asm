@@ -30,6 +30,7 @@ AddNTimes::
 
 SECTION "rst20", ROM0[$0020]
 
+; copy bc bytes from hl to de
 CopyBytes::
 	jmp _CopyBytes
 

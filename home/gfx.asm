@@ -138,9 +138,8 @@ DecompressRequest2bpp::
 	ld [rSVBK], a
 	ret
 
-FarCopyBytes::
 ; copy bc bytes from a:hl to de
-
+FarCopyBytes::
 	ldh [hTempBank], a
 	ldh a, [hROMBank]
 	push af

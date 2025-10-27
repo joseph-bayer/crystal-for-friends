@@ -1,5 +1,5 @@
-_CopyBytes::
 ; copy bc bytes from hl to de
+_CopyBytes::
 	inc b ; we bail the moment b hits 0, so include the last run
 
 	srl c
@@ -88,8 +88,8 @@ endr
 	ld c, $40
 	jr .loop
 
-GetFarByte::
 ; retrieve a single byte from a:hl, and return it in a.
+GetFarByte::
 	; bankswitch to new bank
 	ldh [hTempBank], a
 	ldh a, [hROMBank]
