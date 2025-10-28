@@ -1022,9 +1022,9 @@ INCLUDE "data/pokemon/palettes.asm"
 
 INCLUDE "data/trainers/palettes.asm"
 
-INCLUDE "data/pokemon/cosmetic_palette_pointers.asm"
+INCLUDE "data/pokemon/cosmetic_palettes.asm"
 
-INCLUDE "data/pokemon/cosmetic_form_palette_pointers_table.asm"
+INCLUDE "data/pokemon/cosmetic_form_palette_pointers.asm"
 
 LoadMapPals:
 	farcall LoadSpecialMapPalette

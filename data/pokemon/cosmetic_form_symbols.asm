@@ -32,7 +32,7 @@ CosmeticFormSymbols::
 	dw 0					; FEAROW (16)
 	dw 0					; EKANS (17)
 	dw 0					; ARBOK (18)
-	dw 0					; PIKACHU (19)
+	dw PikachuFormSymbols			; PIKACHU (19)
 	dw 0					; RAICHU (1a)
 	dw 0					; SANDSHREW (1b)
 	dw 0					; SANDSLASH (1c)
@@ -130,13 +130,13 @@ CosmeticFormSymbols::
 	dw 0					; STARYU (78)
 	dw 0					; STARMIE (79)
 	dw 0					; MR__MIME (7a)
-	dw ScytherFormSymbols			; SCYTHER (7b)
+	dw 0					; SCYTHER (7b)
 	dw 0					; JYNX (7c)
 	dw 0					; ELECTABUZZ (7d)
 	dw 0					; MAGMAR (7e)
-	dw PinsirFormSymbols			; PINSIR (7f)
+	dw 0					; PINSIR (7f)
 	dw 0					; TAUROS (80)
-	dw MagikarpFormSymbols			; MAGIKARP (81)
+	dw 0					; MAGIKARP (81)
 	dw 0					; GYARADOS (82)
 	dw 0					; LAPRAS (83)
 	dw 0					; DITTO (84)
@@ -219,7 +219,7 @@ CosmeticFormSymbols::
 	dw 0					; SNUBBULL (d1)
 	dw 0					; GRANBULL (d2)
 	dw 0					; QWILFISH (d3)
-	dw ScizorFormSymbols			; SCIZOR (d4)
+	dw 0					; SCIZOR (d4)
 	dw 0					; SHUCKLE (d5)
 	dw 0					; HERACROSS (d6)
 	dw 0					; SNEASEL (d7)
@@ -261,30 +261,10 @@ CosmeticFormSymbols::
 	dw 0					; CELEBI (fb)
 	assert_table_length NUM_POKEMON
 
-MagikarpFormSymbols:
+PikachuFormSymbols:
 	table_width 1
 	db 0
-	db "<XS>"
-	db "<XL>"
+	db 0
+	db 0
+	db "<CARTRIDGE>"
 	assert_table_length NUM_MAGIKARP_FORMS
-
-ScytherFormSymbols:
-	table_width 1
-	db 0
-	db "<BUG>"
-	db "<BUG>"
-	assert_table_length NUM_SCYTHER_FORMS
-
-ScizorFormSymbols:
-	table_width 1
-	db 0
-	db "<BUG>"
-	db "<BUG>"
-	assert_table_length NUM_SCIZOR_FORMS
-
-PinsirFormSymbols:
-	table_width 1
-	db 0
-	db "<BUG>"
-	db "<BUG>"
-	assert_table_length NUM_PINSIR_FORMS

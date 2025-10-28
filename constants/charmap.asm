@@ -125,11 +125,9 @@
 
 	charmap "⁂",			$c0 ; shiny icon
 	charmap "<ALT_SHINY>",		$c1 ; alternate shiny icon
-	charmap "<XS>",			$c2 ; XS form icon
-	charmap "<XL>",			$c3 ; XL form icon
-	charmap "<ROCKET_LOGO>",	$c4 ; Team Rocket logo icon
-	charmap "★",			$c5 ; Star icon
-	charmap "<BUG>",		$c6 ; Bug catching contest alt form icon
+	charmap "<ROCKET_LOGO>",	$c2 ; Team Rocket logo icon
+	charmap "★",			$c3 ; Star icon
+	charmap "<CARTRIDGE>",		$c4 ; cartridge icon
 
 	charmap "′",         $ce
 	charmap "″",         $cf

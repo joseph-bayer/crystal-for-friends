@@ -516,3 +516,107 @@ CosmeticFormIdleAnimationPointers:
 	dw 0                           		; HO_OH (fa) - no cosmetic forms
 	dw 0                           		; CELEBI (fb) - no cosmetic forms
 	assert_table_length NUM_POKEMON
+
+; Animation Pointers
+PikachuAnimationPointers:
+	table_width 2
+	dw PikachuPlainAnimation
+	dw PikachuSurfAnimation
+	dw PikachuFlyAnimation
+	assert_table_length NUM_PIKACHU_FORMS
+
+ShuckleAnimationPointers:
+	table_width 2
+	dw ShucklePlainAnimation
+	dw ShuckleShuckieNeutralAnimation
+	dw ShuckleShuckieHappyAnimation
+	assert_table_length NUM_SHUCKLE_FORMS
+
+UnownAnimationPointers:
+	table_width 2
+	dw UnownAAnimation
+	dw UnownBAnimation
+	dw UnownCAnimation
+	dw UnownDAnimation
+	dw UnownEAnimation
+	dw UnownFAnimation
+	dw UnownGAnimation
+	dw UnownHAnimation
+	dw UnownIAnimation
+	dw UnownJAnimation
+	dw UnownKAnimation
+	dw UnownLAnimation
+	dw UnownMAnimation
+	dw UnownNAnimation
+	dw UnownOAnimation
+	dw UnownPAnimation
+	dw UnownQAnimation
+	dw UnownRAnimation
+	dw UnownSAnimation
+	dw UnownTAnimation
+	dw UnownUAnimation
+	dw UnownVAnimation
+	dw UnownWAnimation
+	dw UnownXAnimation
+	dw UnownYAnimation
+	dw UnownZAnimation
+	assert_table_length NUM_UNOWN
+
+MagikarpAnimationPointers:
+	table_width 2
+	dw MagikarpPlainAnimation
+	dw MagikarpXSAnimation
+	dw MagikarpXLAnimation
+	assert_table_length NUM_MAGIKARP_FORMS
+
+; Idle Animation Pointers
+PikachuAnimationIdlePointers:
+	table_width 2
+	dw PikachuPlainAnimationIdle
+	dw PikachuSurfAnimationIdle
+	dw PikachuFlyAnimationIdle
+	assert_table_length NUM_PIKACHU_FORMS
+
+ShuckleAnimationIdlePointers:
+	table_width 2
+	dw ShucklePlainAnimationIdle
+	dw ShuckleShuckieNeutralAnimationIdle
+	dw ShuckleShuckieHappyAnimationIdle
+	assert_table_length NUM_SHUCKLE_FORMS
+
+UnownAnimationIdlePointers:
+	table_width 2
+	dw UnownAAnimationIdle
+	dw UnownBAnimationIdle
+	dw UnownCAnimationIdle
+	dw UnownDAnimationIdle
+	dw UnownEAnimationIdle
+	dw UnownFAnimationIdle
+	dw UnownGAnimationIdle
+	dw UnownHAnimationIdle
+	dw UnownIAnimationIdle
+	dw UnownJAnimationIdle
+	dw UnownKAnimationIdle
+	dw UnownLAnimationIdle
+	dw UnownMAnimationIdle
+	dw UnownNAnimationIdle
+	dw UnownOAnimationIdle
+	dw UnownPAnimationIdle
+	dw UnownQAnimationIdle
+	dw UnownRAnimationIdle
+	dw UnownSAnimationIdle
+	dw UnownTAnimationIdle
+	dw UnownUAnimationIdle
+	dw UnownVAnimationIdle
+	dw UnownWAnimationIdle
+	dw UnownXAnimationIdle
+	dw UnownYAnimationIdle
+	dw UnownZAnimationIdle
+	assert_table_length NUM_UNOWN
+
+MagikarpAnimationIdlePointers:
+	table_width 2
+	dw MagikarpPlainAnimationIdle
+	dw MagikarpXSAnimationIdle
+	dw MagikarpXLAnimationIdle
+	assert_table_length NUM_MAGIKARP_FORMS

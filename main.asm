@@ -298,8 +298,7 @@ INCLUDE "engine/battle/battlestart_copytilemapatonce.asm"
 INCLUDE "engine/sprite_anims/core.asm"
 INCLUDE "engine/gfx/mon_icons.asm"
 
-INCLUDE "data/pokemon/cosmetic_form_icon_pointers_table.asm"
-INCLUDE "data/pokemon/cosmetic_icon_pointers.asm"
+INCLUDE "data/pokemon/cosmetic_form_icon_pointers.asm"
 INCLUDE "gfx/cosmetic_icons.asm"
 
 
@@ -442,30 +441,26 @@ INCLUDE "gfx/pokemon/johto_frames.asm"
 
 SECTION "Cosmetic Forms Anims", ROMX
 
-INCLUDE "gfx/pokemon/cosmetic_form_anim_pointers_table.asm"
-INCLUDE "gfx/pokemon/cosmetic_anim_pointers.asm"
+INCLUDE "gfx/pokemon/cosmetic_form_anim_pointers.asm"
 INCLUDE "gfx/pokemon/cosmetic_anims.asm"
-INCLUDE "gfx/pokemon/cosmetic_idle_pointers.asm"
 INCLUDE "gfx/pokemon/cosmetic_idles.asm"
 
 
 SECTION "Cosmetic Forms Bitmasks", ROMX
 
-INCLUDE "gfx/pokemon/cosmetic_form_bitmask_pointers_table.asm"
-INCLUDE "gfx/pokemon/cosmetic_bitmask_pointers.asm"
+INCLUDE "gfx/pokemon/cosmetic_form_bitmask_pointers.asm"
 INCLUDE "gfx/pokemon/cosmetic_bitmasks.asm"
 
 
 SECTION "Cosmetic Forms Dimensions", ROMX
 
-INCLUDE "gfx/pokemon/cosmetic_form_dimensions_pointers_table.asm"
+INCLUDE "gfx/pokemon/cosmetic_form_dimensions_pointers.asm"
 INCLUDE "gfx/pokemon/cosmetic_dimensions.asm"
 
 
 SECTION "Cosmetic Forms Frames", ROMX
 
-INCLUDE "gfx/pokemon/cosmetic_form_frame_pointers_table.asm"
-INCLUDE "gfx/pokemon/cosmetic_frame_pointers.asm"
+INCLUDE "gfx/pokemon/cosmetic_form_frame_pointers.asm"
 INCLUDE "gfx/pokemon/cosmetic_frames.asm"
 
 

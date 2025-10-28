@@ -9,8 +9,7 @@ INCLUDE "data/pokemon/pic_pointers.asm"
 
 SECTION "Cosmetic Form Pic Pointers", ROMX
 
-INCLUDE "data/pokemon/cosmetic_form_pic_pointers_table.asm"
-INCLUDE "data/pokemon/cosmetic_pic_pointers.asm"
+INCLUDE "data/pokemon/cosmetic_form_pic_pointers.asm"
 
 SECTION "Trainer Pic Pointers", ROMX
 

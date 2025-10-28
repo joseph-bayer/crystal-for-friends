@@ -1,4 +1,4 @@
-; Master table for Pokemon frame pointers
+; Master table for Pokemon bitmask pointers
 ; Each entry corresponds to a Pokemon species (indexed by species ID)
 ; Entries for Pokemon with cosmetic forms point to their form-specific pointer tables
 ; Entries for Pokemon without cosmetic forms are null (0)
@@ -6,7 +6,7 @@
 	dw 0					; NULL
 	dw 0					; NULL
 	dw 0					; NULL
-CosmeticFormFramePointersTable:
+CosmeticFormBitmaskPointersTable:
 	table_width 2
 	dw 0					; BULBASAUR (01) - no cosmetic forms
 	dw 0					; IVYSAUR (02) - no cosmetic forms
@@ -32,7 +32,7 @@ CosmeticFormFramePointersTable:
 	dw 0					; FEAROW (16) - no cosmetic forms
 	dw 0					; EKANS (17) - no cosmetic forms
 	dw 0					; ARBOK (18) - no cosmetic forms
-	dw PikachuFramesPointers		; PIKACHU (19) - has cosmetic forms
+	dw PikachuBitmasksPointers		; PIKACHU (19) - has cosmetic forms
 	dw 0					; RAICHU (1a) - no cosmetic forms
 	dw 0					; SANDSHREW (1b) - no cosmetic forms
 	dw 0					; SANDSLASH (1c) - no cosmetic forms
@@ -136,7 +136,7 @@ CosmeticFormFramePointersTable:
 	dw 0					; MAGMAR (7e) - no cosmetic forms
 	dw 0					; PINSIR (7f) - no cosmetic forms
 	dw 0					; TAUROS (80) - no cosmetic forms
-	dw MagikarpFramesPointers		; MAGIKARP (81) - no cosmetic forms
+	dw MagikarpBitmasksPointers		; MAGIKARP (81) - no cosmetic forms
 	dw 0					; GYARADOS (82) - no cosmetic forms
 	dw 0					; LAPRAS (83) - no cosmetic forms
 	dw 0					; DITTO (84) - no cosmetic forms
@@ -208,7 +208,7 @@ CosmeticFormFramePointersTable:
 	dw 0					; MURKROW (c6) - no cosmetic forms
 	dw 0					; SLOWKING (c7) - no cosmetic forms
 	dw 0					; MISDREAVUS (c8) - no cosmetic forms
-	dw UnownFramesPointers			; UNOWN (c9) - has cosmetic forms
+	dw UnownBitmasksPointers		; UNOWN (c9) - has cosmetic forms
 	dw 0					; WOBBUFFET (ca) - no cosmetic forms
 	dw 0					; GIRAFARIG (cb) - no cosmetic forms
 	dw 0					; PINECO (cc) - no cosmetic forms
@@ -220,7 +220,7 @@ CosmeticFormFramePointersTable:
 	dw 0					; GRANBULL (d2) - no cosmetic forms
 	dw 0					; QWILFISH (d3) - no cosmetic forms
 	dw 0					; SCIZOR (d4) - no cosmetic forms
-	dw ShuckleFramesPointers		; SHUCKLE (d5) - has cosmetic forms
+	dw ShuckleBitmasksPointers		; SHUCKLE (d5) - has cosmetic forms
 	dw 0					; HERACROSS (d6) - no cosmetic forms
 	dw 0					; SNEASEL (d7) - no cosmetic forms
 	dw 0					; TEDDIURSA (d8) - no cosmetic forms
@@ -260,3 +260,54 @@ CosmeticFormFramePointersTable:
 	dw 0					; HO_OH (fa) - no cosmetic forms
 	dw 0					; CELEBI (fb) - no cosmetic forms
 	assert_table_length NUM_POKEMON
+
+PikachuBitmasksPointers:
+	table_width 2
+	dw PikachuPlainBitmask
+	dw PikachuSurfBitmask
+	dw PikachuFlyBitmask
+	assert_table_length NUM_PIKACHU_FORMS
+
+ShuckleBitmasksPointers:
+	table_width 2
+	dw ShucklePlainBitmasks
+	dw ShuckleShuckieNeutralBitmasks
+	dw ShuckleShuckieHappyBitmasks
+	assert_table_length NUM_SHUCKLE_FORMS
+
+UnownBitmasksPointers:
+	table_width 2
+	dw UnownABitmasks
+	dw UnownBBitmasks
+	dw UnownCBitmasks
+	dw UnownDBitmasks
+	dw UnownEBitmasks
+	dw UnownFBitmasks
+	dw UnownGBitmasks
+	dw UnownHBitmasks
+	dw UnownIBitmasks
+	dw UnownJBitmasks
+	dw UnownKBitmasks
+	dw UnownLBitmasks
+	dw UnownMBitmasks
+	dw UnownNBitmasks
+	dw UnownOBitmasks
+	dw UnownPBitmasks
+	dw UnownQBitmasks
+	dw UnownRBitmasks
+	dw UnownSBitmasks
+	dw UnownTBitmasks
+	dw UnownUBitmasks
+	dw UnownVBitmasks
+	dw UnownWBitmasks
+	dw UnownXBitmasks
+	dw UnownYBitmasks
+	dw UnownZBitmasks
+	assert_table_length NUM_UNOWN
+
+MagikarpBitmasksPointers:
+	table_width 2
+	dw MagikarpPlainBitmasks
+	dw MagikarpXSBitmasks
+	dw MagikarpXLBitmasks
+	assert_table_length NUM_MAGIKARP_FORMS

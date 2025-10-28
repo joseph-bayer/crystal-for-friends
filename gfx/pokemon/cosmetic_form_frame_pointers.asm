@@ -1,4 +1,4 @@
-; Master table for Pokemon icon pointers
+; Master table for Pokemon frame pointers
 ; Each entry corresponds to a Pokemon species (indexed by species ID)
 ; Entries for Pokemon with cosmetic forms point to their form-specific pointer tables
 ; Entries for Pokemon without cosmetic forms are null (0)
@@ -6,7 +6,7 @@
 	dw 0					; NULL
 	dw 0					; NULL
 	dw 0					; NULL
-CosmeticFormIconPointersTable:
+CosmeticFormFramePointersTable:
 	table_width 2
 	dw 0					; BULBASAUR (01) - no cosmetic forms
 	dw 0					; IVYSAUR (02) - no cosmetic forms
@@ -32,7 +32,7 @@ CosmeticFormIconPointersTable:
 	dw 0					; FEAROW (16) - no cosmetic forms
 	dw 0					; EKANS (17) - no cosmetic forms
 	dw 0					; ARBOK (18) - no cosmetic forms
-	dw PikachuIconPointers			; PIKACHU (19) - has cosmetic forms
+	dw PikachuFramesPointers		; PIKACHU (19) - has cosmetic forms
 	dw 0					; RAICHU (1a) - no cosmetic forms
 	dw 0					; SANDSHREW (1b) - no cosmetic forms
 	dw 0					; SANDSLASH (1c) - no cosmetic forms
@@ -136,7 +136,7 @@ CosmeticFormIconPointersTable:
 	dw 0					; MAGMAR (7e) - no cosmetic forms
 	dw 0					; PINSIR (7f) - no cosmetic forms
 	dw 0					; TAUROS (80) - no cosmetic forms
-	dw 0					; MAGIKARP (81) - has cosmetic forms, but does not require icon variants
+	dw MagikarpFramesPointers		; MAGIKARP (81) - no cosmetic forms
 	dw 0					; GYARADOS (82) - no cosmetic forms
 	dw 0					; LAPRAS (83) - no cosmetic forms
 	dw 0					; DITTO (84) - no cosmetic forms
@@ -208,7 +208,7 @@ CosmeticFormIconPointersTable:
 	dw 0					; MURKROW (c6) - no cosmetic forms
 	dw 0					; SLOWKING (c7) - no cosmetic forms
 	dw 0					; MISDREAVUS (c8) - no cosmetic forms
-	dw UnownIconPointers			; UNOWN (c9) - has cosmetic forms
+	dw UnownFramesPointers			; UNOWN (c9) - has cosmetic forms
 	dw 0					; WOBBUFFET (ca) - no cosmetic forms
 	dw 0					; GIRAFARIG (cb) - no cosmetic forms
 	dw 0					; PINECO (cc) - no cosmetic forms
@@ -220,7 +220,7 @@ CosmeticFormIconPointersTable:
 	dw 0					; GRANBULL (d2) - no cosmetic forms
 	dw 0					; QWILFISH (d3) - no cosmetic forms
 	dw 0					; SCIZOR (d4) - no cosmetic forms
-	dw 0					; SHUCKLE (d5) - has cosmetic forms, but does not require icon variants
+	dw ShuckleFramesPointers		; SHUCKLE (d5) - has cosmetic forms
 	dw 0					; HERACROSS (d6) - no cosmetic forms
 	dw 0					; SNEASEL (d7) - no cosmetic forms
 	dw 0					; TEDDIURSA (d8) - no cosmetic forms
@@ -260,3 +260,54 @@ CosmeticFormIconPointersTable:
 	dw 0					; HO_OH (fa) - no cosmetic forms
 	dw 0					; CELEBI (fb) - no cosmetic forms
 	assert_table_length NUM_POKEMON
+
+PikachuFramesPointers:
+	table_width 2
+	dw PikachuPlainFrames
+	dw PikachuSurfFrames
+	dw PikachuFlyFrames
+	assert_table_length NUM_PIKACHU_FORMS
+
+ShuckleFramesPointers:
+	table_width 2
+	dw ShucklePlainFrames
+	dw ShuckleShuckieNeutralFrames
+	dw ShuckleShuckieHappyFrames
+	assert_table_length NUM_SHUCKLE_FORMS
+
+UnownFramesPointers:
+	table_width 2
+	dw UnownAFrames
+	dw UnownBFrames
+	dw UnownCFrames
+	dw UnownDFrames
+	dw UnownEFrames
+	dw UnownFFrames
+	dw UnownGFrames
+	dw UnownHFrames
+	dw UnownIFrames
+	dw UnownJFrames
+	dw UnownKFrames
+	dw UnownLFrames
+	dw UnownMFrames
+	dw UnownNFrames
+	dw UnownOFrames
+	dw UnownPFrames
+	dw UnownQFrames
+	dw UnownRFrames
+	dw UnownSFrames
+	dw UnownTFrames
+	dw UnownUFrames
+	dw UnownVFrames
+	dw UnownWFrames
+	dw UnownXFrames
+	dw UnownYFrames
+	dw UnownZFrames
+	assert_table_length NUM_UNOWN
+
+MagikarpFramesPointers:
+	table_width 2
+	dw MagikarpPlainFrames
+	dw MagikarpXSFrames
+	dw MagikarpXLFrames
+	assert_table_length NUM_MAGIKARP_FORMS
