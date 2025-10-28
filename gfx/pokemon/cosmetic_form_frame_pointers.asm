@@ -266,6 +266,7 @@ PikachuFramesPointers:
 	dw PikachuPlainFrames
 	dw PikachuSurfFrames
 	dw PikachuFlyFrames
+	dw PikachuRBFrames
 	assert_table_length NUM_PIKACHU_FORMS
 
 ShuckleFramesPointers:

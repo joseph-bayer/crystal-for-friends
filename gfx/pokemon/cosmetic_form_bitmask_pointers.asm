@@ -266,6 +266,7 @@ PikachuBitmasksPointers:
 	dw PikachuPlainBitmask
 	dw PikachuSurfBitmask
 	dw PikachuFlyBitmask
+	dw PikachuRBBitmask
 	assert_table_length NUM_PIKACHU_FORMS
 
 ShuckleBitmasksPointers:

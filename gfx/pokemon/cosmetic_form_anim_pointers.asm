@@ -523,6 +523,7 @@ PikachuAnimationPointers:
 	dw PikachuPlainAnimation
 	dw PikachuSurfAnimation
 	dw PikachuFlyAnimation
+	dw PikachuRBAnimation
 	assert_table_length NUM_PIKACHU_FORMS
 
 ShuckleAnimationPointers:
@@ -575,6 +576,7 @@ PikachuAnimationIdlePointers:
 	dw PikachuPlainAnimationIdle
 	dw PikachuSurfAnimationIdle
 	dw PikachuFlyAnimationIdle
+	dw PikachuRBAnimationIdle
 	assert_table_length NUM_PIKACHU_FORMS
 
 ShuckleAnimationIdlePointers:

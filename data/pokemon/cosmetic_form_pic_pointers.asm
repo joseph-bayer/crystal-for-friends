@@ -270,6 +270,8 @@ PikachuPicPointers::
 	dba PikachuSurfBackpic
 	dba PikachuFlyFrontpic
 	dba PikachuFlyBackpic
+	dba PikachuRBFrontpic
+	dba PikachuRBBackpic
 	assert_table_length NUM_PIKACHU_FORMS
 
 ShucklePicPointers::

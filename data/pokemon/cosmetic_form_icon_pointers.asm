@@ -266,6 +266,7 @@ PikachuIconPointers:
 	dw PikachuPlainIcon
 	dw PikachuSurfIcon
 	dw PikachuFlyIcon
+	dw PikachuPlainIcon
 	assert_table_length NUM_PIKACHU_FORMS
 
 UnownIconPointers:

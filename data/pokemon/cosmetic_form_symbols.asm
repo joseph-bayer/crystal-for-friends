@@ -267,4 +267,4 @@ PikachuFormSymbols:
 	db 0
 	db 0
 	db "<CARTRIDGE>"
-	assert_table_length NUM_MAGIKARP_FORMS
+	assert_table_length NUM_PIKACHU_FORMS

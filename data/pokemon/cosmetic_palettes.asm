@@ -2,6 +2,18 @@
 ; only the middle two colors are included, not black or white.
 ; Shiny palettes are defined directly, not generated.
 
+PikachuPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/pikachu/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/pikachu/shiny.pal"
+INCBIN	"gfx/pokemon/pikachu_surf/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/pikachu/shiny.pal"
+INCBIN	"gfx/pokemon/pikachu_fly/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/pikachu/shiny.pal"
+INCBIN	"gfx/pokemon/pikachu_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/pikachu/shiny.pal"
+
 SmearglePalettes:
 	; 2 middle palettes, normal and shiny, with 2 colors each
 	table_width COLOR_SIZE * 2 * 2

@@ -1,6 +1,7 @@
 PikachuPlainBitmask:		INCLUDE "gfx/pokemon/pikachu/bitmask.asm"
 PikachuSurfBitmask: 		INCLUDE "gfx/pokemon/pikachu_surf/bitmask.asm"
 PikachuFlyBitmask:  		INCLUDE "gfx/pokemon/pikachu_fly/bitmask.asm"
+PikachuRBBitmask:  		INCLUDE "gfx/pokemon/pikachu_rb/bitmask.asm"
 
 ShucklePlainBitmasks:		INCLUDE "gfx/pokemon/shuckle/bitmask.asm"
 ShuckleShuckieNeutralBitmasks: 	INCLUDE "gfx/pokemon/shuckle/bitmask.asm"

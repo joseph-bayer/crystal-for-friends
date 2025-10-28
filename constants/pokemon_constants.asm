@@ -320,8 +320,9 @@ DEF NUM_UNOWN EQU const_value ; 26
   const PIKACHU_PLAIN_FORM  ; 0
   const PIKACHU_SURF_FORM   ; 1
   const PIKACHU_FLY_FORM    ; 2
-  ; TODO: const PIKACHU_PARTY_HAT_FORM ; 3
-DEF NUM_PIKACHU_FORMS EQU const_value ; 3
+  const PIKACHU_RB_FORM     ; 3
+  ; TODO: const PIKACHU_PARTY_HAT_FORM ; 4
+DEF NUM_PIKACHU_FORMS EQU const_value ; 4
 
 ; Shuckle forms
   const_def 0 ; Note that forms are now 0-indexed

@@ -1,6 +1,7 @@
 PikachuPlainFrames:		INCLUDE "gfx/pokemon/pikachu/frames.asm"
 PikachuSurfFrames: 		INCLUDE "gfx/pokemon/pikachu_surf/frames.asm"
 PikachuFlyFrames:  		INCLUDE "gfx/pokemon/pikachu_fly/frames.asm"
+PikachuRBFrames:  		INCLUDE "gfx/pokemon/pikachu_rb/frames.asm"
 
 ShucklePlainFrames:         	INCLUDE "gfx/pokemon/shuckle/frames.asm"
 ShuckleShuckieNeutralFrames:	INCLUDE "gfx/pokemon/shuckle/frames.asm"

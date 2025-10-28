@@ -220,7 +220,7 @@ CosmeticFormDimensionsPointersTable:
 	dw 0					; GRANBULL (d2)
 	dw 0					; QWILFISH (d3)
 	dw 0					; SCIZOR (d4)
-	dw 0		; SHUCKLE (d5)
+	dw 0					; SHUCKLE (d5)
 	dw 0					; HERACROSS (d6)
 	dw 0					; SNEASEL (d7)
 	dw 0					; TEDDIURSA (d8)
