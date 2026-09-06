@@ -715,7 +715,6 @@ INCLUDE "engine/gfx/fade.asm"
 
 SECTION "Following", ROMX
 
-INCLUDE "gfx/following_sprite_pointers.asm"
 INCLUDE "engine/events/follower.asm"
 
 

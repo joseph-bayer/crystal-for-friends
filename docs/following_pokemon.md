@@ -17,7 +17,6 @@ Source: `fellowship-of-the-roms/pokecrystal`, branch `follow-mons`, tip `28da8e0
 - [The tile budget](#the-tile-budget)
 - [Follower graphics](#follower-graphics)
 - [Follower palettes](#follower-palettes)
-- [Adding a form-specific follower sprite](#adding-a-form-specific-follower-sprite)
 - [Known gaps](#known-gaps)
 - [TODO](#todo)
 
@@ -68,12 +67,11 @@ changed files.
 | Path | Contents |
 | --- | --- |
 | `engine/events/follower.asm` | The follower's interaction table and all its dialogue scripts |
-| `engine/overworld/overworld.asm` | `GetFollowingSprite` / `GetWalkingMonSprite` (sprite lookup), `_GetSpritePalette` (colors) |
+| `engine/overworld/overworld.asm` | `GetFollowingSprite` / `GetFollowerIconSprite` (builds the sprite), `_GetSpritePalette` (colors) |
 | `engine/overworld/map_objects.asm` | `MovementFunction_FollowerObj` (the movement state machine), Poké Ball animation |
 | `engine/overworld/player_object.asm` | `FollowObjTemplate`, `RefreshFollowingCoords`, warp/connection handling |
-| `gfx/following/*.png` | One sprite per species, 16×96 px = 24 tiles (12 standing, 12 walking) |
-| `gfx/following_sprite_pointers.asm` | `FollowingSpritePointers`, `UnownFollowingSpritePointers`, `EggFollowingSpritePointer` |
-| `gfx/following_sprites.asm` | The `INCBIN`s, split across banks |
+| `gfx/icons/*.png` | The party menu icons the follower is drawn from, 16×32 px = 8 tiles |
+| `engine/overworld/map_object_action.asm` | `SetFacingFollowerStep` / `SetFacingFollowerRun`, the two-frame walk cycle |
 | `constants/ram_constants.asm` | `wFollowerFlags` bits |
 
 
@@ -137,39 +135,50 @@ contiguous gap left for the Poké Ball. With 14 object structs, only `9` works.
 
 ## Follower graphics
 
-### How a sprite gets chosen
+The follower is drawn from the same party menu icon the menus use. It has no artwork of its own.
 
-`GetFollowingSprite` (in `engine/overworld/overworld.asm`) runs when the overworld needs the
-follower's graphics:
+### How a sprite gets built
+
+`GetFollowingSprite` runs when the overworld needs the follower's graphics:
 
 1. Pick the follower: the first party member with HP above zero, falling back to the first member.
-   Its 8-bit species handle is stored in `wFollowerSpriteID` and locked so it cannot be evicted; its
+   Its 8-bit species handle goes in `wFollowerSpriteID` and is locked so it cannot be evicted; its
    1-based party slot goes in `wFollowerPartyNum`.
-2. Convert the handle to a real 16-bit species index with `GetPokemonIndexFromID`.
-3. Index `FollowingSpritePointers` — a flat `dba` table, one entry per species, 0-based.
-4. Decompress the result into `wDecompressScratch`, from which the engine copies 12 standing tiles
-   and 12 walking tiles into the follower's VRAM slot.
+2. Copy that member's form byte into `wForm`, then call `LoadOverworldMonIcon` — the same routine
+   the day-care mons use. It returns the icon's graphics, bank, and length.
+3. `GetFollowerIconSprite` assembles a 24-tile overworld sprite from it in `wDecompressScratch`.
 
-Two species are special-cased before step 3:
+Step 3 works because the two layouts line up. A menu icon is 8 tiles: two 2×2 frames, each stored
+top-left, top-right, bottom-left, bottom-right. An overworld sprite wants 12 standing tiles — facing
+down at `$00`, up at `$04`, left/right at `$08` — followed by the same 12 walking tiles at `+$80`,
+in that identical order. So:
 
-- **Egg** uses `EggFollowingSpritePointer`.
-- **Unown** reads its letter from the form byte (`MON_FORM & FORM_MASK`) and indexes
-  `UnownFollowingSpritePointers` instead.
+- **frame 1** is copied into all three standing facings,
+- **frame 2** into all three walking facings,
+- then the **down-facing** copies of both are mirrored in place, so walking towards the camera reads
+  as a different pose from walking away rather than being identical.
 
-### Can follower graphics vary by form?
+The engine's own walk cycle then alternates the two frames, with no changes to the movement code.
 
-**Yes, and Unown already proves it works** — but only as a hardcoded special case, not a general
-system. There is currently no form dimension in `FollowingSpritePointers`: every cosmetic form of a
-species shares one follower sprite. A Surfing Pikachu follows you as an ordinary Pikachu.
+Mirroring is done in software (`.MirrorFrameInPlace`): the two columns swap and every byte's bits
+are reversed, since horizontal flipping of 2bpp data is a bit reversal. It runs once per sprite
+load, not per frame.
 
-Generalizing it is straightforward because this repo already has the pattern, used by
-`data/pokemon/cosmetic_form_pic_pointers.asm` and friends: a master table with one `dw` per species
-where `0` means "no forms", and anything else points at a per-form table. The Unown branch would
-then become one entry in that table rather than an `if` in the lookup. See the recipe below.
+### Forms, Unown and eggs come free
 
-The cost is ROM: each form needs its own 24-tile sprite, and `gfx/following_sprites.asm` is already
-split across six banks.
+Because the lookup goes through `LoadOverworldMonIcon`, anything the icon system knows about works
+without extra tables: cosmetic forms (that is what the `wForm` write feeds), Unown letters, and eggs
+(`IconPointers` carries an `EGG is -3` entry ahead of the table). There is no separate follower
+graphics table to keep in sync, and no per-form artwork to draw.
 
+### The two-frame walk cycle
+
+The engine's normal walk cycle has four steps: standing, walking, standing, then **the walking frame
+mirrored**. That last one is fine for hand-drawn NPC art but flips a mon icon left-to-right
+mid-stride. `SetFacingFollowerStep` and `SetFacingFollowerRun` mask the step frame to one bit
+instead of two, so the follower alternates only the first two. They are wired up as
+`OBJECT_ACTION_FOLLOWER_STEP` and `OBJECT_ACTION_FOLLOWER_RUN`, chosen in
+`MovementFunction_FollowerObj` according to the step speed.
 
 ## Follower palettes
 
@@ -217,37 +226,23 @@ follower is indistinguishable from a normal one in the overworld. That is a data
 one — editing the shiny nibble for those species fixes it, and improves the party menu at the same
 time.
 
-### Could followers use true per-species colors?
+### Where else the same palettes are used
 
-Yes, but it is a real feature rather than a tweak. `CopySpritePal` loads palette data by
-`PAL_OW_*` index out of the NPC palette file. Giving followers their own colors would mean adding a
-reserved index meaning "use the follower's own palette" and teaching the loader to pull from
-`data/pokemon/palettes.asm` / `cosmetic_palettes.asm` instead — which is also where per-form colors
-already live, so cosmetic-form followers would get correct colors for free.
+All three surfaces read the same source of truth — `MonMenuIconPals` in
+`data/pokemon/menu_icon_pals.asm`, a normal/shiny nibble pair per species naming one of the eight
+`PAL_ICON_*` colors, whose RGB lives in `PartyMenuOBPals`:
 
-Two things to weigh first: it consumes one of the eight shared slots permanently, and overworld
-sprites only get three colors plus transparency, so a battle palette will not transfer exactly.
+| Surface | How it applies the color |
+| --- | --- |
+| Party menu | `SetMenuMonIconColor` sets an OAM palette *number*, sharing the eight palettes `InitPartyMenuOBPals` loads |
+| Box (Bill's PC) | `WriteIconPaletteData` → `GetMonPalInBCDE` looks up the same table, then copies the **RGB values** into a per-slot palette (`wBillsPC_MonPals*`) |
+| Overworld follower | The same table, mapped through `FollowingPalLookupTable` to a `PAL_OW_*` value |
 
-
-## Adding a form-specific follower sprite
-
-Not yet implemented — this is the recipe if you want it, mirroring the existing cosmetic-form
-tables.
-
-1. Draw the sprite as 16×96 px (2 tiles wide, 12 tall: 4 standing frames then 4 walking frames, the
-   same layout as the existing files in `gfx/following/`).
-2. `INCBIN` it in `gfx/following_sprites.asm` under whichever `PokemonSprites` bank has room.
-3. Add a master table — `dw` per species, `0` for "no forms", otherwise a pointer to a per-form
-   `dba` table — following `data/pokemon/cosmetic_form_pic_pointers.asm`. Terminate the master table
-   with `assert_table_length NUM_POKEMON` and each per-form table with
-   `assert_table_length NUM_<SPECIES>_FORMS`, so a missed entry fails the build instead of
-   corrupting at runtime.
-4. In `GetWalkingMonSprite`, consult the master table before falling back to
-   `FollowingSpritePointers` — and fold the existing Unown branch into it, since Unown is just the
-   first species with per-form followers.
-5. Keep both tables in the same bank, or update the `assert BANK(...) == BANK(...)` that the lookup
-   relies on.
-
+That makes the box the easiest place to introduce true per-species colors: it already writes
+per-slot RGB rather than sharing fixed palette numbers, so pointing `GetMonPalInBCDE` at
+`data/pokemon/palettes.asm` / `cosmetic_palettes.asm` would mostly do it. The party menu would first
+have to move from shared palette numbers to per-icon palettes. The overworld is hardest, because the
+follower competes with every NPC for the same eight hardware slots.
 
 ## Bugs from the source branch
 
@@ -331,16 +326,38 @@ of falling through to the table.
 
 ### 5. _SetPlayerPalette is dead code that would corrupt memory
 
-In `engine/overworld/map_objects.asm`. Nothing calls it. It contains `ld bc, 0 ; debug?` followed by
-`ld hl, OBJECT_DIRECTION` / `add hl, bc`, so it would read and write near address `$0008` rather than
-an object struct. Harmless while unreferenced; worth deleting before someone wires it up.
+In upstream's `engine/overworld/map_objects.asm`. Nothing calls it. It contains `ld bc, 0 ; debug?`
+followed by `ld hl, OBJECT_DIRECTION` / `add hl, bc`, so it would read and write near address `$0008`
+rather than an object struct. Harmless while unreferenced; worth deleting before someone wires it up.
+It never reached this repo — the merge dropped it — so there is nothing to fix on our side.
 
 ### 6. CheckFollowerLoaded is stubbed out
 
 In `engine/overworld/player_object.asm` the routine opens with `xor a` / `ret`, making the loop below
 it unreachable and the follower unconditionally spawned. Looks like leftover debugging.
 
-### 7. FrozenInteraction emotes on the player
+### 7. The follower vanishes next to a pacing NPC
+
+**Symptom.** Stand still where an NPC's patrol route crosses the follower's tile — the blue-shirted
+woman in southern Cherrygrove is a reliable spot — and after a few of her passes the follower
+disappears. The graphics are still in VRAM; it simply stops being drawn.
+
+**Cause.** `HideFollowerIfNPCBump` hides the follower whenever an NPC would walk into it, setting
+`FOLLOWER_INVISIBLE_F` and `FOLLOWER_INVISIBLE_ONE_STEP_F` so the NPC can pass through. The matching
+restore lives in `CheckFollowerInvisOneStep`, which begins `cp PLAYER` / `ret nz` — so it only runs
+while the *player* is taking a step. Stand still and nothing ever puts the follower back.
+
+The author clearly intended a different condition: the restore contains a commented-out call to
+`IsObjectStandingOnSomeoneElse` with its `ret c` still live underneath, guarding on a carry flag
+nothing sets any more.
+
+**Fix.** Added `TryRestoreHiddenFollower`, called from `MovementFunction_FollowerObj` so it runs
+every frame the follower is idle rather than only on player steps. It restores visibility once
+`IsNPCAtCoord` reports nothing else on the follower's tile — the check the commented-out code was
+reaching for. `IsNPCAtCoord` already excludes the calling object, so the follower does not detect
+itself. The dead `ret c` and its commented block were removed.
+
+### 8. FrozenInteraction emotes on the player
 
 It uses `showemote EMOTE_SHOCK, PLAYER, 40` where its siblings target `FOLLOWER`. Possibly
 deliberate — flagged as a question rather than a defect.
@@ -359,24 +376,20 @@ explaining what it is for.
   neither running shoes nor a 60fps overworld.
 - **The Poké Ball recall animation shares a tile region with map graphics** that vary by tileset. It
   looks correct where it has been tested; worth a look on unusual maps.
-- **`_SetPlayerPalette`** came in with the feature, is called by nothing, and would write to a bogus
-  address if anything ever called it. Harmless while unreferenced; worth deleting.
+- **Icons always face the camera.** A follower walking away from you still faces forwards; the
+  mirrored down-facing frames are the only cue to travel direction.
 - **`FrozenInteraction` shows its emote above the player**, not the follower, unlike its siblings.
   Possibly deliberate; flagged in case it is not.
-- **Cosmetic-form followers and true per-species palettes** are both unimplemented; see above.
-
 
 ## TODO
 
-- **True per-species follower palettes.** Followers currently borrow one of eight party-menu icon
-  colors (see [Follower palettes](#follower-palettes)). Giving them their own would mean adding a
-  reserved `PAL_OW_*` index meaning "use the follower's own palette" and teaching `CopySpritePal` to
-  pull from `data/pokemon/palettes.asm` / `cosmetic_palettes.asm`. That would also give
-  cosmetic-form followers correct colors for free. Costs one of the eight shared OBJ palette slots
-  permanently, and overworld sprites only get three colors plus transparency, so battle palettes
-  will not transfer exactly.
-- **Test branch: build followers from the two party-menu icon frames** instead of dedicated 24-tile
-  follower sprites. Would cut the ROM cost sharply — the follower sprites currently occupy six
-  banks — and make every cosmetic form work immediately, since icons are already form-aware and
-  shiny-aware. Open questions: icons have no directional frames, so the follower would face one way
-  regardless of travel direction, and a two-frame bounce reads differently from a walk cycle.
+- **True per-species follower palettes.** Followers, the party menu and the box all borrow one of
+  eight party-menu icon colors (see [Where else the same palettes are used](#where-else-the-same-palettes-are-used)).
+  Giving them real colors would mean a reserved `PAL_OW_*` index meaning "use the follower's own
+  palette" and teaching `CopySpritePal` to pull from `data/pokemon/palettes.asm` /
+  `cosmetic_palettes.asm`. Costs one of the eight shared OBJ slots permanently, and overworld
+  sprites only get three colors plus transparency, so battle palettes will not transfer exactly.
+  The box is the cheapest place to start.
+- **Shiny followers are invisible for some species.** 38 of the 255 entries in
+  `menu_icon_pals.asm` list the same palette for normal and shiny, so those look identical in the
+  overworld, party menu and box alike. That is a data fix, not a code one.

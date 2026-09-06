@@ -295,88 +295,143 @@ SetFollowerFromParty::
 
 GetFollowingSprite:
 	cp SPRITE_FOLLOWER
-	jr nz, GetWalkingMonSprite.nope
+	jr z, .follower
+	and a ; not the follower; let GetMonSprite deal with this sprite id
+	ret
+
+.follower
 	call SetFollowerFromParty
 	and a
 ; No party (or no living mon): there is no follower sprite to load. SPRITE_FOLLOWER has no
 ; OverworldSprites entry, so fall back rather than running off the end of the table.
 	jr z, GetMonSprite.NoBreedmon
 	; fallthrough
-GetWalkingMonSprite:
-; Input: a = species ID (8-bit) of the follower.
-; Decompresses its walking sprite into wDecompressScratch.
-; Output: carry set, de = wDecompressScratch, c = 12 tiles, hl = 0:WALKING_SPRITE
-	push af
-	cp EGG
-	jr nz, .not_egg
-	ld hl, EggFollowingSpritePointer
-	jr .got_pointer
 
-.not_egg
-	call GetPokemonIndexFromID ; hl = 16-bit index
-	ld a, l
-	cp LOW(UNOWN)
-	jr nz, .not_unown
-	ld a, h
-	cp HIGH(UNOWN)
-	jr nz, .not_unown
-; Unown letters are stored in the form byte
+; A party menu icon is 8 tiles: two 2x2 frames, each stored top-left, top-right, bottom-left,
+; bottom-right. An overworld sprite wants 12 standing tiles - facing down at $00, up at $04,
+; left/right at $08 - followed by the same 12 walking tiles at +$80. Copying frame 1 into all
+; three standing facings and frame 2 into all three walking facings makes the engine's own walk
+; cycle alternate the icon's two frames, whichever way the follower is facing.
+DEF FOLLOWER_ICON_FRAME_SIZE EQU 4 tiles
+DEF FOLLOWER_ICON_FACINGS    EQU 3
+
+GetFollowerIconSprite:
+; in: a = the follower's species ID
+; out: the GetSprite contract - de = graphics, b = bank, c = tile count, l = sprite type, carry set
+	push af
 	ld a, [wFollowerPartyNum]
-	dec a
+	dec a ; wFollowerPartyNum is 1-based
 	ld hl, wPartyMon1Form
 	call GetPartyLocation
 	ld a, [hl]
-	and FORM_MASK
-	ld e, a
-	ld d, 0
-	ld hl, UnownFollowingSpritePointers
-	jr .add_offset
-
-.not_unown
-	dec hl ; the table is 0-indexed
-	ld d, h
-	ld e, l
-	ld hl, FollowingSpritePointers
-.add_offset
-	add hl, de
-	add hl, de
-	add hl, de
-.got_pointer
-	assert BANK(FollowingSpritePointers) == BANK(UnownFollowingSpritePointers), \
-			"FollowingSpritePointers Bank is not equal to UnownFollowingSpritePointers"
-	ld a, BANK(FollowingSpritePointers)
-	push af
-	call GetFarByte
-	ld b, a
-	inc hl
+	ld [wForm], a ; LoadOverworldMonIcon reads this for cosmetic forms and Unown letters
 	pop af
-	call GetFarWord
+	ld e, a
+	ld d, 0 ; not a day-care mon, so wForm above is used as-is
+	farcall LoadOverworldMonIcon ; de = icon graphics, b = its bank, c = 8 tiles
 
 	ldh a, [rSVBK]
 	push af
 	ld a, BANK(wDecompressScratch)
 	ldh [rSVBK], a
 
-	push bc
-	ld a, b
+	ld h, d
+	ld l, e ; hl = icon frame 1
+	ld a, b ; a = icon bank
 	ld de, wDecompressScratch
-	call FarDecompress
-	pop bc
-	ld de, wDecompressScratch
+	call .CopyFrameToEachFacing ; frame 1 becomes every standing facing
+	ld bc, FOLLOWER_ICON_FRAME_SIZE
+	add hl, bc ; hl = icon frame 2
+	call .CopyFrameToEachFacing ; frame 2 becomes every walking facing
+
+; Every facing holds the same artwork, so mirror the down-facing copies. Walking towards the camera
+; then reads as a different pose from walking away, rather than the two being identical.
+	ld hl, wDecompressScratch
+	call .MirrorFrameInPlace
+	ld hl, wDecompressScratch + FOLLOWER_ICON_FACINGS * FOLLOWER_ICON_FRAME_SIZE
+	call .MirrorFrameInPlace
 
 	pop af
 	ldh [rSVBK], a
 
-	ld h, 0
-	ld c, 12
-	ld l, WALKING_SPRITE
-
-	pop af
-
+	ldh a, [hROMBank]
+	ld b, a ; the graphics are in WRAM now, so any valid bank will do for Get2bpp
+	ld de, wDecompressScratch
+	ld c, FOLLOWER_ICON_FACINGS * 4
+	lb hl, 0, WALKING_SPRITE
 	scf
 	ret
-.nope
-	and a
+
+.CopyFrameToEachFacing:
+; in: a = bank, hl = one 2x2 frame, de = destination
+; out: de advanced past the block, a and hl unchanged
+	push hl
+	ld c, FOLLOWER_ICON_FACINGS
+.loop
+	push bc
+	push hl
+	push af
+	ld bc, FOLLOWER_ICON_FRAME_SIZE
+	call FarCopyBytes ; copies bc bytes from a:hl to de, advancing de
+	pop af
+	pop hl
+	pop bc
+	dec c
+	jr nz, .loop
+	pop hl
+	ret
+
+.MirrorFrameInPlace:
+; in: hl = one 2x2 frame in WRAM, stored top-left, top-right, bottom-left, bottom-right
+; Mirrors it horizontally: the two columns swap, and every byte's bits are reversed.
+	push hl
+	ld d, h
+	ld e, l ; de = top-left
+	ld bc, TILE_SIZE
+	add hl, bc ; hl = top-right
+	call .SwapAndReverseTiles
+	pop hl
+	push hl
+	ld bc, TILE_SIZE * 2
+	add hl, bc
+	ld d, h
+	ld e, l ; de = bottom-left
+	ld bc, TILE_SIZE
+	add hl, bc ; hl = bottom-right
+	call .SwapAndReverseTiles
+	pop hl
+	ret
+
+.SwapAndReverseTiles:
+; in: hl and de each point at one 2bpp tile in WRAM; swaps them, reversing each byte
+	ld c, TILE_SIZE
+.swap_loop
+	ld a, [de]
+	call .ReverseBits
+	ld b, a
+	ld a, [hl]
+	call .ReverseBits
+	ld [de], a
+	ld a, b
+	ld [hli], a
+	inc de
+	dec c
+	jr nz, .swap_loop
+	ret
+
+.ReverseBits:
+; in: a = a byte. out: a = that byte with its bits in the opposite order.
+	push bc
+	ld b, a
+	ld c, 0
+	ld a, 8
+.reverse_loop
+	rl b ; the top bit of b falls out into carry...
+	rr c ; ...and lands in the bottom of c, one place further each time
+	dec a
+	jr nz, .reverse_loop
+	ld a, c
+	pop bc
 	ret
 
 _DoesSpriteHaveFacings::

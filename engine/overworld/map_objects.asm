@@ -361,6 +361,42 @@ HideFollowerIfNPCBump:
 	pop hl
 	ret
 
+TryRestoreHiddenFollower:
+; HideFollowerIfNPCBump hides the follower so an NPC can walk through it, but the restore lived in
+; CheckFollowerInvisOneStep, which only runs while the *player* is stepping. Standing still beside a
+; pacing NPC therefore left the follower invisible indefinitely. This runs every frame the follower
+; is idle, and puts it back as soon as nothing else is on its tile.
+; in: bc = the follower's object struct
+	ld hl, wFollowerFlags
+	bit FOLLOWER_INVISIBLE_ONE_STEP_F, [hl]
+	ret z
+	bit FOLLOWER_IN_POKEBALL_F, [hl]
+	ret nz ; the poke ball animation owns visibility while it plays
+
+	ld hl, OBJECT_MAP_X
+	add hl, bc
+	ld d, [hl]
+	ld hl, OBJECT_MAP_Y
+	add hl, bc
+	ld e, [hl]
+
+	ldh a, [hObjectStructIndex]
+	push af
+	push bc
+	call IsNPCAtCoord ; carry if another object is on d,e
+	pop bc
+	pop af
+	ldh [hObjectStructIndex], a
+	ret c
+
+	ld hl, wFollowerFlags
+	res FOLLOWER_INVISIBLE_ONE_STEP_F, [hl]
+	res FOLLOWER_INVISIBLE_F, [hl]
+	ld hl, OBJECT_FLAGS1
+	add hl, bc
+	res INVISIBLE_F, [hl]
+	ret
+
 UpdateFollowerSprite:
 	ld e, a
 	ldh a, [hMapObjectIndex]
@@ -412,15 +448,6 @@ CheckFollowerInvisOneStep:
 	ret z
 	bit FOLLOWER_INVISIBLE_ONE_STEP_F, [hl]
 	ret z
-;	push hl
-;	push bc
-;	push de
-;	ld bc, wObject1Struct
-;	call IsObjectStandingOnSomeoneElse
-;	pop de
-;	pop bc
-;	pop hl
-	ret c
 	res FOLLOWER_INVISIBLE_ONE_STEP_F, [hl]
 	bit FOLLOWER_IN_POKEBALL_F, [hl]
 	push bc
@@ -803,6 +830,7 @@ MovementFunction_Strength:
 	ret
 
 MovementFunction_FollowerObj:
+	call TryRestoreHiddenFollower
 	ld a, [wFollowerFlags]
 	bit FOLLOWER_FROZEN_F, a
 	jr z, .follow_not_exact
@@ -838,9 +866,9 @@ MovementFunction_FollowerObj:
 	push af
 	and %00001100 ; step speed
 	cp STEP_RUN << 2
-	ld d, OBJECT_ACTION_STEP
+	ld d, OBJECT_ACTION_FOLLOWER_STEP
 	jr nz, .got_action
-	ld d, OBJECT_ACTION_RUN
+	ld d, OBJECT_ACTION_FOLLOWER_RUN
 .got_action
 	pop af
 	jp hl
@@ -887,7 +915,7 @@ MovementFunction_FollowerObj:
 
 MovementFunction_FollowNotExact:
 	call MoveFollowNotExact
-	ld d, OBJECT_ACTION_STEP ; NormalStep takes the action in d
+	ld d, OBJECT_ACTION_FOLLOWER_STEP ; NormalStep takes the action in d
 	jmp c, NormalStep
 	ret
 

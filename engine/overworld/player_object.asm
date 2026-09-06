@@ -87,23 +87,8 @@ _FollowerScript:
 POPS
 
 CheckFollowerLoaded:
+; Upstream stubs this out so the follower always spawns; the search it used to do was unreachable.
 	xor a
-	ret
-	ld hl, wObjectStructs + 1
-	ld bc, MAPOBJECT_LENGTH
-	ld d, NUM_OBJECT_STRUCTS
-.loop
-	ld a, [hl]
-	add hl, bc
-	cp FOLLOWER
-	jr z, .loaded
-	dec d
-	jr nz, .loop
-	xor a
-	ret
-
-.loaded
-	scf
 	ret
 
 CopyDECoordsToMapObject::
@@ -147,9 +132,6 @@ WriteObjectXY::
 	and a
 	ret
 
-RefreshPlayerCoords:
-	jmp _RefreshPlayerCoords
-
 MapPlayerCoordWarped:
 	ld hl, wFollowerFlags
 ;	set FOLLOWER_IN_POKEBALL_F, [hl]
@@ -159,7 +141,7 @@ MapPlayerCoordWarped:
 	lb bc, PLAYER, FOLLOWER
 	call MoveToObject
 ;	call UpdatedFollowerPositionAfterWarp
-	jmp MatchFollowerDirection
+	jr MatchFollowerDirection
 
 MapPlayerCoordConnected:
 	call _RefreshPlayerCoords
@@ -195,7 +177,7 @@ MapPlayerCoordConnected:
 	call MoveToCoord
 	call MatchFollowerDirection
 .none
-	jmp RefreshFollowingCoords
+	jr RefreshFollowingCoords ; no-optimize stub jump
 
 MatchFollowerDirection:
 	ld a, FOLLOWER
@@ -212,6 +194,7 @@ MatchFollowerDirection:
 	ld [hl], a
 	ret
 
+RefreshPlayerCoords:
 _RefreshPlayerCoords:
 	ld a, [wXCoord]
 	add 4

@@ -20,6 +20,8 @@ ObjectActionPairPointers:
 	dw SetFacingGrassShake,            SetFacingStanding
 	dw SetFacingSkyfall,               SetFacingCurrent
 	dw SetFacingRunAction,             SetFacingCurrent
+	dw SetFacingFollowerStep,          SetFacingCurrent
+	dw SetFacingFollowerRun,           SetFacingCurrent
 	assert_table_length NUM_OBJECT_ACTIONS
 
 SetFacingStanding:
@@ -304,6 +306,49 @@ SetFacingRunAction:
 	rrca
 	rrca
 	and %11
+	ld d, a
+	call GetSpriteDirection
+	or d
+	ld hl, OBJECT_FACING
+	add hl, bc
+	ld [hl], a
+	ret
+
+SetFacingFollowerStep:
+; The follower is drawn from its two-frame party menu icon, so it only has a standing frame and a
+; walking frame. Masking the step frame to one bit alternates just those two; the normal four-frame
+; cycle would also use step frame 3, which is the walking frame mirrored, flipping the icon
+; left-to-right mid-stride.
+	ld hl, OBJECT_FLAGS1
+	add hl, bc
+	bit SLIDING_F, [hl]
+	jmp nz, SetFacingCurrent
+
+	ld hl, OBJECT_STEP_FRAME
+	add hl, bc
+	inc [hl]
+	ld a, [hl]
+	rrca
+	rrca
+	rrca
+	and %1
+	jr _SetFacingFollowerFrame
+
+SetFacingFollowerRun:
+; As above, but cycling at the faster cadence SetFacingRunAction uses.
+	ld hl, OBJECT_FLAGS1
+	add hl, bc
+	bit SLIDING_F, [hl]
+	jmp nz, SetFacingCurrent
+
+	ld hl, OBJECT_STEP_FRAME
+	add hl, bc
+	inc [hl]
+	ld a, [hl]
+	rrca
+	rrca
+	and %1
+_SetFacingFollowerFrame:
 	ld d, a
 	call GetSpriteDirection
 	or d
