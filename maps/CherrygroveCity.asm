@@ -36,6 +36,9 @@ CherrygroveCityGuideGent:
 	waitbutton
 	closetext
 	playmusic MUSIC_SHOW_ME_AROUND
+	readvar VAR_FACING
+	ifequal RIGHT, .PlayerMove
+.Return
 	follow CHERRYGROVECITY_GRAMPS, PLAYER
 	applymovement CHERRYGROVECITY_GRAMPS, GuideGentMovement1
 	opentext
@@ -86,6 +89,10 @@ CherrygroveCityGuideGent:
 	waitsfx
 	end
 
+.PlayerMove:
+	applymovement PLAYER, GuideGentMovement_Player
+	sjump .Return
+
 .JumpstdReceiveItem:
 	jumpstd ReceiveItemScript
 	end
@@ -101,6 +108,9 @@ CherrygroveCityGuideGent:
 
 CherrygroveRivalSceneSouth:
 	moveobject CHERRYGROVECITY_RIVAL, 39, 7
+	getfollowerdirection
+	ifnotequal DOWN, CherrygroveRivalSceneNorth
+	applymovement FOLLOWER, CherrygroveCity_FollowerMovementForRival
 CherrygroveRivalSceneNorth:
 	turnobject PLAYER, RIGHT
 	showemote EMOTE_SHOCK, PLAYER, 15
@@ -165,9 +175,14 @@ CherrygroveRivalSceneNorth:
 	waitbutton
 	closetext
 .FinishRival:
+	freezefollower
 	playsound SFX_TACKLE
 	applymovement PLAYER, CherrygroveCity_RivalPushesYouOutOfTheWay
-	turnobject PLAYER, LEFT
+	unfreezefollower
+	turnobject PLAYER, UP
+	applymovement CHERRYGROVECITY_RIVAL, CherrygroveCity_RivalStepLeft
+	playsound SFX_TACKLE
+	applymovement FOLLOWER, CherrygroveCity_RivalPushesYouOutOfTheWay
 	applymovement CHERRYGROVECITY_RIVAL, CherrygroveCity_RivalExitsStageLeft
 	disappear CHERRYGROVECITY_RIVAL
 	setscene SCENE_CHERRYGROVECITY_NOOP
@@ -256,6 +271,11 @@ CherrygroveCityPokecenterSign:
 CherrygroveCityMartSign:
 	jumpstd MartSignScript
 
+GuideGentMovement_Player:
+	step DOWN
+	step RIGHT
+	step_end
+
 GuideGentMovement1:
 	step LEFT
 	step LEFT
@@ -325,6 +345,12 @@ GuideGentMovement6:
 	step UP
 	step_end
 
+CherrygroveCity_FollowerMovementForRival:
+	step LEFT
+	step UP
+	turn_head RIGHT
+	step_end
+
 CherrygroveCity_RivalWalksToYou:
 	step LEFT
 	step LEFT
@@ -338,8 +364,11 @@ CherrygroveCity_RivalPushesYouOutOfTheWay:
 	turn_head UP
 	step_end
 
-CherrygroveCity_RivalExitsStageLeft:
+CherrygroveCity_RivalStepLeft:
 	big_step LEFT
+	step_end
+
+CherrygroveCity_RivalExitsStageLeft:
 	big_step LEFT
 	big_step LEFT
 	big_step LEFT

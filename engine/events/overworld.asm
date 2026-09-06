@@ -601,6 +601,7 @@ FlyFunction:
 	ret
 
 .FlyScript:
+	silentstowfollower
 	refreshmap
 	callasm HideSprites
 	callasm ClearSavedObjPals
@@ -611,6 +612,7 @@ FlyFunction:
 	special WarpToSpawnPoint
 	callasm SkipUpdateMapSprites
 	loadvar VAR_MOVEMENT, PLAYER_NORMAL
+	loadvar VAR_FOLLOWERSTATE, PLAYER_NORMAL
 	newloadmap MAPSETUP_FLY
 	callasm CopyBGGreenToOBPal7
 	callasm FlyToAnim

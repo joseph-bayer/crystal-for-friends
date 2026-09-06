@@ -152,9 +152,9 @@ if DEF(_DEBUG)
 	givepokemove HEADBUTT,   wPartyMon3, 2
 	givepokemove WATERFALL,  wPartyMon3, 3
 
-	givepoke AMPHAROS, 50, NO_ITEM, SHINY_MASK
+	givepoke AMPHAROS, 50
 	givepoke GENGAR, 50
-	givepoke DITTO, 50
+	; givepoke DITTO, 50
 
 	; DEBUG: CHECK If two Pokemon with same DEF and SPEC DVs can breed
 	; change lanturn's DVs
@@ -166,6 +166,7 @@ if DEF(_DEBUG)
 	; loadmem wPartyMon4DVs+1, %00000000 ; 0 Speed, 0 Special
 
 	; misc pokemon for testing
+	givepoke PIKACHU, 50, NO_ITEM, PIKACHU_RB_FORM
 	; givepoke UNOWN, 50
 	; givepoke MAGIKARP, 50
 	; givepoke MAGIKARP, 50, NO_ITEM, MAGIKARP_XL_FORM
@@ -256,7 +257,9 @@ else
 endc
 
 PlayersHouseBookshelfScript:
-	jumpstd PictureBookshelfScript
+	stowfollower
+	end
+	;jumpstd PictureBookshelfScript
 
 PlayersHousePCScript:
 	opentext

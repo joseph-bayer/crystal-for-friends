@@ -195,7 +195,7 @@ GetMonPalInBCDE:
 	ret
 
 ; TODO: 
-GetMenuMonIconPalette:
+GetMenuMonIconPalette::
 	ld c, l
 	ld b, h
 	farcall CheckShininess

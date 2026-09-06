@@ -31,6 +31,7 @@ ROM0
 	"Header"
 	org $0150
 	"Home"
+	"Follower Script Home"
 ROMX $01
 	"bank1"
 	"Tileset Data 10"
@@ -47,7 +48,6 @@ ROMX $04
 	"Tileset Data 11"
 ROMX $05
 	"bank5"
-	"Load Map Part"
 ROMX $06
 	"Tileset Data 1"
 	"Prism tilemap copy functions"
@@ -75,6 +75,7 @@ ROMX $0d
 	"Effect Commands"
 ROMX $0e
 	"Enemy Trainers"
+	"Load Map Part"
 ROMX $0f
 	"Battle Core"
 ROMX $10

@@ -36,8 +36,12 @@ DEF OBJECT_RANGE            rb ; 20
 DEF OBJECT_PAL_INDEX        rb ; 21
                             rb_skip 6
 DEF OBJECT_LENGTH EQU _RS
-DEF NUM_OBJECT_STRUCTS EQU 13 ; see wObjectStructs
-DEF FIRST_VRAM1_OBJECT_STRUCT EQU 8
+DEF NUM_OBJECT_STRUCTS EQU 14 ; see wObjectStructs; struct 1 is reserved for the follower
+DEF FIRST_VRAM1_OBJECT_STRUCT EQU 9
+; Each object struct gets a fixed 12-tile slot: structs below FIRST_VRAM1_OBJECT_STRUCT live in
+; VRAM bank 0 (standing at index*12, walking at +$80), the rest in bank 1 (walking at +$40).
+; With 9 in bank 0 and 5 in bank 1 that is $00-$6b/$80-$eb and $00-$3b/$40-$7b, which keeps
+; bank 0 $6c-$7f free for the follower's poke ball and $ec-$ff free for the emotes.
 
 ; object_struct OBJECT_DIRECTION values
 DEF OW_DOWN  EQU DOWN  << 2
@@ -95,7 +99,7 @@ DEF MAPOBJECT_SCRIPT_POINTER   rw ; a
 DEF MAPOBJECT_EVENT_FLAG       rw ; c
                                rb_skip 2
 DEF MAPOBJECT_LENGTH EQU _RS
-DEF NUM_OBJECTS EQU 18
+DEF NUM_OBJECTS EQU 19 ; map object 1 is reserved for the follower
 DEF PLAYER_OBJECT EQU 0
 
 ; SpriteMovementData struct members (see data/sprites/map_objects.asm)
@@ -150,6 +154,9 @@ DEF MAPOBJECT_SCREEN_HEIGHT EQU (SCREEN_HEIGHT / 2) + 2
 	const SPRITEMOVEDATA_BOULDERDUST          ; 22
 	const SPRITEMOVEDATA_GRASS                ; 23
 	const SPRITEMOVEDATA_SWIM_WANDER          ; 24
+	const SPRITEMOVEDATA_FOLLOWEROBJ          ; 25
+	const SPRITEMOVEDATA_POKEBALL_OPENING     ; 26
+	const SPRITEMOVEDATA_POKEBALL_CLOSING     ; 27
 DEF NUM_SPRITEMOVEDATA EQU const_value
 
 ; StepFunction_FromMovement.Pointers indexes (see engine/overworld/map_objects.asm)
@@ -182,6 +189,9 @@ DEF NUM_SPRITEMOVEDATA EQU const_value
 	const SPRITEMOVEFN_SPIN_COUNTERCLOCKWISE ; 19
 	const SPRITEMOVEFN_BOULDERDUST           ; 1a
 	const SPRITEMOVEFN_GRASS                 ; 1b
+	const SPRITEMOVEFN_FOLLOWER_OBJ          ; 1c
+	const SPRITEMOVEFN_POKEBALL_OPENING      ; 1d
+	const SPRITEMOVEFN_POKEBALL_CLOSING      ; 1e
 DEF NUM_SPRITEMOVEFN EQU const_value
 
 ; StepTypesJumptable indexes (see engine/overworld/map_objects.asm)
@@ -212,6 +222,9 @@ DEF NUM_SPRITEMOVEFN EQU const_value
 	const STEP_TYPE_17               ; 17
 	const STEP_TYPE_DELETE           ; 18
 	const STEP_TYPE_SKYFALL_TOP      ; 19
+	const STEP_TYPE_POKEBALL_OPENING ; 1a
+	const STEP_TYPE_POKEBALL_CLOSING ; 1b
+	const STEP_TYPE_NPC_JUMP_INPLACE ; 1c
 DEF NUM_STEP_TYPES EQU const_value
 
 ; ObjectActionPairPointers indexes (see engine/overworld/map_object_action.asm)
@@ -285,3 +298,12 @@ DEF NUM_FACINGS EQU const_value
 	const STEP_BACK_LEDGE    ; 7
 	const STEP_WALK_IN_PLACE ; 8
 DEF NUM_STEPS EQU const_value
+
+; MovementFunction_FollowerObj arguments (engine/overworld/map_objects.asm)
+	const_def
+	const FOLLOWERMOVE_NORMAL       ; 0
+	const FOLLOWERMOVE_SLIDE        ; 1
+	const FOLLOWERMOVE_BIG_STEP     ; 2
+	const FOLLOWERMOVE_STILL        ; 3
+	const FOLLOWERMOVE_PREPARE_JUMP ; 4
+DEF FOLLOWERMOVE_NUM_TYPES EQU const_value

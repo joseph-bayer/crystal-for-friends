@@ -20,4 +20,5 @@ Emotes:
 	emote FishingRodGFX,  2, $fc
 	emote BoulderDustGFX, 2, $fe
 	emote GrassRustleGFX, 1, $fe
+	emote AnimPokeBallSpriteGFX, 12, $6c ; free in VRAM bank 0 between the object standing frames ($00-$6b) and walking frames ($80+)
 	assert_table_length NUM_EMOTES

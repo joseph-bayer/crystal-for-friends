@@ -67,6 +67,7 @@ PushWindow::
 ExitMenu::
 	push af
 	farcall _ExitMenu
+	call UpdateFollowPalette
 	pop af
 	ret
 
@@ -80,6 +81,18 @@ CloseWindow::
 	call UpdateSprites
 	pop af
 	ret
+
+UpdateFollowPalette:
+; The lead Pokemon, and so the follower's colors, can change while a menu is open.
+; CSE assigns OBJ palette slots dynamically: OBJECT_PAL_INDEX holds the requested
+; PAL_OW_* color, and CheckForUsedObjPals maps it into OBJECT_PALETTE as an OAM
+; palette number. Writing the color straight to OBJECT_PALETTE recolors the follower.
+	ld a, [wObject1Sprite]
+	cp SPRITE_FOLLOWER
+	ret nz
+	call GetSpritePalette
+	ld [wObject1PalIndex], a
+	farjp CheckForUsedObjPals
 
 RestoreTileBackup::
 	call MenuBoxCoord2Tile

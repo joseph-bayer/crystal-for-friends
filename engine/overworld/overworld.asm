@@ -126,6 +126,9 @@ LoadMiscTiles:
 	bit SPRITES_SKIP_WALKING_GFX_F, a
 	ret nz
 
+	ld c, EMOTE_POKE_BALL
+	call LoadEmote
+
 	ld c, EMOTE_SHADOW
 	call LoadEmote
 	call GetMapEnvironment
@@ -143,6 +146,8 @@ SafeGetSprite:
 	ret
 
 GetSprite::
+	call GetFollowingSprite
+	ret c
 	call GetMonSprite
 	ret c
 
@@ -180,13 +185,13 @@ GetMonSprite:
 	jr z, .BreedMon2
 	cp SPRITE_VARS
 	jr nc, .Variable
-	jr .Icon
+	jr .pokemon_sprite
 
 .Normal:
 	and a
 	ret
 
-.Icon:
+.pokemon_sprite:
 	sub SPRITE_POKEMON
 	ld e, a
 	ld d, 0
@@ -235,9 +240,150 @@ GetMonSprite:
 	and a
 	ret
 
+GetFirstAliveMon::
+; Returns the species ID of the first party mon with HP > 0 in a
+; and its 1-based party slot in d. Falls back to the first mon.
+; Returns a = 0 if the party is empty.
+	ld a, [wPartyCount]
+	and a
+	ret z
+	inc a
+	ld d, 1
+	ld e, a
+	ld bc, wPartyMon1
+.loop
+	ld hl, MON_HP
+	add hl, bc
+	ld a, [hli]
+	push de
+	ld d, a
+	ld a, [hl]
+	or d
+	pop de
+	jr nz, .got_mon_struct
+	inc d
+	ld a, d
+	cp e
+	jr z, .none
+	ld hl, PARTYMON_STRUCT_LENGTH
+	add hl, bc
+	ld b, h
+	ld c, l
+	jr .loop
+.none
+	ld d, 1
+	ld a, [wPartySpecies]
+	ret
+.got_mon_struct
+	ld a, [bc]
+	ret
+
+SetFollowerFromParty::
+; Picks the follower from the party and locks its 8-bit ID so the
+; 16-bit conversion table can't evict it while it's on screen.
+; Returns a = species ID (0 if the party is empty).
+	call GetFirstAliveMon
+	and a
+	ret z
+	ld [wFollowerSpriteID], a
+	ld l, LOCKED_MON_ID_FOLLOWER
+	call LockPokemonID
+	ld a, d
+	ld [wFollowerPartyNum], a
+	ld a, [wFollowerSpriteID]
+	ret
+
+GetFollowingSprite:
+	cp SPRITE_FOLLOWER
+	jr nz, GetWalkingMonSprite.nope
+	call SetFollowerFromParty
+	and a
+; No party (or no living mon): there is no follower sprite to load. SPRITE_FOLLOWER has no
+; OverworldSprites entry, so fall back rather than running off the end of the table.
+	jr z, GetMonSprite.NoBreedmon
+	; fallthrough
+GetWalkingMonSprite:
+; Input: a = species ID (8-bit) of the follower.
+; Decompresses its walking sprite into wDecompressScratch.
+; Output: carry set, de = wDecompressScratch, c = 12 tiles, hl = 0:WALKING_SPRITE
+	push af
+	cp EGG
+	jr nz, .not_egg
+	ld hl, EggFollowingSpritePointer
+	jr .got_pointer
+
+.not_egg
+	call GetPokemonIndexFromID ; hl = 16-bit index
+	ld a, l
+	cp LOW(UNOWN)
+	jr nz, .not_unown
+	ld a, h
+	cp HIGH(UNOWN)
+	jr nz, .not_unown
+; Unown letters are stored in the form byte
+	ld a, [wFollowerPartyNum]
+	dec a
+	ld hl, wPartyMon1Form
+	call GetPartyLocation
+	ld a, [hl]
+	and FORM_MASK
+	ld e, a
+	ld d, 0
+	ld hl, UnownFollowingSpritePointers
+	jr .add_offset
+
+.not_unown
+	dec hl ; the table is 0-indexed
+	ld d, h
+	ld e, l
+	ld hl, FollowingSpritePointers
+.add_offset
+	add hl, de
+	add hl, de
+	add hl, de
+.got_pointer
+	assert BANK(FollowingSpritePointers) == BANK(UnownFollowingSpritePointers), \
+			"FollowingSpritePointers Bank is not equal to UnownFollowingSpritePointers"
+	ld a, BANK(FollowingSpritePointers)
+	push af
+	call GetFarByte
+	ld b, a
+	inc hl
+	pop af
+	call GetFarWord
+
+	ldh a, [rSVBK]
+	push af
+	ld a, BANK(wDecompressScratch)
+	ldh [rSVBK], a
+
+	push bc
+	ld a, b
+	ld de, wDecompressScratch
+	call FarDecompress
+	pop bc
+	ld de, wDecompressScratch
+
+	pop af
+	ldh [rSVBK], a
+
+	ld h, 0
+	ld c, 12
+	ld l, WALKING_SPRITE
+
+	pop af
+
+	scf
+	ret
+.nope
+	and a
+	ret
+
 _DoesSpriteHaveFacings::
 ; Checks to see whether we can apply a facing to a sprite.
 ; Returns carry unless the sprite is a Pokemon or a Still Sprite.
+	cp SPRITE_FOLLOWER
+	jr z, .follower
 	cp SPRITE_POKEMON
 	jr nc, .only_down
 
@@ -257,12 +403,17 @@ _DoesSpriteHaveFacings::
 	scf
 	ret
 
+.follower
+	ld a, WALKING_SPRITE
+
 .only_down
 	and a
 	ret
 
 _GetSpritePalette::
 	ld a, c
+	cp SPRITE_FOLLOWER
+	jr z, .follower
 	call GetMonSprite
 	jr c, .is_pokemon
 
@@ -279,6 +430,44 @@ _GetSpritePalette::
 	xor a
 	ld c, a
 	ret
+
+.follower
+; The follower uses its party menu icon palette (already shiny-aware),
+; mapped onto an overworld palette.
+	call SetFollowerFromParty
+	and a
+	jr z, .is_pokemon
+	push de
+	ld e, a
+	ld a, [wCurPartySpecies]
+	push af
+	ld a, e
+	ld [wCurPartySpecies], a
+	ld a, [wFollowerPartyNum]
+	dec a
+	ld hl, wPartyMon1Form
+	call GetPartyLocation
+	farcall GetMenuMonIconPalette ; a = PAL_ICON_*
+	ld e, a
+	pop af
+	ld [wCurPartySpecies], a
+	ld d, 0
+	ld hl, FollowingPalLookupTable
+	add hl, de
+	ld c, [hl]
+	pop de
+	ret
+
+FollowingPalLookupTable:
+; maps PAL_ICON_* (party menu icon palettes) to PAL_OW_* (overworld palettes)
+	db PAL_OW_RED    ; PAL_ICON_RED
+	db PAL_OW_BLUE   ; PAL_ICON_BLUE
+	db PAL_OW_GREEN  ; PAL_ICON_GREEN
+	db PAL_OW_BROWN  ; PAL_ICON_BROWN
+	db PAL_OW_PINK   ; PAL_ICON_PINK
+	db PAL_OW_GRAY   ; PAL_ICON_GRAY
+	db PAL_OW_TEAL   ; PAL_ICON_TEAL
+	db PAL_OW_PURPLE ; PAL_ICON_PURPLE
 
 AddSpriteGFX:
 ; Add any new sprite ids to a list of graphics to be loaded.
@@ -421,7 +610,14 @@ endr
 	swap a
 	rra
 	ldh [rVBK], a
+; the follower's sprite is decompressed into wDecompressScratch (WRAMX)
+	ldh a, [rSVBK]
+	push af
+	ld a, BANK(wDecompressScratch)
+	ldh [rSVBK], a
 	call Get2bpp
+	pop af
+	ldh [rSVBK], a
 	pop af
 	ldh [rVBK], a
 	ret

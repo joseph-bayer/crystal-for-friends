@@ -5082,9 +5082,16 @@ CamperGroup:
 	db -1 ; end
 
 	next_list_item ; CAMPER (2)
-	db "TODD@", TRAINERTYPE_NORMAL
+	db "TODD@", TRAINERTYPE_FORM
 	db 15
-	dw AZUMARILL
+	dw SCYTHER
+	db SCYTHER_TEAL_FORM
+	db 15
+	dw SCYTHER
+	db SCYTHER_TEAL_FORM | SHINY_MASK
+	db 15
+	dw SCYTHER
+	db SHINY_MASK
 	db -1 ; end
 
 	next_list_item ; CAMPER (3)

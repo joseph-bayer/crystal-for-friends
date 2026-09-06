@@ -236,6 +236,15 @@ ScriptCommandTable:
 	dw Script_checkmaplockeditems        ; ad
 	dw Script_givepokemove               ; ae
 	dw Script_domysterygift              ; af
+	dw Script_freezefollower             ; b6
+	dw Script_unfreezefollower           ; b7
+	dw Script_getfollowerdirection       ; b8
+	dw Script_followcry                  ; b3
+	dw Script_stowfollower               ; b4
+	dw Script_appearfollower             ; b5
+	dw Script_appearfolloweronestep      ; b6
+	dw Script_savefollowercoords         ; b7
+	dw Script_silentstowfollower         ; b8
 	assert_table_length NUM_EVENT_COMMANDS
 
 StartScript:
@@ -759,8 +768,6 @@ GetScriptObject:
 	and a ; PLAYER?
 	ret z
 	cp LAST_TALKED
-	ret z
-	dec a
 	ret
 
 Script_setlasttalked:
@@ -917,6 +924,9 @@ Script_variablesprite:
 
 Script_appear:
 	rst GetScriptByte
+	ld b, a
+Script_appear_skipinput::
+	ld a, b
 	call GetScriptObject
 	call UnmaskCopyMapObjectStruct
 	ldh a, [hMapObjectIndex]
@@ -1182,7 +1192,7 @@ Script_memcall:
 	ld d, [hl]
 	ld e, a
 	; fallthrough
-ScriptCall:
+ScriptCall::
 	ld hl, wScriptStackSize
 	ld a, [hl]
 	cp 5
@@ -2189,6 +2199,8 @@ Script_deactivatefacing:
 	jr z, .no_time
 	ld [wScriptDelay], a
 .no_time
+; fallthrough
+DoScriptWait:
 	ld a, SCRIPT_WAIT
 	ld [wScriptMode], a
 	jmp StopScript
@@ -2446,4 +2458,36 @@ Script_domysterygift:
 	
 	; Call the enhanced mystery gift function
 	farcall DoNPCMysteryGift
-	ret
+
+Script_freezefollower:
+	farjp _FreezeFollower
+
+Script_unfreezefollower:
+	farjp _UnfreezeFollower
+
+Script_getfollowerdirection:
+	jmp Script_GetFollowerDirectionFromPlayer
+
+Script_followcry:
+	ld a, [wFollowerSpriteID]
+	jmp PlayMonCry
+
+Script_stowfollower:
+	farcall _StowFollower
+	jmp DoScriptWait
+
+Script_appearfollower:
+	farcall _AppearFollower
+	jmp DoScriptWait
+
+Script_appearfolloweronestep:
+	farcall _AppearFollowerOneStep
+	jmp DoScriptWait
+
+Script_savefollowercoords:
+	farjp _SaveFollowerCoords
+
+Script_silentstowfollower:
+	xor a
+	ld [wScriptDelay], a
+	farjp _SilentStowFollower

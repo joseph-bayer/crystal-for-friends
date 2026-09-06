@@ -1107,4 +1107,49 @@ MACRO domysterygift
 	db \1 ; mystery gift npc id
 ENDM
 
+	const freezefollower_command ; $b6
+MACRO freezefollower
+	db freezefollower_command
+ENDM
+
+	const unfreezefollower_command ; $b7
+MACRO unfreezefollower
+	db unfreezefollower_command
+ENDM
+
+	const getfollowerdirection_command ; $b8
+MACRO getfollowerdirection
+	db getfollowerdirection_command
+ENDM
+
+	const followcry_command ; $b3
+MACRO followcry
+	db followcry_command
+ENDM
+
+	const stowfollower_command ; $b4
+MACRO stowfollower
+	db stowfollower_command
+ENDM
+
+	const appearfollower_command ; $b5
+MACRO appearfollower
+	db appearfollower_command
+ENDM
+
+	const appearfolloweronestep_command ; $b6
+MACRO appearfolloweronestep
+	db appearfolloweronestep_command
+ENDM
+
+	const savefollowercoords_command ; $b7
+MACRO savefollowercoords
+	db savefollowercoords_command
+ENDM
+
+	const silentstowfollower_command ; $b8
+MACRO silentstowfollower
+	db silentstowfollower_command
+ENDM
+
 DEF NUM_EVENT_COMMANDS EQU const_value

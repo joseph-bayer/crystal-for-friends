@@ -130,7 +130,8 @@ wMapTimeOfDay:: db
 
 wPalFlags:: db
 
-	ds 2
+wFollowerSpriteID:: db
+wFollowerPartyNum:: db
 
 wPrinterConnectionOpen:: db
 wPrinterOpcode:: db
@@ -147,6 +148,7 @@ wLinkMode::
 	db
 
 wScriptVar:: db
+wScriptVar2:: db
 
 wPlayerNextMovement:: db
 wPlayerMovement:: db
@@ -2633,6 +2635,8 @@ wStartSecond:: db
 
 wRTC:: ds 4
 
+wFollowerNextMovement:: db
+
 wDST::
 ; bit 7: dst
 	db
@@ -2646,6 +2650,7 @@ wGameTimeFrames::  db
 
 wCurDay:: db
 
+wFollowerFlags:: db
 wObjectFollow_Leader:: db
 wObjectFollow_Follower:: db
 wCenteredObject:: db
@@ -2747,7 +2752,7 @@ wPokegearFlags::
 	db
 wRadioTuningKnob:: db
 wLastDexMode:: db
-
+wFollowerState:: db
 wWhichRegisteredItem:: db
 wRegisteredItem:: db
 

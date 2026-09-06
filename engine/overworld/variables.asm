@@ -65,6 +65,7 @@ _GetVarAction::
 	dwb wBuenasPassword,                RETVAR_ADDR_DE
 	dwb wKenjiBreakTimer,               RETVAR_STRBUF2
 	dwb .CountUncaughtMons,             RETVAR_EXECUTE
+	dwb wFollowerState,                 RETVAR_ADDR_DE
 
 .CountCaughtMons:
 ; Caught mons. Saturate at 255.

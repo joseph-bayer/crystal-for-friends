@@ -63,3 +63,5 @@ MapSetupCommands:
 	add_mapsetup EnableDynPalUpdates ; 30
 	add_mapsetup EnableDynPalUpdatesNoApply ; 31
 	add_mapsetup DeferredLoadMapGraphics ; 32
+	add_mapsetup MapPlayerCoordWarped ; 33
+	add_mapsetup MapPlayerCoordConnected ; 34
