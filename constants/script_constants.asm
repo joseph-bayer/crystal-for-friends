@@ -142,7 +142,7 @@ DEF NUM_BGEVENTS EQU const_value
 	const OBJECTTYPE_SCRIPT
 	const OBJECTTYPE_ITEMBALL
 	const OBJECTTYPE_TRAINER
-	const OBJECTTYPE_3
+	const OBJECTTYPE_WILDMON ; a wandering Pokemon; walking beside it starts a wild battle
 	const OBJECTTYPE_4
 	const OBJECTTYPE_5
 	const OBJECTTYPE_6

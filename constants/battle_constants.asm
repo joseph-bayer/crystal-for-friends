@@ -97,6 +97,7 @@ DEF MAX_STAT_VALUE EQU 999
 	const BATTLETYPE_FORCEITEM
 	const BATTLETYPE_CELEBI
 	const BATTLETYPE_SUICUNE
+	const BATTLETYPE_OVERWORLD_MON ; the mon was rolled in the overworld; read it, do not roll
 
 ; BattleVarPairs indexes (see home/battle_vars.asm)
 	const_def

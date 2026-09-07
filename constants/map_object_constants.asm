@@ -157,6 +157,8 @@ DEF MAPOBJECT_SCREEN_HEIGHT EQU (SCREEN_HEIGHT / 2) + 2
 	const SPRITEMOVEDATA_FOLLOWEROBJ          ; 25
 	const SPRITEMOVEDATA_POKEBALL_OPENING     ; 26
 	const SPRITEMOVEDATA_POKEBALL_CLOSING     ; 27
+	const SPRITEMOVEDATA_WANDER_NOCLIP        ; 28
+	const SPRITEMOVEDATA_SWIM_WANDER_NOCLIP   ; 29
 DEF NUM_SPRITEMOVEDATA EQU const_value
 
 ; StepFunction_FromMovement.Pointers indexes (see engine/overworld/map_objects.asm)
@@ -192,6 +194,7 @@ DEF NUM_SPRITEMOVEDATA EQU const_value
 	const SPRITEMOVEFN_FOLLOWER_OBJ          ; 1c
 	const SPRITEMOVEFN_POKEBALL_OPENING      ; 1d
 	const SPRITEMOVEFN_POKEBALL_CLOSING      ; 1e
+	const SPRITEMOVEFN_MON_WANDER            ; 1f
 DEF NUM_SPRITEMOVEFN EQU const_value
 
 ; StepTypesJumptable indexes (see engine/overworld/map_objects.asm)

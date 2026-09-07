@@ -186,6 +186,7 @@ MapSetupScript_Continue:
 	mapsetup LoadMapAttributes_SkipObjects
 	mapsetup GetMapScreenCoords
 	mapsetup HandleContinueMap
+	mapsetup RollOverworldMonsOnContinue ; the map objects come back from the save; these do not
 	mapsetup LoadBlockData
 	mapsetup LoadConnectionBlockData
 	mapsetup BufferScreen

@@ -241,10 +241,10 @@ GetMonSprite:
 	jr z, .NoBreedmon
 
 	farcall LoadOverworldMonIcon
-
-	lb hl, 0, WALKING_SPRITE
-	scf
-	ret
+; An icon is 8 tiles; an overworld sprite is 12 standing and 12 walking. Handing the 8 straight to
+; the loader leaves it copying whatever sits after them in the icon table -- which is invisible on
+; a mon that only ever faces the camera, and is the garbage you see the moment one turns or walks.
+	jmp ExpandMonIconToSprite
 
 .Variable:
 	sub SPRITE_VARS
@@ -412,9 +412,9 @@ GetFollowingSprite:
 ; bottom-right. An overworld sprite wants 12 standing tiles - facing down at $00, up at $04,
 ; left/right at $08 - followed by the same 12 walking tiles at +$80. Copying frame 1 into all
 ; three standing facings and frame 2 into all three walking facings makes the engine's own walk
-; cycle alternate the icon's two frames, whichever way the follower is facing.
-DEF FOLLOWER_ICON_FRAME_SIZE EQU 4 tiles
-DEF FOLLOWER_ICON_FACINGS    EQU 3
+; cycle alternate the icon's two frames, whichever way the mon is facing.
+DEF MON_ICON_FRAME_SIZE EQU 4 tiles
+DEF MON_ICON_FACINGS    EQU 3
 
 GetFollowerIconSprite:
 ; in: a = the follower's species ID
@@ -430,7 +430,12 @@ GetFollowerIconSprite:
 	ld e, a
 	ld d, 0 ; not a day-care mon, so wForm above is used as-is
 	farcall LoadOverworldMonIcon ; de = icon graphics, b = its bank, c = 8 tiles
+	; fallthrough
 
+ExpandMonIconToSprite::
+; Build a full overworld sprite out of a party menu icon.
+; in:  de = the icon's two 2x2 frames, b = the bank they are in
+; out: the GetSprite contract - de = graphics, b = bank, c = tile count, l = type, carry set
 	ldh a, [rSVBK]
 	push af
 	ld a, BANK(wDecompressScratch)
@@ -441,7 +446,7 @@ GetFollowerIconSprite:
 	ld a, b ; a = icon bank
 	ld de, wDecompressScratch
 	call .CopyFrameToEachFacing ; frame 1 becomes every standing facing
-	ld bc, FOLLOWER_ICON_FRAME_SIZE
+	ld bc, MON_ICON_FRAME_SIZE
 	add hl, bc ; hl = icon frame 2
 	call .CopyFrameToEachFacing ; frame 2 becomes every walking facing
 
@@ -449,7 +454,7 @@ GetFollowerIconSprite:
 ; then reads as a different pose from walking away, rather than the two being identical.
 	ld hl, wDecompressScratch
 	call .MirrorFrameInPlace
-	ld hl, wDecompressScratch + FOLLOWER_ICON_FACINGS * FOLLOWER_ICON_FRAME_SIZE
+	ld hl, wDecompressScratch + MON_ICON_FACINGS * MON_ICON_FRAME_SIZE
 	call .MirrorFrameInPlace
 
 	pop af
@@ -458,7 +463,7 @@ GetFollowerIconSprite:
 	ldh a, [hROMBank]
 	ld b, a ; the graphics are in WRAM now, so any valid bank will do for Get2bpp
 	ld de, wDecompressScratch
-	ld c, FOLLOWER_ICON_FACINGS * 4
+	ld c, MON_ICON_FACINGS * 4
 	lb hl, 0, WALKING_SPRITE
 	scf
 	ret
@@ -467,12 +472,12 @@ GetFollowerIconSprite:
 ; in: a = bank, hl = one 2x2 frame, de = destination
 ; out: de advanced past the block, a and hl unchanged
 	push hl
-	ld c, FOLLOWER_ICON_FACINGS
+	ld c, MON_ICON_FACINGS
 .loop
 	push bc
 	push hl
 	push af
-	ld bc, FOLLOWER_ICON_FRAME_SIZE
+	ld bc, MON_ICON_FRAME_SIZE
 	call FarCopyBytes ; copies bc bytes from a:hl to de, advancing de
 	pop af
 	pop hl

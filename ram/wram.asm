@@ -3098,6 +3098,35 @@ wPokemonDataEnd::
 wGameDataEnd::
 
 
+SECTION "Overworld Wild Mon", WRAMX, BANK[1]
+
+; The rolled encounters standing on the current map, one per SPRITE_OW_MON_* slot. Filled when the
+; map is entered and read by both the overworld sprite and the battle.
+;
+; Deliberately its own section rather than a spot inside wGameData: this is per-visit state, and
+; the free space at the top of bank 1 sits past wGameDataEnd, so it costs nothing in the save and
+; shifts nothing. It cannot live in a SECTION UNION either -- the battle has to read it after
+; something else would have reused that memory.
+wOverworldMonEncounters:: ds NUM_OW_MON_SLOTS * OW_MON_ENCOUNTER_LENGTH
+
+; Which slot the battle now starting is against, 1-based, 0 for none, and the map object it came
+; from. hLastTalked is what `disappear LAST_TALKED` reads, and a battle is free to clobber HRAM,
+; so the object index is kept here and put back afterwards.
+wOverworldMonBattleSlot:: db
+wOverworldMonBattleObject:: db
+
+; Scratch for RollOverworldMons. The roll is assembled here and copied into the slot in one go, so
+; that a half-rolled encounter is never visible to anything.
+wOverworldMonRollBuffer:: ds OW_MON_ENCOUNTER_LENGTH
+wOverworldMonRollCount:: db   ; how many this map can have out at once
+wOverworldMonRollChance:: db  ; the chance each one shows up
+wOverworldMonRollSlot:: db    ; the 0-based slot being filled
+
+; Set when a roll turns up a shiny, cleared once the chime has played. The sound cannot be played
+; at roll time -- that happens inside HandleNewMap, with InitSound and the map music still to come.
+wOverworldMonShinyPending:: db
+
+
 SECTION "Pic Animations", WRAMX
 
 wTempTilemap::

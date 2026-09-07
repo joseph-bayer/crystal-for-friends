@@ -158,7 +158,9 @@ if DEF(_DEBUG)
 	givepoke AMPHAROS, 50
 	givepoke GENGAR, 50
 	; A form Pikachu to make the follower, for the doll test below.
-	givepoke PIKACHU, 50, NO_ITEM, PIKACHU_FLY_FORM
+	; givepoke PIKACHU, 50, NO_ITEM, PIKACHU_FLY_FORM
+	; An egg, for testing egg followers -- select it in the party and it walks around with you.
+	giveegg TOGEPI, EGG_LEVEL
 	; givepoke DITTO, 50
 
 	; DEBUG: CHECK If two Pokemon with same DEF and SPEC DVs can breed

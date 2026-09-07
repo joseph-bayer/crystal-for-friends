@@ -256,6 +256,9 @@ PlayerEvents:
 	call CheckTrainerEvent
 	jr c, .ok
 
+	call CheckWildMonEvent
+	jr c, .ok
+
 	call CheckTileEvent
 	jr c, .ok
 
@@ -555,7 +558,7 @@ ObjectEventTypeArray:
 	dbw OBJECTTYPE_ITEMBALL, .itemball
 	dbw OBJECTTYPE_TRAINER, .trainer
 	; the remaining four are dummy events
-	dbw OBJECTTYPE_3, .three
+	dbw OBJECTTYPE_WILDMON, .wildmon
 	dbw OBJECTTYPE_4, .four
 	dbw OBJECTTYPE_5, .five
 	dbw OBJECTTYPE_6, .six
@@ -611,7 +614,21 @@ ObjectEventTypeArray:
 	scf
 	ret
 
-.three
+.wildmon
+; Facing one and pressing A starts the battle, the same as walking onto it. bc is the map object
+; and hLastTalked is already set, which is everything the battle needs.
+	ld hl, MAPOBJECT_SPRITE
+	add hl, bc
+	ld a, [hl]
+	call TryClaimOverworldMonBattle
+	jr nc, .no_wildmon
+	ldh a, [hLastTalked]
+	ld [wOverworldMonBattleObject], a
+	ld a, BANK(OverworldMonBattleScript)
+	ld hl, OverworldMonBattleScript
+	jmp CallScript
+
+.no_wildmon
 	xor a
 	ret
 
@@ -1206,6 +1223,164 @@ RandomEncounter::
 WildBattleScript:
 	randomwildmon
 	startbattle
+	reloadmapafterbattle
+	end
+
+TryClaimOverworldMonBattle:
+; in:  a = a sprite id
+; out: carry, and the slot recorded in wOverworldMonBattleSlot, if that sprite names a mon slot
+;      holding a rolled encounter
+; Both halves of the test matter: an OBJECTTYPE_WILDMON on some other sprite is a map data
+; mistake, and an empty slot means the roll decided nobody appears. Neither should start a battle
+; against species zero.
+	sub SPRITE_OW_MON
+	cp NUM_OW_MON_SLOTS
+	ret nc
+	ld e, a
+	inc a
+	ld [wOverworldMonBattleSlot], a ; 1-based, so that 0 can mean "no overworld mon battle"
+	farcall GetOverworldMonEncounter
+	ld a, [hli]
+	or [hl]
+	ret z
+	scf
+	ret
+
+CheckWildMonEvent::
+; Walking onto a wandering Pokemon starts a wild battle. Shaped like _CheckTrainerBattle, but it
+; wants the player's own tile rather than a line of sight, and there is no approach cutscene.
+;
+; It also carries the shiny chime. PlayerEvents is the first thing that runs once the player
+; actually has control -- past the fade, past the music starting, and it bows out entirely while a
+; script is running -- so a sound played here is heard, which one played at roll time would not be.
+	ld a, [wOverworldMonShinyPending]
+	and a
+	jr z, .no_chime
+	xor a
+	ld [wOverworldMonShinyPending], a
+	ld de, SFX_SHINE
+	call PlaySFX
+
+.no_chime
+	ld a, 1
+	ld de, wMap1Object
+.loop
+	push af
+	push de
+
+; Has a sprite
+	ld hl, MAPOBJECT_SPRITE
+	add hl, de
+	ld a, [hl]
+	and a
+	jr z, .next
+
+; Is a wandering Pokemon
+	ld hl, MAPOBJECT_TYPE
+	add hl, de
+	ld a, [hl]
+	cp OBJECTTYPE_WILDMON
+	jr nz, .next
+
+; Is on screen
+	ld hl, MAPOBJECT_OBJECT_STRUCT_ID
+	add hl, de
+	ld a, [hl]
+	cp -1
+	jr z, .next
+
+; Has finished moving. Its map coordinates change when a step begins, not when the sprite gets
+; there, so without this a mon walking onto the player starts the battle while it is still visibly
+; a tile away -- the same thing that made a trigger distance of 1 read badly.
+	call GetObjectStruct
+	ld hl, OBJECT_WALKING
+	add hl, bc
+	ld a, [hl]
+	cp STANDING
+	jr nz, .next
+
+; Is on the player's tile
+	call .CheckDistance
+	jr nc, .next
+
+; And its sprite names a slot that actually holds a rolled encounter
+	ld hl, MAPOBJECT_SPRITE
+	add hl, de
+	ld a, [hl]
+	call TryClaimOverworldMonBattle
+	jr nc, .next
+
+	pop de
+	pop af
+	jr .start
+
+.next
+	pop de
+	ld hl, MAPOBJECT_LENGTH
+	add hl, de
+	ld d, h
+	ld e, l
+
+	pop af
+	inc a
+	cp NUM_OBJECTS
+	jr nz, .loop
+	xor a
+	ret
+
+.start
+; a = the map object index, and the slot is already recorded.
+	ldh [hLastTalked], a
+	ld [wOverworldMonBattleObject], a
+	push bc
+	ld bc, wPlayerStruct
+	farcall ResetObject
+	pop bc
+	ld a, BANK(OverworldMonBattleScript)
+	ld hl, OverworldMonBattleScript
+	call CallScript
+	scf
+	ret
+
+.CheckDistance:
+; in: bc = an object struct. Returns carry when it is within OW_MON_TRIGGER_DISTANCE steps of the
+; player. Steps, not line of sight -- which way either of them faces does not matter.
+; de is the caller's map object pointer and d is the only scratch register free here, so it is
+; saved rather than borrowed: reading the sprite id through a half-overwritten pointer is exactly
+; the sort of thing that looks like "the trigger just does not fire".
+	push de
+	ld hl, OBJECT_MAP_X
+	add hl, bc
+	ld a, [wPlayerMapX]
+	sub [hl]
+	call .Abs
+	ld d, a
+	ld hl, OBJECT_MAP_Y
+	add hl, bc
+	ld a, [wPlayerMapY]
+	sub [hl]
+	call .Abs
+	add d
+	pop de
+	cp OW_MON_TRIGGER_DISTANCE + 1
+	ret
+
+.Abs:
+	bit 7, a
+	ret z
+	cpl
+	inc a
+	ret
+
+OverworldMonBattleScript:
+; Any finished battle spends the mon -- beaten, caught or run from, it is gone until the route is
+; left and re-entered. `disappear` both deletes the object and sets its event flag, and the flag is
+; one of the EVENT_TEMPORARY_UNTIL_MAP_RELOAD_* set, which clears on the next HandleNewMap -- the
+; same boundary the reroll happens on.
+	callasm SetUpOverworldMonBattle
+	startbattle
+	callasm EndOverworldMonBattle
+	disappear LAST_TALKED
 	reloadmapafterbattle
 	end
 

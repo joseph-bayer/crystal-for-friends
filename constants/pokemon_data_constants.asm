@@ -186,6 +186,16 @@ DEF GIFT_SHINY_NUMERATOR EQU 128 ; 128/65536 = 1/512
 DEF LEGENDARY_SHINY_NUMERATOR EQU 128 ; 128/65536 = 1/512
 DEF BUG_CATCHING_CONTEST_SHINY_NUMERATOR EQU 128 ; 128/65536 = 1/512
 DEF SHINY_EGG_NUMERATOR EQU 16 ; 16/65536 = 1/4096  
+DEF OVERWORLD_MON_SHINY_NUMERATOR EQU 128 ; 128/65536 = 1/512, after the 1/256 check above
+
+; OW_PERK_EXTRA_SHINY skips the initial 1/256 check, so this numerator is out of 256 on its own rather
+; than 65536. Done this way so it can be tweaked to higher odds above 1/256
+DEF OVERWORLD_MON_EXTRA_SHINY_NUMERATOR EQU 1 ; 1/256
+
+; The rest of what makes a wandering Pokemon worth chasing. A grass encounter rolls each DV freely
+; and holds an item half the time; these are the same rolls with a thumb on the scale.
+DEF OVERWORLD_MON_MIN_DV EQU 10 ; out of 15, applied to each DV as a floor
+DEF OVERWORLD_MON_NO_ITEM_CHANCE EQU 20 percent ; against a grass encounter's 50%
 
 ; These numerators do not have a preceding 1/256 check, resulting in a denominator of 256.
 DEF SHINY_EGG_ONE_SHINY_PARENT_NUMERATOR EQU 4 ; 4/256 = 1/64

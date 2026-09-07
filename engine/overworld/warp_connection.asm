@@ -4,6 +4,10 @@ HandleNewMap:
 	call GetCurrentMapSceneID
 	call ResetBikeFlags
 	call ResetMapLockedIDs
+; After ResetMapBufferEventFlags, which clears the flags the wandering mon are hidden with, and
+; before the objects load. This is the only place they are rolled, which is what makes a route
+; hold still through battles and menus and reroll only when it is left and re-entered.
+	farcall RollOverworldMons
 	ld a, MAPCALLBACK_NEWMAP
 	call RunMapCallback
 HandleContinueMap:

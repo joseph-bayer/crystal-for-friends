@@ -49,6 +49,34 @@ MACRO assert_list_length
 		"{CURRENT_LIST_START}: expected {d:x} entries, got {d:list_index}"
 ENDM
 
+MACRO def_ow_wildmons
+;\1: map id
+; Opens one area's roster of wandering Pokemon. Fixed width like the grass tables, so the reader
+; can index a time of day rather than walk the list.
+	REDEF CURRENT_OW_WILDMONS_LABEL EQUS "._def_ow_wildmons_\1"
+	REDEF CURRENT_OW_WILDMONS_MAP EQUS "\1"
+	{CURRENT_OW_WILDMONS_LABEL}:
+	map_id \1
+ENDM
+
+MACRO ow_wildmon
+;\1: weight, out of 100 within its time of day
+;\2: species
+;\3: level
+;\4: form byte: a *_FORM constant, optionally | SHINY_MASK for one that is always shiny
+;\5: OW_PERK_* flags, or 0
+;\6: a move it always knows on top of its level-up set, or NO_MOVE
+	db \1
+	dw \2
+	db \3, \4, \5
+	dw \6
+ENDM
+
+MACRO end_ow_wildmons
+	assert OW_WILDDATA_LENGTH == @ - {CURRENT_OW_WILDMONS_LABEL}, \
+		"def_ow_wildmons {CURRENT_OW_WILDMONS_MAP}: expected {d:OW_WILDDATA_LENGTH} bytes"
+ENDM
+
 MACRO def_grass_wildmons
 ;\1: map id
 	REDEF CURRENT_GRASS_WILDMONS_MAP EQUS "\1"

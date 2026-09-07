@@ -6011,6 +6011,18 @@ LoadEnemyMon:
 	jr .UpdateItem
 
 .WildItem:
+; An overworld mon brought its item with it -- everything about it was decided when it appeared on
+; the map, so that the sprite you walked up to and the mon you are fighting are the same one.
+	ld a, [wBattleType]
+	cp BATTLETYPE_OVERWORLD_MON
+	jr nz, .not_overworld_mon_item
+	farcall GetOverworldMonBattleEncounter ; hl = the rolled encounter
+	ld bc, OW_MON_ITEM
+	add hl, bc
+	ld b, [hl]
+	jr .UpdateItem
+
+.not_overworld_mon_item
 ; In a wild battle, we pull from the item slots in BaseData
 
 ; Force Item1
@@ -6094,6 +6106,17 @@ LoadEnemyMon:
 ; Roaming monsters (Entei, Raikou) work differently
 ; They have their own structs, which are shorter than normal
 	ld a, [wBattleType]
+	cp BATTLETYPE_OVERWORLD_MON
+	jr nz, .not_overworld_mon_dvs
+	farcall GetOverworldMonBattleEncounter
+	ld bc, OW_MON_DVS
+	add hl, bc
+	ld a, [hli]
+	ld b, a
+	ld c, [hl]
+	jr .UpdateDVs
+
+.not_overworld_mon_dvs
 	cp BATTLETYPE_ROAMING
 	jr nz, .GenerateDVs
 
@@ -6388,6 +6411,7 @@ LoadEnemyMon:
 	ld [wSkipMovesBeforeLevelUp], a
 ; Fill moves based on level
 	predef FillMoves
+	farcall ApplyOverworldMonMove ; a wandering mon may have been rolled with one more
 
 .PP:
 ; Trainer battle?
@@ -6464,6 +6488,19 @@ LoadEnemyMon:
 
 .generate_shininess
 	ld a, [wBattleType]
+	cp BATTLETYPE_OVERWORLD_MON
+	jr nz, .not_overworld_mon_form
+; The form byte carries the cosmetic form *and* the shiny bit, and it was settled when the mon
+; appeared on the map. Taking it whole is what stops an ordinary-looking sprite from turning into
+; a shiny -- or into a different form -- the moment the battle starts.
+	farcall GetOverworldMonBattleEncounter
+	ld bc, OW_MON_FORM
+	add hl, bc
+	ld a, [hl]
+	ld [wEnemyMonForm], a
+	jmp .Finish
+
+.not_overworld_mon_form
 	cp BATTLETYPE_FORCESHINY
 	jr nz, .generate_roam_mon_shininess
 	ld a, [wEnemyMonForm]

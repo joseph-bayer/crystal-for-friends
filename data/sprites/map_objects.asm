@@ -322,6 +322,27 @@ SpriteMovementData::
 	db HIGH_PRIORITY ; flags2
 	db 0 ; palette flags
 
+; SPRITEMOVEDATA_WANDER_NOCLIP
+; Wanders like SPRITEMOVEDATA_WANDER, but NOCLIP_OBJS lets it share a tile with another object --
+; which for a wandering Pokemon means it is willing to walk onto the player, and that is what
+; starts the battle. Terrain still stops it; only objects are ignored.
+	db SPRITEMOVEFN_MON_WANDER ; movement function
+	db DOWN ; facing
+	db OBJECT_ACTION_STAND ; action
+	db NOCLIP_OBJS ; flags1
+	db 0 ; flags2
+	db 0 ; palette flags
+
+; SPRITEMOVEDATA_SWIM_WANDER_NOCLIP
+; The water version of the above. SWIMMING keeps it off dry land the way NOCLIP_OBJS keeps it from
+; minding the player -- terrain still confines it, objects no longer do.
+	db SPRITEMOVEFN_MON_WANDER ; movement function
+	db DOWN ; facing
+	db OBJECT_ACTION_STAND ; action
+	db NOCLIP_OBJS ; flags1
+	db 0 ; flags2
+	db SWIMMING ; palette flags
+
 	assert_table_length NUM_SPRITEMOVEDATA
 
 ; unused

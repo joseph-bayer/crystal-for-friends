@@ -65,3 +65,4 @@ MapSetupCommands:
 	add_mapsetup DeferredLoadMapGraphics ; 32
 	add_mapsetup MapPlayerCoordWarped ; 33
 	add_mapsetup MapPlayerCoordConnected ; 34
+	add_mapsetup RollOverworldMonsOnContinue ; 35

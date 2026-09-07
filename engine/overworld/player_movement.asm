@@ -681,6 +681,12 @@ ENDM
 	ld a, [hl]
 	cp SPRITE_FOLLOWER
 	jr z, .no_npc
+; A wandering Pokemon is walked onto rather than bumped into -- standing on its tile is what
+; starts the battle. Only the player passes through: other NPCs still route around it, the same
+; way they do around the follower.
+	sub SPRITE_OW_MON
+	cp NUM_OW_MON_SLOTS
+	jr c, .no_npc
 
 	call .CheckStrengthBoulder
 	jr c, .no_bump

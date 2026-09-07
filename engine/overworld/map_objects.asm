@@ -30,7 +30,30 @@ HandleObjectStep:
 	call CheckObjectStillVisible
 	ret c
 	call HandleStepType
+	call KeepOverworldMonAnimating
 	jmp HandleObjectAction
+
+KeepOverworldMonAnimating:
+; A wandering Pokemon is drawn from a two-frame icon, so standing still has to mean cycling those
+; two frames the way a follower does, not holding frame one.
+;
+; This cannot live in the movement function, because a finished step never reaches it:
+; StepFunction_ContinueWalk jumps straight into RandomStepDuration_Slow, and that parks the object
+; on OBJECT_ACTION_STAND on its way into STEP_TYPE_SLEEP. Promoting the action here, every frame,
+; catches that path and any other that ever stands one of these still.
+	ld hl, OBJECT_SPRITE
+	add hl, bc
+	ld a, [hl]
+	sub SPRITE_OW_MON
+	cp NUM_OW_MON_SLOTS
+	ret nc
+	ld hl, OBJECT_ACTION
+	add hl, bc
+	ld a, [hl]
+	cp OBJECT_ACTION_STAND
+	ret nz
+	ld [hl], OBJECT_ACTION_FOLLOWER_IDLE
+	ret
 
 CheckObjectStillVisible:
 	ld hl, OBJECT_FLAGS2
@@ -687,6 +710,7 @@ StepFunction_FromMovement:
 	dw MovementFunction_FollowerObj          ; 1c
 	dw MovementFunction_Pokeball_Opening     ; 1d
 	dw MovementFunction_Pokeball_Closing     ; 1e
+	dw MovementFunction_MonWander            ; 1f
 	assert_table_length NUM_SPRITEMOVEFN
 
 MovementFunction_RandomWalkY:
@@ -707,6 +731,30 @@ MovementFunction_RandomWalkXY:
 	ldh a, [hRandomAdd]
 	and %00000011
 	jmp _RandomWalkContinue
+
+MovementFunction_MonWander:
+; A wandering Pokemon's random walk: MovementFunction_RandomWalkXY, except that it uses the
+; follower's pair of actions instead of the ordinary ones, so the icon's two frames keep cycling
+; the whole time -- walking and resting alike -- rather than only while it happens to be moving.
+;
+; Both halves matter. _SetRandomStepDuration writes OBJECT_ACTION_STAND on its way into
+; STEP_TYPE_SLEEP and nothing touches the action again until the mon next moves, which is what
+; froze it between steps. And OBJECT_ACTION_STEP runs the ordinary four-frame walk cycle, whose
+; fourth frame is the walking frame *mirrored* -- fine on hand-drawn art, a horizontal flip
+; mid-stride on a mon icon. The follower's actions are two-frame for exactly that reason.
+	call MovementFunction_RandomWalkXY
+	ld hl, OBJECT_STEP_TYPE
+	add hl, bc
+	ld a, [hl]
+	cp STEP_TYPE_SLEEP
+	ld a, OBJECT_ACTION_FOLLOWER_STEP
+	jr nz, .got_action
+	ld a, OBJECT_ACTION_FOLLOWER_IDLE
+.got_action
+	ld hl, OBJECT_ACTION
+	add hl, bc
+	ld [hl], a
+	ret
 
 MovementFunction_RandomSpinSlow:
 	call Random

@@ -79,6 +79,7 @@ LoadMapObjects:
 	ld a, MAPCALLBACK_OBJECTS
 	call RunMapCallback
 	farcall LoadObjectMasks
+	farcall UpdateOverworldMonObjectMasks ; after the masks are rebuilt, before the objects spawn
 	farjp InitializeVisibleSprites
 
 ResetPlayerObjectAction:
