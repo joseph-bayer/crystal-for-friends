@@ -180,6 +180,10 @@ GetMonSprite:
 
 	cp SPRITE_POKEMON
 	jr c, .Normal
+	cp SPRITE_OW_MON
+	jr c, .pokemon_sprite
+	cp SPRITE_OW_MON + NUM_OW_MON_SLOTS
+	jr c, .ow_mon
 	cp SPRITE_DAY_CARE_MON_1
 	jr z, .BreedMon1
 	cp SPRITE_DAY_CARE_MON_2
@@ -196,6 +200,11 @@ GetMonSprite:
 	sub SPRITE_POKEMON
 	ld e, a
 	ld d, 0
+; A SpriteMons entry names a species and nothing else, so the form is always the plain one.
+; Say so, rather than leaving wForm holding whatever wrote it last -- the follower loads before
+; any map object and would otherwise lend a Pikachu doll its Flying Pikachu form.
+	xor a ; PLAIN_FORM
+	ld [wForm], a
 	ld hl, SpriteMons
 	add hl, de
 	add hl, de
@@ -203,6 +212,18 @@ GetMonSprite:
 	ld h, [hl]
 	ld l, a
 	call GetPokemonIDFromIndex
+	jr .Mon
+
+.ow_mon
+; The species is not in the sprite id -- the id names a slot, and this map's row in
+; OverworldMonObjects says what the slot holds. So the same id is a Dratini in Blackthorn and a
+; Miltank on Route 39, and either can carry a cosmetic form or be shiny.
+	sub SPRITE_OW_MON
+	farcall GetOverworldMonSlot ; hl = species index, a = form byte, carry if the slot is filled
+	jr nc, .NoBreedmon ; nothing declared this slot: show nothing rather than species 0
+	ld [wForm], a ; LoadOverworldMonIcon reads this for cosmetic forms and Unown letters
+	call GetPokemonIDFromIndex
+	ld d, 0 ; not a day-care mon, so the form written above is used as-is
 	jr .Mon
 
 .BreedMon1
@@ -562,6 +583,21 @@ _GetSpritePalette::
 	ret
 
 .is_pokemon
+; Colored from the mon itself, exactly as the follower is. GetMonSprite has just resolved the
+; icon, which leaves the species in wCurIcon and the form in wForm -- everything the color lookup
+; wants, and it does not matter which path got here: a mon slot, a SpriteMons id, a doll's
+; variable sprite or a day-care mon all arrive with those two set.
+	ld a, [wCurIcon]
+	and a
+	jr z, .no_mon_palette
+	ld bc, wForm
+	farcall GetArrangedMonIconColors ; bc = the light color, de = the dark one
+	call ClaimOverworldMonPalette
+	jr c, .no_mon_palette ; every index is spoken for; fall back to a flat overworld color
+	ld c, a
+	ret
+
+.no_mon_palette
 	xor a
 	ld c, a
 	ret
@@ -572,7 +608,7 @@ _GetSpritePalette::
 ; CopySpritePal reads them back out of wFollowerPalette when it loads PAL_OW_FOLLOWER.
 	call SetFollowerFromParty
 	and a
-	jr z, .is_pokemon
+	jr z, .no_mon_palette
 	push af
 	ld a, [wFollowerPartyNum]
 	dec a ; wFollowerPartyNum is 1-based
@@ -620,8 +656,97 @@ StoreFollowerPalette:
 	ld [hl], a
 	; fallthrough
 
+ClaimOverworldMonPalette::
+; Hand back the PAL_OW_MON_* index carrying these two colors on this map, claiming a fresh one if
+; they are not there yet. Identical mon share an index, which is what keeps the six Rocket Base
+; Electrode and the four Route 39 Miltank down to one palette each.
+; in:  bc = the light color, de = the dark color (both preserved)
+; out: a = the palette index and carry clear, or carry set when every index is taken
+;
+; The colors are written into the next free entry before the search rather than after it. That
+; way the comparison is memory against memory and the loop has registers to spare, instead of
+; juggling four bytes of color through it. The entry it writes is the one at the current count,
+; which is a real entry while there is room and the spare scratch entry once there is not -- so a
+; full table still recognises colors it already holds instead of turning them down.
+	push hl
+	push de
+	push bc
+	ld a, [wNumOverworldMonPals]
+	call .EntryAddress ; once the table is full this is the spare entry past the end
+	ld a, c
+	ld [hli], a
+	ld a, b
+	ld [hli], a
+	ld a, e
+	ld [hli], a
+	ld a, d
+	ld [hl], a
+
+	ld c, 0 ; the index being compared against it
+.search
+	ld a, [wNumOverworldMonPals]
+	cp c
+	jr z, .claim ; nothing earlier matched, so the entry just written becomes a real one
+	ld a, c
+	call .EntryAddress
+	ld d, h
+	ld e, l
+	ld a, [wNumOverworldMonPals]
+	call .EntryAddress
+	ld b, OW_MON_PAL_LENGTH
+.compare
+	ld a, [de]
+	cp [hl]
+	jr nz, .next
+	inc de
+	inc hl
+	dec b
+	jr nz, .compare
+	ld a, c ; a match: reuse that index and leave the count alone
+	jr .done
+
+.next
+	inc c
+	jr .search
+
+.claim
+	ld a, [wNumOverworldMonPals]
+	cp NUM_OW_MON_PALS
+	jr nc, .full ; the colors stay in the scratch entry and are discarded
+	ld c, a
+	inc a
+	ld [wNumOverworldMonPals], a
+	ld a, c
+.done
+	add PAL_OW_MON
+	pop bc
+	pop de
+	pop hl
+	and a ; a real index, so no carry
+	ret
+
+.full
+	pop bc
+	pop de
+	pop hl
+	scf
+	ret
+
+.EntryAddress:
+; in: a = an index. out: hl = its entry. Preserves bc and de.
+	add a
+	add a
+	assert OW_MON_PAL_LENGTH == 4, "ClaimOverworldMonPalette doubles twice to scale an index"
+	add LOW(wOverworldMonPals)
+	ld l, a
+	adc HIGH(wOverworldMonPals)
+	sub l
+	ld h, a
+	ret
+
 InvalidateFollowerPalette::
-; Drop the loaded copy of the follower's colors so the allocator fetches them again. MarkUsedPal
+; Drop the loaded copy of every palette that comes from a Pokemon rather than a table -- the
+; follower's and the overworld mon's alike -- so the allocator fetches them again. MarkUsedPal
 ; dedupes by palette index, so without this a changed mon -- or a changed time of day -- would
 ; keep whatever is already sitting in the slot.
 	ld hl, wLoadedObjPal0
@@ -629,7 +754,7 @@ InvalidateFollowerPalette::
 .loop
 	ld a, [hl]
 	cp PAL_OW_FOLLOWER
-	jr nz, .next
+	jr c, .next ; every index from the follower's up is a mon's own colors
 	ld [hl], -1 ; free the slot, the way ClearSavedObjPals marks an empty one
 .next
 	inc hl

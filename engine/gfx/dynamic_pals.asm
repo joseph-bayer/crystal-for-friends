@@ -1,3 +1,18 @@
+ResetOverworldMonPalettes::
+; Forget which Pokemon were standing on the last map. Called from LoadMapObjects rather than from
+; ClearSavedObjPals, because the objects are rebuilt -- and so the indexes immediately reclaimed --
+; right afterwards. ClearSavedObjPals also runs on returns from menus and battles, where nothing
+; reclaims, and an index left pointing at a cleared entry would draw the mon black.
+	ldh a, [rSVBK]
+	push af
+	ld a, BANK(wNumOverworldMonPals)
+	ldh [rSVBK], a
+	xor a
+	ld [wNumOverworldMonPals], a
+	pop af
+	ldh [rSVBK], a
+	ret
+
 ClearSavedObjPals::
 	ldh a, [rSVBK]
 	push af

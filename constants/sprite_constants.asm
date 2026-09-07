@@ -147,6 +147,19 @@ DEF SPRITE_POKEMON EQU const_value
 	const SPRITE_HO_OH ; a2
 DEF NUM_POKEMON_SPRITES EQU const_value - SPRITE_POKEMON
 
+; Runtime Pokemon slots (see data/maps/overworld_mons.asm)
+; A map object's sprite id is one byte, so it cannot name a 16-bit species index -- let alone a
+; cosmetic form or a shiny flag. These ids name a *slot* instead, and the map says what the slot
+; holds, so an object can be any species the party menu icons can draw.
+	const_next $c0
+DEF SPRITE_OW_MON EQU const_value
+	const SPRITE_OW_MON_1 ; c0
+	const SPRITE_OW_MON_2 ; c1
+	const SPRITE_OW_MON_3 ; c2
+	const SPRITE_OW_MON_4 ; c3
+DEF NUM_OW_MON_SLOTS EQU const_value - SPRITE_OW_MON
+assert SPRITE_OW_MON + NUM_OW_MON_SLOTS <= $e0, 	"the mon slots have run into SPRITE_DAY_CARE_MON_1"
+
 ; special GetMonSprite values (see engine/overworld/overworld.asm)
 	const_next $e0
 	const SPRITE_DAY_CARE_MON_1 ; e0

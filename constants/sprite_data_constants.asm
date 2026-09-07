@@ -7,6 +7,12 @@ DEF SPRITEDATA_TYPE    rb ; 4
 DEF SPRITEDATA_PALETTE rb ; 5
 DEF NUM_SPRITEDATA_FIELDS EQU _RS
 
+; overworld mon slot members (see data/maps/overworld_mons.asm)
+rsreset
+DEF OW_MON_SLOT_SPECIES rw ; 0
+DEF OW_MON_SLOT_FORM    rb ; 2
+DEF OW_MON_SLOT_LENGTH EQU _RS
+
 ; sprite types
 	const_def 1
 	const WALKING_SPRITE  ; 1
@@ -66,6 +72,22 @@ DEF NUM_OW_PALS EQU const_value
 ; so it sits past every counted range and CopySpritePal special-cases it. Only ever assigned in
 ; code -- an object_event cannot ask for it.
 DEF PAL_OW_FOLLOWER EQU NUM_OW_PALS
+
+; Overworld Pokemon objects are colored from the mon too, the same way and for the same reason.
+; One index per distinct pair of colors standing on the map, claimed as objects load, so mon that
+; look alike share one -- six Electrode cost a single palette. CopySpritePal reads the colors back
+; out of wOverworldMonPals. Three is the most any map asks for today (Mr. Fuji's house).
+; These come at a price: the eight hardware OBJ palettes are shared with every NPC on screen, and
+; the follower already holds one.
+DEF PAL_OW_MON EQU PAL_OW_FOLLOWER + 1
+DEF NUM_OW_MON_PALS EQU 4
+assert PAL_OW_MON + NUM_OW_MON_PALS <= $100, 	"the overworld mon palettes no longer fit in a palette byte"
+
+; wOverworldMonPals entries
+rsreset
+DEF OW_MON_PAL_LIGHT rw ; 0
+DEF OW_MON_PAL_DARK  rw ; 2
+DEF OW_MON_PAL_LENGTH EQU _RS
 
 DEF PAL_OW_ROCK EQU PAL_OW_BROWN
 DEF PAL_NPC_ROCK EQU PAL_NPC_BROWN

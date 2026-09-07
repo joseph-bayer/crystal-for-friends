@@ -157,6 +157,8 @@ if DEF(_DEBUG)
 
 	givepoke AMPHAROS, 50
 	givepoke GENGAR, 50
+	; A form Pikachu to make the follower, for the doll test below.
+	givepoke PIKACHU, 50, NO_ITEM, PIKACHU_FLY_FORM
 	; givepoke DITTO, 50
 
 	; DEBUG: CHECK If two Pokemon with same DEF and SPEC DVs can breed
@@ -211,6 +213,11 @@ if DEF(_DEBUG)
 	; The party is full by this point, so all of them land in the boxes.
 	; Comment this out for a normal debug run -- it takes a moment and fills nine boxes.
 	callasm FillPCWithEveryForm
+
+	; Unlock the Pokemon dolls, to check whether a map object's icon picks up the follower's
+	; form byte. Place one from the PC's Decoration menu, then make the Flying Pikachu above
+	; your follower and see whether the Pikachu doll stays plain.
+	callasm GiveDebugDolls
 
 
 	giveitem HM_SURF

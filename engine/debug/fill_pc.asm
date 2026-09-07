@@ -200,4 +200,32 @@ if FILL_PC_ALL_UNOWN_LETTERS
 endc
 	dw 0
 
+GiveDebugDolls::
+; Unlock the Pokemon dolls whose species have cosmetic forms, so the doll objects in the player's
+; room can be used to see what form a SPRITE_POKEMON map object actually draws. Reach it with
+;   callasm GiveDebugDolls
+; then place one from the PC's Decoration menu -- it resolves through SPRITE_DOLL_1 / SPRITE_DOLL_2
+; into the SpriteMons entry for that species.
+;
+; The test: make a Pikachu with a cosmetic form your follower, then look at the Pikachu doll. The
+; map object path leaves wForm alone, so if the doll comes out surfing or flying rather than plain,
+; the follower's form byte leaked into it.
+	ld hl, .Flags
+.loop
+	ld a, [hli]
+	cp -1
+	ret z
+	ld c, a
+	push hl
+	farcall SetSpecificDecorationFlag
+	pop hl
+	jr .loop
+
+.Flags:
+	db DECOFLAG_PIKACHU_DOLL      ; four forms, and the plain icon is unmistakable
+	db DECOFLAG_SURF_PIKACHU_DOLL ; its own sprite, not a SpriteMons entry -- the control
+	db DECOFLAG_MAGIKARP_DOLL     ; three size forms
+	db DECOFLAG_UNOWN_DOLL        ; 26 letters, so any leak is obvious
+	db -1
+
 endc

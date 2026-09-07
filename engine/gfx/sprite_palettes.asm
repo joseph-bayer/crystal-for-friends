@@ -16,6 +16,7 @@ CopySpritePal::
 	ld a, [wNeededPalIndex]
 	cp PAL_OW_FOLLOWER
 	jr z, .follower
+	jr nc, .overworld_mon ; every index past the follower's carries a mon's own colors
 	sub FIRST_COPY_BG_PAL
 	jr c, .not_copy_bg
 	ld hl, wBGPals1
@@ -73,16 +74,32 @@ CopySpritePal::
 	jr .got_pal
 
 .follower
-; The follower is colored from the mon itself, so there is no table to index -- its two colors
-; were arranged into wFollowerPalette when the sprite's palette was chosen. Bookend them white
-; and black the way every mon pic is.
+	ld hl, wFollowerPalette
+	jr .mon_colors
+
+.overworld_mon
+; An overworld Pokemon object. Its colors were arranged into wOverworldMonPals when the sprite's
+; palette was chosen, and the index says which entry.
+	sub PAL_OW_MON
+	add a
+	add a
+	assert OW_MON_PAL_LENGTH == 4, "CopySpritePal doubles twice to scale a mon palette index"
+	add LOW(wOverworldMonPals)
+	ld l, a
+	adc HIGH(wOverworldMonPals)
+	sub l
+	ld h, a
+	; fallthrough
+
+.mon_colors
+; A Pokemon is colored from itself, so there is no table to index -- hl already points at its two
+; arranged colors. Bookend them white and black the way every mon pic is.
 ; Read them out here, while the dynamic palette system's WRAM bank is still current.
-; WriteIconPalette switches to the palette bank, which wFollowerPalette does not live in, so
-; anything still unread by then comes back as zeroes.
+; WriteIconPalette switches to the palette bank, which these colors do not live in, so anything
+; still unread by then comes back as zeroes.
 ; Reached without a bank switch, so a layout change that separated the two would otherwise fail
 ; silently at runtime rather than here.
 	assert BANK(WriteIconPalette) == BANK(@), "CopySpritePal calls WriteIconPalette directly"
-	ld hl, wFollowerPalette
 	ld a, [hli]
 	ld c, a
 	ld a, [hli]
