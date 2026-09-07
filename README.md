@@ -104,28 +104,9 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Bug Catching Contest now appears on Sundays as well (on top of Tuesdays, Thursdays, and Saturdays)
 
 - **Following Pokemon**
-  - The first Pokemon in your party that hasn't fainted walks behind you
-  - Talk to it for a reaction. There are 79 of them, picked from the species, its type, its status
-    condition, where you're standing, and how far through the game you are
-    - A Slowpoke in Slowpoke Well, any Fire type in Azalea Town, a Unown in the Ruins of Alph,
-      a poisoned Pokemon anywhere, and plenty more
-    - A Pokemon that likes you enough will jump for joy
-  - Follows you through doors, over ledges, and onto new routes, and returns to its Poke Ball
-    whenever it can't follow
-  - Drawn from its party menu icon, so it keeps animating while it waits and hops as it walks
-  - Cosmetic forms, Unown letters, shininess and eggs all show correctly
-  - Dims at night along with everyone else, and becomes a silhouette in an unlit cave until you
-    use Flash
-
-- **Every Pokemon Has Its Own Icon Colors**
-  - The party menu, the PC, your follower, the naming screen, the move list, trades and the Fly
-    map all draw a Pokemon in its own colors, the same pair its battle sprite uses, rather than
-    picking from eight shared ones
-  - Shiny Pokemon now read as shiny on all of those screens. Previously 38 species used the same
-    color whether they were shiny or not
-  - Cosmetic forms carry their own colors too, so a Blue Smeargle really does have a blue icon
-  - Where an icon reads better with its two colors swapped, or with the lighter one pushed to
-    white, that is set per species
+  - Press **Select** on a party member to make it your follower
+  - A fainted follower waits in its Poke Ball, and comes back out when you heal it
+  - Eggs can follow you too!
 
 - **New Cosmetic Forms**
 	| Species	| Form			| How to Obtain |

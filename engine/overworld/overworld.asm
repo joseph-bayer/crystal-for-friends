@@ -73,6 +73,7 @@ RefreshSprites::
 	push hl
 	push de
 	push bc
+	call UpdateFollowerPresence
 	call GetPlayerSprite
 	xor a
 	ldh [hUsedSpriteIndex], a
@@ -285,6 +286,25 @@ GetFollowerMon::
 	pop af
 	xor a
 	ret
+
+UpdateFollowerPresence::
+; Keeps the follower object in step with the party menu's choice. With nobody following -- no
+; selection, an empty party, or a choice that has fainted -- there is no mon to put on screen,
+; and SPRITE_FOLLOWER has no OverworldSprites entry of its own, so GetFollowingSprite's fallback
+; used to hand the object a placeholder NPC sprite and one walked around behind the player.
+; Only acts on a change, so it is safe on the every-text-close path that calls it.
+	call GetFollowerMon
+	and a
+	ld a, [wObject1Sprite]
+	jr z, .nobody
+	cp SPRITE_FOLLOWER
+	ret z ; already out
+	farjp SpawnFollowerObject
+
+.nobody
+	cp SPRITE_FOLLOWER
+	ret nz ; already gone
+	farjp DespawnFollowerObject
 
 SwapFollowerSlot::
 ; Keep the follower pointing at the same mon when two party slots trade places.

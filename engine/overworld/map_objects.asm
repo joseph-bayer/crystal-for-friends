@@ -3130,6 +3130,8 @@ _AppearFollower::
 	farcall Script_appear_skipinput
 _AppearFollowerOneStep::
 	ld bc, wObject1Struct
+	call DoesObjectHaveASprite
+	ret z ; nobody follows, so there is no ball to open
 	ld hl, OBJECT_FLAGS1
 	add hl, bc
 	set INVISIBLE_F, [hl]

@@ -15,6 +15,7 @@ Source: `fellowship-of-the-roms/pokecrystal`, branch `follow-mons`, tip `28da8e0
 - [Bugs found and fixed](#bugs-found-and-fixed)
 - [Bugs from the source branch](#bugs-from-the-source-branch)
 - [The tile budget](#the-tile-budget)
+- [Choosing your follower](#choosing-your-follower)
 - [Follower graphics](#follower-graphics)
 - [Follower palettes](#follower-palettes)
 - [Known gaps](#known-gaps)
@@ -76,6 +77,9 @@ changed files.
 | `engine/gfx/sprite_palettes.asm` | `CopySpritePal`'s `PAL_OW_FOLLOWER` branch and its time-of-day tinting |
 | `data/pokemon/icon_palette_order.asm` | How each species arranges its two colors into an icon palette |
 | `constants/ram_constants.asm` | `wFollowerFlags` bits |
+| `engine/pokemon/party_menu.asm` | `PartyMenuToggleFollower` (SELECT) and `PlacePartyMonFollowerMark` (the star) |
+| `engine/overworld/overworld.asm` | `GetFollowerMon` plus `SwapFollowerSlot` / `RemoveFollowerSlot` / `ValidateFollowerSlot`, the party-change fixups |
+| `gfx/stats/party_menu_follower_mark.pal` | The one palette that lets a font tile be red |
 | `engine/debug/fill_pc.asm` | Debug only: fills the PC with every species and form, for reviewing colors side by side |
 
 
@@ -137,6 +141,105 @@ contiguous gap left for the Poké Ball. With 14 object structs, only `9` works.
 **Do not change `NUM_OBJECT_STRUCTS` without redoing this arithmetic.**
 
 
+## Choosing your follower
+
+The player picks. **SELECT on a party member makes it your follower; SELECT on the one already
+marked clears the choice and nobody follows.**
+
+`NewGame` writes slot 1 before the player has any Pokémon at all, which is the cheapest way to say
+"the first one you are given follows you" — `GetFollowerMon` shows nobody while the party is empty,
+then the starter lands in slot 1 and walks out of the lab behind you. Elm's aide explains the
+button on the way out, after handing over the Potion (`AideText_FollowerTip` in
+`maps/ElmsLab.asm`).
+
+### Where the choice is stored
+
+One byte, `wFollowerPartySlot`: `0` for nobody, otherwise a **1-based party slot**. It sits in the
+saved block right after `wFollowerFlags`.
+
+The original plan was to reuse a spare byte next to `wBikeFlags` so the save layout would not
+shift. That turned out not to be worth the indirection: the follower port had *already* inserted
+`wFollowerFlags` and the movement queue into the same region, so saves from before the feature were
+invalid regardless. **Adding a byte here shifts everything after it, so a save made against an
+earlier build of this hack will not read correctly** — that is the cost of the straightforward
+placement, and it is only payable once per save-layout change.
+
+The alternative was a bit on the mon's `MON_FORM` byte, where `%00100000` and `%01000000` were
+free. That travels with the mon through every reorder and deposit with no fixups at all, which is
+genuinely tempting — but a form byte gets copied wholesale into the PC, into trades and into bred
+eggs, so a traded mon could arrive in someone else's game already flagged as their follower. A
+stored slot's worst case is that it points at the wrong party member, which the player can correct
+in two button presses; the form bit's worst case is mon data leaving the game with a stray bit set.
+`%01000000` is now reserved for alternate shinies instead (`ALT_SHINY_MASK`).
+
+### Keeping the slot pointed at the right mon
+
+A stored slot number is only correct until the party changes under it, so five call sites maintain
+it. All three helpers live in `engine/overworld/overworld.asm`:
+
+| Event | Call site | What happens |
+| --- | --- | --- |
+| Reorder in the party menu | `switchpartymons.asm` | `SwapFollowerSlot` — swaps the stored slot when it is one of the two |
+| Reorder in Bill's PC | `bills_pc.asm` | `SwapFollowerSlot` again, so the choice survives a shuffle |
+| Release, trade, day-care | `RemoveMonFromParty` | `RemoveFollowerSlot` — clears to slot 1 if it was the mon leaving, decrements if it was after it |
+| Deposit to the PC | `bills_pc.asm` | `ValidateFollowerSlot` — the deposited mon is shifted to the end first, so this catches it there |
+| Withdraw | — | Nothing. New party members land at the end |
+
+`RemoveMonFromParty` is the single funnel for every path that takes a mon out of the party — NPC
+trades, link trades, Shuckie, mail, day-care and release all reach it — which is why one call there
+covers four of the rules.
+
+### The rules, and why
+
+- **Deposited, released, day-cared or traded away → the follower defaults to slot 1.** Somebody
+  should be out; falling back to nobody would read as a bug.
+- **A fainted follower keeps its slot but stays in its ball.** `GetFollowerMon` returns 0 for it, so
+  nobody is drawn, and it comes back out when healed without the player re-choosing.
+- **There is no fallback to "the first living mon".** That is what the old `GetFirstAliveMon` did.
+  Once the choice is the player's, quietly substituting a different Pokémon is worse than showing
+  nobody — so `GetFollowerMon` returns 0 for an empty party, no selection, or a fainted selection,
+  and never guesses.
+- **Eggs can be chosen**, and walk around in the overworld. `LoadOverworldMonIcon` already has an
+  egg icon, so this cost nothing and is funny.
+
+### The marker
+
+`PlacePartyMonFollowerMark` is a new `PARTYMENUQUALITY_FOLLOWER` entry in the party menu's quality
+jumptable, modelled on `PlacePartyMonGender` — walk the party, step two rows per mon, draw at
+`FOLLOWER_MARK_X`, `FOLLOWER_MARK_Y`. Unlike the gender symbol it does **not** skip eggs.
+
+The glyph is `"★"` (tile `$C3`), placed just above the left end of the mon's HP bar, and it is red.
+Getting it red took a dedicated palette. Font tiles are 1bpp and ink with **color index 3**, which
+is black in every palette the party menu otherwise loads — including `PREDEFPAL_HP_RED`, whose red
+sits at index 2 because the HP bar tiles ink with *that* index. So
+`gfx/stats/party_menu_follower_mark.pal` occupies BG palette slot `FOLLOWER_MARK_PAL` with red at
+both 2 and 3, loaded by `InitFollowerMarkBGPal`, and the routine writes the slot number into
+`wAttrmap` by hand at the same offset it wrote the tile.
+
+That palette's red is `22, 00, 00` rather than the overworld's `30, 10, 06`. Muting a red here
+means **lowering the red channel, not raising green and blue** — the overworld value's non-zero
+green and blue wash the hue toward salmon against the menu's white paper.
+
+### Letting SELECT through
+
+Two things were in the way, and both were quiet rather than loud.
+
+`PartyMenu2DMenuData` ends with an accepted-buttons byte, but `InitPartyMenuWithCancel` overwrites
+`wMenuJoypadFilter` *after* `Load2DMenuData` returns — so editing the data table did nothing. The
+filter is set to `PAD_A | PAD_B | PAD_SELECT` in the routine itself.
+
+`PartyMenuSelect` then tests `B_PAD_SELECT` on `hJoyLast`, calls `PartyMenuToggleFollower`, and
+**loops** rather than returning, so choosing a follower is not choosing a menu entry.
+`PartyMenuToggleFollower` ignores the CANCEL row, toggles off if the cursor is already on the
+follower, plays `SFX_READ_TEXT_2` and redraws so the star moves with the choice.
+
+The jumptable was the other trap: adding `PARTYMENUQUALITY_FOLLOWER` to the constants without
+putting the entry in the same position in `.Jumptable` sent the party menu into the mobile-battle
+routine, which garbled the fifth slot and the area above every HP bar. The constants now live in
+`constants/menu_constants.asm` so the table can carry `assert_table_length NUM_PARTYMENUQUALITIES`
+and fail the build instead.
+
+
 ## Follower graphics
 
 The follower is drawn from the same party menu icon the menus use. It has no artwork of its own.
@@ -145,9 +248,11 @@ The follower is drawn from the same party menu icon the menus use. It has no art
 
 `GetFollowingSprite` runs when the overworld needs the follower's graphics:
 
-1. Pick the follower: the first party member with HP above zero, falling back to the first member.
-   Its 8-bit species handle goes in `wFollowerSpriteID` and is locked so it cannot be evicted; its
-   1-based party slot goes in `wFollowerPartyNum`.
+1. Pick the follower: `GetFollowerMon` reads the player's choice out of `wFollowerPartySlot` and
+   returns nobody if the party is empty, nothing is selected, or the selection has fainted — see
+   [Choosing your follower](#choosing-your-follower). Its 8-bit species handle goes in
+   `wFollowerSpriteID` and is locked so it cannot be evicted; its 1-based party slot goes in
+   `wFollowerPartyNum`.
 2. Copy that member's form byte into `wForm`, then call `LoadOverworldMonIcon` — the same routine
    the day-care mons use. It returns the icon's graphics, bank, and length.
 3. `GetFollowerIconSprite` assembles a 24-tile overworld sprite from it in `wDecompressScratch`.
@@ -439,6 +544,10 @@ explaining what it is for.
 - **The follower now owns one of the eight hardware OBJ palettes on every map.** Maps that already
   used all eight will lose a color. Worth watching in Goldenrod, the Celadon department store and
   the underground.
+- **The follower star has not been checked against a full-length nickname.** It sits at
+  `FOLLOWER_MARK_X` above the HP bar; a ten-character nickname is the case to try.
+- **Deselecting a follower makes it vanish rather than returning to its Poké Ball.** The recall
+  animation already exists for warps and should be reused here.
 
 ## TODO
 

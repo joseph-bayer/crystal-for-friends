@@ -24,16 +24,8 @@ SpawnPlayer:
 	call CopyPlayerObjectTemplate
 
 	call CheckFollowerLoaded
-	jr c, .skip_follower
-	ld a, FOLLOWER
-	ld hl, FollowObjTemplate
-	call CopyPlayerObjectTemplate
-	ld b, FOLLOWER
-	call PlayerSpawn_ConvertCoords
-	xor a
-	ld [wFollowerNextMovement], a
+	call nc, SpawnFollowerMapObject
 
-.skip_follower
 	ld b, PLAYER_OBJECT
 	call PlayerSpawn_ConvertCoords
 	ld a, PLAYER_OBJECT
@@ -87,8 +79,58 @@ _FollowerScript:
 POPS
 
 CheckFollowerLoaded:
-; Upstream stubs this out so the follower always spawns; the search it used to do was unreachable.
+; Carry means leave the follower object unspawned. Upstream stubs this out so the follower always
+; spawns, because there the follower is whatever is in party slot 1; here the choice is the
+; player's, and "nobody" is one of the answers.
+	farcall GetFollowerMon
+	and a
+	ret nz ; somebody follows, so spawn as usual
+
+; Map loading clears object structs 2 and up and only resets the follower map object's struct id,
+; so without this the last follower is still sitting in wObject1Struct for
+; InitializeVisibleSprites to pick straight back up.
+	call DespawnFollowerObject
+	scf
+	ret
+
+SpawnFollowerMapObject:
+; Only the map object. InitializeVisibleSprites turns it into wObject1Struct a moment later.
+	ld a, FOLLOWER
+	ld hl, FollowObjTemplate
+	call CopyPlayerObjectTemplate
+	ld b, FOLLOWER
+	call PlayerSpawn_ConvertCoords
 	xor a
+	ld [wFollowerNextMovement], a
+	ret
+
+SpawnFollowerObject::
+; The whole object, for a follower chosen with SELECT while the overworld is already up: no
+; InitializeVisibleSprites pass is coming, so build the object struct here too.
+; The flags go first. Whatever hid the previous follower -- a warp, a poke ball, an NPC walking
+; through it -- has nothing to do with the mon just picked, and CopyMapObjectToObjectStruct folds
+; FOLLOWER_INVISIBLE straight into the new object's own flags.
+	xor a
+	ld [wFollowerFlags], a
+	call SpawnFollowerMapObject
+	ld a, FOLLOWER
+	ldh [hMapObjectIndex], a
+	ld bc, wMap1Object
+	jmp CopyObjectStruct
+
+DespawnFollowerObject::
+; Leaves exactly what SpawnPlayer's own .skip_follower path leaves behind: no object struct, and
+; a follower map object with no sprite, which is what InitializeVisibleSprites reads as
+; "nothing here".
+	ld bc, wObject1Struct
+	call DoesObjectHaveASprite
+	jr z, .no_struct
+	farcall DeleteMapObject ; zeroes the struct and hands the OBJ palette back
+.no_struct
+	xor a
+	ld [wMap1ObjectSprite], a
+	ld a, -1
+	ld [wMap1ObjectStructID], a
 	ret
 
 CopyDECoordsToMapObject::
