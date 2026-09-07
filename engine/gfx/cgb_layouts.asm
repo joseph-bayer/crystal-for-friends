@@ -323,7 +323,7 @@ _CGB_StatsScreenHPPals:
 	jr .set_ball_attr
 
 .default_color:
-	ld a, $0  ; Default to palette 0 for other ball types
+	xor a ; Default to palette 0 for other ball types
 
 .set_ball_attr:
 	hlcoord 8, 6, wAttrmap
@@ -635,6 +635,7 @@ _CGB_PartyMenu:
 	call InitPartyMenuBGPal0
 	call InitPartyMenuBGPal7
 	call InitPartyMenuOBPals
+	call InitPartyMenuMonOBPals
 	jmp ApplyAttrmap
 
 _CGB_Evolution:

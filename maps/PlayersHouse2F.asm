@@ -3,6 +3,9 @@
 	const PLAYERSHOUSE2F_DOLL_1
 	const PLAYERSHOUSE2F_DOLL_2
 	const PLAYERSHOUSE2F_BIG_DOLL
+if DEF(_DEBUG)
+	const PLAYERSHOUSE2F_DEBUG_TRADER
+endc
 
 PlayersHouse2F_MapScripts:
 	def_scene_scripts
@@ -165,37 +168,49 @@ if DEF(_DEBUG)
 	; loadmem wPartyMon4DVs+0, %11110000 ; 15 Atk (MALE), 0 Def
 	; loadmem wPartyMon4DVs+1, %00000000 ; 0 Speed, 0 Special
 
-	; misc pokemon for testing
+	; ; misc pokemon for testing
 	; givepoke PIKACHU, 50, NO_ITEM, PIKACHU_RB_FORM
-	givepoke PIKACHU, 50, NO_ITEM, PIKACHU_SURF_FORM
+	; givepoke PIKACHU, 50, NO_ITEM, PIKACHU_SURF_FORM
 	; givepoke UNOWN, 50
 	; givepoke MAGIKARP, 50
 	; givepoke MAGIKARP, 50, NO_ITEM, MAGIKARP_XL_FORM
 	; givepoke MAGIKARP, 50, NO_ITEM, MAGIKARP_XS_FORM
 	; givepoke PIKACHU, 50
-	givepoke SMEARGLE, 50, NO_ITEM, SMEARGLE_BLUE_FORM | SHINY_MASK
-	; givepoke SMEARGLE, 50
-	givepoke SMEARGLE, 50, NO_ITEM, SMEARGLE_BLUE_FORM
-	givepoke SMEARGLE, 50, NO_ITEM, SMEARGLE_YELLOW_FORM
-	givepoke SMEARGLE, 50, NO_ITEM, SMEARGLE_PURPLE_FORM
-	givepoke SMEARGLE, 50, NO_ITEM, SMEARGLE_GREEN_FORM
-	givepoke SMEARGLE, 50, NO_ITEM, SMEARGLE_ORANGE_FORM
-	givepoke SMEARGLE, 50, NO_ITEM, 0 | SHINY_MASK
-	; givepoke SCYTHER, 50
-	givepoke SCYTHER, 50, NO_ITEM, SCYTHER_FOREST_GREEN_FORM
-	givepoke SCYTHER, 50, NO_ITEM, SCYTHER_TEAL_FORM
-	givepoke SCYTHER, 50, NO_ITEM, SCYTHER_TEAL_FORM | SHINY_MASK
-	; givepoke SCIZOR, 50
-	givepoke SCIZOR, 50, NO_ITEM, SCIZOR_CRIMSON_FORM
-	givepoke SCIZOR, 50, NO_ITEM, SCIZOR_DUSTY_ROSE_FORM
-	givepoke SCIZOR, 50, NO_ITEM, SCIZOR_DUSTY_ROSE_FORM | SHINY_MASK
-	; givepoke PINSIR, 50
-	givepoke PINSIR, 50, NO_ITEM, PINSIR_VINE_FORM
-	givepoke PINSIR, 50, NO_ITEM, PINSIR_SLATE_FORM
-	givepoke PINSIR, 50, NO_ITEM, PINSIR_SLATE_FORM | SHINY_MASK
+	; givepoke SMEARGLE, 50, NO_ITEM, SMEARGLE_BLUE_FORM | SHINY_MASK
+	; ; givepoke SMEARGLE, 50
+	; givepoke SMEARGLE, 50, NO_ITEM, SMEARGLE_BLUE_FORM
+	; givepoke SMEARGLE, 50, NO_ITEM, SMEARGLE_YELLOW_FORM
+	; givepoke SMEARGLE, 50, NO_ITEM, SMEARGLE_PURPLE_FORM
+	; givepoke SMEARGLE, 50, NO_ITEM, SMEARGLE_GREEN_FORM
+	; givepoke SMEARGLE, 50, NO_ITEM, SMEARGLE_ORANGE_FORM
+	; givepoke SMEARGLE, 50, NO_ITEM, 0 | SHINY_MASK
+	; ; givepoke SCYTHER, 50
+	; givepoke SCYTHER, 50, NO_ITEM, SCYTHER_FOREST_GREEN_FORM
+	; givepoke SCYTHER, 50, NO_ITEM, SCYTHER_TEAL_FORM
+	; givepoke SCYTHER, 50, NO_ITEM, SCYTHER_TEAL_FORM | SHINY_MASK
+	; ; givepoke SCIZOR, 50
+	; givepoke SCIZOR, 50, NO_ITEM, SCIZOR_CRIMSON_FORM
+	; givepoke SCIZOR, 50, NO_ITEM, SCIZOR_DUSTY_ROSE_FORM
+	; givepoke SCIZOR, 50, NO_ITEM, SCIZOR_DUSTY_ROSE_FORM | SHINY_MASK
+	; ; givepoke PINSIR, 50
+	; givepoke PINSIR, 50, NO_ITEM, PINSIR_VINE_FORM
+	; givepoke PINSIR, 50, NO_ITEM, PINSIR_SLATE_FORM
+	; givepoke PINSIR, 50, NO_ITEM, PINSIR_SLATE_FORM | SHINY_MASK
+	; Five Unown spread across the alphabet, to spot check form followers.
+	; NOTE: the wrong-letter cause is SendMonIntoBox -- for Unown it overwrites wForm with the
+	; generated mon's form, and GivePoke then stores that instead of the form it was asked for.
+	; FillPCWithEveryForm below works around it by re-stamping the form after GivePoke returns.
+	; NOTE 2: Gifting an UNOWN before completing the puzzle in the ruins of alph causes the game to crash. Either do that before uncommenting this code or figure out what flags need to be set.
+	; givepoke UNOWN, 50, NO_ITEM, UNOWN_A
+	; givepoke UNOWN, 50, NO_ITEM, UNOWN_G
+	; givepoke UNOWN, 50, NO_ITEM, UNOWN_N
+	; givepoke UNOWN, 50, NO_ITEM, UNOWN_T
+	; givepoke UNOWN, 50, NO_ITEM, UNOWN_Z
 
-
-
+	; One of every species and every color form, in order, filling the PC for palette review.
+	; The party is full by this point, so all of them land in the boxes.
+	; Comment this out for a normal debug run -- it takes a moment and fills nine boxes.
+	callasm FillPCWithEveryForm
 
 
 	giveitem HM_SURF
@@ -221,7 +236,7 @@ if DEF(_DEBUG)
 
   special UnlockMysteryGift
   ; DEBUG: testing new rocket takeover npc placements
-  ; clearevent EVENT_RADIO_TOWER_ROCKET_TAKEOVER
+;   clearevent EVENT_RADIO_TOWER_ROCKET_TAKEOVER
 	closetext
 	end
 else
@@ -292,6 +307,19 @@ PlayersRadioText4:
 	line "#MON CHANNEL…"
 	done
 
+if DEF(_DEBUG)
+PlayersHouseDebugTraderScript:
+; Reaches the trade screen on demand, as often as you like. See NPC_TRADE_DEBUG.
+; The wrapping matters: trade draws into a text window, so without opentext around it the box
+; lands in the wrong place and the font is never loaded.
+	faceplayer
+	opentext
+	trade NPC_TRADE_DEBUG
+	waitbutton
+	closetext
+	end
+endc
+
 PlayersHouse2F_MapEvents:
 	db 0, 0 ; filler
 
@@ -311,3 +339,6 @@ PlayersHouse2F_MapEvents:
 	object_event  4,  4, SPRITE_DOLL_1, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, PlayersHouseDoll1Script, EVENT_PLAYERS_HOUSE_2F_DOLL_1
 	object_event  5,  4, SPRITE_DOLL_2, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, PlayersHouseDoll2Script, EVENT_PLAYERS_HOUSE_2F_DOLL_2
 	object_event  0,  1, SPRITE_BIG_DOLL, SPRITEMOVEDATA_BIGDOLL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, PlayersHouseBigDollScript, EVENT_PLAYERS_HOUSE_2F_BIG_DOLL
+if DEF(_DEBUG)
+	object_event  2,  4, SPRITE_GENTLEMAN, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, PlayersHouseDebugTraderScript, -1
+endc

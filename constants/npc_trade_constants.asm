@@ -21,7 +21,13 @@ DEF NPCTRADE_STRUCT_LENGTH EQU _RS
 	const NPC_TRADE_CHRIS  ; 4
 	const NPC_TRADE_KIM    ; 5
 	const NPC_TRADE_FOREST ; 6
+if DEF(_DEBUG)
+	const NPC_TRADE_DEBUG  ; 7, accepts any species and can be repeated
+endc
 DEF NUM_NPC_TRADES EQU const_value
+; wTradeFlags is a flag_array, so the debug entry has to share the byte the other seven use --
+; otherwise a debug save would not line up with a release one.
+assert NUM_NPC_TRADES <= 8, "the debug trade would grow wTradeFlags past a byte"
 
 ; trade gender limits
 	const_def

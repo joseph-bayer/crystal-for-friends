@@ -149,7 +149,7 @@ HandleObjectAction:
 	ld hl, OBJECT_FLAGS1
 	add hl, bc
 	bit INVISIBLE_F, [hl]
-	jr nz, SetFacingStanding
+	jmp nz, SetFacingStanding
 	ld hl, OBJECT_FLAGS2
 	add hl, bc
 	bit OFF_SCREEN_F, [hl]
@@ -841,7 +841,14 @@ MovementFunction_FollowerObj:
 
 .follow_not_exact
 	call MoveFollowNotExact
-	ret nc
+	jr c, .stepping
+; Nothing to do this frame, so keep the icon animating in place rather than freezing on one frame.
+	ld hl, OBJECT_ACTION
+	add hl, bc
+	ld [hl], OBJECT_ACTION_FOLLOWER_IDLE
+	ret
+
+.stepping
 	push af
 	ld a, [wFollowerNextMovement]
 	cp FOLLOWERMOVE_NUM_TYPES

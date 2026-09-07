@@ -14,6 +14,8 @@ CopySpritePal::
 	push hl
 	push de
 	ld a, [wNeededPalIndex]
+	cp PAL_OW_FOLLOWER
+	jr z, .follower
 	sub FIRST_COPY_BG_PAL
 	jr c, .not_copy_bg
 	ld hl, wBGPals1
@@ -68,10 +70,38 @@ CopySpritePal::
 	maskbits NUM_DAYTIMES
 	ld bc, NUM_OW_TIME_OF_DAY_PALS palettes
 	rst AddNTimes
+	jr .got_pal
+
+.follower
+; The follower is colored from the mon itself, so there is no table to index -- its two colors
+; were arranged into wFollowerPalette when the sprite's palette was chosen. Bookend them white
+; and black the way every mon pic is.
+; Read them out here, while the dynamic palette system's WRAM bank is still current.
+; WriteIconPalette switches to the palette bank, which wFollowerPalette does not live in, so
+; anything still unread by then comes back as zeroes.
+; Reached without a bank switch, so a layout change that separated the two would otherwise fail
+; silently at runtime rather than here.
+	assert BANK(WriteIconPalette) == BANK(@), "CopySpritePal calls WriteIconPalette directly"
+	ld hl, wFollowerPalette
+	ld a, [hli]
+	ld c, a
+	ld a, [hli]
+	ld b, a ; bc = the light color
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	ld d, h
+	ld e, l ; de = the dark color
+	call .TimeOfDayAdjust
+	pop hl ; the destination pushed on entry
+	call WriteIconPalette
+	jr .apply
+
 .got_pal
 	pop de
 	ld bc, 1 palettes
 	call FarCopyColorWRAM
+.apply
 	ld hl, wPalFlags
 	bit NO_DYN_PAL_APPLY_F, [hl]
 	jr nz, .skip_apply
@@ -83,6 +113,122 @@ CopySpritePal::
 	pop bc
 	pop hl
 	ret
+
+.TimeOfDayAdjust:
+; in: bc = the light color, de = the dark color. Adjusts both for the time of day.
+; Only night and darkness do anything. Comparing the daytimes in npc_sprites.pal, morn, day and
+; eve leave a sprite's own two colors alone -- practically all of the difference between them sits
+; in color 0, which an OBJ palette never draws.
+	push bc
+	push de
+	call GetMapTimeOfDay
+	pop de
+	pop bc
+	or ~IN_DARKNESS
+	inc a
+	jr nz, .check_night
+
+	ld a, [wStatusFlags]
+	bit STATUSFLAGS_FLASH_F, a
+	jr nz, .check_night
+	ld a, [wPalFlags]
+	bit USE_DAYTIME_PAL_F, a
+	jr nz, .check_night
+
+; An unlit cave drops every character to the same flat silhouette, so take it from the table the
+; other palettes use rather than dimming the mon's own colors towards it.
+	ld hl, DarknessOBPalette + COLOR_SIZE
+	ld a, [hli]
+	ld c, a
+	ld a, [hli]
+	ld b, a
+	ld a, [hli]
+	ld e, a
+	ld d, [hl]
+	ret
+
+.check_night
+	ld a, [wPalFlags]
+	bit USE_DAYTIME_PAL_F, a
+	ret nz ; a map that forces daylight
+
+	ld a, [wTimeOfDayPal]
+	maskbits NUM_DAYTIMES
+	cp NITE_F
+	ret nz
+
+	push de
+	call .Darken
+	pop de
+	push bc
+	ld b, d
+	ld c, e
+	call .Darken
+	ld d, b
+	ld e, c
+	pop bc
+	ret
+
+.Darken:
+; in: bc = a 15-bit color. out: bc, darkened to night brightness.
+; Red and green halve while blue keeps about seven eighths, which is roughly what day -> nite does
+; to the authored palettes -- a cool darkening rather than an even dim, so the follower sits
+; alongside the NPCs instead of going flatly grey.
+	ld a, c
+	and %00011111
+	srl a
+	ld l, a ; red
+
+	ld a, c
+	rlca
+	rlca
+	rlca
+	and %00000111
+	ld h, a
+	ld a, b
+	and %00000011
+	add a
+	add a
+	add a
+	or h
+	srl a
+	ld h, a ; green
+
+	ld a, b
+	rrca
+	rrca
+	and %00011111
+	ld d, a
+	rrca
+	rrca
+	rrca
+	and %00011111 ; a >> 3
+	ld e, a
+	ld a, d
+	sub e
+	ld d, a ; blue
+
+	ld a, h
+	and %00000111
+	rrca
+	rrca
+	rrca
+	or l
+	ld c, a
+
+	ld a, h
+	rrca
+	rrca
+	rrca
+	and %00011111 ; a >> 3
+	ld l, a
+	ld a, d
+	add a
+	add a
+	or l
+	ld b, a
+	ret
+
 
 ApplyOBPals:
 	ld hl, wOBPals1

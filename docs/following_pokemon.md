@@ -57,7 +57,7 @@ changed files.
 | Dropped the feature's party-menu icon rewrite | It rebuilds menu icons out of the follower sprites. CSE already has colored, shiny-aware, cosmetic-form-aware icons. Taking the feature's version would have deleted that work. |
 | Pinned the follower's species ID | CSE converts species between a real 16-bit index and a temporary 8-bit handle drawn from a small recycled table. Handles get evicted. The follower's now occupies a reserved slot (`LOCKED_MON_ID_FOLLOWER`) so a long walk cannot silently swap its sprite. |
 | Appended script commands rather than renumbering | Both engines added new script commands at the same opcodes. The follower's nine were appended after CSE's, at `$b0`–`$b8`, so existing scripts keep working. |
-| Reused CSE's icon palettes for the overworld | Instead of the feature's parallel palette table, the follower's colors come from `MonMenuIconPals`, which is already shiny-aware, mapped onto overworld palettes. |
+| Reused CSE's icon palettes for the overworld | Instead of the feature's parallel palette table, the follower's colors came from `MonMenuIconPals`, already shiny-aware, mapped onto overworld palettes. **Since superseded** — followers now use the mon's own palette, see [Follower palettes](#follower-palettes). |
 | Reserved map object slot 1 for the follower | The feature's design. CSE's object loading was adjusted to start map objects at slot 2. |
 | Moved a ROM section rather than shrinking code | The feature overflowed bank 5 by 261 bytes. `"Load Map Part"` is only ever reached across banks, so it moved to a bank with room. |
 
@@ -71,8 +71,12 @@ changed files.
 | `engine/overworld/map_objects.asm` | `MovementFunction_FollowerObj` (the movement state machine), Poké Ball animation |
 | `engine/overworld/player_object.asm` | `FollowObjTemplate`, `RefreshFollowingCoords`, warp/connection handling |
 | `gfx/icons/*.png` | The party menu icons the follower is drawn from, 16×32 px = 8 tiles |
-| `engine/overworld/map_object_action.asm` | `SetFacingFollowerStep` / `SetFacingFollowerRun`, the two-frame walk cycle |
+| `engine/overworld/map_object_action.asm` | `SetFacingFollowerStep` / `Run` / `Idle`, the two-frame cycle and the hop |
+| `engine/gfx/color.asm` | `GetArrangedMonIconColors`, `LoadMonIconOBPal`, `WriteIconPalette` -- every icon surface resolves colors here |
+| `engine/gfx/sprite_palettes.asm` | `CopySpritePal`'s `PAL_OW_FOLLOWER` branch and its time-of-day tinting |
+| `data/pokemon/icon_palette_order.asm` | How each species arranges its two colors into an icon palette |
 | `constants/ram_constants.asm` | `wFollowerFlags` bits |
+| `engine/debug/fill_pc.asm` | Debug only: fills the PC with every species and form, for reviewing colors side by side |
 
 
 ## Bugs found and fixed
@@ -171,7 +175,7 @@ without extra tables: cosmetic forms (that is what the `wForm` write feeds), Uno
 (`IconPointers` carries an `EGG is -3` entry ahead of the table). There is no separate follower
 graphics table to keep in sync, and no per-form artwork to draw.
 
-### The two-frame walk cycle
+### The two-frame walk cycle, the idle, and the hop
 
 The engine's normal walk cycle has four steps: standing, walking, standing, then **the walking frame
 mirrored**. That last one is fine for hand-drawn NPC art but flips a mon icon left-to-right
@@ -180,69 +184,121 @@ instead of two, so the follower alternates only the first two. They are wired up
 `OBJECT_ACTION_FOLLOWER_STEP` and `OBJECT_ACTION_FOLLOWER_RUN`, chosen in
 `MovementFunction_FollowerObj` according to the step speed.
 
+Standing still, `OBJECT_ACTION_FOLLOWER_IDLE` keeps those two frames cycling off the object's own
+counter -- one flip every 16 frames -- so a waiting follower animates the way a hovered party menu
+icon does. The follower's movement function used to simply return when it had nowhere to go,
+leaving whatever action was last set and freezing the icon on one frame. A follower frozen by a
+script still uses `OBJECT_ACTION_STAND` and stays genuinely still.
+
+While walking, `OBJECT_SPRITE_Y_OFFSET` lifts the sprite a pixel to turn the frame swap into a
+hop. It has to lift the **standing** frame, not the walking one: an icon's second frame is a
+squash with the feet planted -- both frames end on the same bottom row and the second begins one
+or two rows lower -- so lifting the squashed frame merely cancels the squash, leaving the top
+still while the bottom rises. Lifting the extended frame instead reads as squash, then spring.
+Actions run after step functions and a normal step never touches the sprite offset (only jumps do,
+and they use their own actions), so the two never fight; the idle action clears the offset.
+
 ## Follower palettes
 
 ### How a color gets chosen
 
-The follower does not get its battle-sprite colors. It gets one of the overworld palettes, chosen
-in `_GetSpritePalette`:
+The follower is colored from **the mon's own palette** -- the same two colors its battle sprite
+uses -- not from the overworld's shared color set. `_GetSpritePalette`:
 
-1. Set `wCurPartySpecies` to the follower's species and point at its `MON_FORM` byte.
-2. Call `GetMenuMonIconPalette`, which checks the shiny bit in that form byte and returns the
-   species' **normal or shiny party-menu icon palette** — one of eight `PAL_ICON_*` values, from
-   `data/pokemon/menu_icon_pals.asm`.
-3. Map that through `FollowingPalLookupTable` to the matching `PAL_OW_*` value.
-4. Store it in `OBJECT_PAL_INDEX` and let CSE's dynamic palette system assign one of the eight
-   hardware OBJ slots.
+1. Point at the follower's `MON_FORM` byte and call `GetMonNormalOrShinyPalettePointer`, which
+   resolves species, cosmetic form and shininess in one step and returns a pointer to two colors
+   in `data/pokemon/palettes.asm` or `data/pokemon/cosmetic_palettes.asm`.
+2. Hand the two colors to `StoreFollowerPalette`, which keeps them in `wFollowerPalette` and, if
+   they changed, frees whichever hardware slot was holding the old ones.
+3. Return `PAL_OW_FOLLOWER`, a reserved index that sits past every counted `PAL_OW_*` range.
+4. `CopySpritePal` special-cases that index: instead of indexing a palette table it reads
+   `wFollowerPalette` and builds white / color 1 / color 2 / black, the same shape every mon pic
+   uses. It reads those bytes before switching WRAM banks -- they do not live in the palette
+   bank, so anything left unread by then comes back as zeroes and the follower renders black.
 
-### What palettes are available
+Step 2 matters. `MarkUsedPal` dedupes by palette index, so without the invalidation it would see
+`PAL_OW_FOLLOWER` already loaded after a party change and keep showing the previous mon's colors.
 
-CSE defines 17 time-of-day-aware overworld palettes (`PAL_OW_RED` through `PAL_OW_TREE`), plus emote
-palettes and background-copy palettes. Of those, the first thirteen are general colors: red, blue,
-green, brown, purple, gray, pink, teal, yellow, orange, azure, white, black.
+### Time of day
 
-**Followers can currently only reach eight of them** — red, blue, green, brown, pink, gray, teal,
-purple — because the input is a `PAL_ICON_*` value and there are only eight of those. Yellow,
-orange, azure, white and black are defined and available but unreachable through the current path.
+`PAL_OW_FOLLOWER` sits above the range `CopySpritePal` gives morn/day/nite/eve variants to, so the
+tinting is done in the follower branch itself, by `.TimeOfDayAdjust`.
 
-Two separate limits are worth keeping straight:
+It only has two cases to handle. Comparing the daytimes in `gfx/overworld/npc_sprites.pal`, morn,
+day and eve leave a sprite's own two colors essentially untouched -- nearly all the difference
+between them lives in color 0, which an OBJ palette never draws. So:
 
-- **Eight colors reachable**, because of the icon palette table feeding the lookup.
-- **Eight hardware slots total**, allocated dynamically and shared with every NPC on the map. On a
-  busy map the follower competes for a slot like anything else.
+- **Night** halves red and green and keeps about seven eighths of blue, which is close to what the
+  authored palettes do (day `31,19,10` becomes `16,09,09`; the formula gives `15,09,09`). It is a
+  cool darkening rather than an even dim, so the follower matches the NPCs beside it.
+- **An unlit cave** takes the character silhouette straight out of `DarknessOBPalette` and ignores
+  the mon's colors entirely. That table is not uniform -- items use a darker row than characters --
+  so the follower reads the character entry.
 
-Palettes are also time-of-day aware — `CopySpritePal` darkens them at night and in caves — so a
-follower's colors shift with the clock, the same as NPCs.
+The catch is that `MarkUsedPal` dedupes by palette index and would happily leave stale colors on
+screen through a sunset. `InvalidateFollowerPalette` frees the slot, and `timeofday_pals.asm` calls
+it immediately before its existing `CheckForUsedObjPals`.
+
+### What this costs
+
+- **One of the eight hardware OBJ slots is now permanently the follower's**, on every map. Every
+  NPC on screen competes for the remaining seven. Busy maps are where to look for regressions.
+- **The night tint is a formula, not authored art.** It will not match a hand-made palette for
+  every mon, and a shiny whose colors are already dark may go close to black once halved.
 
 ### Do shiny followers show shiny colors?
 
-**Yes, this already works.** The shiny bit lives in the form byte, `GetMenuMonIconPalette` checks
-it, and the shiny nibble of `MonMenuIconPals` is used. No extra work is needed.
+Yes, and they are now the mon's **true** shiny colors rather than a shiny icon color.
+`GetMonNormalOrShinyPalettePointer` checks the shiny bit in the form byte and advances to the
+shiny pair of the same table the battle sprite reads.
 
-The caveat: it is the shiny *icon* palette, not the mon's true shiny colors. Bulbasaur is teal
-normally and green when shiny, so the difference reads clearly. But **38 of the 255 entries in
-`menu_icon_pals.asm` list the same palette for normal and shiny**, and for those species a shiny
-follower is indistinguishable from a normal one in the overworld. That is a data problem, not a code
-one — editing the shiny nibble for those species fixes it, and improves the party menu at the same
-time.
+This also removed a whole class of invisible-shiny bug: `menu_icon_pals.asm` listed the same
+color for normal and shiny on 38 of 255 species, so those looked identical shiny or not. The mon
+palette tables always carry a distinct shiny pair.
+
+### Rearranging the two colors
+
+An icon reuses the mon's two pic colors, but icon art is not always shaded the same way round, so
+`data/pokemon/icon_palette_order.asm` carries one byte per species saying how to arrange them:
+`ICON_PAL_SWAP` exchanges the pair, and `ICON_PAL_OFFWHITE` replaces whichever color lands in the
+light slot with white. They combine, which is how a species picks *which* of its two colors
+survives. Per-form exceptions go in a short scanned list ahead of it.
+
+It started as a sparse exception list and became dense once about half the dex wanted an entry --
+at that point 251 bytes and a direct index beat 348 bytes and a linear scan.
+
+### Cosmetic forms
+
+Form colors come free, because `GetMonNormalOrShinyPalettePointer` consults
+`CosmeticFormPalettePointersTable` before falling back to the per-species table. A blue Smeargle
+follower is blue; a teal Scyther is teal. Forms that differ only in shape (Unown letters, Magikarp
+sizes) have no entry in that table and correctly fall back to the species' colors.
 
 ### Where else the same palettes are used
 
-All three surfaces read the same source of truth — `MonMenuIconPals` in
-`data/pokemon/menu_icon_pals.asm`, a normal/shiny nibble pair per species naming one of the eight
-`PAL_ICON_*` colors, whose RGB lives in `PartyMenuOBPals`:
+All three surfaces now read the mon palette tables rather than the eight shared icon colors:
 
 | Surface | How it applies the color |
 | --- | --- |
-| Party menu | `SetMenuMonIconColor` sets an OAM palette *number*, sharing the eight palettes `InitPartyMenuOBPals` loads |
-| Box (Bill's PC) | `WriteIconPaletteData` → `GetMonPalInBCDE` looks up the same table, then copies the **RGB values** into a per-slot palette (`wBillsPC_MonPals*`) |
-| Overworld follower | The same table, mapped through `FollowingPalLookupTable` to a `PAL_OW_*` value |
+| Party menu | `InitPartyMenuMonOBPals` gives each party slot the OBJ palette of its own number, holding that mon's colors; `LoadPartyMenuMonIconColors` writes the slot number into OAM |
+| Box (Bill's PC) | `WriteIconPaletteData` -> `GetMonPalInBCDE` copies the two **RGB values** into a per-slot palette (`wBillsPC_MonPals*`) |
+| Overworld follower | `PAL_OW_FOLLOWER` plus `wFollowerPalette`, as above |
 
-That makes the box the easiest place to introduce true per-species colors: it already writes
-per-slot RGB rather than sharing fixed palette numbers, so pointing `GetMonPalInBCDE` at
-`data/pokemon/palettes.asm` / `cosmetic_palettes.asm` would mostly do it. The party menu would first
-have to move from shared palette numbers to per-icon palettes. The overworld is hardest, because the
-follower competes with every NPC for the same eight hardware slots.
+The party menu can do this because it only needs six palettes at once, one per slot. The red the
+held-item indicator wants used to be palette 0; it now lives at `PARTY_MENU_ITEM_PAL` (6), since
+palette 0 belongs to the first party mon.
+
+Every icon surface now resolves through `GetArrangedMonIconColors`. The single-icon screens --
+naming, move list, and the Pokegear's Fly map -- share `SetSingleMonIconColor`, which loads
+`MENU_MON_ICON_PAL`; the trade screen uses `TRADE_MON_ICON_PAL` instead, because its palette 7 is
+the trade tube. `MonMenuIconPals`, `GetMenuMonIconPalette` and `SetMenuMonIconColor` are dead as a
+result, kept only until the converted screens have been eyeballed.
+
+Two of those were quietly broken before the conversion rather than by it. The Fly map read
+`wCurPartySpecies`, which nothing on that screen sets, and `_CGB_PokegearPals` only defines OBJ
+palettes 0 and 1 -- so the icon picked an undefined palette left over from the overworld. The
+trade screen had no form byte at all (the animation still carries a `TODO: load wForm`) and fed
+the mon's *DVs* to the shiny check, so any mon whose first DV byte had bit 7 set came out shiny.
 
 ## Bugs from the source branch
 
@@ -380,16 +436,20 @@ explaining what it is for.
   mirrored down-facing frames are the only cue to travel direction.
 - **`FrozenInteraction` shows its emote above the player**, not the follower, unlike its siblings.
   Possibly deliberate; flagged in case it is not.
+- **The follower now owns one of the eight hardware OBJ palettes on every map.** Maps that already
+  used all eight will lose a color. Worth watching in Goldenrod, the Celadon department store and
+  the underground.
 
 ## TODO
 
-- **True per-species follower palettes.** Followers, the party menu and the box all borrow one of
-  eight party-menu icon colors (see [Where else the same palettes are used](#where-else-the-same-palettes-are-used)).
-  Giving them real colors would mean a reserved `PAL_OW_*` index meaning "use the follower's own
-  palette" and teaching `CopySpritePal` to pull from `data/pokemon/palettes.asm` /
-  `cosmetic_palettes.asm`. Costs one of the eight shared OBJ slots permanently, and overworld
-  sprites only get three colors plus transparency, so battle palettes will not transfer exactly.
-  The box is the cheapest place to start.
-- **Shiny followers are invisible for some species.** 38 of the 255 entries in
-  `menu_icon_pals.asm` list the same palette for normal and shiny, so those look identical in the
-  overworld, party menu and box alike. That is a data fix, not a code one.
+- **Delete the dead icon path.** `MonMenuIconPals` (~255 bytes), `GetMenuMonIconPalette` and
+  `SetMenuMonIconColor` have no callers left. Held back only so the converted screens can be
+  compared against the old behaviour; remove once they have been checked.
+- **Audit which forms want their own shiny colors.** Several forms still reuse their base form's
+  `shiny.pal`, so they are indistinguishable from each other when shiny even though they now
+  differ normally. All four Pikachu forms share `pikachu/shiny.pal`, for instance. Data, not code.
+- **Pikachu RB is a plain icon in RB colors.** `PikachuIconPointers` maps the RB form back to
+  `PikachuPlainIcon` while `PikachuPalettes` gives it its own paler yellow. That may be intended;
+  it only became visible once icons stopped using the eight shared colors. Surf and Fly were the
+  same kind of mismatch in reverse -- greyscale artwork with no palette pointing at Pikachu's --
+  and now take Pikachu's colors outright.

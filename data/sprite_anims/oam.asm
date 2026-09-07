@@ -337,28 +337,28 @@ SpriteAnimOAMData:
 	db 4
 	dbsprite -1, -1,  0,  0, $00, -1
 	dbsprite  0, -1,  0,  0, $01, -1
-	dbsprite -1,  0,  0,  0, $08, PAL_ICON_RED
+	dbsprite -1,  0,  0,  0, $08, PARTY_MENU_ITEM_PAL
 	dbsprite  0,  0,  0,  0, $03, -1
 
 .OAMData_PartyMonWithMail2:
 	db 4
 	dbsprite -1, -1,  0,  0, $04, -1
 	dbsprite  0, -1,  0,  0, $05, -1
-	dbsprite -1,  0,  0,  0, $08, PAL_ICON_RED
+	dbsprite -1,  0,  0,  0, $08, PARTY_MENU_ITEM_PAL
 	dbsprite  0,  0,  0,  0, $07, -1
 
 .OAMData_PartyMonWithItem1:
 	db 4
 	dbsprite -1, -1,  0,  0, $00, -1
 	dbsprite  0, -1,  0,  0, $01, -1
-	dbsprite -1,  0,  0,  0, $09, PAL_ICON_RED
+	dbsprite -1,  0,  0,  0, $09, PARTY_MENU_ITEM_PAL
 	dbsprite  0,  0,  0,  0, $03, -1
 
 .OAMData_PartyMonWithItem2:
 	db 4
 	dbsprite -1, -1,  0,  0, $04, -1
 	dbsprite  0, -1,  0,  0, $05, -1
-	dbsprite -1,  0,  0,  0, $09, PAL_ICON_RED
+	dbsprite -1,  0,  0,  0, $09, PARTY_MENU_ITEM_PAL
 	dbsprite  0,  0,  0,  0, $07, -1
 
 .OAMData_PartyMon:

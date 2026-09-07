@@ -2671,6 +2671,7 @@ for n, 8
 wLoadedObjPal{d:n}:: db
 endr
 wNeededPalIndex:: db
+wFollowerPalette:: ds 2 * 2 ; the follower's two arranged colors, for PAL_OW_FOLLOWER
 
 wMapObjects::
 wPlayerObject:: map_object wPlayer ; player is map object 0

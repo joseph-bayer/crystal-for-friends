@@ -22,6 +22,7 @@ ObjectActionPairPointers:
 	dw SetFacingRunAction,             SetFacingCurrent
 	dw SetFacingFollowerStep,          SetFacingCurrent
 	dw SetFacingFollowerRun,           SetFacingCurrent
+	dw SetFacingFollowerIdle,          SetFacingCurrent
 	assert_table_length NUM_OBJECT_ACTIONS
 
 SetFacingStanding:
@@ -314,6 +315,25 @@ SetFacingRunAction:
 	ld [hl], a
 	ret
 
+SetFacingFollowerIdle:
+; Standing still, the follower keeps flipping between its two icon frames, the way a hovered
+; party menu icon does. Nothing else drives this -- the step actions only run while the player is
+; moving -- so cycle on the object's own frame counter, one flip every 16 frames.
+	ld hl, OBJECT_SPRITE_Y_OFFSET
+	add hl, bc
+	ld [hl], 0 ; a step may have left the hop behind
+
+	ld hl, OBJECT_STEP_FRAME
+	add hl, bc
+	inc [hl]
+	ld a, [hl]
+	rrca
+	rrca
+	rrca
+	rrca
+	and %1
+	jr _SetFacingFollowerIdleFrame
+
 SetFacingFollowerStep:
 ; The follower is drawn from its two-frame party menu icon, so it only has a standing frame and a
 ; walking frame. Masking the step frame to one bit alternates just those two; the normal four-frame
@@ -349,6 +369,24 @@ SetFacingFollowerRun:
 	rrca
 	and %1
 _SetFacingFollowerFrame:
+; in: a = 0 for the standing frame, 1 for the walking one
+	ld d, a
+; Lift the standing frame a pixel so the follower hops along rather than sliding.
+; It has to be that frame rather than the walking one. An icon's second frame is a squash with
+; the feet planted -- both frames end on the same bottom row, and the second starts one or two
+; rows lower -- so lifting the squashed frame just cancels the squash, leaving the top still and
+; the bottom rising. Lifting the extended frame instead reads as squash, then spring.
+; Actions run after step functions, and a normal step never touches the sprite offset -- only
+; jumps do, and those use their own actions -- so the two do not fight. The idle action clears it.
+	ld hl, OBJECT_SPRITE_Y_OFFSET
+	add hl, bc
+	ld a, d
+	dec a ; the extended frame lifts to -1, the squashed one stays at 0
+	ld [hl], a
+	ld a, d
+
+_SetFacingFollowerIdleFrame:
+; As above but leaving the sprite offset alone, so a standing follower animates without bobbing.
 	ld d, a
 	call GetSpriteDirection
 	or d

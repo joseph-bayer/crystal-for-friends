@@ -249,6 +249,7 @@ DEF NUM_STEP_TYPES EQU const_value
 	const OBJECT_ACTION_RUN           ; 11
 	const OBJECT_ACTION_FOLLOWER_STEP ; 12
 	const OBJECT_ACTION_FOLLOWER_RUN  ; 13
+	const OBJECT_ACTION_FOLLOWER_IDLE ; 14
 DEF NUM_OBJECT_ACTIONS EQU const_value
 
 ; Facings indexes (see data/sprites/facings.asm)

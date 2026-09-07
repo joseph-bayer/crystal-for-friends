@@ -62,6 +62,11 @@ DEF FIRST_COPY_BG_PAL EQU const_value
 DEF NUM_OW_BG_COPY_PALS EQU const_value - NUM_OW_INDIVIDUAL_PALS
 DEF NUM_OW_PALS EQU const_value
 
+; The follower takes its colors from the mon itself rather than from any of the tables above,
+; so it sits past every counted range and CopySpritePal special-cases it. Only ever assigned in
+; code -- an object_event cannot ask for it.
+DEF PAL_OW_FOLLOWER EQU NUM_OW_PALS
+
 DEF PAL_OW_ROCK EQU PAL_OW_BROWN
 DEF PAL_NPC_ROCK EQU PAL_NPC_BROWN
 DEF PAL_OW_GREY EQU PAL_OW_GRAY

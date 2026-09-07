@@ -487,42 +487,75 @@ _GetSpritePalette::
 	ret
 
 .follower
-; The follower uses its party menu icon palette (already shiny-aware),
-; mapped onto an overworld palette.
+; The follower is colored from the mon's own palette -- the two colors its battle sprite uses,
+; form and shininess included -- rather than from one of the eight overworld colors.
+; CopySpritePal reads them back out of wFollowerPalette when it loads PAL_OW_FOLLOWER.
 	call SetFollowerFromParty
 	and a
 	jr z, .is_pokemon
-	push de
-	ld e, a
-	ld a, [wCurPartySpecies]
 	push af
-	ld a, e
-	ld [wCurPartySpecies], a
 	ld a, [wFollowerPartyNum]
-	dec a
+	dec a ; wFollowerPartyNum is 1-based
 	ld hl, wPartyMon1Form
 	call GetPartyLocation
-	farcall GetMenuMonIconPalette ; a = PAL_ICON_*
-	ld e, a
-	pop af
-	ld [wCurPartySpecies], a
-	ld d, 0
-	ld hl, FollowingPalLookupTable
-	add hl, de
-	ld c, [hl]
-	pop de
+	ld b, h
+	ld c, l ; bc = the follower's form byte, its shiny bit included
+	pop af ; a = the follower's species
+	farcall GetArrangedMonIconColors ; bc = the light color, de = the dark one
+	call StoreFollowerPalette
+	ld c, PAL_OW_FOLLOWER
 	ret
 
-FollowingPalLookupTable:
-; maps PAL_ICON_* (party menu icon palettes) to PAL_OW_* (overworld palettes)
-	db PAL_OW_RED    ; PAL_ICON_RED
-	db PAL_OW_BLUE   ; PAL_ICON_BLUE
-	db PAL_OW_GREEN  ; PAL_ICON_GREEN
-	db PAL_OW_BROWN  ; PAL_ICON_BROWN
-	db PAL_OW_PINK   ; PAL_ICON_PINK
-	db PAL_OW_GRAY   ; PAL_ICON_GRAY
-	db PAL_OW_TEAL   ; PAL_ICON_TEAL
-	db PAL_OW_PURPLE ; PAL_ICON_PURPLE
+StoreFollowerPalette:
+; Keep the follower's colors where CopySpritePal can reach them without a bank switch, and when
+; they have changed, drop the loaded copy so the allocator fetches the new ones. Without that
+; last part MarkUsedPal sees PAL_OW_FOLLOWER already loaded and keeps showing the previous mon's.
+; in: bc = the light color, de = the dark color
+	ld hl, wFollowerPalette
+	ld a, c
+	cp [hl]
+	jr nz, .changed
+	inc hl
+	ld a, b
+	cp [hl]
+	jr nz, .changed
+	inc hl
+	ld a, e
+	cp [hl]
+	jr nz, .changed
+	inc hl
+	ld a, d
+	cp [hl]
+	ret z
+
+.changed
+	ld hl, wFollowerPalette
+	ld a, c
+	ld [hli], a
+	ld a, b
+	ld [hli], a
+	ld a, e
+	ld [hli], a
+	ld a, d
+	ld [hl], a
+	; fallthrough
+
+InvalidateFollowerPalette::
+; Drop the loaded copy of the follower's colors so the allocator fetches them again. MarkUsedPal
+; dedupes by palette index, so without this a changed mon -- or a changed time of day -- would
+; keep whatever is already sitting in the slot.
+	ld hl, wLoadedObjPal0
+	ld c, 8
+.loop
+	ld a, [hl]
+	cp PAL_OW_FOLLOWER
+	jr nz, .next
+	ld [hl], -1 ; free the slot, the way ClearSavedObjPals marks an empty one
+.next
+	inc hl
+	dec c
+	jr nz, .loop
+	ret
 
 AddSpriteGFX:
 ; Add any new sprite ids to a list of graphics to be loaded.

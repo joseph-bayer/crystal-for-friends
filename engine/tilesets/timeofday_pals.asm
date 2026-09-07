@@ -90,6 +90,7 @@ _TimeOfDayPals::
 	ldh [rWBK], a
 
 ; update palettes
+	farcall InvalidateFollowerPalette ; its colors are tinted per time of day, so refetch them
 	farcall CheckForUsedObjPals
 	call _UpdateTimePals
 	call DelayFrame

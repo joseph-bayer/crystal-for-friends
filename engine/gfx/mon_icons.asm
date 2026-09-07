@@ -111,9 +111,7 @@ LoadPartyMenuMonIconColors:
 	add hl, de
 	ld a, [hl]
 	ld [wCurPartySpecies], a
-	ld a, MON_FORM
-	call GetPartyParamLocation
-	call GetMenuMonIconPalette
+	ld a, [wCurPartyMon] ; InitPartyMenuMonOBPals gave this slot the palette of the same number
 	ld hl, wShadowOAMSprite00Attributes
 	push af
 	ld a, [wCurPartyMon]
@@ -135,7 +133,7 @@ LoadPartyMenuMonIconColors:
 	ld d, a
 	ld a, [wCurIconMonHasItemOrMail]
 	and a
-	ld a, PAL_OW_RED ; item or mail color
+	ld a, PARTY_MENU_ITEM_PAL ; item or mail color
 	jr nz, .ok
 	ld a, d
 .ok
@@ -154,45 +152,27 @@ _ApplyMenuMonIconColor:
 _FinishMenuMonIconColor:
 	jmp PopAFBCDEHL
 
-GetMonPalInBCDE:
-; Sets BCDE to mon icon palette.
-; Input: c = species, b = shininess (1=true, 0=false)
-	ld a, c
-	call GetPokemonIndexFromID
-	dec hl
-	ld d, h
-	ld e, l
-
-	ld hl, MonMenuIconPals
-
-	; This sets z if mon is shiny.
-	dec b
-	ld b, 0
-	add hl, de
-	ld a, [hl]
-	jr z, .shiny
-	swap a
-.shiny
-	and $f
-
-	; Now we have the target color. Get the palette (+ 2 to avoid white).
-	ld hl, PartyMenuOBPals + 2
-	ld bc, 1 palettes
-	rst AddNTimes
-
+SetSingleMonIconColor:
+; Screens that show one icon give it a palette of its own rather than one of the eight shared
+; icon colors.
+; in: hl = the mon's form byte
 	push hl
-	ld a, BANK(PartyMenuOBPals)
-	call GetFarWord
+	push de
+	push bc
+	push af
+
 	ld b, h
 	ld c, l
-	pop hl
-	inc hl
-	inc hl
-	ld a, BANK(PartyMenuOBPals)
-	call GetFarWord
-	ld d, h
-	ld e, l
-	ret
+	ld a, [wTempIconSpecies]
+	ld e, MENU_MON_ICON_PAL
+	farcall LoadMonIconOBPal
+	farcall ApplyOBPals ; the screen's palettes were pushed before the icon existed
+	ld a, TRUE
+	ldh [hCGBPalUpdate], a
+
+	ld a, MENU_MON_ICON_PAL
+	ld hl, wShadowOAMSprite00Attributes
+	jr _ApplyMenuMonIconColor
 
 ; TODO: 
 GetMenuMonIconPalette::
@@ -412,7 +392,7 @@ SetPartyMonIconAnimSpeed:
 
 NamingScreen_InitAnimatedMonIcon:
 	ld hl, wTempMonForm
-	call SetMenuMonIconColor
+	call SetSingleMonIconColor
 	ld a, [wTempIconSpecies]
 	ld [wCurIcon], a
 	ld a, [wTempMonForm]
@@ -430,7 +410,7 @@ NamingScreen_InitAnimatedMonIcon:
 MoveList_InitAnimatedMonIcon:
 	ld a, MON_FORM
 	call GetPartyParamLocation
-	call SetMenuMonIconColor
+	call SetSingleMonIconColor
 	ld a, [wTempIconSpecies]
 	ld [wCurIcon], a
 	; Put the mon's form in wForm
@@ -456,22 +436,32 @@ Trade_LoadMonIconGFX:
 	ld a, [wTempIconSpecies]
 	ld [wCurPartySpecies], a
 	ld [wCurIcon], a
-	call GetMenuMonIconPalette
-	add a
-	add a
-	add a
-	ld e, a
-	farcall SetSecondOBJPalette
+; A trademon carries no form byte -- the animation itself has a "TODO: load wForm" where one
+; would come from -- so pin both the form and the shiny bit to zero. The old code handed the DVs
+; to the shiny check, but shininess here is a stored form bit rather than something derived from
+; DVs, so any mon whose first DV byte had bit 7 set came out in shiny colors.
+	xor a
+	ld [wForm], a
+	ld bc, wForm
+	ld a, [wTempIconSpecies]
+	ld e, TRADE_MON_ICON_PAL
+	farcall LoadMonIconOBPal
+	ld a, TRUE
+	ldh [hCGBPalUpdate], a
+	farcall ApplyPals
 	ld a, $62
 	ld [wCurIconTile], a
 	jr GetMemIconGFX
 
 GetSpeciesIcon:
 ; Load species icon into VRAM at tile a
+; The Pokegear's town map draws the Fly mon through here, and _CGB_PokegearPals only defines OBJ
+; palettes 0 and 1 -- so picking one of the eight shared icon colors landed on an undefined
+; palette left over from the previous screen. Load a real one instead.
 	push de
 	ld a, MON_FORM
 	call GetPartyParamLocation
-	call SetMenuMonIconColor
+	call SetSingleMonIconColor
 	ld a, [wTempIconSpecies]
 	ld [wCurIcon], a
 
@@ -501,15 +491,25 @@ FlyFunction_GetMonIcon:
 ; todo: made up this label location... fix this!
 ; fallthrough
 SetOWFlyMonColor:
-	; Edit the OBJ 0 palette so that the cursor Pokémon has the right colors.
+	; Give OBJ palette 0 the cursor Pokémon's own colors, the pair its battle sprite uses.
 	ld a, MON_FORM
-	call GetPartyParamLocation
-	call GetMenuMonIconPalette
-	add a
-	add a
-	add a
+	call GetPartyParamLocation ; hl = this mon's form byte
+	ld b, h
+	ld c, l
+; Read the species out of the party slot rather than wCurPartySpecies, which nothing on this
+; screen sets -- FlyFunction_InitGFX calls here before it has even filled wTempIconSpecies, so
+; the stale value left there was picking some other mon's colors entirely.
+	ld a, [wCurPartyMon]
 	ld e, a
-	farjp SetFirstOBJPalette
+	ld d, 0
+	ld hl, wPartySpecies
+	add hl, de
+	ld a, [hl]
+	ld e, 0 ; the fly map's icon is drawn with OBJ palette 0
+	farcall LoadMonIconOBPal
+	ld a, TRUE
+	ldh [hCGBPalUpdate], a
+	farjp ApplyPals
 
 GetMemIconGFX:
 	ld a, [wCurIconTile]

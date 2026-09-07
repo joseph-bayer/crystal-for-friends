@@ -23,6 +23,9 @@ NPCTrade::
 	call Trade_GetDialog
 	ld b, CHECK_FLAG
 	call TradeFlagAction
+if DEF(_DEBUG)
+	call nz, .DebugTradeCheck ; the debug trade can be done again and again
+endc
 	ld a, TRADE_DIALOG_AFTER
 	jr nz, .done
 
@@ -43,6 +46,9 @@ NPCTrade::
 	call GetLockedPokemonID
 	ld hl, wCurPartySpecies
 	cp [hl]
+if DEF(_DEBUG)
+	call nz, .DebugTradeCheck ; the debug trade takes whatever it is handed
+endc
 	ld a, TRADE_DIALOG_WRONG
 	jr nz, .done
 
@@ -75,6 +81,17 @@ NPCTrade::
 	call LockPokemonID
 	ld l, LOCKED_MON_ID_TRADE_RECEIVE
 	jmp LockPokemonID
+
+if DEF(_DEBUG)
+.DebugTradeCheck:
+; Returns z when the trade in progress is the debug one, so the caller's `jr nz` falls through.
+; Waives both the already-traded gate and the species check, which is only safe because
+; DoNPCTrade now reads the outgoing species off the mon actually handed over.
+; wJumptableIndex holds the trade id, stashed at the top of NPCTrade.
+	ld a, [wJumptableIndex]
+	cp NPC_TRADE_DEBUG
+	ret
+endc
 
 .TradeAnimation:
 	call DisableSpriteUpdates
@@ -135,8 +152,14 @@ Trade_GetDialog:
 	ret
 
 DoNPCTrade:
-	ld a, LOCKED_MON_ID_TRADE_SEND
-	call GetLockedPokemonID
+; Take the outgoing species from the mon actually handed over rather than the one the trade asked
+; for. Every real trade checks those match before reaching here, so the value is unchanged for
+; them -- but the debug trade waives that check, and the animation would otherwise name and draw
+; the requested mon while trading a different one away.
+	ld hl, wPartyMon1Species
+	ld bc, PARTYMON_STRUCT_LENGTH
+	call Trade_GetAttributeOfCurrentPartymon
+	ld a, [hl]
 	ld [wPlayerTrademonSpecies], a
 
 	ld a, LOCKED_MON_ID_TRADE_RECEIVE

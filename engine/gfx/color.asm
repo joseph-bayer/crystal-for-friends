@@ -58,6 +58,7 @@ InitPartyMenuPalettes:
 	ld hl, PalPacket_PartyMenu + 1
 	call CopyFourPalettes
 	call InitPartyMenuOBPals
+	call InitPartyMenuMonOBPals
 	jmp WipeAttrmap
 
 ; SGB layout for SCGB_PARTY_MENU_HP_BARS
@@ -147,7 +148,7 @@ ApplyHPBarPals:
 	ld a, [wWhichHPBar]
 	and a
 	jr z, .Enemy
-	cp $1
+	cp $1 ; no-optimize a == 1 (a is still needed for the cp $2 below)
 	jr z, .Player
 	cp $2
 	jr z, .PartyMenu
@@ -476,6 +477,194 @@ InitPartyMenuOBPals:
 	ld bc, 8 palettes
 	ld a, BANK(wOBPals1)
 	jmp FarCopyWRAM
+
+GetMonIconPaletteOrder::
+; How this mon's two colors should be arranged into an icon palette.
+; in: a = species ID, bc = address of its form byte
+; out: a = ICON_PAL_*. Preserves bc, de, hl.
+	push hl
+	push de
+	push bc
+	push af
+	ld a, [bc]
+	and FORM_MASK
+	ld b, a ; b = the form
+	pop af ; a = the species
+	push bc
+	call GetPokemonIndexFromID
+	pop bc
+	ld d, h
+	ld e, l ; de = the species index
+
+; A form only appears here when it wants something different from its species, so this list stays
+; short and a scan is cheaper than a second table indexed by every species.
+	assert NUM_POKEMON < $100, "the form table matches only the low byte of the species index"
+	ld hl, IconPaletteOrderForms
+.form_loop
+	ld a, [hli]
+	inc hl ; the high byte of the index, always zero
+	and a
+	jr z, .by_species ; the terminator
+	cp e
+	jr nz, .skip_form_entry
+	ld a, [hli]
+	cp b
+	jr z, .found
+	inc hl ; step over the order
+	jr .form_loop
+
+.skip_form_entry
+	inc hl ; step over the form
+	inc hl ; and the order
+	jr .form_loop
+
+.by_species
+; One byte per species, so index straight in. Eggs carry a negative index and land on the padding
+; rows ahead of the label rather than off the front of the table.
+	ld h, d
+	ld l, e
+	dec hl ; the table starts at species index 1
+	ld de, IconPaletteOrders
+	add hl, de
+	; fallthrough
+
+.found
+	ld a, [hl]
+	pop bc
+	pop de
+	pop hl
+	ret
+
+GetArrangedMonIconColors::
+; The two colors an icon should draw with, after this mon's ICON_PAL_* arrangement is applied.
+; in: a = species ID, bc = address of its form byte, its shiny bit included
+; out: bc = the color for the light slot, de = the color for the dark slot
+	push bc
+	push af
+	call GetMonIconPaletteOrder
+	ld e, a
+	pop af
+	pop bc
+	push de
+	call GetMonNormalOrShinyPalettePointer ; hl = this mon's two colors
+	pop de
+	ld d, e ; d = the order, until the dark color needs the register
+
+	push hl
+	bit ICON_PAL_SWAP_F, d
+	jr z, .light_at_hl
+	inc hl
+	inc hl
+.light_at_hl
+	ld a, [hli]
+	ld c, a
+	ld b, [hl]
+	pop hl
+
+	bit ICON_PAL_OFFWHITE_F, d
+	jr z, .got_light
+	ld bc, PALRGB_ICON_LIGHT
+.got_light
+	bit ICON_PAL_SWAP_F, d
+	jr nz, .dark_at_hl ; swapped, so the dark slot wants color 1, still at hl
+	inc hl
+	inc hl
+.dark_at_hl
+	ld a, [hli]
+	ld e, a
+	ld d, [hl]
+	ret
+
+LoadMonIconOBPal::
+; Load one mon's own colors into one OBJ palette, bookended white and black.
+; in: a = species ID, bc = address of its form byte, e = which OBJ palette (0-7)
+	push de
+	call GetArrangedMonIconColors ; bc = light, de = dark
+	pop hl ; l = the palette to write
+
+	ld a, l
+	add a
+	add a
+	add a ; a palette is 8 bytes
+	add LOW(wOBPals1)
+	ld l, a
+	adc HIGH(wOBPals1)
+	sub l
+	ld h, a
+	; fallthrough
+
+WriteIconPalette::
+; Write white / the light color / the dark color / black to one palette.
+; in: hl = destination, bc = the light color, de = the dark color
+; Switches to the palette WRAM bank itself, so read any source out of another bank first.
+	ldh a, [rWBK]
+	push af
+	ld a, BANK(wOBPals1)
+	ldh [rWBK], a
+
+	ld a, LOW(PALRGB_WHITE)
+	ld [hli], a
+	ld a, HIGH(PALRGB_WHITE)
+	ld [hli], a
+	ld a, c
+	ld [hli], a
+	ld a, b
+	ld [hli], a
+	ld a, e
+	ld [hli], a
+	ld a, d
+	ld [hli], a
+	xor a
+	ld [hli], a
+	ld [hl], a
+
+	pop af
+	ldh [rWBK], a
+	ret
+
+INCLUDE "data/pokemon/icon_palette_order.asm"
+
+InitPartyMenuMonOBPals:
+; Give each party slot the OBJ palette matching its own number, holding that mon's own two
+; colors -- the same pair its battle sprite uses, form and shininess included. Icons then look
+; like the mon rather than picking from eight shared colors.
+; Run this after InitPartyMenuOBPals, which is what leaves palettes 6 and 7 sane.
+	ld hl, PartyMenuOBPals ; palette 0 is the red the held-item indicator wants
+	ld de, wOBPals1 palette PARTY_MENU_ITEM_PAL
+	ld bc, 1 palettes
+	ld a, BANK(wOBPals1)
+	call FarCopyWRAM
+
+	ld a, [wPartyCount]
+	and a
+	ret z
+	ld d, a ; how many slots to color
+	ld e, 0 ; the slot being colored
+.loop
+	push de
+
+	ld a, e
+	ld hl, wPartyMon1Form
+	call GetPartyLocation
+	ld b, h
+	ld c, l ; bc = this mon's form byte, its shiny bit included
+
+	pop de
+	push de
+	ld a, e
+	add LOW(wPartySpecies)
+	ld l, a
+	adc HIGH(wPartySpecies)
+	sub l
+	ld h, a
+	ld a, [hl]
+	call LoadMonIconOBPal ; e already names the palette this slot owns
+
+	pop de
+	inc e
+	dec d
+	jr nz, .loop
+	ret
 
 SetFirstOBJPalette::
 ; input: e must contain the offset of the selected palette from PartyMenuOBPals

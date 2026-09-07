@@ -727,15 +727,9 @@ WriteIconPaletteData:
 	push hl
 	push de
 	push bc
-	ld bc, wBufferMonForm
-	farcall CheckShininess
 	ld a, [wBufferMonAltSpecies]
-	ld c, a
-	ld b, 1
-	jr c, .got_shininess
-	dec b
-.got_shininess
-	farcall GetMonPalInBCDE
+	ld bc, wBufferMonForm ; the form and shiny bit are read from here
+	farcall GetArrangedMonIconColors
 	ld h, b
 	ld l, c
 	pop bc
@@ -3377,7 +3371,7 @@ BillsPC_PlaceHeldMon:
 	; Make sure the mon your moving uses the correct form icon
 	push bc
 	call GetStorageBoxMon
-	ld a, 0
+	ld a, 0 ; no-optimize a = 0 (xor a would clobber GetStorageBoxMon's z flag)
 	jr z, .no_dest_mon
 	ld a, [wBufferMonForm]
 .no_dest_mon:
@@ -3447,7 +3441,7 @@ BillsPC_PlaceHeldMon:
 	ld b, d
 	ld c, e
 	call GetStorageBoxMon
-	ld a, 0
+	ld a, 0 ; no-optimize a = 0 (xor a would clobber GetStorageBoxMon's z flag)
 	jr z, .no_dest_mon2
 	ld a, [wBufferMonForm]
 .no_dest_mon2:
