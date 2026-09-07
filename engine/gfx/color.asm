@@ -1328,6 +1328,9 @@ INCLUDE "data/maps/environment_colors.asm"
 PartyMenuBGPalette:
 INCLUDE "gfx/stats/party_menu_bg.pal"
 
+FollowerMarkBGPalette:
+INCLUDE "gfx/stats/party_menu_follower_mark.pal"
+
 BillsPC_ThemePals:
 	table_width COLOR_SIZE * 4
 INCLUDE "gfx/pc/themes.pal"

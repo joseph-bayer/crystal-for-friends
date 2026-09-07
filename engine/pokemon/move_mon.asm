@@ -916,6 +916,10 @@ String_Egg:
 	db "EGG@"
 
 RemoveMonFromParty:
+	ld a, [wCurPartyMon]
+	inc a ; the follower slot is 1-based
+	farcall RemoveFollowerSlot
+
 	ld hl, wPartyCount
 
 	ld a, [hl]

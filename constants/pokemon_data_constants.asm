@@ -174,7 +174,10 @@ DEF MOVES_HIGH_MASK EQU %00111111
 
 ; form byte
 DEF SHINY_MASK EQU %10000000
+DEF ALT_SHINY_MASK EQU %01000000 ; reserved for alternate shiny palettes; not read yet
 DEF FORM_MASK  EQU %00011111
+; bit 5 is the only one of MON_FORM still going spare
+assert !(SHINY_MASK & ALT_SHINY_MASK) && !(FORM_MASK & ALT_SHINY_MASK), "MON_FORM bits overlap"
 DEF PLAIN_FORM EQU 0
 
 ; These numerators are used after a 1/256 check, resulting in a denominator of 65536.

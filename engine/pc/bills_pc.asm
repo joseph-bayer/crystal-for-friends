@@ -266,6 +266,13 @@ SwapPartyMons:
 	push hl
 	push de
 	push bc
+
+	push bc
+	ld b, c
+	ld c, e
+	farcall SwapFollowerSlot ; so the follower stays with its mon through a shuffle
+	pop bc
+
 	dec c
 	dec e
 	ld d, c
@@ -611,6 +618,7 @@ SetStorageBoxPointer:
 	ld hl, wPartySpecies
 	add hl, bc
 	ld [hl], -1
+	farcall ValidateFollowerSlot ; the mon that left was shifted to the end, so catch it there
 	jr .done
 
 .not_empty

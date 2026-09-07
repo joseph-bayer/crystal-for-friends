@@ -1,0 +1,9 @@
+; The follower mark is a font tile, and 1bpp font tiles only ever use color 0 for the paper and
+; color 3 for the ink -- which is black in every palette the party menu otherwise loads. This one
+; exists so the star can be red.
+; Mute it by lowering the red channel, not by raising green and blue: the overworld's own red
+; (30,10,06) reads as salmon here, because those two channels wash the hue out.
+	RGB 31, 31, 31
+	RGB 31, 31, 31
+	RGB 22, 00, 00
+	RGB 22, 00, 00

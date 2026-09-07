@@ -55,6 +55,8 @@ NewGame:
 	xor a
 	ld [wDebugFlags], a
 	call ResetWRAM
+	ld a, 1
+	ld [wFollowerPartySlot], a ; the first mon you are given follows you
 	farcall ClearSavedObjPals
 	call NewGame_ClearTilemapEtc
 	call PlayerProfileSetup

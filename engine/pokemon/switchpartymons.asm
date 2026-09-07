@@ -8,6 +8,16 @@ _SwitchPartyMons:
 	ld [wSwitchMonTo], a
 	cp b
 	ret z
+
+	push bc
+	inc a
+	ld c, a
+	ld a, b
+	inc a
+	ld b, a
+	farcall SwapFollowerSlot ; SwitchMonFrom/To are 0-based, the follower slot is 1-based
+	pop bc
+
 	call .SwapMonAndMail
 	ld a, [wSwitchMonFrom]
 	call .ClearSprite

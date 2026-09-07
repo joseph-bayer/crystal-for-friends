@@ -1,15 +1,3 @@
-; WritePartyMenuTilemap.Jumptable indexes (see engine/pokemon/party_menu.asm)
-	const_def
-	const PARTYMENUQUALITY_NICKNAMES
-	const PARTYMENUQUALITY_HP_BAR
-	const PARTYMENUQUALITY_HP_DIGITS
-	const PARTYMENUQUALITY_LEVEL
-	const PARTYMENUQUALITY_STATUS
-	const PARTYMENUQUALITY_TMHM_COMPAT
-	const PARTYMENUQUALITY_EVO_STONE_COMPAT
-	const PARTYMENUQUALITY_GENDER
-	const PARTYMENUQUALITY_MOBILE_SELECTION
-
 MACRO partymenuqualities
 	rept _NARG
 		db PARTYMENUQUALITY_\1
@@ -32,7 +20,7 @@ PartyMenuQualityPointers:
 	dw .Default  ; PARTYMENUACTION_GIVE_ITEM
 	assert_table_length NUM_PARTYMENUACTIONS
 
-.Default:  partymenuqualities NICKNAMES, HP_BAR, HP_DIGITS, LEVEL, STATUS
+.Default:  partymenuqualities NICKNAMES, HP_BAR, HP_DIGITS, LEVEL, STATUS, FOLLOWER
 .TMHM:     partymenuqualities NICKNAMES, TMHM_COMPAT,       LEVEL, STATUS
 .EvoStone: partymenuqualities NICKNAMES, EVO_STONE_COMPAT,  LEVEL, STATUS
 .Gender:   partymenuqualities NICKNAMES, GENDER,            LEVEL, STATUS

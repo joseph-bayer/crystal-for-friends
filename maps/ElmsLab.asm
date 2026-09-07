@@ -497,6 +497,8 @@ AideScript_GivePotion:
 	promptbutton
 	verbosegiveitem POTION
 	writetext AideText_AlwaysBusy
+	promptbutton
+	writetext AideText_FollowerTip
 	waitbutton
 	closetext
 	setscene SCENE_ELMSLAB_NOOP
@@ -1241,6 +1243,22 @@ AideText_AlwaysBusy:
 	text "There are only two"
 	line "of us, so we're"
 	cont "always busy."
+	done
+
+AideText_FollowerTip:
+	text "Oh, and your"
+	line "#MON likes"
+	cont "walking with you!"
+
+	para "Open your party and"
+	line "press SELECT on"
+	cont "another one to have"
+	cont "it come out instead."
+
+	para "Press SELECT on the"
+	line "one following you"
+	cont "to send it back to"
+	cont "its BALL."
 	done
 
 AideText_TheftTestimony:

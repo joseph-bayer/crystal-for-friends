@@ -240,49 +240,109 @@ GetMonSprite:
 	and a
 	ret
 
-GetFirstAliveMon::
-; Returns the species ID of the first party mon with HP > 0 in a
-; and its 1-based party slot in d. Falls back to the first mon.
-; Returns a = 0 if the party is empty.
+GetFollowerMon::
+; Returns the follower's species ID in a and its 1-based party slot in d.
+; Returns a = 0 when nobody should be out: an empty party, nobody selected, or a selected mon
+; that has fainted -- a fainted follower keeps its slot, it just stays in its ball. There is no
+; falling through to another mon: once the choice is the player's, quietly substituting a
+; different one is worse than showing nobody.
 	ld a, [wPartyCount]
 	and a
 	ret z
-	inc a
-	ld d, 1
-	ld e, a
-	ld bc, wPartyMon1
-.loop
-	ld hl, MON_HP
-	add hl, bc
-	ld a, [hli]
-	push de
-	ld d, a
-	ld a, [hl]
-	or d
-	pop de
-	jr nz, .got_mon_struct
-	inc d
-	ld a, d
+	ld e, a ; how many mons are in the party
+
+	ld a, [wFollowerPartySlot]
+	and a
+	ret z ; nobody selected
 	cp e
-	jr z, .none
-	ld hl, PARTYMON_STRUCT_LENGTH
-	add hl, bc
-	ld b, h
-	ld c, l
-	jr .loop
-.none
-	ld d, 1
-	ld a, [wPartySpecies]
+	jr z, .in_party
+	ret nc ; the slot points past the end of the party; a = the slot, so nonzero -- fix below
+.in_party
+	ld d, a ; d = the follower's slot, 1-based
+
+	dec a
+	add LOW(wPartySpecies)
+	ld l, a
+	adc HIGH(wPartySpecies)
+	sub l
+	ld h, a
+	ld a, [hl]
+	cp EGG
+	ret z ; an egg has no HP worth testing, and following as one is allowed
+	push af
+
+	ld a, d
+	dec a
+	ld hl, wPartyMon1HP
+	call GetPartyLocation
+	ld a, [hli]
+	or [hl]
+	jr z, .fainted
+	pop af
 	ret
-.got_mon_struct
-	ld a, [bc]
+
+.fainted
+	pop af
+	xor a
+	ret
+
+SwapFollowerSlot::
+; Keep the follower pointing at the same mon when two party slots trade places.
+; in: b, c = the two 1-based slots being exchanged. Preserves everything else.
+	ld a, [wFollowerPartySlot]
+	cp b
+	jr z, .take_c
+	cp c
+	ret nz
+	ld a, b
+	ld [wFollowerPartySlot], a
+	ret
+
+.take_c
+	ld a, c
+	ld [wFollowerPartySlot], a
+	ret
+
+RemoveFollowerSlot::
+; Called when a party slot is removed and the ones after it shift down to fill the gap.
+; in: a = the 1-based slot that left.
+; The follower shifts with them; if the follower is what left, the first slot takes over.
+	ld b, a
+	ld a, [wFollowerPartySlot]
+	and a
+	ret z ; nobody selected, and deselecting is deliberate
+	cp b
+	jr z, .default_to_first
+	ret c ; ahead of the gap, so its slot is unchanged
+	dec a
+	ld [wFollowerPartySlot], a
+	ret
+
+.default_to_first
+	ld a, 1
+	ld [wFollowerPartySlot], a
+	ret
+
+ValidateFollowerSlot::
+; The PC removes a mon by shifting it to the end of the party and then shortening the party, so a
+; follower left pointing past the end is the mon that just left. Also repairs a slot from an older
+; save that predates this being stored.
+	ld a, [wFollowerPartySlot]
+	and a
+	ret z ; nobody selected, and deselecting is deliberate
+	ld b, a
+	ld a, [wPartyCount]
+	cp b
+	ret nc
+	ld a, 1
+	ld [wFollowerPartySlot], a
 	ret
 
 SetFollowerFromParty::
 ; Picks the follower from the party and locks its 8-bit ID so the
 ; 16-bit conversion table can't evict it while it's on screen.
 ; Returns a = species ID (0 if the party is empty).
-	call GetFirstAliveMon
+	call GetFollowerMon
 	and a
 	ret z
 	ld [wFollowerSpriteID], a
@@ -304,7 +364,7 @@ GetFollowingSprite:
 	and a
 ; No party (or no living mon): there is no follower sprite to load. SPRITE_FOLLOWER has no
 ; OverworldSprites entry, so fall back rather than running off the end of the table.
-	jr z, GetMonSprite.NoBreedmon
+	jmp z, GetMonSprite.NoBreedmon
 	; fallthrough
 
 ; A party menu icon is 8 tiles: two 2x2 frames, each stored top-left, top-right, bottom-left,

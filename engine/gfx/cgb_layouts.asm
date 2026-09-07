@@ -211,6 +211,14 @@ InitPartyMenuBGPal0:
 	ld a, BANK(wBGPals1)
 	jmp FarCopyWRAM
 
+InitFollowerMarkBGPal:
+; CopyFourPalettes fills 0-3 and the two routines above claim 0 and 7, so 4 is going spare.
+	ld hl, FollowerMarkBGPalette
+	ld de, wBGPals1 palette FOLLOWER_MARK_PAL
+	ld bc, 1 palettes
+	ld a, BANK(wBGPals1)
+	jmp FarCopyWRAM
+
 _CGB_PokegearPals:
 	ld a, [wPlayerGender]
 	bit PLAYERGENDER_FEMALE_F, a
@@ -634,6 +642,7 @@ _CGB_PartyMenu:
 	call CopyFourPalettes
 	call InitPartyMenuBGPal0
 	call InitPartyMenuBGPal7
+	call InitFollowerMarkBGPal
 	call InitPartyMenuOBPals
 	call InitPartyMenuMonOBPals
 	jmp ApplyAttrmap

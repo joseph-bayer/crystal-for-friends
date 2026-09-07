@@ -64,6 +64,7 @@ WritePartyMenuTilemap:
 
 .Jumptable:
 ; entries correspond to PARTYMENUQUALITY_* constants
+	table_width 2
 	dw PlacePartyNicknames
 	dw PlacePartyHPBar
 	dw PlacePartyMenuHPDigits
@@ -73,6 +74,8 @@ WritePartyMenuTilemap:
 	dw PlacePartyMonEvoStoneCompatibility
 	dw PlacePartyMonGender
 	dw PlacePartyMonMobileBattleSelection
+	dw PlacePartyMonFollowerMark
+	assert_table_length NUM_PARTYMENUQUALITIES
 
 PlacePartyNicknames:
 	hlcoord 3, 1
@@ -390,6 +393,40 @@ PlacePartyMonEvoStoneCompatibility:
 .string_not_able
 	db "NOT ABLE@"
 
+PlacePartyMonFollowerMark:
+; Mark the party member that follows you. Eggs can be chosen too, so unlike the gender symbol this
+; does not skip them.
+	ld a, [wFollowerPartySlot]
+	and a
+	ret z ; nobody follows you
+	ld b, a
+	ld a, [wPartyCount]
+	and a
+	ret z
+	cp b
+	ret c ; the slot points past the party; ValidateFollowerSlot will tidy it up
+
+	hlcoord FOLLOWER_MARK_X, FOLLOWER_MARK_Y
+	ld de, 2 * SCREEN_WIDTH
+.loop
+	dec b
+	jr z, .place
+	add hl, de
+	jr .loop
+
+.place
+	ld [hl], "★"
+
+; Color it by hand: the attribute map is a parallel buffer, so the same offset addresses the same
+; cell. This has to happen after PlacePartyHPBar, whose attribute box covers two rows and would
+; otherwise repaint this cell for every mon but the first -- hence FOLLOWER coming last in the
+; quality list, and hence re-applying the layout here the same way PlacePartyHPBar does.
+	ld de, wAttrmap - wTilemap
+	add hl, de
+	ld [hl], FOLLOWER_MARK_PAL
+	ld b, SCGB_PARTY_MENU
+	jmp GetSGBLayout
+
 PlacePartyMonGender:
 	ld a, [wPartyCount]
 	and a
@@ -594,7 +631,7 @@ InitPartyMenuWithCancel:
 
 .done
 	ld [wMenuCursorY], a
-	ld a, PAD_A | PAD_B
+	ld a, PAD_A | PAD_B | PAD_SELECT ; SELECT picks the follower; see PartyMenuToggleFollower
 	ld [wMenuJoypadFilter], a
 	ret
 
@@ -625,12 +662,21 @@ PartyMenu2DMenuData:
 	db _2DMENU_WRAP_UP_DOWN | _2DMENU_ENABLE_SPRITE_ANIMS ; flags 1
 	db 0 ; flags 2
 	dn 2, 0 ; cursor offset
-	db 0 ; accepted buttons
+	db 0 ; accepted buttons; InitPartyMenuWithCancel/NoCancel overwrite this after loading
 
 PartyMenuSelect:
 ; sets carry if exitted menu.
+.loop
 	call StaticMenuJoypad
 	call PlaceHollowCursor
+
+	ldh a, [hJoyLast]
+	bit B_PAD_SELECT, a
+	jr z, .not_select
+	call PartyMenuToggleFollower
+	jr .loop
+
+.not_select
 	ld a, [wPartyCount]
 	inc a
 	ld b, a
@@ -664,6 +710,37 @@ PartyMenuSelect:
 	call WaitSFX
 	scf
 	ret
+
+PartyMenuToggleFollower:
+; SELECT on a party member makes it your follower, or clears the choice when it is already the
+; one following. Only on the plain browse screen -- the same menu is reused to pick a mon for a
+; trade, the day-care and so on, where SELECT quietly retargeting your follower would be a
+; surprise.
+	ld a, [wPartyMenuActionText]
+	and a ; PARTYMENUACTION_CHOOSE_POKEMON
+	ret nz
+
+	ld a, [wPartyCount]
+	and a
+	ret z
+	inc a
+	ld b, a
+	ld a, [wMenuCursorY]
+	cp b
+	ret z ; the CANCEL row
+
+	ld b, a ; the 1-based slot under the cursor
+	ld a, [wFollowerPartySlot]
+	cp b
+	ld a, b ; take the mon under the cursor...
+	jr nz, .store
+	xor a ; ...unless it already follows you, in which case nobody does
+.store
+	ld [wFollowerPartySlot], a
+
+	ld de, SFX_READ_TEXT_2
+	call PlaySFX
+	jmp WritePartyMenuTilemap ; redraw so the mark moves with the choice
 
 PlacePartyMenuText:
 	hlcoord 0, 14

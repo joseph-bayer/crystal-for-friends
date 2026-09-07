@@ -91,6 +91,29 @@ DEF NUM_MONMENU_ITEMS EQU 8
 DEF HMENURETURN_SCRIPT EQU %10000000
 DEF HMENURETURN_ASM    EQU %11111111
 
+; WritePartyMenuTilemap.Jumptable indexes (see engine/pokemon/party_menu.asm)
+	const_def
+	const PARTYMENUQUALITY_NICKNAMES
+	const PARTYMENUQUALITY_HP_BAR
+	const PARTYMENUQUALITY_HP_DIGITS
+	const PARTYMENUQUALITY_LEVEL
+	const PARTYMENUQUALITY_STATUS
+	const PARTYMENUQUALITY_TMHM_COMPAT
+	const PARTYMENUQUALITY_EVO_STONE_COMPAT
+	const PARTYMENUQUALITY_GENDER
+	const PARTYMENUQUALITY_MOBILE_SELECTION
+	const PARTYMENUQUALITY_FOLLOWER
+DEF NUM_PARTYMENUQUALITIES EQU const_value
+
+; Where the follower mark sits in each party menu entry: directly above the left end of the HP
+; bar, which PlacePartyHPBar draws from column 11 of the entry's second row.
+DEF FOLLOWER_MARK_X EQU 11
+DEF FOLLOWER_MARK_Y EQU 1
+; A palette of its own, loaded by InitFollowerMarkBGPal. Borrowing the HP bar's red does not
+; work: that palette is white/cream/red/black and the bar shows red because its tiles use color
+; index 2, while a font tile like the mark only ever inks with index 3, which is black there.
+DEF FOLLOWER_MARK_PAL EQU 4
+
 ; PartyMenuQualityPointers indexes (see data/party_menu_qualities.asm)
 	const_def
 	const PARTYMENUACTION_CHOOSE_POKEMON

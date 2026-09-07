@@ -2651,6 +2651,7 @@ wGameTimeFrames::  db
 wCurDay:: db
 
 wFollowerFlags:: db
+wFollowerPartySlot:: db ; which party member follows you: 0 for nobody, else a 1-based slot
 wObjectFollow_Leader:: db
 wObjectFollow_Follower:: db
 wCenteredObject:: db
