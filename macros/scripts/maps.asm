@@ -104,6 +104,26 @@ MACRO def_object_events
 	DEF {_NUM_OBJECT_EVENTS} = 0
 ENDM
 
+MACRO ow_mon_map
+;\1: map id
+; Opens one map's list of runtime Pokemon. The entries that follow fill SPRITE_OW_MON_1, _2, ...
+; in order, so they are positional -- do not reorder them without editing that map's objects.
+	REDEF _NUM_OW_MONS EQUS "_NUM_OW_MONS_\@"
+	map_id \1
+	db {_NUM_OW_MONS}
+	DEF {_NUM_OW_MONS} = 0
+ENDM
+
+MACRO ow_mon
+;\1: species
+;\2: form byte: a *_FORM constant, optionally combined with SHINY_MASK
+	dw \1
+	db \2
+	DEF {_NUM_OW_MONS} += 1
+	assert {_NUM_OW_MONS} <= NUM_OW_MON_SLOTS, \
+		"a map declares more overworld mon than there are SPRITE_OW_MON_* slots"
+ENDM
+
 MACRO object_event
 ; TODO: Remove unused argument \7 (Old HOUR_1)
 ;\1: x: left to right, starts at 0

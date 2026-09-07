@@ -75,6 +75,7 @@ SuspendMapAnims:
 	ret
 
 LoadMapObjects:
+	farcall ResetOverworldMonPalettes ; the objects below reclaim them
 	ld a, MAPCALLBACK_OBJECTS
 	call RunMapCallback
 	farcall LoadObjectMasks

@@ -2673,6 +2673,13 @@ wLoadedObjPal{d:n}:: db
 endr
 wNeededPalIndex:: db
 wFollowerPalette:: ds 2 * 2 ; the follower's two arranged colors, for PAL_OW_FOLLOWER
+; One entry per PAL_OW_MON_* index: the arranged colors of a Pokemon standing on this map.
+; Claimed in order as objects load and reset by LoadMapObjects, so an index only means anything
+; for the map it was claimed on.
+; The one entry past the end is scratch: ClaimOverworldMonPalette writes the colors it is
+; looking for into it before searching, so the search compares memory against memory.
+wOverworldMonPals:: ds (NUM_OW_MON_PALS + 1) * OW_MON_PAL_LENGTH
+wNumOverworldMonPals:: db
 
 wMapObjects::
 wPlayerObject:: map_object wPlayer ; player is map object 0
