@@ -109,13 +109,14 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Eggs can follow you too!
 
 - **Wild Pokemon in the Overworld**
-  - Some routes have Pokemon wandering in the open
+  - Many routes and towns have Pokemon wandering in the open
   - Walk into one, or face it and press **A**, to start a wild battle
   - What you see is what you fight - a shiny out in the grass is shiny in the battle
   - They are worth chasing: better DVs, far more likely to be holding an item, and better shiny odds than the same Pokemon in the grass
   - Some know egg moves or otherwise unobtainable moves 
   - Some turn up in forms you cannot find any other way
   - A chime plays when you walk into an area that has a shiny in it
+  - Who turns up is decided fresh each time you enter an area, so it is worth passing back through
 
 - **New Cosmetic Forms**
 	| Species	| Form			| How to Obtain |

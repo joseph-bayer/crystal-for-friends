@@ -92,6 +92,54 @@ GetOverworldMonSlot::
 	ld h, a
 	ret
 
+GetOverworldMonStaticCount:
+; How many of this map's SPRITE_OW_MON_* slots its static entries already own.
+; out: a = the count, 0 if the map declares none
+;
+; Static mon and rolled ones come out of the same slot lookup in GetOverworldMonSlot, and a rolled
+; encounter wins. So a roll into a slot a static mon owns would redraw that mon as whatever
+; wandered in -- the whole Route 39 Miltank herd, or the Red Gyarados, turning into a Magikarp.
+; The static entries always sit at the bottom, so the roll starts above them.
+	ld hl, OverworldMonObjects
+.map_loop
+	ld a, [hli]
+	cp -1
+	jr z, .none
+	ld d, a ; this row's map group
+	ld a, [hli]
+	ld e, a ; this row's map number
+	ld a, [hli]
+	ld b, a ; how many mon this row declares
+
+	ld a, [wMapGroup]
+	cp d
+	jr nz, .skip_row
+	ld a, [wMapNumber]
+	cp e
+	jr z, .found
+
+.skip_row
+	ld a, b
+	and a
+	jr z, .map_loop
+.skip_loop
+	ld a, l
+	add OW_MON_SLOT_LENGTH
+	ld l, a
+	adc h
+	sub l
+	ld h, a
+	dec b
+	jr nz, .skip_loop
+	jr .map_loop
+
+.none
+	xor a
+	ret
+
+.found
+	ld a, b
+	ret
 SetUpOverworldMonBattle::
 ; Point the battle at the encounter that was rolled when this mon appeared on the map, instead of
 ; letting it roll its own. Everything else -- form, shininess, DVs, held item -- LoadEnemyMon reads
@@ -252,7 +300,21 @@ RollOverworldMons::
 ; Decide what is wandering this map. Called from HandleNewMap, which runs on warps, connections and
 ; fly -- but not on returning from a battle or closing a menu. That is what makes a route reroll
 ; when you leave and come back, and hold still otherwise.
+; Grass and water roll from separate tables, one pass each, so a Tentacool never turns up in a
+; field and a Sentret never turns up out at sea. The slots fill in that order -- this map's static
+; mon, then its grass slots, then its water ones -- so a map's SPRITE_OW_MON_* objects have to be
+; numbered the same way.
 	call ClearOverworldMonEncounters
+	call GetOverworldMonStaticCount
+	ld c, a ; the first slot this map's static mon do not own
+	ld hl, OverworldWildMonsGrass
+	call .RollTable
+	ld hl, OverworldWildMonsWater
+; fallthrough
+
+.RollTable:
+; in:  hl = one terrain's table, c = the first slot to fill
+; out: c advanced past whatever this table filled
 	call .FindMap
 	ret nc
 
@@ -281,7 +343,14 @@ RollOverworldMons::
 	and a
 	ret z
 	ld b, a
-	ld c, 0 ; the slot being filled
+	ld a, c
+	cp NUM_OW_MON_SLOTS
+	ret nc ; every slot is spoken for already
+	ld a, NUM_OW_MON_SLOTS
+	sub c ; how many slots are left
+	cp b
+	jr nc, .slot_loop ; the roster asks for no more than fit
+	ld b, a ; otherwise fill what there is
 .slot_loop
 	push bc
 	push hl
@@ -468,20 +537,20 @@ RollOverworldMons::
 	ret
 
 .FindMap:
-; out: carry and hl = this map's row past the map id, or no carry when the map has no roster
-	ld hl, OverworldWildMons
-.find_loop
+; in:  hl = one terrain's table
+; out: carry and hl = this map's row past the map id, or no carry when the map has no row there.
+;      Preserves bc -- the caller is holding the slot to fill in c, across both passes.
 	ld a, [hli]
 	cp -1
 	jr z, .no_row
-	ld b, a
+	ld d, a
 	ld a, [hli]
-	ld c, a
+	ld e, a
 	ld a, [wMapGroup]
-	cp b
+	cp d
 	jr nz, .skip_row
 	ld a, [wMapNumber]
-	cp c
+	cp e
 	jr nz, .skip_row
 	scf
 	ret
@@ -489,7 +558,7 @@ RollOverworldMons::
 .skip_row
 	ld de, OW_WILDDATA_LENGTH - 2
 	add hl, de
-	jr .find_loop
+	jr .FindMap
 
 .no_row
 	and a

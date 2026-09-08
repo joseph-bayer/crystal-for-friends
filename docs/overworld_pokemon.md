@@ -53,9 +53,14 @@ places:
    32 entries, about 200 bytes. It is scanned rather than cached, which keeps it out of WRAM and
    therefore out of the save.
 
-Four slots is one more than any map needs. The most distinct species on one map is three (Mr.
-Fuji's house). Objects may share a slot: the six Rocket Base Electrode and the four Route 39
-Miltank each declare one entry between them.
+The four slots fill in a fixed order — a map's static entries first, then its grass slots, then
+its water ones — and `RollOverworldMons` starts rolling above whatever the static table already
+owns. Without that, a roll into slot 1 would redraw the static mon that slot belongs to: the whole
+Route 39 Miltank herd, or the Red Gyarados, becoming whatever wandered in.
+
+Objects may share a slot: the six Rocket Base Electrode and the four Route 39 Miltank each declare
+one entry between them. Two maps are now at the four-slot ceiling — Route 45 (four grass) and Lake
+of Rage (the Red Gyarados plus three Magikarp).
 
 **`SpriteMons` still exists** and still earns its keep — 20 of its 35 entries are load-bearing for
 room decorations, which map each doll to a `SPRITE_*`.
@@ -174,17 +179,25 @@ whole truth and can be called from anywhere.
 
 ## The area tables
 
-`data/wild/overworld_mons.asm`, shaped like the grass tables so the format is familiar:
+`data/wild/overworld_mons.asm` holds **two** tables, `OverworldWildMonsGrass` and
+`OverworldWildMonsWater`, the way `JohtoGrassWildMons` and `JohtoWaterWildMons` are two tables.
+`RollOverworldMons` runs one pass over each — grass slots draw only from the grass table, water
+slots only from the water one. A map appears in whichever tables it needs, and in both if it has
+slots on both.
 
 ```asm
 	def_ow_wildmons ROUTE_29
 	db 2 ; how many can be out at once -- one SPRITE_OW_MON_n object each
-	db 99 percent ; the chance each one shows up
+	db 100 percent ; the chance each one shows up
 	; morn
 	ow_wildmon 30, PIDGEY,  3, PLAIN_FORM, 0, PURSUIT
 	...
 	end_ow_wildmons
 ```
+
+A single blended roster was tried first and read badly: the water table concentrates its odds in
+three fat entries and crowded the land mon out of a four-entry roster, so Tentacool turned up in
+fields.
 
 `ow_wildmon` is **weight, species, level, form, perks, move**. Weights are out of 100 within their
 time of day; a block adding to less than 100 falls through to its last entry more often. Four
@@ -303,8 +316,6 @@ jumps straight into `RandomStepDuration_Slow`, which parks the object on `OBJECT
   `wOverworldMonBattleSlot` is already non-zero exactly when the battle is against a wandering mon,
   so the three `LoadEnemyMon` branches could test that instead and leave `wBattleType` alone.
 - **Reload scumming for a shiny works**, as above.
-- **Water is not distinguished from land.** A map has one roster, not a grass one and a water one.
-  `def_ow_watermons` was never needed because no map has both yet.
 - **They swim and walk with the follower's hop**, which suits a Sentret and may not suit a
   Tentacool.
 - **A mon can be dodged.** If you step onto one that is mid-step and it steps away, no battle. It
