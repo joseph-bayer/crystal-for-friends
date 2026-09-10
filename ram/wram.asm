@@ -3109,6 +3109,11 @@ SECTION "Overworld Wild Mon", WRAMX, BANK[1]
 ; something else would have reused that memory.
 wOverworldMonEncounters:: ds NUM_OW_MON_SLOTS * OW_MON_ENCOUNTER_LENGTH
 
+; One bit per slot: set when that slot's mon rides on the surface instead of sinking to the waist.
+; A bitmask rather than a look through the roster because CopySpriteMovementData reads it, and that
+; lives in ROM0 -- a lookup there would mean a bank switch on every object that scrolls onto screen.
+wOverworldMonOnSurface:: db
+
 ; Which slot the battle now starting is against, 1-based, 0 for none, and the map object it came
 ; from. hLastTalked is what `disappear LAST_TALKED` reads, and a battle is free to clobber HRAM,
 ; so the object index is kept here and put back afterwards.

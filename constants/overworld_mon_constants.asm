@@ -35,6 +35,10 @@ DEF OW_MON_TRIGGER_DISTANCE EQU 0
 	const_def
 	shift_const OW_PERK_ALWAYS_ITEM ; skip the held item roll and always hold one
 	shift_const OW_PERK_EXTRA_SHINY ; a better shiny rate again, on top of the one they all get
+; Water mon sink to the waist by default -- see OVERHEAD on SPRITEMOVEDATA_SWIM_WANDER_NOCLIP. This
+; takes one back out of the water, for the ones that ride on top of it rather than swim in it: a
+; Surfing Pikachu, a Lapras with a passenger. Meaningless on a grass slot.
+	shift_const OW_PERK_ON_SURFACE
 
 ; Area tables (see data/wild/overworld_mons.asm). Fixed width, like the grass tables, so a time of
 ; day can be indexed rather than walked.

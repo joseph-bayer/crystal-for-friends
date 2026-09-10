@@ -364,20 +364,20 @@ OverworldWildMonsWater:
 	db 1 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM, 0, NO_MOVE
-	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM, 0, NO_MOVE
-	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM, 0, NO_MOVE
-	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM, 0, NO_MOVE
+	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
 	; day
-	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM, 0, NO_MOVE
-	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM, 0, NO_MOVE
-	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM, 0, NO_MOVE
-	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM, 0, NO_MOVE
+	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
 	; nite
-	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM, 0, NO_MOVE
-	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM, 0, NO_MOVE
-	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM, 0, NO_MOVE
-	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM, 0, NO_MOVE
+	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
 	end_ow_wildmons
 
 	def_ow_wildmons ROUTE_32
@@ -385,20 +385,20 @@ OverworldWildMonsWater:
 	db 100 percent ; the chance each one shows up
 ; From the water encounter table for this map.
 	; morn
-	ow_wildmon 56, TENTACOOL,  15, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 56, TENTACOOL,  15, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	ow_wildmon 29, QUAGSIRE,   20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	; day
-	ow_wildmon 56, TENTACOOL,  15, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 56, TENTACOOL,  15, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	ow_wildmon 29, QUAGSIRE,   20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	; nite
-	ow_wildmon 56, TENTACOOL,  15, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 56, TENTACOOL,  15, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	ow_wildmon 29, QUAGSIRE,   20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	end_ow_wildmons
 
 	def_ow_wildmons ROUTE_34
@@ -406,20 +406,20 @@ OverworldWildMonsWater:
 	db 100 percent ; the chance each one shows up
 ; From the water encounter table for this map.
 	; morn
-	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	; day
-	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	; nite
-	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	end_ow_wildmons
 
 	def_ow_wildmons ROUTE_35
@@ -448,20 +448,20 @@ OverworldWildMonsWater:
 	db 100 percent ; the chance each one shows up
 ; From the water encounter table for this map.
 	; morn
-	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 29, SHELLDER,   21, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 10, TENTACRUEL, 22, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 5,  TENTACRUEL, 25, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 29, SHELLDER,   21, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 22, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 5,  TENTACRUEL, 25, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	; day
-	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 29, SHELLDER,   21, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 10, TENTACRUEL, 22, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 5,  TENTACRUEL, 25, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 29, SHELLDER,   21, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 22, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 5,  TENTACRUEL, 25, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	; nite
-	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 29, SHELLDER,   21, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 10, TENTACRUEL, 22, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 5,  TENTACRUEL, 25, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 29, SHELLDER,   21, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 22, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 5,  TENTACRUEL, 25, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	end_ow_wildmons
 
 	def_ow_wildmons ROUTE_41
@@ -469,17 +469,17 @@ OverworldWildMonsWater:
 	db 100 percent ; the chance each one shows up
 ; From the water encounter table for this map.
 	; morn
-	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	ow_wildmon 29, HORSEA,     21, PLAIN_FORM,       0, NO_MOVE
 	ow_wildmon 10, MANTINE,    22, PLAIN_FORM,       0, NO_MOVE
 	ow_wildmon 5,  MANTINE,    25, PLAIN_FORM,       0, NO_MOVE
 	; day
-	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	ow_wildmon 29, HORSEA,     21, PLAIN_FORM,       0, NO_MOVE
 	ow_wildmon 10, MANTINE,    22, PLAIN_FORM,       0, NO_MOVE
 	ow_wildmon 5,  MANTINE,    25, PLAIN_FORM,       0, NO_MOVE
 	; nite
-	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	ow_wildmon 29, HORSEA,     21, PLAIN_FORM,       0, NO_MOVE
 	ow_wildmon 10, MANTINE,    22, PLAIN_FORM,       0, NO_MOVE
 	ow_wildmon 5,  MANTINE,    25, PLAIN_FORM,       0, NO_MOVE
@@ -490,20 +490,20 @@ OverworldWildMonsWater:
 	db 100 percent ; the chance each one shows up
 ; From the water encounter table for this map.
 	; morn
-	ow_wildmon 56, REMORAID,   21, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 29, GOLDEEN,    20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 10, SEAKING,    25, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 5,  SEAKING,    28, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 56, REMORAID,   21, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 29, GOLDEEN,    20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, SEAKING,    25, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 5,  SEAKING,    28, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	; day
-	ow_wildmon 56, REMORAID,   21, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 29, GOLDEEN,    20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 10, SEAKING,    25, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 5,  SEAKING,    28, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 56, REMORAID,   21, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 29, GOLDEEN,    20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, SEAKING,    25, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 5,  SEAKING,    28, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	; nite
-	ow_wildmon 56, REMORAID,   21, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 29, GOLDEEN,    20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 10, SEAKING,    25, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 5,  SEAKING,    28, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 56, REMORAID,   21, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 29, GOLDEEN,    20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, SEAKING,    25, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 5,  SEAKING,    28, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	end_ow_wildmons
 
 	def_ow_wildmons ROUTE_43
@@ -511,20 +511,20 @@ OverworldWildMonsWater:
 	db 100 percent ; the chance each one shows up
 ; From the water encounter table for this map.
 	; morn
-	ow_wildmon 56, MAGIKARP,   20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 29, MAGIKARP,   15, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 10, MAGIKARP,   10, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 5,  MAGIKARP,   13, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 56, MAGIKARP,   20, PLAIN_FORM,       OW_PERK_ON_SURFACE , NO_MOVE
+	ow_wildmon 29, MAGIKARP,   15, PLAIN_FORM,       OW_PERK_ON_SURFACE , NO_MOVE
+	ow_wildmon 10, MAGIKARP,   10, PLAIN_FORM,       OW_PERK_ON_SURFACE , NO_MOVE
+	ow_wildmon 5,  MAGIKARP,   13, PLAIN_FORM,       OW_PERK_ON_SURFACE , NO_MOVE
 	; day
-	ow_wildmon 56, MAGIKARP,   20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 29, MAGIKARP,   15, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 10, MAGIKARP,   10, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 5,  MAGIKARP,   13, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 56, MAGIKARP,   20, PLAIN_FORM,       OW_PERK_ON_SURFACE , NO_MOVE
+	ow_wildmon 29, MAGIKARP,   15, PLAIN_FORM,       OW_PERK_ON_SURFACE , NO_MOVE
+	ow_wildmon 10, MAGIKARP,   10, PLAIN_FORM,       OW_PERK_ON_SURFACE , NO_MOVE
+	ow_wildmon 5,  MAGIKARP,   13, PLAIN_FORM,       OW_PERK_ON_SURFACE , NO_MOVE
 	; nite
-	ow_wildmon 56, MAGIKARP,   20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 29, MAGIKARP,   15, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 10, MAGIKARP,   10, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 5,  MAGIKARP,   13, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 56, MAGIKARP,   20, PLAIN_FORM,       OW_PERK_ON_SURFACE , NO_MOVE
+	ow_wildmon 29, MAGIKARP,   15, PLAIN_FORM,       OW_PERK_ON_SURFACE , NO_MOVE
+	ow_wildmon 10, MAGIKARP,   10, PLAIN_FORM,       OW_PERK_ON_SURFACE , NO_MOVE
+	ow_wildmon 5,  MAGIKARP,   13, PLAIN_FORM,       OW_PERK_ON_SURFACE , NO_MOVE
 	end_ow_wildmons
 
 	def_ow_wildmons ROUTE_44
@@ -553,20 +553,20 @@ OverworldWildMonsWater:
 	db 100 percent ; the chance each one shows up
 ; From the water encounter table for this map.
 	; morn
-	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	; day
-	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	; nite
-	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	end_ow_wildmons
 
 	def_ow_wildmons ECRUTEAK_CITY
@@ -595,20 +595,20 @@ OverworldWildMonsWater:
 	db 100 percent ; the chance each one shows up
 ; From the water encounter table for this map.
 	; morn
-	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	; day
-	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	; nite
-	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	end_ow_wildmons
 
 	def_ow_wildmons OLIVINE_PORT
@@ -616,20 +616,20 @@ OverworldWildMonsWater:
 	db 100 percent ; the chance each one shows up
 ; From the water encounter table for this map.
 	; morn
-	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	; day
-	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	; nite
-	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 56, TENTACOOL,  20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 29, TENTACOOL,  15, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 5,  TENTACRUEL, 23, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	end_ow_wildmons
 
 	def_ow_wildmons VIOLET_CITY
@@ -659,20 +659,20 @@ OverworldWildMonsWater:
 ; Magikarp only, by design -- the lake is the Red Gyarados story, and a lake thick with
 ; Magikarp sells it. Ignores the GYARADOS in the water table on purpose.
 	; morn
-	ow_wildmon 40, MAGIKARP,   10, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 30, MAGIKARP,   15, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 20, MAGIKARP,   20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 10, MAGIKARP,   25, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 40, MAGIKARP,   10, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, MAGIKARP,   15, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 20, MAGIKARP,   20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, MAGIKARP,   25, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	; day
-	ow_wildmon 40, MAGIKARP,   10, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 30, MAGIKARP,   15, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 20, MAGIKARP,   20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 10, MAGIKARP,   25, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 40, MAGIKARP,   10, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, MAGIKARP,   15, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 20, MAGIKARP,   20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, MAGIKARP,   25, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	; nite
-	ow_wildmon 40, MAGIKARP,   10, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 30, MAGIKARP,   15, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 20, MAGIKARP,   20, PLAIN_FORM,       0, NO_MOVE
-	ow_wildmon 10, MAGIKARP,   25, PLAIN_FORM,       0, NO_MOVE
+	ow_wildmon 40, MAGIKARP,   10, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, MAGIKARP,   15, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 20, MAGIKARP,   20, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, MAGIKARP,   25, PLAIN_FORM,       OW_PERK_ON_SURFACE, NO_MOVE
 	end_ow_wildmons
 
 	db -1 ; end of table

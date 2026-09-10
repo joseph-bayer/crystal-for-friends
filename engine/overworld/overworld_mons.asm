@@ -239,6 +239,7 @@ ClearOverworldMonEncounters::
 	rst ByteFill
 	ld [wOverworldMonBattleSlot], a
 	ld [wOverworldMonShinyPending], a
+	ld [wOverworldMonOnSurface], a
 	ret
 
 INCLUDE "data/maps/overworld_mons.asm"
@@ -432,6 +433,24 @@ RollOverworldMons::
 	ld hl, wOverworldMonRollBuffer
 	ld bc, OW_MON_ENCOUNTER_LENGTH
 	rst CopyBytes
+
+; Note whether this one rides on the surface, so CopySpriteMovementData can take OVERHEAD back off
+; its object without reaching into the roster from ROM0.
+	ld a, [wOverworldMonRollBuffer + OW_MON_PERKS]
+	bit OW_PERK_ON_SURFACE_F, a
+	ret z
+	ld a, [wOverworldMonRollSlot]
+	ld b, a
+	inc b
+	xor a
+	scf
+.surface_bit
+	rla ; after slot + 1 rotations a is 1 << slot
+	dec b
+	jr nz, .surface_bit
+	ld hl, wOverworldMonOnSurface
+	or [hl]
+	ld [hl], a
 	ret
 
 .RollForm:

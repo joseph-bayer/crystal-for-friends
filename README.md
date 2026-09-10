@@ -30,6 +30,11 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
     - TODO: Mewtwo
     - TODO: Mew
 
+- **Following Pokemon**
+  - Press **Select** on a party member to make it your follower
+  - A fainted follower waits in its Poke Ball, and comes back out when you heal it
+  - Eggs can follow you too!
+
 - **Type Rebalance**
   - Dark type moves are now Physical
   - Ghost type moves are now Special
@@ -64,6 +69,7 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
 	- Unown can be shiny in any form - not just "I" and "V"
 	- You can get shinies that are super weak, super strong, and everywhere in between
   - A shiny symbol appears below the mon's name when it's shiny
+  - Eggs are blue when shiny
   - Standard Odds **1/8192**
   - Gift Mon **1/512**
   - Bug Catching Contest **1/512**
@@ -102,11 +108,6 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
 
 - **New and Updated Daily Events**
   - Bug Catching Contest now appears on Sundays as well (on top of Tuesdays, Thursdays, and Saturdays)
-
-- **Following Pokemon**
-  - Press **Select** on a party member to make it your follower
-  - A fainted follower waits in its Poke Ball, and comes back out when you heal it
-  - Eggs can follow you too!
 
 - **Wild Pokemon in the Overworld**
   - Many routes and towns have Pokemon wandering in the open

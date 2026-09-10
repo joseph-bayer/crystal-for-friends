@@ -269,6 +269,20 @@ UpdateTallGrassFlags:
 	jr UselessAndA
 
 SetTallGrassFlags:
+; A swimmer is exempt. It stands in water, not grass, and its OVERHEAD bit is what sinks its lower
+; half behind the water tile it is in -- so deriving the bit from the tile would clear it.
+;
+; The guard belongs here rather than in UpdateTallGrassFlags, which is only one of the two callers.
+; CopyCoordsTileToLastCoordsTile calls this unconditionally, without the OVERHEAD check
+; UpdateTallGrassFlags makes first, and it runs every time a step completes or resets -- so a
+; wandering water Pokemon surfaced the instant it moved.
+;
+; Preserves a, which holds the tile collision the checks below read.
+	ld hl, OBJECT_PALETTE
+	add hl, bc
+	bit SWIMMING_F, [hl]
+	ret nz
+
 	call CheckSuperTallGrassTile
 	jr z, .set
 	call CheckGrassTile

@@ -178,7 +178,7 @@ IconPaletteOrders:
 	db ICON_PAL_OFFWHITE                 ; DRAGONAIR
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; DRAGONITE
 	db ICON_PAL_NORMAL                   ; MEWTWO
-	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; MEW
+	db ICON_PAL_NORMAL                   ; MEW
 	db ICON_PAL_NORMAL                   ; CHIKORITA
 	db ICON_PAL_NORMAL                   ; BAYLEEF
 	db ICON_PAL_SWAP                     ; MEGANIUM

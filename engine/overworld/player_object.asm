@@ -588,6 +588,31 @@ CopyTempObjectToObjectStruct:
 	add hl, de
 	ld [hl], a
 
+; A wandering water Pokemon carries OVERHEAD from its movement data, which sinks its bottom half
+; behind the water tile. The ones that ride on top of the water take it back off. Which slots those
+; are is a bitmask in WRAM rather than a look through the roster, which would mean a farcall into
+; bank 3F every time one of these scrolls onto the screen.
+;
+; This has to sit here, after OBJECT_SPRITE is written -- CopySpriteMovementData runs before that
+; and would read whatever object last held this struct.
+	sub SPRITE_OW_MON
+	cp NUM_OW_MON_SLOTS
+	jr nc, .not_ow_mon
+	push bc
+	ld b, a
+	inc b
+	ld a, [wOverworldMonOnSurface]
+.surface_bit
+	rrca ; after slot + 1 rotations this slot's bit is in carry
+	dec b
+	jr nz, .surface_bit
+	pop bc
+	jr nc, .not_ow_mon
+	ld hl, OBJECT_FLAGS2
+	add hl, de
+	res OVERHEAD_F, [hl]
+.not_ow_mon
+
 	ld a, [wTempObjectCopySpriteVTile]
 	ld hl, OBJECT_SPRITE_TILE
 	add hl, de
