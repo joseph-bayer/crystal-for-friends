@@ -8,6 +8,10 @@
 	const SLOWPOKEWELLB1F_KURT
 	const SLOWPOKEWELLB1F_BOULDER
 	const SLOWPOKEWELLB1F_POKE_BALL
+	const SLOWPOKEWELLB1F_WILD_MON_1
+	const SLOWPOKEWELLB1F_WILD_MON_2
+	const SLOWPOKEWELLB1F_WILD_MON_3
+	const SLOWPOKEWELLB1F_WILD_MON_4
 
 SlowpokeWellB1F_MapScripts:
 	def_scene_scripts
@@ -349,3 +353,13 @@ SlowpokeWellB1F_MapEvents:
 	object_event 16, 14, SPRITE_KURT, SPRITEMOVEDATA_STANDING_UP, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, SlowpokeWellB1FKurtScript, EVENT_SLOWPOKE_WELL_KURT
 	object_event  3,  2, SPRITE_BOULDER, SPRITEMOVEDATA_STRENGTH_BOULDER, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, SlowpokeWellB1FBoulder, -1
 	object_event 10,  3, SPRITE_POKE_BALL, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_ITEMBALL, 0, SlowpokeWellB1FSuperPotion, EVENT_SLOWPOKE_WELL_B1F_SUPER_POTION
+; Wandering Pokemon. The species, form, shininess, level, DVs and held item are all rolled by
+; RollOverworldMons when the map is entered; the sprite id only names which rolled slot this is.
+; Palette 0 so they take the mon's own colors. Slots run static, then grass, then water -- the
+; order RollOverworldMons fills them in -- so these have to stay numbered that way.
+; The event flag reads *inverted* on a wandering-mon object: these appear only once
+; EVENT_SLOWPOKE_WELL_ROCKETS is set, which is after the Rockets clear out.
+	object_event 12,  2, SPRITE_OW_MON_1, SPRITEMOVEDATA_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, EVENT_SLOWPOKE_WELL_ROCKETS
+	object_event 10,  9, SPRITE_OW_MON_2, SPRITEMOVEDATA_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, EVENT_SLOWPOKE_WELL_ROCKETS
+	object_event  4, 14, SPRITE_OW_MON_3, SPRITEMOVEDATA_SWIM_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, EVENT_SLOWPOKE_WELL_ROCKETS
+	object_event 12, 14, SPRITE_OW_MON_4, SPRITEMOVEDATA_SWIM_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, EVENT_SLOWPOKE_WELL_ROCKETS

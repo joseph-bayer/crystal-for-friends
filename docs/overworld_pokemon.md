@@ -123,7 +123,15 @@ battle — with the mon you were looking at.
 
 An object opts in with `OBJECTTYPE_WILDMON`, a `SPRITE_OW_MON_*` sprite, palette byte `0` so it
 takes the mon's own colors, and `SPRITEMOVEDATA_WANDER_NOCLIP` (or `SWIM_WANDER_NOCLIP` on water).
-Its event flag is `-1`: whether one is standing there is decided by whether its slot holds a mon.
+Its event flag is usually `-1`: whether one is standing there is decided by whether its slot holds
+a mon, not by a flag.
+
+**A flag other than `-1` reads inverted on these objects.** Everywhere else in the game an event
+flag hides an object once it is *set*; on an `OBJECTTYPE_WILDMON` object it does the opposite — the
+mon appears only once that event has happened. `UpdateOverworldMonObjectMasks` checks it before
+unmasking. The ordinary sense would be useless here, since an empty slot already hides these, and
+the field was otherwise dead on them. It is how a roster waits for something: Slowpoke Well B1F
+carries `EVENT_SLOWPOKE_WELL_ROCKETS`, so nothing wanders the well until the Rockets clear out.
 
 
 ## The rolled encounter

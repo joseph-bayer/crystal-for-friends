@@ -674,6 +674,35 @@ UpdateOverworldMonObjectMasks::
 	jr .apply
 
 .unmask
+; An event flag on a wandering-mon object reads the other way round from everywhere else: the mon
+; appears only once that event has *happened*, rather than vanishing once it has. The ordinary
+; sense is no use here, since an empty slot is already what hides these, and the field was
+; otherwise dead on them. It is how a roster waits for something -- the Slowpoke Well Rockets
+; clearing out, say -- without a second mechanism.
+	pop de
+	push de ; the map object again; the slot lookup above reused de
+	ld hl, MAPOBJECT_EVENT_FLAG
+	add hl, de
+	ld a, [hli]
+	ld e, a
+	ld d, [hl]
+	ld a, d
+	cp -1
+	jr nz, .check_event
+	ld a, e
+	cp -1
+	jr z, .seen ; -1 is no condition at all, which is what most of them carry
+
+.check_event
+	push bc
+	ld b, CHECK_FLAG
+	call EventFlagAction
+	pop bc
+	ld a, c
+	and a
+	jr z, .mask ; the event has not happened yet, so nothing is standing here
+
+.seen
 	xor a
 
 .apply
