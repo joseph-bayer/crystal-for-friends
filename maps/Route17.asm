@@ -3,6 +3,7 @@
 	const ROUTE17_BIKER2
 	const ROUTE17_BIKER3
 	const ROUTE17_BIKER4
+	const ROUTE17_WILD_MON_1
 
 Route17_MapScripts:
 	def_scene_scripts
@@ -148,3 +149,10 @@ Route17_MapEvents:
 	object_event  9, 68, SPRITE_BIKER, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_TRAINER, 1, TrainerBikerJoel, -1
 	object_event  3, 53, SPRITE_BIKER, SPRITEMOVEDATA_SPINRANDOM_FAST, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_TRAINER, 3, TrainerBikerGlenn, -1
 	object_event  6, 80, SPRITE_BIKER, SPRITEMOVEDATA_STANDING_RIGHT, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_TRAINER, 4, TrainerBikerCharles, -1
+; Wandering Pokemon. The species, form, shininess, level, DVs and held item are all rolled by
+; RollOverworldMons when the map is entered; the sprite id only names which rolled slot this is.
+; Palette 0 so they take the mon's own colors. Slots run static, then grass, then water -- the
+; order RollOverworldMons fills them in -- so these have to stay numbered that way.
+; The event flag is -1: whether one is standing here is decided by whether its slot holds a
+; rolled mon, not by a flag.
+	object_event 11,  4, SPRITE_OW_MON_1, SPRITEMOVEDATA_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1

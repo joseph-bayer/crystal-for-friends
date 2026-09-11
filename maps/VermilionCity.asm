@@ -5,6 +5,10 @@
 	const VERMILIONCITY_SUPER_NERD
 	const VERMILIONCITY_BIG_SNORLAX
 	const VERMILIONCITY_POKEFAN_M
+	const VERMILIONCITY_WILD_MON_1
+	const VERMILIONCITY_WILD_MON_2
+	const VERMILIONCITY_WILD_MON_3
+	const VERMILIONCITY_WILD_MON_4
 
 VermilionCity_MapScripts:
 	def_scene_scripts
@@ -299,3 +303,13 @@ VermilionCity_MapEvents:
 	object_event 14, 16, SPRITE_SUPER_NERD, SPRITEMOVEDATA_WANDER, 1, 1, -1, -1, PAL_NPC_GREEN, OBJECTTYPE_SCRIPT, 0, VermilionCitySuperNerdScript, -1
 	object_event 34,  8, SPRITE_BIG_SNORLAX, SPRITEMOVEDATA_BIGDOLLSYM, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, VermilionSnorlax, EVENT_VERMILION_CITY_SNORLAX
 	object_event 31, 12, SPRITE_POKEFAN_M, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, VermilionGymBadgeGuy, -1
+; Wandering Pokemon. The species, form, shininess, level, DVs and held item are all rolled by
+; RollOverworldMons when the map is entered; the sprite id only names which rolled slot this is.
+; Palette 0 so they take the mon's own colors. Slots run static, then grass, then water -- the
+; order RollOverworldMons fills them in -- so these have to stay numbered that way.
+; The event flag is -1: whether one is standing here is decided by whether its slot holds a
+; rolled mon, not by a flag.
+	object_event 10, 10, SPRITE_OW_MON_1, SPRITEMOVEDATA_SWIM_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1
+	object_event 32, 27, SPRITE_OW_MON_2, SPRITEMOVEDATA_SWIM_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1
+	object_event 21, 22, SPRITE_OW_MON_3, SPRITEMOVEDATA_SWIM_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1
+	object_event  6, 26, SPRITE_OW_MON_4, SPRITEMOVEDATA_SWIM_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1

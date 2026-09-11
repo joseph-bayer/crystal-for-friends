@@ -5,6 +5,10 @@
 	const ROUTE12_FISHER4
 	const ROUTE12_POKE_BALL1
 	const ROUTE12_POKE_BALL2
+	const ROUTE12_WILD_MON_1
+	const ROUTE12_WILD_MON_2
+	const ROUTE12_WILD_MON_3
+	const ROUTE12_WILD_MON_4
 
 Route12_MapScripts:
 	def_scene_scripts
@@ -184,3 +188,13 @@ Route12_MapEvents:
 	object_event  6,  7, SPRITE_FISHER, SPRITEMOVEDATA_STANDING_RIGHT, 0, 0, -1, -1, PAL_NPC_GREEN, OBJECTTYPE_TRAINER, 3, TrainerFisherKyle, -1
 	object_event  5, 43, SPRITE_POKE_BALL, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_ITEMBALL, 0, Route12Calcium, EVENT_ROUTE_12_CALCIUM
 	object_event  5, 51, SPRITE_POKE_BALL, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_ITEMBALL, 0, Route12Nugget, EVENT_ROUTE_12_NUGGET
+; Wandering Pokemon. The species, form, shininess, level, DVs and held item are all rolled by
+; RollOverworldMons when the map is entered; the sprite id only names which rolled slot this is.
+; Palette 0 so they take the mon's own colors. Slots run static, then grass, then water -- the
+; order RollOverworldMons fills them in -- so these have to stay numbered that way.
+; The event flag is -1: whether one is standing here is decided by whether its slot holds a
+; rolled mon, not by a flag.
+	object_event 13, 13, SPRITE_OW_MON_1, SPRITEMOVEDATA_SWIM_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1
+	object_event  7, 10, SPRITE_OW_MON_2, SPRITEMOVEDATA_SWIM_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1
+	object_event  6, 29, SPRITE_OW_MON_3, SPRITEMOVEDATA_SWIM_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1
+	object_event 14, 44, SPRITE_OW_MON_4, SPRITEMOVEDATA_SWIM_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1

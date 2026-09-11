@@ -2,6 +2,7 @@
 	const VERMILIONPORT_SAILOR1
 	const VERMILIONPORT_SAILOR2
 	const VERMILIONPORT_SUPER_NERD
+	const VERMILIONPORT_WILD_MON_1
 
 VermilionPort_MapScripts:
 	def_scene_scripts
@@ -314,3 +315,10 @@ VermilionPort_MapEvents:
 	object_event  7, 17, SPRITE_SAILOR, SPRITEMOVEDATA_STANDING_UP, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, VermilionPortSailorAtGangwayScript, EVENT_VERMILION_PORT_SAILOR_AT_GANGWAY
 	object_event  6, 11, SPRITE_SAILOR, SPRITEMOVEDATA_STANDING_RIGHT, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, VermilionPortSailorScript, -1
 	object_event 11, 11, SPRITE_SUPER_NERD, SPRITEMOVEDATA_WALK_LEFT_RIGHT, 2, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, VermilionPortSuperNerdScript, -1
+; Wandering Pokemon. The species, form, shininess, level, DVs and held item are all rolled by
+; RollOverworldMons when the map is entered; the sprite id only names which rolled slot this is.
+; Palette 0 so they take the mon's own colors. Slots run static, then grass, then water -- the
+; order RollOverworldMons fills them in -- so these have to stay numbered that way.
+; The event flag is -1: whether one is standing here is decided by whether its slot holds a
+; rolled mon, not by a flag.
+	object_event 10, 15, SPRITE_OW_MON_1, SPRITEMOVEDATA_SWIM_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1

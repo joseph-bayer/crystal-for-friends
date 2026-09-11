@@ -503,8 +503,15 @@ SECTION "bank3F", ROMX
 INCLUDE "engine/tilesets/tileset_anims.asm"
 INCLUDE "engine/events/npc_trade.asm"
 INCLUDE "engine/events/mom_phone.asm"
-INCLUDE "engine/overworld/overworld_mons.asm"
 INCLUDE "engine/debug/fill_pc.asm"
+
+
+; Its own section because the rosters outgrew bank3F: the grass and water tables are 100 bytes per
+; map and there are over a hundred of them. Everything outside reaches this file by farcall or a
+; dba mapsetup pointer, so the bank it lands in does not matter.
+SECTION "Overworld Mons", ROMX
+
+INCLUDE "engine/overworld/overworld_mons.asm"
 
 
 SECTION "bank41", ROMX

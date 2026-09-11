@@ -783,6 +783,623 @@ OverworldWildMonsGrass:
 	ow_wildmon 20, SEEL,       24, PLAIN_FORM, 0,                  NO_MOVE
 	ow_wildmon 10, KRABBY,     27, PLAIN_FORM, 0,                  NO_MOVE
 	end_ow_wildmons
+
+; ==============
+; KANTO OUTSIDE
+; ==============
+
+	def_ow_wildmons ROUTE_1
+	db 4 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 45, PIDGEY,      2, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, RATTATA,     2, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, SENTRET,     3, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 5,  FURRET,      6, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 45, PIDGEY,      2, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, RATTATA,     2, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, SENTRET,     3, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 5,  FURRET,      6, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 45, HOOTHOOT,    2, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, RATTATA,     2, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, RATTATA,     3, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 5,  RATICATE,    6, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_2
+	db 3 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 34, CATERPIE,    3, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, LEDYBA,      3, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, PIDGEY,      5, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, BUTTERFREE,  7, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 52, PIDGEY,      3, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 32, CATERPIE,    3, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, BUTTERFREE,  7, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 5,  PIDGEOTTO,   7, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 50, HOOTHOOT,    3, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, SPINARAK,    3, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 15, NOCTOWL,     7, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 5,  ARIADOS,     7, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_3
+	db 2 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 34, SPEAROW,     5, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, RATTATA,     5, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, EKANS,       8, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, RATICATE,   10, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 34, SPEAROW,     5, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, RATTATA,     5, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, EKANS,       8, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, RATICATE,   10, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 65, RATTATA,     5, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, RATICATE,   10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, ZUBAT,       6, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 5,  CLEFAIRY,    6, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_4
+	db 2 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 34, SPEAROW,     5, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, RATTATA,     5, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, EKANS,       8, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, RATICATE,   10, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 34, SPEAROW,     5, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, RATTATA,     5, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, EKANS,       8, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, RATICATE,   10, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 65, RATTATA,     5, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, RATICATE,   10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, ZUBAT,       6, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 5,  CLEFAIRY,    6, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_5
+	db 2 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 31, PIDGEY,     13, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 32, SNUBBULL,   13, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 21, PIDGEOTTO,  15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 16, ABRA,       12, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 31, PIDGEY,     13, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 32, SNUBBULL,   13, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 21, PIDGEOTTO,  15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 16, ABRA,       12, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 31, HOOTHOOT,   13, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 32, MEOWTH,     13, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 21, NOCTOWL,    15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 16, ABRA,       12, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_6
+	db 3 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 34, RATTATA,    13, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, SNUBBULL,   13, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, MAGNEMITE,  14, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, RATICATE,   15, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 34, RATTATA,    13, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, SNUBBULL,   13, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, MAGNEMITE,  14, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, RATICATE,   15, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 34, MEOWTH,     13, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, DROWZEE,    13, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, MAGNEMITE,  14, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, PSYDUCK,    15, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_7
+	db 2 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 34, RATTATA,    17, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, SPEAROW,    17, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, SNUBBULL,   18, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, RATICATE,   18, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 34, RATTATA,    17, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, SPEAROW,    17, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, SNUBBULL,   18, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, RATICATE,   18, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 34, MEOWTH,     17, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, MURKROW,    17, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, HOUNDOUR,   18, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, PERSIAN,    18, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_8
+	db 2 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 34, SNUBBULL,   17, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, PIDGEOTTO,  19, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, ABRA,       16, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, GROWLITHE,  17, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 34, SNUBBULL,   17, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, PIDGEOTTO,  19, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, ABRA,       16, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, GROWLITHE,  17, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 34, MEOWTH,     17, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, NOCTOWL,    20, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, ABRA,       16, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, HAUNTER,    17, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_9
+	db 3 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 31, RATTATA,    15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 32, SPEAROW,    15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 21, RATICATE,   15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 16, FEAROW,     15, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 31, RATTATA,    15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 32, SPEAROW,    15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 21, RATICATE,   15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 16, FEAROW,     15, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 31, RATTATA,    15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 32, VENONAT,    15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 26, RATICATE,   15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, VENOMOTH,   15, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_10_NORTH
+	db 1 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 34, SPEAROW,    35, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, VOLTORB,    37, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, RATICATE,   35, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, FEAROW,     45, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 34, SPEAROW,    35, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, VOLTORB,    37, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, RATICATE,   35, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, FEAROW,     45, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 34, VENONAT,    35, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, VOLTORB,    37, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, RATICATE,   35, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, VENOMOTH,   45, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_11
+	db 4 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 36, HOPPIP,     14, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 32, RATICATE,   13, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 21, MAGNEMITE,  15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, PIDGEOTTO,  16, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 36, HOPPIP,     14, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 32, RATICATE,   13, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 21, MAGNEMITE,  15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, PIDGEOTTO,  16, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 34, DROWZEE,    14, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, MEOWTH,     13, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, MAGNEMITE,  15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, NOCTOWL,    16, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_13
+	db 2 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 31, NIDORINO,   23, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, NIDORINA,   23, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, PIDGEOTTO,  25, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 19, HOPPIP,     25, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 31, NIDORINO,   23, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, NIDORINA,   23, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, PIDGEOTTO,  25, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 19, HOPPIP,     25, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 40, QUAGSIRE,   23, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, VENONAT,    23, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, NOCTOWL,    25, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, VENOMOTH,   25, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_14
+	db 2 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 34, NIDORINO,   26, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, NIDORINA,   26, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, PIDGEOTTO,  28, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, HOPPIP,     28, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 34, NIDORINO,   26, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, NIDORINA,   26, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, PIDGEOTTO,  28, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, HOPPIP,     28, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 40, QUAGSIRE,   26, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, VENONAT,    26, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, NOCTOWL,    28, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, VENOMOTH,   28, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_15
+	db 3 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 31, NIDORINO,   23, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, NIDORINA,   23, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, PIDGEOTTO,  25, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 19, HOPPIP,     25, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 31, NIDORINO,   23, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, NIDORINA,   23, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, PIDGEOTTO,  25, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 19, HOPPIP,     25, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 40, QUAGSIRE,   23, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, VENONAT,    23, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, NOCTOWL,    25, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, VENOMOTH,   25, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_16
+	db 1 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 45, FEAROW,     27, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, GRIMER,     26, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, GRIMER,     28, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 5,  MUK,        30, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 50, GRIMER,     26, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 40, FEAROW,     27, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 5,  SLUGMA,     29, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 5,  MUK,        30, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 50, GRIMER,     26, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, GRIMER,     27, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 15, MURKROW,    29, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 5,  MUK,        30, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_17
+	db 1 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 40, FEAROW,     30, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 35, GRIMER,     29, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, GRIMER,     31, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 5,  MUK,        33, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 40, FEAROW,     30, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 35, SLUGMA,     29, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, GRIMER,     29, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 5,  MUK,        33, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 45, GRIMER,     30, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, GRIMER,     29, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, GRIMER,     31, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 5,  MUK,        33, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_18
+	db 2 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 45, FEAROW,     27, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, GRIMER,     26, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, GRIMER,     28, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 5,  MUK,        30, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 50, GRIMER,     26, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 40, FEAROW,     27, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 5,  SLUGMA,     29, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 5,  MUK,        30, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 45, GRIMER,     26, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, GRIMER,     27, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, GRIMER,     28, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 5,  MUK,        30, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_21
+	db 1 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 50, TANGELA,    30, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, RATTATA,    25, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, RATICATE,   20, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, MR__MIME,   30, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 50, TANGELA,    30, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, RATTATA,    25, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, RATICATE,   20, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, MR__MIME,   28, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 40, TANGELA,    30, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, RATTATA,    25, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, TANGELA,    35, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, RATICATE,   20, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_22
+	db 2 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 52, SPEAROW,     3, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 32, RATTATA,     3, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, DODUO,       4, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 5,  PONYTA,      6, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 52, SPEAROW,     3, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 32, RATTATA,     3, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, DODUO,       4, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 5,  PONYTA,      6, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 40, RATTATA,     3, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, POLIWAG,     3, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, RATTATA,     5, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, POLIWAG,     4, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_24
+	db 1 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 63, CATERPIE,    8, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 21, METAPOD,    12, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, ABRA,       12, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 5,  BELLSPROUT, 10, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 52, CATERPIE,    8, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 32, SUNKERN,    12, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, ABRA,       12, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 5,  BELLSPROUT, 10, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 52, ODDISH,     10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 32, VENONAT,    10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, ABRA,       12, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 5,  BELLSPROUT, 10, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_25
+	db 1 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 34, CATERPIE,   10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, PIDGEY,     10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, PIDGEOTTO,  12, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, METAPOD,    12, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 34, CATERPIE,   10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, PIDGEY,     10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, PIDGEOTTO,  12, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, METAPOD,    12, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 31, ODDISH,     10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 32, HOOTHOOT,   10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 21, VENONAT,    10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 16, NOCTOWL,    12, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_26
+	db 2 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 40, DODRIO,     38, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, ARBOK,      38, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, PONYTA,     39, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, RAPIDASH,   42, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 40, DODRIO,     38, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, ARBOK,      38, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, PONYTA,     39, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, RAPIDASH,   42, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 34, MURKROW,    38, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, ARBOK,      38, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, PONYTA,     39, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, RAPIDASH,   42, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_27
+	db 1 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 36, DODRIO,     38, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 32, ARBOK,      38, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 21, PONYTA,     39, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, RAPIDASH,   42, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 36, DODRIO,     38, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 32, ARBOK,      38, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 21, PONYTA,     39, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, RAPIDASH,   42, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 34, MURKROW,    38, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, ARBOK,      38, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, PONYTA,     39, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, RAPIDASH,   42, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_28
+	db 3 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 34, TANGELA,    39, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, PONYTA,     40, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, RAPIDASH,   40, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, ARBOK,      42, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 34, TANGELA,    39, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, PONYTA,     40, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, RAPIDASH,   40, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, ARBOK,      42, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 40, POLIWHIRL,  40, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, TANGELA,    39, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, GOLBAT,     40, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, GOLBAT,     42, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+; ==============
+; KANTO INSIDE
+; ==============
+
+	def_ow_wildmons DIGLETTS_CAVE
+	db 2 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 40, DIGLETT,     3, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, DIGLETT,     6, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, DIGLETT,    12, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, DUGTRIO,    24, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 40, DIGLETT,     2, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, DIGLETT,     4, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, DIGLETT,     8, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, DUGTRIO,    16, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 40, DIGLETT,     4, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, DIGLETT,     8, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, DIGLETT,    16, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, DUGTRIO,    32, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons MOUNT_MOON
+	db 2 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 36, GEODUDE,     8, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 32, ZUBAT,       6, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 21, SANDSHREW,   8, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, PARAS,      12, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 36, GEODUDE,     8, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 32, ZUBAT,       6, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 21, SANDSHREW,   8, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, PARAS,      12, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 35, GEODUDE,     8, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, ZUBAT,       6, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 25, CLEFAIRY,    8, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, PARAS,      12, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROCK_TUNNEL_1F
+	db 4 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 34, CUBONE,     42, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, GEODUDE,    44, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, MACHOP,     43, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, ZUBAT,      42, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 34, CUBONE,     42, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, GEODUDE,    44, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, MACHOP,     43, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, ZUBAT,      42, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 50, GEODUDE,    44, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 35, ZUBAT,      42, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, HAUNTER,    42, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 5,  GOLBAT,     44, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROCK_TUNNEL_B1F
+	db 2 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 34, CUBONE,     42, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, GEODUDE,    44, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, ONIX,       46, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, ZUBAT,      42, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 34, CUBONE,     42, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, GEODUDE,    44, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, ONIX,       46, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, ZUBAT,      42, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 42, ZUBAT,      42, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 32, GEODUDE,    44, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 21, ONIX,       46, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 5,  HAUNTER,    45, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons VICTORY_ROAD
+	db 4 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the grass encounter table for this map.
+	; morn
+	ow_wildmon 34, GOLEM,      44, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, RHYDON,     42, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, DONPHAN,    43, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, GOLBAT,     44, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 34, GOLEM,      44, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, RHYDON,     42, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, DONPHAN,    43, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, GOLBAT,     44, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 34, GOLEM,      44, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 33, RHYDON,     42, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 22, DONPHAN,    43, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, GOLBAT,     44, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
 	db -1 ; end of table
 
 
@@ -1326,5 +1943,408 @@ OverworldWildMonsWater:
 	ow_wildmon 30, QUAGSIRE,   20, PLAIN_FORM, 0,                  NO_MOVE
 	ow_wildmon 10, QUAGSIRE,   15, PLAIN_FORM, 0,                  NO_MOVE
 	ow_wildmon 1,  QUAGSIRE,   18, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+; ==============
+; KANTO OUTSIDE
+; ==============
+
+	def_ow_wildmons ROUTE_6
+	db 1 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the water encounter table for this map.
+	; morn
+	ow_wildmon 59, PSYDUCK,    10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, PSYDUCK,     5, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, GOLDUCK,    10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  PSYDUCK,     8, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 59, PSYDUCK,    10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, PSYDUCK,     5, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, GOLDUCK,    10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  PSYDUCK,     8, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 59, PSYDUCK,    10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, PSYDUCK,     5, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, GOLDUCK,    10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  PSYDUCK,     8, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_12
+	db 4 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the water encounter table for this map.
+	; morn
+	ow_wildmon 59, TENTACOOL,  25, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, QUAGSIRE,   25, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 25, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 28, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	; day
+	ow_wildmon 59, TENTACOOL,  25, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, QUAGSIRE,   25, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 25, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 28, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	; nite
+	ow_wildmon 59, TENTACOOL,  25, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, QUAGSIRE,   25, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 25, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 28, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_13
+	db 2 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the water encounter table for this map.
+	; morn
+	ow_wildmon 59, TENTACOOL,  25, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, QUAGSIRE,   25, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 25, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 28, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	; day
+	ow_wildmon 59, TENTACOOL,  25, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, QUAGSIRE,   25, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 25, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 28, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	; nite
+	ow_wildmon 59, TENTACOOL,  25, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, QUAGSIRE,   25, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 25, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 28, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_19
+	db 3 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the water encounter table for this map.
+	; morn
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACOOL,  33, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	; day
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACOOL,  33, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	; nite
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACOOL,  33, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_20
+	db 4 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the water encounter table for this map.
+	; morn
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACOOL,  33, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	; day
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACOOL,  33, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	; nite
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACOOL,  33, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_21
+	db 3 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the water encounter table for this map.
+	; morn
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACOOL,  33, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	; day
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACOOL,  33, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	; nite
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACOOL,  33, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_22
+	db 1 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the water encounter table for this map.
+	; morn
+	ow_wildmon 59, POLIWAG,    10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, POLIWAG,     5, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, POLIWHIRL,  10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  POLIWAG,     8, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 59, POLIWAG,    10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, POLIWAG,     5, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, POLIWHIRL,  10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  POLIWAG,     8, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 59, POLIWAG,    10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, POLIWAG,     5, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, POLIWHIRL,  10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  POLIWAG,     8, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_24
+	db 1 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the water encounter table for this map.
+	; morn
+	ow_wildmon 59, GOLDEEN,    10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, GOLDEEN,     5, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, SEAKING,    10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  GOLDEEN,     8, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	; day
+	ow_wildmon 59, GOLDEEN,    10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, GOLDEEN,     5, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, SEAKING,    10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  GOLDEEN,     8, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	; nite
+	ow_wildmon 59, GOLDEEN,    10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, GOLDEEN,     5, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, SEAKING,    10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  GOLDEEN,     8, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_25
+	db 2 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the water encounter table for this map.
+	; morn
+	ow_wildmon 59, GOLDEEN,    10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, GOLDEEN,     5, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, SEAKING,    10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  GOLDEEN,     8, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	; day
+	ow_wildmon 59, GOLDEEN,    10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, GOLDEEN,     5, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, SEAKING,    10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  GOLDEEN,     8, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	; nite
+	ow_wildmon 59, GOLDEEN,    10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, GOLDEEN,     5, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, SEAKING,    10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  GOLDEEN,     8, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_26
+	db 2 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the water encounter table for this map.
+	; morn
+	ow_wildmon 59, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, TENTACOOL,  25, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACOOL,  28, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	; day
+	ow_wildmon 59, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, TENTACOOL,  25, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACOOL,  28, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	; nite
+	ow_wildmon 59, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, TENTACOOL,  25, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACOOL,  28, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_27
+	db 3 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the water encounter table for this map.
+	; morn
+	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACOOL,  18, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	; day
+	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACOOL,  18, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	; nite
+	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACOOL,  18, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons ROUTE_28
+	db 1 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the water encounter table for this map.
+	; morn
+	ow_wildmon 59, POLIWAG,    40, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, POLIWAG,    35, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, POLIWHIRL,  40, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  POLIWAG,    38, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 59, POLIWAG,    40, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, POLIWAG,    35, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, POLIWHIRL,  40, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  POLIWAG,    38, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 59, POLIWAG,    40, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, POLIWAG,    35, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, POLIWHIRL,  40, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  POLIWAG,    38, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons CELADON_CITY
+	db 1 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the water encounter table for this map.
+	; morn
+	ow_wildmon 59, GRIMER,     20, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, GRIMER,     15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, MUK,        15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  GRIMER,     18, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 59, GRIMER,     20, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, GRIMER,     15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, MUK,        15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  GRIMER,     18, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 59, GRIMER,     20, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, GRIMER,     15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, MUK,        15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  GRIMER,     18, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons CINNABAR_ISLAND
+	db 2 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the water encounter table for this map.
+	; morn
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACOOL,  33, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	; day
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACOOL,  33, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	; nite
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACOOL,  33, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons FUCHSIA_CITY
+	db 1 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the water encounter table for this map.
+	; morn
+	ow_wildmon 59, MAGIKARP,   20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, MAGIKARP,   15, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, MAGIKARP,   10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  MAGIKARP,   13, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	; day
+	ow_wildmon 59, MAGIKARP,   20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, MAGIKARP,   15, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, MAGIKARP,   10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  MAGIKARP,   13, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	; nite
+	ow_wildmon 59, MAGIKARP,   20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, MAGIKARP,   15, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, MAGIKARP,   10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  MAGIKARP,   13, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons PALLET_TOWN
+	db 1 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the water encounter table for this map.
+	; morn
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACOOL,  33, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	; day
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACOOL,  33, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	; nite
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACOOL,  33, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons VERMILION_CITY
+	db 4 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the water encounter table for this map.
+	; morn
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACOOL,  33, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	; day
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACOOL,  33, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	; nite
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACOOL,  33, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons VERMILION_PORT
+	db 1 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the water encounter table for this map.
+	; morn
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACOOL,  33, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	; day
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACOOL,  33, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	; nite
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, TENTACRUEL, 35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 1,  TENTACOOL,  33, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons VIRIDIAN_CITY
+	db 1 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+; From the water encounter table for this map.
+	; morn
+	ow_wildmon 59, POLIWAG,    10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, POLIWAG,     5, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, POLIWHIRL,  10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  POLIWAG,     8, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 59, POLIWAG,    10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, POLIWAG,     5, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, POLIWHIRL,  10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  POLIWAG,     8, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 59, POLIWAG,    10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, POLIWAG,     5, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, POLIWHIRL,  10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  POLIWAG,     8, PLAIN_FORM, 0,                  NO_MOVE
 	end_ow_wildmons
 	db -1 ; end of table

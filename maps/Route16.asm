@@ -1,3 +1,6 @@
+	object_const_def
+	const ROUTE16_WILD_MON_1
+
 Route16_MapScripts:
 	def_scene_scripts
 
@@ -42,3 +45,10 @@ Route16_MapEvents:
 	bg_event  5,  5, BGEVENT_READ, CyclingRoadSign
 
 	def_object_events
+; Wandering Pokemon. The species, form, shininess, level, DVs and held item are all rolled by
+; RollOverworldMons when the map is entered; the sprite id only names which rolled slot this is.
+; Palette 0 so they take the mon's own colors. Slots run static, then grass, then water -- the
+; order RollOverworldMons fills them in -- so these have to stay numbered that way.
+; The event flag is -1: whether one is standing here is decided by whether its slot holds a
+; rolled mon, not by a flag.
+	object_event 13,  1, SPRITE_OW_MON_1, SPRITEMOVEDATA_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1
