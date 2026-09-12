@@ -1,5 +1,10 @@
 SECTION "Egg Moves 1", ROMX
 
+; A trailing note marks an egg move the species could get another way. "also learned at level N"
+; means it comes by levelling anyway; "also a TM" (or an HM, or a move tutor move) means it is in
+; the species' tmhm list in data/pokemon/base_stats/. Egg moves the species already knows by level 5 were
+; removed, since breeding for one of those gained nothing at all.
+
 EggMovePointers1:
 	dw BulbasaurEggMoves
 	dw NoEggMoves1
@@ -216,7 +221,7 @@ SandshrewEggMoves:
 	dw SAFEGUARD
 	dw COUNTER
 	dw RAPID_SPIN
-	dw METAL_CLAW
+	dw METAL_CLAW     ; also learned at level 19
 	dw -1 ; end
 
 NidoranFEggMoves:
@@ -251,7 +256,7 @@ ZubatEggMoves:
 	dw QUICK_ATTACK
 	dw PURSUIT
 	dw FAINT_ATTACK
-	dw GUST
+	dw GUST           ; also learned at level 7
 	dw WHIRLWIND
 	dw -1 ; end
 
@@ -275,7 +280,7 @@ ParasEggMoves:
 VenonatEggMoves:
 	dw BATON_PASS
 	dw SCREECH
-	dw GIGA_DRAIN
+	dw GIGA_DRAIN     ; also a TM
 	dw -1 ; end
 
 DiglettEggMoves:
@@ -294,13 +299,13 @@ MeowthEggMoves:
 	dw -1 ; end
 
 PsyduckEggMoves:
-	dw ICE_BEAM
+	dw ICE_BEAM       ; also a move tutor move
 	dw HYPNOSIS
 	dw PSYBEAM
 	dw FORESIGHT
 	dw LIGHT_SCREEN
 	dw FUTURE_SIGHT
-	dw PSYCHIC_M
+	dw PSYCHIC_M      ; also learned at level 42, and a TM
 	dw CROSS_CHOP
 	dw -1 ; end
 
@@ -322,9 +327,8 @@ GrowlitheEggMoves:
 	dw -1 ; end
 
 PoliwagEggMoves:
-	dw MIST
 	dw SPLASH
-	dw BUBBLEBEAM
+	dw BUBBLEBEAM     ; also learned at level 20
 	dw HAZE
 	dw MIND_READER
 	dw -1 ; end
@@ -360,13 +364,13 @@ TentacoolEggMoves:
 
 GeodudeEggMoves:
 	dw MEGA_PUNCH
-	dw ROCK_SLIDE
+	dw ROCK_SLIDE     ; also learned at level 40
 	dw -1 ; end
 
 PonytaEggMoves:
-	dw FLAME_WHEEL
+	dw FLAME_WHEEL    ; also learned at level 20
 	dw THRASH
-	dw DOUBLE_KICK
+	dw DOUBLE_KICK    ; also learned at level 25
 	dw HYPNOSIS
 	dw CHARM
 	dw QUICK_ATTACK
@@ -425,7 +429,7 @@ GastlyEggMoves:
 	dw -1 ; end
 
 OnixEggMoves:
-	dw ROCK_SLIDE
+	dw ROCK_SLIDE     ; also learned at level 30
 	dw FLAIL
 	dw -1 ; end
 
@@ -435,7 +439,7 @@ DrowzeeEggMoves:
 	dw -1 ; end
 
 KrabbyEggMoves:
-	dw DIG
+	dw DIG            ; also a TM
 	dw HAZE
 	dw AMNESIA
 	dw FLAIL
@@ -445,8 +449,8 @@ KrabbyEggMoves:
 ExeggcuteEggMoves:
 	dw SYNTHESIS
 	dw MOONLIGHT
-	dw REFLECT
-	dw MEGA_DRAIN
+	dw REFLECT        ; also learned at level 7
+	dw MEGA_DRAIN     ; also learned at level 20
 	dw ANCIENTPOWER
 	dw -1 ; end
 
@@ -461,27 +465,27 @@ CuboneEggMoves:
 	dw -1 ; end
 
 LickitungEggMoves:
-	dw BELLY_DRUM
+	dw BELLY_DRUM     ; also learned at level 40
 	dw MAGNITUDE
-	dw BODY_SLAM
+	dw BODY_SLAM      ; also learned at level 32
 	dw -1 ; end
 
 KoffingEggMoves:
 	dw SCREECH
 	dw PSYWAVE
 	dw PSYBEAM
-	dw DESTINY_BOND
+	dw DESTINY_BOND   ; also learned at level 45
 	dw PAIN_SPLIT
 	dw -1 ; end
 
 RhyhornEggMoves:
 	dw CRUNCH
 	dw REVERSAL
-	dw ROCK_SLIDE
+	dw ROCK_SLIDE     ; also learned at level 44
 	dw THRASH
 	dw PURSUIT
 	dw COUNTER
-	dw MAGNITUDE
+	dw MAGNITUDE      ; also learned at level 24
 	dw -1 ; end
 
 ChanseyEggMoves:
@@ -493,7 +497,7 @@ ChanseyEggMoves:
 TangelaEggMoves:
 	dw FLAIL
 	dw CONFUSION
-	dw MEGA_DRAIN
+	dw MEGA_DRAIN     ; also learned at level 22
 	dw REFLECT
 	dw AMNESIA
 	dw -1 ; end
@@ -518,7 +522,7 @@ HorseaEggMoves:
 GoldeenEggMoves:
 	dw PSYBEAM
 	dw HAZE
-	dw HYDRO_PUMP
+	dw HYDRO_PUMP     ; also learned at level 53
 	dw -1 ; end
 
 MrMimeEggMoves:
@@ -552,7 +556,7 @@ EeveeEggMoves:
 	dw -1 ; end
 
 OmanyteEggMoves:
-	dw BUBBLEBEAM
+	dw BUBBLEBEAM     ; also learned at level 18
 	dw AURORA_BEAM
 	dw SLAM
 	dw SUPERSONIC
@@ -563,7 +567,7 @@ KabutoEggMoves:
 	dw BUBBLEBEAM
 	dw AURORA_BEAM
 	dw RAPID_SPIN
-	dw DIG
+	dw DIG            ; also a TM
 	dw FLAIL
 	dw -1 ; end
 

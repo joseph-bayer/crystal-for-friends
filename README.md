@@ -127,9 +127,9 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
 	| Shuckle	| Happy Shuckie		| Reach 150 happiness with Mania's Shuckle, "Shuckie" |
 	| Magikarp	| Extra Small		| Wild Magikarp that's less than 2 feet |
 	| Magikarp	| Extra Large		| Wild Magikarp that's larger than 4 feet 5 inches |
-	| Smeargle	| Red			| Found in the wild |
-	| Smeargle	| Blue			| Found in the wild |
-	| Smeargle	| Yellow		| Found in the wild |
+	| Smeargle	| Red			| Found in the Ruins of Alph outdoors |
+	| Smeargle	| Blue			| Found in the Ruins of Alph outdoors |
+	| Smeargle	| Yellow		| Found in the Ruins of Alph outdoors |
 	| Smeargle	| Purple		| Bred from a Red and Blue Smeargle |
 	| Smeargle	| Orange		| Bred from a Red and Yellow Smeargle |
 	| Smeargle	| Green			| Bred from a Blue and Yellow Smeargle |

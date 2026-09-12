@@ -1,5 +1,10 @@
 SECTION "Egg Moves 2", ROMX
 
+; A trailing note marks an egg move the species could get another way. "also learned at level N"
+; means it comes by levelling anyway; "also a TM" (or an HM, or a move tutor move) means it is in
+; the species' tmhm list in data/pokemon/base_stats/. Egg moves the species already knows by level 5 were
+; removed, since breeding for one of those gained nothing at all.
+
 EggMovePointers2::
 	dw ChikoritaEggMoves
 	dw NoEggMoves2
@@ -105,7 +110,7 @@ EggMovePointers2::
 
 ChikoritaEggMoves:
 	dw VINE_WHIP
-	dw LEECH_SEED
+	dw LEECH_SEED     ; also learned at level 9
 	dw COUNTER
 	dw ANCIENTPOWER
 	dw FLAIL
@@ -114,7 +119,7 @@ ChikoritaEggMoves:
 
 CyndaquilEggMoves:
 	dw FURY_SWIPES
-	dw QUICK_ATTACK
+	dw QUICK_ATTACK   ; also learned at level 21
 	dw REVERSAL
 	dw THRASH
 	dw FORESIGHT
@@ -122,9 +127,9 @@ CyndaquilEggMoves:
 	dw -1 ; end
 
 TotodileEggMoves:
-	dw CRUNCH
+	dw CRUNCH         ; also learned at level 55
 	dw THRASH
-	dw HYDRO_PUMP
+	dw HYDRO_PUMP     ; also learned at level 50
 	dw ANCIENTPOWER
 	dw RAZOR_WIND
 	dw ROCK_SLIDE
@@ -132,7 +137,7 @@ TotodileEggMoves:
 
 SentretEggMoves:
 	dw DOUBLE_EDGE
-	dw PURSUIT
+	dw PURSUIT        ; also learned at level 25
 	dw SLASH
 	dw FOCUS_ENERGY
 	dw REVERSAL
@@ -142,7 +147,7 @@ HoothootEggMoves:
 	dw MIRROR_MOVE
 	dw SUPERSONIC
 	dw FAINT_ATTACK
-	dw WING_ATTACK
+	dw WING_ATTACK    ; also learned at level 24
 	dw WHIRLWIND
 	dw SKY_ATTACK
 	dw -1 ; end
@@ -150,7 +155,7 @@ HoothootEggMoves:
 LedybaEggMoves:
 	dw PSYBEAM
 	dw BIDE
-	dw LIGHT_SCREEN
+	dw LIGHT_SCREEN   ; also learned at level 20
 	dw -1 ; end
 
 SpinarakEggMoves:
@@ -162,8 +167,7 @@ SpinarakEggMoves:
 	dw -1 ; end
 
 ChinchouEggMoves:
-	dw FLAIL
-	dw SUPERSONIC
+	dw FLAIL          ; also learned at level 11
 	dw SCREECH
 	dw -1 ; end
 
@@ -203,11 +207,11 @@ NatuEggMoves:
 	dw DRILL_PECK
 	dw QUICK_ATTACK
 	dw FAINT_ATTACK
-	dw STEEL_WING
+	dw STEEL_WING     ; also a TM
 	dw -1 ; end
 
 MareepEggMoves:
-	dw THUNDERBOLT
+	dw THUNDERBOLT    ; also learned at level 47, and a move tutor move
 	dw TAKE_DOWN
 	dw BODY_SLAM
 	dw SAFEGUARD
@@ -242,9 +246,9 @@ HoppipEggMoves:
 
 AipomEggMoves:
 	dw COUNTER
-	dw SCREECH
+	dw SCREECH        ; also learned at level 36
 	dw PURSUIT
-	dw AGILITY
+	dw AGILITY        ; also learned at level 46
 	dw SPITE
 	dw SLAM
 	dw DOUBLESLAP
@@ -265,15 +269,15 @@ WooperEggMoves:
 
 MurkrowEggMoves:
 	dw WHIRLWIND
-	dw DRILL_PECK
+	dw DRILL_PECK     ; also learned at level 36
 	dw QUICK_ATTACK
 	dw MIRROR_MOVE
-	dw WING_ATTACK
+	dw WING_ATTACK    ; also learned at level 22
 	dw SKY_ATTACK
 	dw -1 ; end
 
 MisdreavusEggMoves:
-	dw SCREECH
+	dw SCREECH        ; also learned at level 24
 	dw DESTINY_BOND
 	dw -1 ; end
 
@@ -287,7 +291,7 @@ GirafarigEggMoves:
 
 PinecoEggMoves:
 	dw REFLECT
-	dw PIN_MISSILE
+	dw PIN_MISSILE    ; also learned at level 7
 	dw FLAIL
 	dw SWIFT
 	dw -1 ; end
@@ -297,12 +301,11 @@ DunsparceEggMoves:
 	dw ANCIENTPOWER
 	dw ROCK_SLIDE
 	dw BITE
-	dw RAGE
 	dw -1 ; end
 
 GligarEggMoves:
 	dw METAL_CLAW
-	dw WING_ATTACK
+	dw WING_ATTACK    ; also learned at level 24
 	dw RAZOR_WIND
 	dw COUNTER
 	dw -1 ; end
@@ -312,21 +315,21 @@ SnubbullEggMoves:
 	dw FAINT_ATTACK
 	dw REFLECT
 	dw PRESENT
-	dw CRUNCH
+	dw CRUNCH         ; also learned at level 39
 	dw HEAL_BELL
-	dw LICK
+	dw LICK           ; also learned at level 19
 	dw LEER
 	dw -1 ; end
 
 QwilfishEggMoves:
 	dw FLAIL
 	dw HAZE
-	dw BUBBLEBEAM
+	dw BUBBLEBEAM     ; also learned at level 30
 	dw SUPERSONIC
 	dw -1 ; end
 
 ShuckleEggMoves:
-	dw SWEET_SCENT
+	dw SWEET_SCENT    ; also a TM
 	dw -1 ; end
 
 HeracrossEggMoves:
@@ -357,7 +360,7 @@ SlugmaEggMoves:
 	dw -1 ; end
 
 SwinubEggMoves:
-	dw TAKE_DOWN
+	dw TAKE_DOWN      ; also learned at level 28
 	dw BITE
 	dw BODY_SLAM
 	dw ROCK_SLIDE
@@ -373,7 +376,7 @@ CorsolaEggMoves:
 	dw -1 ; end
 
 RemoraidEggMoves:
-	dw AURORA_BEAM
+	dw AURORA_BEAM    ; also learned at level 22
 	dw OCTAZOOKA
 	dw SUPERSONIC
 	dw HAZE
@@ -390,13 +393,13 @@ DelibirdEggMoves:
 
 MantineEggMoves:
 	dw TWISTER
-	dw HYDRO_PUMP
+	dw HYDRO_PUMP     ; also learned at level 49
 	dw HAZE
 	dw SLAM
 	dw -1 ; end
 
 SkarmoryEggMoves:
-	dw DRILL_PECK
+	dw DRILL_PECK     ; also learned at level 41
 	dw PURSUIT
 	dw WHIRLWIND
 	dw SKY_ATTACK
@@ -420,10 +423,10 @@ PhanpyEggMoves:
 	dw -1 ; end
 
 StantlerEggMoves:
-	dw REFLECT
+	dw REFLECT        ; also learned at level 33
 	dw SPITE
 	dw DISABLE
-	dw LIGHT_SCREEN
+	dw LIGHT_SCREEN   ; also learned at level 37
 	dw BITE
 	dw -1 ; end
 
