@@ -1343,7 +1343,7 @@ OverworldWildMonsGrass:
 	ow_wildmon 35, URSARING,   50, PLAIN_FORM, 0,                  NO_MOVE
 	ow_wildmon 35, GOLEM,      51, PLAIN_FORM, 0,                  NO_MOVE
 	ow_wildmon 28, RAPIDASH,   54, PLAIN_FORM, 0,                  NO_MOVE
-	ow_wildmon 2,  VENUSAUR,   50, PLAIN_FORM, 0,                  ANCIENT_POWER
+	ow_wildmon 2,  VENUSAUR,   50, PLAIN_FORM, 0,                  ANCIENTPOWER
 	; day
 	ow_wildmon 35, URSARING,   50, PLAIN_FORM, 0,                  NO_MOVE
 	ow_wildmon 35, GOLEM,      52, PLAIN_FORM, 0,                  NO_MOVE
