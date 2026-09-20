@@ -6,6 +6,9 @@ PikachuRBFrames:  		INCLUDE "gfx/pokemon/pikachu_rb/frames.asm"
 CharmeleonPlainFrames:		INCLUDE "gfx/pokemon/charmeleon/frames.asm"
 CharmeleonRocketFrames:		INCLUDE "gfx/pokemon/charmeleon_rocket/frames.asm"
 
+CharizardPlainFrames:		INCLUDE "gfx/pokemon/charizard/frames.asm"
+CharizardRocketFrames:		INCLUDE "gfx/pokemon/charizard_rocket/frames.asm"
+
 ArbokPlainFrames:		INCLUDE "gfx/pokemon/arbok/frames.asm"
 ArbokRocketFrames:		INCLUDE "gfx/pokemon/arbok_rocket/frames.asm"
 

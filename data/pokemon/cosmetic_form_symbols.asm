@@ -13,7 +13,7 @@ CosmeticFormSymbols::
 	dw 0					; VENUSAUR (03)
 	dw 0					; CHARMANDER (04)
 	dw CharmeleonFormSymbols		; CHARMELEON (05)
-	dw 0					; CHARIZARD (06)
+	dw CharizardFormSymbols			; CHARIZARD (06)
 	dw 0					; SQUIRTLE (07)
 	dw 0					; WARTORTLE (08)
 	dw 0					; BLASTOISE (09)
@@ -274,6 +274,12 @@ CharmeleonFormSymbols:
 	db 0
 	db "<ROCKET_LOGO>"
 	assert_table_length NUM_CHARMELEON_FORMS
+
+CharizardFormSymbols:
+	table_width 1
+	db 0
+	db "<ROCKET_LOGO>"
+	assert_table_length NUM_CHARIZARD_FORMS
 
 ArbokFormSymbols:
 	table_width 1

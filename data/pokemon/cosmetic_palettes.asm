@@ -28,6 +28,16 @@ INCBIN	"gfx/pokemon/charmeleon_rocket/normal.gbcpal", middle_colors ; built from
 INCLUDE "gfx/pokemon/charmeleon/shiny.pal"
 	assert_table_length NUM_CHARMELEON_FORMS
 
+CharizardPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/charizard/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/charizard/shiny.pal"
+INCBIN	"gfx/pokemon/charizard_rocket/normal.gbcpal", middle_colors ; built from the front alone, see the Makefile
+; A shiny Rocket Charizard takes the ordinary shiny Charizard colours, by design.
+INCLUDE "gfx/pokemon/charizard/shiny.pal"
+	assert_table_length NUM_CHARIZARD_FORMS
+
 ArbokPalettes:
 	; 2 middle palettes, normal and shiny, with 2 colors each
 	table_width COLOR_SIZE * 2 * 2

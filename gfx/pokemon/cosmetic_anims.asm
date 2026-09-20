@@ -6,6 +6,9 @@ PikachuRBAnimation:  		INCLUDE "gfx/pokemon/pikachu_rb/anim.asm"
 CharmeleonPlainAnimation:	INCLUDE "gfx/pokemon/charmeleon/anim.asm"
 CharmeleonRocketAnimation:	INCLUDE "gfx/pokemon/charmeleon_rocket/anim.asm"
 
+CharizardPlainAnimation:	INCLUDE "gfx/pokemon/charizard/anim.asm"
+CharizardRocketAnimation:	INCLUDE "gfx/pokemon/charizard_rocket/anim.asm"
+
 ArbokPlainAnimation:		INCLUDE "gfx/pokemon/arbok/anim.asm"
 ArbokRocketAnimation:		INCLUDE "gfx/pokemon/arbok_rocket/anim.asm"
 

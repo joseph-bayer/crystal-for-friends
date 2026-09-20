@@ -185,6 +185,10 @@ gfx/pokemon/snorlax_apricorn/normal.gbcpal: gfx/pokemon/snorlax_apricorn/front.g
 gfx/pokemon/charmeleon_rocket/normal.gbcpal: gfx/pokemon/charmeleon_rocket/front.gbcpal
 	tools/gbcpal $(tools/gbcpal) $@ $^
 
+# Rocket Charizard, same again
+gfx/pokemon/charizard_rocket/normal.gbcpal: gfx/pokemon/charizard_rocket/front.gbcpal
+	tools/gbcpal $(tools/gbcpal) $@ $^
+
 # Unown letters share one normal.gbcpal
 unown_pngs := $(wildcard gfx/pokemon/unown_*/front.png) $(wildcard gfx/pokemon/unown_*/back.png)
 $(foreach png, $(unown_pngs),\

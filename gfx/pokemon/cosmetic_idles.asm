@@ -6,6 +6,9 @@ PikachuRBAnimationIdle:  		INCLUDE "gfx/pokemon/pikachu_rb/anim_idle.asm"
 CharmeleonPlainAnimationIdle:		INCLUDE "gfx/pokemon/charmeleon/anim_idle.asm"
 CharmeleonRocketAnimationIdle:		INCLUDE "gfx/pokemon/charmeleon_rocket/anim_idle.asm"
 
+CharizardPlainAnimationIdle:		INCLUDE "gfx/pokemon/charizard/anim_idle.asm"
+CharizardRocketAnimationIdle:		INCLUDE "gfx/pokemon/charizard_rocket/anim_idle.asm"
+
 ArbokPlainAnimationIdle:		INCLUDE "gfx/pokemon/arbok/anim_idle.asm"
 ArbokRocketAnimationIdle:	INCLUDE "gfx/pokemon/arbok_rocket/anim_idle.asm"
 

@@ -13,7 +13,7 @@ CosmeticFormPalettePointersTable:
 	dw 0					; VENUSAUR (03)
 	dw 0					; CHARMANDER (04)
 	dw CharmeleonPalettes			; CHARMELEON (05)
-	dw 0					; CHARIZARD (06)
+	dw CharizardPalettes			; CHARIZARD (06)
 	dw 0					; SQUIRTLE (07)
 	dw 0					; WARTORTLE (08)
 	dw 0					; BLASTOISE (09)

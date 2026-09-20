@@ -13,7 +13,7 @@ CosmeticFormAnimationPointerTable:
 	dw 0					; VENUSAUR (03) - no cosmetic forms
 	dw 0					; CHARMANDER (04) - no cosmetic forms
 	dw CharmeleonAnimationPointers		; CHARMELEON (05) - has cosmetic forms
-	dw 0					; CHARIZARD (06) - no cosmetic forms
+	dw CharizardAnimationPointers		; CHARIZARD (06) - has cosmetic forms
 	dw 0					; SQUIRTLE (07) - no cosmetic forms
 	dw 0					; WARTORTLE (08) - no cosmetic forms
 	dw 0					; BLASTOISE (09) - no cosmetic forms
@@ -269,7 +269,7 @@ CosmeticFormIdleAnimationPointers:
 	dw 0                           		; VENUSAUR (03) - no cosmetic forms
 	dw 0                           		; CHARMANDER (04) - no cosmetic forms
 	dw CharmeleonAnimationIdlePointers	; CHARMELEON (05) - has cosmetic forms
-	dw 0                           		; CHARIZARD (06) - no cosmetic forms
+	dw CharizardAnimationIdlePointers	; CHARIZARD (06) - has cosmetic forms
 	dw 0                           		; SQUIRTLE (07) - no cosmetic forms
 	dw 0                           		; WARTORTLE (08) - no cosmetic forms
 	dw 0                           		; BLASTOISE (09) - no cosmetic forms
@@ -532,6 +532,12 @@ CharmeleonAnimationPointers:
 	dw CharmeleonRocketAnimation
 	assert_table_length NUM_CHARMELEON_FORMS
 
+CharizardAnimationPointers:
+	table_width 2
+	dw CharizardPlainAnimation
+	dw CharizardRocketAnimation
+	assert_table_length NUM_CHARIZARD_FORMS
+
 ArbokAnimationPointers:
 	table_width 2
 	dw ArbokPlainAnimation
@@ -608,6 +614,12 @@ CharmeleonAnimationIdlePointers:
 	dw CharmeleonPlainAnimationIdle
 	dw CharmeleonRocketAnimationIdle
 	assert_table_length NUM_CHARMELEON_FORMS
+
+CharizardAnimationIdlePointers:
+	table_width 2
+	dw CharizardPlainAnimationIdle
+	dw CharizardRocketAnimationIdle
+	assert_table_length NUM_CHARIZARD_FORMS
 
 ArbokAnimationIdlePointers:
 	table_width 2

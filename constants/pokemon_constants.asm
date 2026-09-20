@@ -321,6 +321,13 @@ DEF NUM_UNOWN EQU const_value ; 26
   const CHARMELEON_ROCKET_FORM ; 1 -- Team Rocket's
 DEF NUM_CHARMELEON_FORMS EQU const_value ; 2
 
+; Charizard forms
+; Numbered in parallel with Charmeleon's, so a Rocket Charmeleon stays Rocket when it evolves
+  const_def 0 ; Note that forms are now 0-indexed
+  const CHARIZARD_PLAIN_FORM  ; 0
+  const CHARIZARD_ROCKET_FORM ; 1 -- Team Rocket's
+DEF NUM_CHARIZARD_FORMS EQU const_value ; 2
+
 ; Pikachu forms
   const_def 0 ; Note that forms are now 0-indexed
   const PIKACHU_PLAIN_FORM  ; 0
