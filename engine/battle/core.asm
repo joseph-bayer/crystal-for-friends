@@ -4839,7 +4839,7 @@ DrawEnemyHUD:
 	or l
 	jr z, .done ; return if no symbol for this form
 
-	hlcoord 1, 1
+	hlcoord 2, 1 ; 1, 1 holds the caught-mon ball
 	ld [hl], a
 
 .done
