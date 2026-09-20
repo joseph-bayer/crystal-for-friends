@@ -307,7 +307,7 @@ ArbokPicPointers::
 	dba ArbokFrontpic
 	dba ArbokBackpic
 	dba ArbokRocketFrontpic
-	dba ArbokRocketBackpic
+	dba ArbokBackpic ; shares Arbok's back, drawn in the form's colours
 	assert_table_length NUM_ARBOK_FORMS
 
 GolbatPicPointers::
@@ -316,7 +316,7 @@ GolbatPicPointers::
 	dba GolbatFrontpic
 	dba GolbatBackpic
 	dba GolbatRocketFrontpic
-	dba GolbatRocketBackpic
+	dba GolbatBackpic ; shares Golbat's back; the form keeps Golbat's colours
 	assert_table_length NUM_GOLBAT_FORMS
 
 SnorlaxPicPointers::

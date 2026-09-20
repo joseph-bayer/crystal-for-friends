@@ -43,7 +43,7 @@ ArbokPalettes:
 	table_width COLOR_SIZE * 2 * 2
 INCBIN	"gfx/pokemon/arbok/normal.gbcpal", middle_colors
 INCLUDE "gfx/pokemon/arbok/shiny.pal"
-INCBIN	"gfx/pokemon/arbok_rocket/normal.gbcpal", middle_colors
+INCBIN	"gfx/pokemon/arbok_rocket/normal.gbcpal", middle_colors ; built from the front alone, see the Makefile
 ; A shiny Rocket Arbok takes the ordinary shiny Arbok colours, by design.
 INCLUDE "gfx/pokemon/arbok/shiny.pal"
 	assert_table_length NUM_ARBOK_FORMS
@@ -53,7 +53,7 @@ GolbatPalettes:
 	table_width COLOR_SIZE * 2 * 2
 INCBIN	"gfx/pokemon/golbat/normal.gbcpal", middle_colors
 INCLUDE "gfx/pokemon/golbat/shiny.pal"
-INCBIN	"gfx/pokemon/golbat_rocket/normal.gbcpal", middle_colors
+INCBIN	"gfx/pokemon/golbat/normal.gbcpal", middle_colors ; the Rocket form is drawn in Golbat's colours
 INCLUDE "gfx/pokemon/golbat_rocket/shiny.pal"
 	assert_table_length NUM_GOLBAT_FORMS
 

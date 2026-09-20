@@ -194,6 +194,15 @@ gfx/pokemon/charizard_rocket/normal.gbcpal: gfx/pokemon/charizard_rocket/front.g
 gfx/pokemon/weezing_rocket/front.2bpp: gfx/pokemon/weezing_rocket/front.png gfx/pokemon/weezing/normal.gbcpal
 gfx/pokemon/weezing_rocket/front.2bpp: rgbgfx += --colors gbc:$(word 2,$^)
 
+# Rocket Golbat, same again: no back sprite, drawn in Golbat's own colours
+gfx/pokemon/golbat_rocket/front.2bpp: gfx/pokemon/golbat_rocket/front.png gfx/pokemon/golbat/normal.gbcpal
+gfx/pokemon/golbat_rocket/front.2bpp: rgbgfx += --colors gbc:$(word 2,$^)
+
+# Rocket Arbok has no back sprite but keeps its own colours, so its palette
+# comes from the front alone
+gfx/pokemon/arbok_rocket/normal.gbcpal: gfx/pokemon/arbok_rocket/front.gbcpal
+	tools/gbcpal $(tools/gbcpal) $@ $^
+
 # Unown letters share one normal.gbcpal
 unown_pngs := $(wildcard gfx/pokemon/unown_*/front.png) $(wildcard gfx/pokemon/unown_*/back.png)
 $(foreach png, $(unown_pngs),\
