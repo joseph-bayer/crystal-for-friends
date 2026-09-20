@@ -324,7 +324,10 @@ If <code><i>item_id</i></code> = `USE_SCRIPT_VAR`, then it uses `[wScriptVar]` i
 `[wOtherTrainer] = [wTempTrainer]`
 
 
-## `$5D`: <code>loadwildmon <i>mon_id</i>, <i>level</i></code>
+## `$5D`: <code>loadwildmon <i>mon_id</i>, <i>level</i>[, <i>form</i>]</code>
+
+The optional form is a `*_FORM` constant, optionally `| SHINY_MASK`; it defaults to `PLAIN_FORM`.
+A named form is taken whole, in place of the random wild form and the shiny roll.
 
 
 ## `$5E`: <code>loadtrainer <i>trainer_group</i>, <i>trainer_id</i></code>
