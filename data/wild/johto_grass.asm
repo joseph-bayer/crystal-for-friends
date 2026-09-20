@@ -590,6 +590,34 @@ JohtoGrassWildMons:
 	dbw 13, PSYDUCK
 	end_grass_wildmons
 
+	def_grass_wildmons APRICORN_FOREST
+	db 1 percent, 1 percent, 1 percent ; encounter rates: morn/day/nite
+	; morn
+	dbw 22, BEEDRILL
+	dbw 23, TEDDIURSA
+	dbw 25, DODUO
+	dbw 24, VOLTORB
+	dbw 25, TEDDIURSA
+	dbw 24, BEEDRILL
+	dbw 26, VOLTORB
+	; day
+	dbw 22, BEEDRILL
+	dbw 23, TEDDIURSA
+	dbw 25, DODUO
+	dbw 24, VOLTORB
+	dbw 24, TEDDIURSA
+	dbw 26, BEEDRILL
+	dbw 26, VOLTORB
+	; nite
+	dbw 23, TEDDIURSA
+	dbw 22, BEEDRILL
+	dbw 25, DODUO
+	dbw 24, VOLTORB
+	dbw 25, TEDDIURSA
+	dbw 24, BEEDRILL
+	dbw 26, VOLTORB
+	end_grass_wildmons
+
 	def_grass_wildmons MOUNT_MORTAR_1F_OUTSIDE
 	db 6 percent, 6 percent, 6 percent ; encounter rates: morn/day/nite
 	; morn
