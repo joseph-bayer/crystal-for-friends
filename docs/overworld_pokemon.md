@@ -17,6 +17,7 @@ Two features, built in that order, sharing one mechanism.
 - [Perks and balance knobs](#perks-and-balance-knobs)
 - [Meeting one](#meeting-one)
 - [Saving and loading](#saving-and-loading)
+- [Populations](#populations)
 - [Bugs worth remembering](#bugs-worth-remembering)
 - [Known gaps](#known-gaps)
 
@@ -56,11 +57,12 @@ places:
 The four slots fill in a fixed order — a map's static entries first, then its grass slots, then
 its water ones — and `RollOverworldMons` starts rolling above whatever the static table already
 owns. Without that, a roll into slot 1 would redraw the static mon that slot belongs to: the whole
-Route 39 Miltank herd, or the Red Gyarados, becoming whatever wandered in.
+Route 39 Miltank herd becoming whatever wandered in.
 
 Objects may share a slot: the six Rocket Base Electrode and the four Route 39 Miltank each declare
-one entry between them. Two maps are now at the four-slot ceiling — Route 45 (four grass) and Lake
-of Rage (the Red Gyarados plus three Magikarp).
+one entry between them. Route 45 sits at the four-slot ceiling with four grass slots. The Red
+Gyarados is deliberately *not* a slot: it keeps vanilla's `SPRITE_GYARADOS` icon sprite in the NPC
+red and `SPRITEMOVEDATA_POKEMON` bobbing, so the lake's three Magikarp share the map with it.
 
 **`SpriteMons` still exists** and still earns its keep — 20 of its 35 entries are load-bearing for
 room decorations, which map each doll to a `SPRITE_*`.
@@ -88,6 +90,12 @@ dolls and the day-care mons too.
 The table resets in `LoadMapObjects` — deliberately *not* in `ClearSavedObjPals`, which also runs
 on returns from menus and battles where nothing reclaims, and an index left pointing at a cleared
 entry would draw the mon black.
+
+Two paths skip `LoadMapObjects` and rebuild the table themselves with `RefreshOverworldMonPalettes`,
+which resets it and re-derives every standing wandering mon's colors: the continue path, and the
+reload after a battle on a [population](#populations) map. Without the second, a species-mode
+population claims a new entry per reshuffle, fills all four in a couple of battles, and every
+later member falls back to palette 0 — red.
 
 **The budget is eight hardware OBJ palettes and the follower permanently owns one.** Measured
 across every map: 32 maps have one distinct mon, four have two, two have three. If a map ever
@@ -146,9 +154,11 @@ instant you touch it.
 
 So `wOverworldMonEncounters` holds, per slot: species index, form byte, level, DVs, held item,
 perks, and an extra move. `LoadEnemyMon` gains three branches, at the three points where it already
-branched on `wBattleType` for roaming mon and the Bug Catching Contest:
+branched on `wBattleType` for roaming mon and the Bug Catching Contest. They do not test
+`wBattleType`: `wOverworldMonBattleSlot` is non-zero exactly when the battle is against a wandering
+mon, and testing that leaves the battle type free for the contest.
 
-| What | Where | The `BATTLETYPE_OVERWORLD_MON` branch |
+| What | Where | The `wOverworldMonBattleSlot` branch |
 | --- | --- | --- |
 | Held item | `.UpdateItem` | take the rolled item |
 | DVs | `.GenerateDVs` | take the rolled DVs |
@@ -228,7 +238,7 @@ other shiny rates:
 | Constant | Value | Against |
 | --- | --- | --- |
 | `OVERWORLD_MON_SHINY_NUMERATOR` | 128/65536 = 1/512 | a grass encounter's 1/8192 |
-| `OVERWORLD_MON_MIN_DV` | 10 of 15, as a floor on each DV | a free roll |
+| `OVERWORLD_MON_MIN_DV` | 6 of 15, as a floor on each DV | a free roll |
 | `OVERWORLD_MON_NO_ITEM_CHANCE` | 20% | a grass encounter's 50% |
 
 Per entry, an `OW_PERK_*` bit field:
@@ -288,6 +298,41 @@ previous Pikachu's colors.
 scumming for a shiny therefore works. Moving the encounter struct inside `wGameData` would close
 that, at the cost of a save-layout shift.
 
+Populations keep one thing across a save: each member's **species**, in `wPopulationSpecies`
+inside `wPlayerData`. The continue roll restores those and rolls everything else afresh. See the
+next section.
+
+
+## Populations
+
+A second kind of wandering mon, for a few special maps: a standing group that **reshuffles every
+time you battle one of its members** rather than rerolling when you leave. Hidden Grove and the
+Bug Catching Contest use it. This is the map of where it lives.
+
+| Piece | Where |
+| --- | --- |
+| Table: `def_population`, `spawn_area`, `pop_mon`, `end_population` | `data/wild/mon_populations.asm`, macros in `macros/asserts.asm` |
+| Modes, row layout, `POP_WILD_FORM`, placement limits | `constants/overworld_mon_constants.asm` |
+| The roll (`RollOverworldMons.RollPopulation`), the reroll, placement, the reload command | `engine/overworld/overworld_mons.asm` |
+| Placement hook on every warp | `LoadMapObjects` in `engine/overworld/map_setup.asm` |
+| Reroll hook and the contest branch | `OverworldMonBattleScript` in `engine/overworld/events.asm` |
+| Reload command | `PlacePopulationAndSpawn` in `MapSetupScript_ReloadMap` |
+| Saved species | `wPopulationSpecies` in `ram/wram.asm` |
+
+How it differs from a route roster, in one line each:
+
+- A map has a population **or** an area roster, never both; the population roll fills the slots
+  and the grass and water tables are not consulted.
+- **Placement**: members are scattered over authored rectangles, on land, clear of the player and
+  of every other object, from a 16-bit xorshift seeded once per pass — the hardware RNG is nearly
+  constant with the LCD off. The pass writes map objects only; `InitializeVisibleSprites` spawns.
+- **Two modes.** `POP_REROLL_STATS`: one species for the visit, every battle rerolls level, DVs,
+  shininess, item and form. `POP_REROLL_SPECIES`: every battle rerolls species too.
+- **Per-row form and perks.** `POP_WILD_FORM` in the form column takes the random variant a grass
+  encounter gets, at roll time, so sprite and battle agree. The engine imposes no perk.
+- **The contest** runs on `NATIONAL_PARK_BUG_CONTEST`, so no gate is needed; while the contest
+  timer runs a member battle takes `BATTLETYPE_CONTEST` and the contest's out-of-balls tail.
+
 
 ## Bugs worth remembering
 
@@ -317,13 +362,11 @@ jumps straight into `RandomStepDuration_Slow`, which parks the object on `OBJECT
 
 ## Known gaps
 
-- **The Bug Catching Contest is not compatible.** `wBattleType` is one byte and both features want
-  it: `BATTLETYPE_OVERWORLD_MON` would replace `BATTLETYPE_CONTEST` and take the park-ball menu,
-  the ball count, the contest ending and the scoring with it. Nothing breaks today, because the
-  contest map has no roster — but do not give it one without decoupling first.
-  `wOverworldMonBattleSlot` is already non-zero exactly when the battle is against a wandering mon,
-  so the three `LoadEnemyMon` branches could test that instead and leave `wBattleType` alone.
-- **Reload scumming for a shiny works**, as above.
+- ~~**The Bug Catching Contest is not compatible.**~~ It is now: `BATTLETYPE_OVERWORLD_MON` is gone
+  and the branches test `wOverworldMonBattleSlot`, so a wandering mon in the park can be fought as
+  `BATTLETYPE_CONTEST`.
+- **Reload scumming for a shiny works** on routes, as above. Not on a population map for the
+  species — that is saved — but stats and shininess do reroll on a continue there, by decision.
 - **They swim and walk with the follower's hop**, which suits a Sentret and may not suit a
   Tentacool.
 - **A mon can be dodged.** If you step onto one that is mid-step and it steps away, no battle. It

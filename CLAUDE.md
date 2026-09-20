@@ -110,7 +110,7 @@ Forms are this hack's signature feature. A Pokémon's form lives in the `MON_FOR
 
 Form numbers per species are `const`-enumerated in `constants/pokemon_constants.asm` (`PIKACHU_SURF_FORM`, `SCYTHER_TEAL_FORM`, …), each with a `NUM_<SPECIES>_FORMS` count and sometimes a `NUM_<SPECIES>_WILD_FORMS` subset limiting which forms occur in the wild.
 
-Form data uses a consistent **two-level table** pattern: a master table with one `dw` per species (0 = no forms, else a pointer to that species' per-form table), ending in `assert_table_length NUM_POKEMON`. Adding a form to a species means updating **every** level-two table that species participates in, keeping each in the same form order:
+Form data uses a consistent **two-level table** pattern: a master table with one `dw` per species (0 = use the species' ordinary data for every form, else a pointer to that species' per-form table), ending in `assert_table_length NUM_POKEMON`. Every loader falls back on a 0 row, so a species has a row only in the tables where a form differs: a recolor needs only the palette table; a redrawn sprite needs pics, animation, idle, bitmask and frame tables together; icons, symbols and dimensions only when a form has its own. Where a species does have a per-form table, adding a form means extending **every** table it already has, in the same form order:
 
 - `constants/pokemon_constants.asm` — the form const + `NUM_*_FORMS`
 - `gfx/pics.asm` — `INCBIN` the new front/back pic under a `Pics N` section
@@ -119,6 +119,8 @@ Form data uses a consistent **two-level table** pattern: a master table with one
 - `data/pokemon/cosmetic_form_icon_pointers.asm` — party/box/overworld icons
 - `data/pokemon/cosmetic_form_symbols.asm` — the marker shown in battle/stats/PC
 - `gfx/pokemon/cosmetic_form_{anim,bitmask,frame,dimensions}_pointers.asm` — pic animation data (`dimensions` may be null if all forms share dimensions)
+
+`docs/adding_cosmetic_forms.md` is the step-by-step walkthrough, including how a form gets onto a Pokémon (trainer parties, wandering mon, `givepoke`, `WildFormTable`).
 
 Most per-form tables carry an `assert_table_length NUM_<SPECIES>_FORMS`, so a missed table tends to fail the build rather than corrupt at runtime — but only for the tables that declare it.
 
@@ -138,7 +140,18 @@ Form sprite directories are siblings named `<species>_<form>` (`gfx/pokemon/pika
 
 Map blocks are **`.ablk`**, not vanilla's `.blk` — CSE's expanded tileset format (384 tiles, per-block tile attributes). `maps/` holds ~253 maps, each a `.asm` (events/scripts) plus a `.ablk` (block layout). Map metadata is split across `data/maps/` — notably `maps.asm` (headers), `attributes.asm` (dimensions/connections, split out from headers by CSE), `blocks.asm` (the `INCBIN`s), `scripts.asm`, `scenes.asm`, `landmarks.asm`.
 
-`docs/` documents the scripting command sets: `event_commands.md`, `map_event_scripts.md`, `map_setup_scripts.md`, `movement_commands.md`, `text_commands.md`, `battle_anim_commands.md`, `move_effect_commands.md`, `music_commands.md`, `menus.md`, `pic_animations.md`, `newbox_format.md`, `vc_patch.md`. Consult these before hand-writing script bytes.
+`docs/adding_maps.md` covers adding a new map and joining maps by warp or connection, including
+where this fork diverges from the pret map tutorials. `docs/adding_tilesets.md` is the companion for
+the tileset side — the 384-tile split across VRAM banks, blocks, attributes, collision, animations
+and bank room.
+
+`docs/` holds three kinds of document:
+
+- **Walkthroughs for adding content**, written against this tree rather than vanilla: `adding_maps.md`, `adding_tilesets.md`, `adding_cosmetic_forms.md`.
+- **Feature guides** for the fork's own systems: `overworld_pokemon.md` (wandering wild Pokémon, populations, their colors and save behavior), `following_pokemon.md`, `newbox_format.md`.
+- **Scripting command sets**: `event_commands.md`, `map_event_scripts.md`, `map_setup_scripts.md`, `movement_commands.md`, `text_commands.md`, `battle_anim_commands.md`, `move_effect_commands.md`, `music_commands.md`, `menus.md`, `pic_animations.md`, `vc_patch.md`. Consult these before hand-writing script bytes.
+
+Working notes — specs and plans for in-flight work — go in `plans/`, which is gitignored. Nothing tracked should link to a file there.
 
 ### Other CSE divergences worth knowing
 
