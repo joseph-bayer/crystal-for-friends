@@ -1,5 +1,5 @@
 ; Which maps carry a population of wandering mon, and what it draws from.
-; See docs/spec_mon_populations.md. pop_mon is weight, species, level range, form, perks.
+; See docs/overworld_pokemon.md. pop_mon is weight, species, level range, form, perks.
 
 MonPopulations:
 

@@ -56,7 +56,7 @@ DEF OW_WILDMON_LENGTH EQU _RS
 DEF OW_WILDDATA_LENGTH EQU 2 + 1 + 1 + NUM_OW_WILDMON * OW_WILDMON_LENGTH * 3
 
 
-; Populations (see data/wild/mon_populations.asm and docs/spec_mon_populations.md). A standing
+; Populations (see data/wild/mon_populations.asm and docs/overworld_pokemon.md). A standing
 ; group of wandering mon on a few special maps, which reshuffles when you battle one rather than
 ; when you leave. A map has a population or an area roster, never both.
 ;

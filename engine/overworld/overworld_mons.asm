@@ -605,7 +605,7 @@ RollOverworldMons::
 .RollPopulation:
 ; in:  c = the first slot to fill
 ; out: carry if this map has a population, in which case its members are rolled. The grass and
-;      water tables are not consulted for such a map. See docs/spec_mon_populations.md.
+;      water tables are not consulted for such a map. See docs/overworld_pokemon.md.
 	ld hl, MonPopulations
 	call .FindPopulation
 	ret nc
@@ -1019,7 +1019,7 @@ PlacePopulationAndSpawn::
 
 PlacePopulation::
 ; Give every member of this map's population a tile inside one of its spawn areas, and write it
-; into the member's map object. See docs/spec_mon_populations.md, "Placement".
+; into the member's map object. See docs/overworld_pokemon.md, "Placement".
 ;
 ; Runs from LoadMapObjects, right before InitializeVisibleSprites: after LoadBlockData and the
 ; tileset, which the collision test needs, and before anything is spawned. It writes map objects

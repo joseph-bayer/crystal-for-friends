@@ -2685,8 +2685,8 @@ wOverworldMonPals:: ds (NUM_OW_MON_PALS + 1) * OW_MON_PAL_LENGTH
 wNumOverworldMonPals:: db
 
 ; The species of each population member on the current map, one 16-bit index per slot, 0 for a
-; slot with none. The one part of a population that survives a save (R7 in
-; docs/spec_mon_populations.md): a continue keeps these and rolls everything else afresh. Written
+; slot with none. The one part of a population that survives a save (see
+; docs/overworld_pokemon.md): a continue keeps these and rolls everything else afresh. Written
 ; by every roll of a member, so a species-mode reroll keeps it current too.
 wPopulationSpecies:: ds NUM_OW_MON_SLOTS * 2
 
@@ -3140,7 +3140,7 @@ wOverworldMonRollCount:: db   ; how many this map can have out at once
 wOverworldMonRollChance:: db  ; the chance each one shows up
 wOverworldMonRollSlot:: db    ; the 0-based slot being filled
 
-; The population this map carries, if any -- see docs/spec_mon_populations.md. Rolled on entry
+; The population this map carries, if any -- see docs/overworld_pokemon.md. Rolled on entry
 ; like everything above; nothing here survives a save.
 wPopulationRow:: dw   ; its row in MonPopulations, past the map id
 wPopulationMode:: db  ; POP_REROLL_SPECIES or POP_REROLL_STATS
