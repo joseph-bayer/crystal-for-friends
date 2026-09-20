@@ -145,7 +145,7 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
 - **Misc.**
   - Turn around after healing in the Pokecenter so you don't accidentally heal again
   - Minor update to Goldenrod layout so it's easier to get to the underground and the bike shop
-  - Bug Catching Contest rebalanced
+  - Bug Catching Contest rebalanced + includes overworld encounters
   - Happiness
     - Happiness goes up by 2 points every other step cycle instead of 1
     - Leveling up, Haircuts, Daisy grooming, and battling gym leaders give more happiness.
