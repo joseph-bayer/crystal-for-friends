@@ -49,7 +49,7 @@ CosmeticFormAnimationPointerTable:
 	dw 0					; JIGGLYPUFF (27) - no cosmetic forms
 	dw 0					; WIGGLYTUFF (28) - no cosmetic forms
 	dw 0					; ZUBAT (29) - no cosmetic forms
-	dw 0					; GOLBAT (2a) - no cosmetic forms
+	dw GolbatAnimationPointers		; GOLBAT (2a) - has cosmetic forms
 	dw 0					; ODDISH (2b) - no cosmetic forms
 	dw 0					; GLOOM (2c) - no cosmetic forms
 	dw 0					; VILEPLUME (2d) - no cosmetic forms
@@ -150,7 +150,7 @@ CosmeticFormAnimationPointerTable:
 	dw 0					; KABUTO (8c) - no cosmetic forms
 	dw 0					; KABUTOPS (8d) - no cosmetic forms
 	dw 0					; AERODACTYL (8e) - no cosmetic forms
-	dw 0					; SNORLAX (8f) - no cosmetic forms
+	dw SnorlaxAnimationPointers		; SNORLAX (8f) - has cosmetic forms
 	dw 0					; ARTICUNO (90) - no cosmetic forms
 	dw 0					; ZAPDOS (91) - no cosmetic forms
 	dw 0					; MOLTRES (92) - no cosmetic forms
@@ -305,7 +305,7 @@ CosmeticFormIdleAnimationPointers:
 	dw 0                           		; JIGGLYPUFF (27) - no cosmetic forms
 	dw 0                           		; WIGGLYTUFF (28) - no cosmetic forms
 	dw 0                           		; ZUBAT (29) - no cosmetic forms
-	dw 0                           		; GOLBAT (2a) - no cosmetic forms
+	dw GolbatAnimationIdlePointers		; GOLBAT (2a) - has cosmetic forms
 	dw 0                           		; ODDISH (2b) - no cosmetic forms
 	dw 0                           		; GLOOM (2c) - no cosmetic forms
 	dw 0                           		; VILEPLUME (2d) - no cosmetic forms
@@ -406,7 +406,7 @@ CosmeticFormIdleAnimationPointers:
 	dw 0                           		; KABUTO (8c) - no cosmetic forms
 	dw 0                           		; KABUTOPS (8d) - no cosmetic forms
 	dw 0                           		; AERODACTYL (8e) - no cosmetic forms
-	dw 0                           		; SNORLAX (8f) - no cosmetic forms
+	dw SnorlaxAnimationIdlePointers		; SNORLAX (8f) - has cosmetic forms
 	dw 0                           		; ARTICUNO (90) - no cosmetic forms
 	dw 0                           		; ZAPDOS (91) - no cosmetic forms
 	dw 0                           		; MOLTRES (92) - no cosmetic forms
@@ -526,6 +526,18 @@ PikachuAnimationPointers:
 	dw PikachuRBAnimation
 	assert_table_length NUM_PIKACHU_FORMS
 
+GolbatAnimationPointers:
+	table_width 2
+	dw GolbatPlainAnimation
+	dw GolbatRocketAnimation
+	assert_table_length NUM_GOLBAT_FORMS
+
+SnorlaxAnimationPointers:
+	table_width 2
+	dw SnorlaxPlainAnimation
+	dw SnorlaxApricornAnimation
+	assert_table_length NUM_SNORLAX_FORMS
+
 ShuckleAnimationPointers:
 	table_width 2
 	dw ShucklePlainAnimation
@@ -578,6 +590,18 @@ PikachuAnimationIdlePointers:
 	dw PikachuFlyAnimationIdle
 	dw PikachuRBAnimationIdle
 	assert_table_length NUM_PIKACHU_FORMS
+
+GolbatAnimationIdlePointers:
+	table_width 2
+	dw GolbatPlainAnimationIdle
+	dw GolbatRocketAnimationIdle
+	assert_table_length NUM_GOLBAT_FORMS
+
+SnorlaxAnimationIdlePointers:
+	table_width 2
+	dw SnorlaxPlainAnimationIdle
+	dw SnorlaxApricornAnimationIdle
+	assert_table_length NUM_SNORLAX_FORMS
 
 ShuckleAnimationIdlePointers:
 	table_width 2

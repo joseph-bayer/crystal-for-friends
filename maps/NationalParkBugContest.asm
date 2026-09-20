@@ -11,6 +11,9 @@
 	const NATIONALPARKBUGCONTEST_YOUNGSTER3
 	const NATIONALPARKBUGCONTEST_POKE_BALL1
 	const NATIONALPARKBUGCONTEST_POKE_BALL2
+	const NATIONALPARKBUGCONTEST_MEMBER_1
+	const NATIONALPARKBUGCONTEST_MEMBER_2
+	const NATIONALPARKBUGCONTEST_MEMBER_3
 
 NationalParkBugContest_MapScripts:
 	def_scene_scripts
@@ -248,3 +251,9 @@ NationalParkBugContest_MapEvents:
 	object_event 17, 34, SPRITE_YOUNGSTER, SPRITEMOVEDATA_WANDER, 3, 3, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, BugCatchingContestant10AScript, EVENT_BUG_CATCHING_CONTESTANT_10A
 	object_event 35, 12, SPRITE_POKE_BALL, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_ITEMBALL, 0, NationalParkBugContestParlyzHeal, EVENT_NATIONAL_PARK_PARLYZ_HEAL
 	object_event  1, 43, SPRITE_POKE_BALL, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_ITEMBALL, 0, NationalParkBugContestTMDig, EVENT_NATIONAL_PARK_TM_DIG
+; The population (data/wild/mon_populations.asm). The sprite id names the slot, not a species, and
+; the event flag is -1: whether one stands here is decided by its slot. These tiles are only where
+; one stands if placement finds it nowhere else; the spawn areas decide the rest.
+	object_event 12, 22, SPRITE_OW_MON_1, SPRITEMOVEDATA_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1
+	object_event 24, 24, SPRITE_OW_MON_2, SPRITEMOVEDATA_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1
+	object_event 18, 31, SPRITE_OW_MON_3, SPRITEMOVEDATA_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1

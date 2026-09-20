@@ -1053,33 +1053,11 @@ TitleScreenMain:
 	inc a
 	jr z, .delete_save_data
 
-; To bring up the clock reset dialog:
-
-; Hold Down + B + Select to initiate the sequence.
-	ldh a, [hClockResetTrigger]
-	cp $34
-	jr z, .check_clock_reset
-
+; The clock reset dialog comes up on Down + B + Select, the same shape as deleting the save above.
+; Vanilla wanted that combination, then Left + Up held while Select stayed down, then Select
+; released -- a sequence nobody discovers and few can repeat on purpose.
 	ld a, [hl]
 	or ~(PAD_DOWN + PAD_B + PAD_SELECT)
-	inc a
-	jr nz, .check_start
-
-	ld a, $34
-	ldh [hClockResetTrigger], a
-	jr .check_start
-
-; Keep Select pressed, and hold Left + Up.
-; Then let go of Select.
-.check_clock_reset
-	bit B_PAD_SELECT, [hl]
-	jr nz, .check_start
-
-	xor a
-	ldh [hClockResetTrigger], a
-
-	ld a, [hl]
-	or ~(PAD_LEFT + PAD_UP)
 	inc a
 	jr z, .reset_clock
 

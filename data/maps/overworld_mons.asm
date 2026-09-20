@@ -47,12 +47,6 @@ OverworldMonObjects:
 	ow_mon_map INDIGO_PLATEAU_POKECENTER_1F
 	ow_mon ABRA,       PLAIN_FORM
 
-; The Red Gyarados. The battle has always been shiny -- BATTLETYPE_FORCESHINY sets SHINY_MASK in
-; wEnemyMonForm -- but until now the thing standing in the lake could not be told so, and was
-; painted with the shared overworld red instead.
-	ow_mon_map LAKE_OF_RAGE
-	ow_mon GYARADOS,   PLAIN_FORM | SHINY_MASK
-
 	ow_mon_map MAHOGANY_MART_1F
 	ow_mon DRAGONITE,  PLAIN_FORM
 

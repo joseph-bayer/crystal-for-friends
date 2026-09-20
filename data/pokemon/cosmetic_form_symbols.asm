@@ -49,7 +49,7 @@ CosmeticFormSymbols::
 	dw 0					; JIGGLYPUFF (27)
 	dw 0					; WIGGLYTUFF (28)
 	dw 0					; ZUBAT (29)
-	dw 0					; GOLBAT (2a)
+	dw GolbatFormSymbols			; GOLBAT (2a)
 	dw 0					; ODDISH (2b)
 	dw 0					; GLOOM (2c)
 	dw 0					; VILEPLUME (2d)
@@ -268,3 +268,9 @@ PikachuFormSymbols:
 	db 0
 	db "<CARTRIDGE>"
 	assert_table_length NUM_PIKACHU_FORMS
+
+GolbatFormSymbols:
+	table_width 1
+	db 0
+	db "<ROCKET_LOGO>"
+	assert_table_length NUM_GOLBAT_FORMS

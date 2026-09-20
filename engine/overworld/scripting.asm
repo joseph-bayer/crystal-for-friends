@@ -1101,6 +1101,8 @@ Script_loadwildmon:
 	ld [wTempWildMonSpecies], a
 	rst GetScriptByte
 	ld [wCurPartyLevel], a
+	rst GetScriptByte
+	ld [wTempWildMonForm], a
 	ret
 
 Script_loadtrainer:

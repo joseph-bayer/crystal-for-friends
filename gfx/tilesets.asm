@@ -524,6 +524,28 @@ INCBIN "data/tilesets/omanyte_word_room_metatiles.bin.lz"
 TilesetAerodactylWordRoomMeta::
 INCBIN "data/tilesets/aerodactyl_word_room_metatiles.bin.lz"
 
+; The mystery islands. A copy of Johto to begin with, so every island .ablk drawn against Johto
+; still means the same blocks; anything drawn from here on is the islands' own. See
+; docs/adding_tilesets.md. The three GFX blobs share one bank byte in the header row, so they stay
+; together.
+TilesetIslandsvTiles2GFX::
+INCBIN "gfx/tilesets/islands.2bpp.vtiles2.lz"
+
+TilesetIslandsvTiles5GFX::
+INCBIN "gfx/tilesets/islands.2bpp.vtiles5.lz"
+
+TilesetIslandsvTiles4GFX::
+INCBIN "gfx/tilesets/islands.2bpp.vtiles4.lz"
+
+TilesetIslandsMeta::
+INCBIN "data/tilesets/islands_metatiles.bin.lz"
+
+TilesetIslandsColl::
+INCLUDE "data/tilesets/islands_collision.asm"
+
+TilesetIslandsAttr::
+INCBIN "data/tilesets/islands_attributes.bin.lz"
+
 SECTION "Tileset Data 9", ROMX
 
 Tileset0Attr::

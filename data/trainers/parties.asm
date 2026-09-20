@@ -2537,11 +2537,13 @@ GruntMGroup:
 	db -1 ; end
 
 	next_list_item ; GRUNTM (11)
-	db "GRUNT@", TRAINERTYPE_NORMAL
+	db "GRUNT@", TRAINERTYPE_FORM
 	db 36
 	dw GOLBAT
+	db GOLBAT_ROCKET_FORM
 	db 37
 	dw MUK
+	db PLAIN_FORM
 	db -1 ; end
 
 	next_list_item ; GRUNTM (12) - UNUSED
@@ -2551,11 +2553,13 @@ GruntMGroup:
 	db -1 ; end
 
 	next_list_item ; GRUNTM (13)
-	db "GRUNT@", TRAINERTYPE_NORMAL
+	db "GRUNT@", TRAINERTYPE_FORM
 	db 36
 	dw GOLBAT
+	db GOLBAT_ROCKET_FORM
 	db 37
 	dw WEEZING
+	db PLAIN_FORM
 	db -1 ; end
 
 	next_list_item ; GRUNTM (14)
@@ -2569,15 +2573,19 @@ GruntMGroup:
 	db -1 ; end
 
 	next_list_item ; GRUNTM (15)
-	db "GRUNT@", TRAINERTYPE_NORMAL
+	db "GRUNT@", TRAINERTYPE_FORM
 	db 36
 	dw RATICATE
+	db PLAIN_FORM
 	db 36
 	dw ARBOK
+	db PLAIN_FORM
 	db 36
 	dw MUK
+	db PLAIN_FORM
 	db 36
 	dw GOLBAT
+	db GOLBAT_ROCKET_FORM
 	db -1 ; end
 
 	next_list_item ; GRUNTM (16)
@@ -2587,19 +2595,23 @@ GruntMGroup:
 	db -1 ; end
 
 	next_list_item ; GRUNTM (17)
-	db "GRUNT@", TRAINERTYPE_NORMAL
+	db "GRUNT@", TRAINERTYPE_FORM
 	db 29
 	dw GOLBAT
+	db GOLBAT_ROCKET_FORM
 	db -1 ; end
 
 	next_list_item ; GRUNTM (18)
-	db "GRUNT@", TRAINERTYPE_NORMAL
+	db "GRUNT@", TRAINERTYPE_FORM
 	db 26
 	dw RATICATE
+	db PLAIN_FORM
 	db 27
 	dw GRIMER
+	db PLAIN_FORM
 	db 26
 	dw GOLBAT
+	db GOLBAT_ROCKET_FORM
 	db -1 ; end
 
 	next_list_item ; GRUNTM (19)
@@ -2617,19 +2629,23 @@ GruntMGroup:
 	db -1 ; end
 
 	next_list_item ; GRUNTM (21)
-	db "GRUNT@", TRAINERTYPE_NORMAL
+	db "GRUNT@", TRAINERTYPE_FORM
 	db 27
 	dw GOLBAT
+	db GOLBAT_ROCKET_FORM
 	db 27
 	dw ARIADOS
+	db PLAIN_FORM
 	db 27
 	dw RATICATE
+	db PLAIN_FORM
 	db -1 ; end
 
 	next_list_item ; GRUNTM (22) - UNUSED
-	db "EXECUTIVE@", TRAINERTYPE_NORMAL
+	db "EXECUTIVE@", TRAINERTYPE_FORM
 	db 36
 	dw GOLBAT
+	db GOLBAT_ROCKET_FORM
 	db -1 ; end
 
 	next_list_item ; GRUNTM (23) - UNUSED
@@ -2645,11 +2661,13 @@ GruntMGroup:
 	db -1 ; end
 
 	next_list_item ; GRUNTM (25)
-	db "GRUNT@", TRAINERTYPE_NORMAL
+	db "GRUNT@", TRAINERTYPE_FORM
 	db 36
 	dw GOLBAT
+	db GOLBAT_ROCKET_FORM
 	db 37
 	dw ARBOK
+	db PLAIN_FORM
 	db -1 ; end
 
 	next_list_item ; GRUNTM (26) - UNUSED
@@ -2685,13 +2703,16 @@ GruntMGroup:
 	db -1 ; end
 
 	next_list_item ; GRUNTM (30) - UNUSED
-	db "GRUNT@", TRAINERTYPE_NORMAL
+	db "GRUNT@", TRAINERTYPE_FORM
 	db 25
 	dw GOLBAT
+	db GOLBAT_ROCKET_FORM
 	db 25
 	dw GOLBAT
+	db GOLBAT_ROCKET_FORM
 	db 30
 	dw ARBOK
+	db PLAIN_FORM
 	db -1 ; end
 
 	next_list_item ; GRUNTM (31)

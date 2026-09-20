@@ -150,7 +150,7 @@ CosmeticFormIconPointersTable:
 	dw 0					; KABUTO (8c) - no cosmetic forms
 	dw 0					; KABUTOPS (8d) - no cosmetic forms
 	dw 0					; AERODACTYL (8e) - no cosmetic forms
-	dw 0					; SNORLAX (8f) - no cosmetic forms
+	dw SnorlaxIconPointers			; SNORLAX (8f) - has cosmetic forms
 	dw 0					; ARTICUNO (90) - no cosmetic forms
 	dw 0					; ZAPDOS (91) - no cosmetic forms
 	dw 0					; MOLTRES (92) - no cosmetic forms
@@ -268,6 +268,12 @@ PikachuIconPointers:
 	dw PikachuFlyIcon
 	dw PikachuPlainIcon
 	assert_table_length NUM_PIKACHU_FORMS
+
+SnorlaxIconPointers:
+	table_width 2, SnorlaxIconPointers
+	dw SnorlaxPlainIcon
+	dw SnorlaxApricornIcon
+	assert_table_length NUM_SNORLAX_FORMS
 
 UnownIconPointers:
 	table_width 2, UnownIconPointers

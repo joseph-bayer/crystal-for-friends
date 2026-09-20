@@ -559,6 +559,12 @@ FlyFunction:
 	call GetMapEnvironment
 	call CheckOutdoorMap
 	jr nz, .indoors
+; The mystery islands are reached only by the Cianwood sailor, and which one he lands on is rolled
+; once a day. Flying off one looks like an ordinary shortcut but strands the player until the roll
+; comes round again, so Fly is refused there the same way it is indoors.
+	ld a, [wMapGroup]
+	cp MAPGROUP_MYSTERY_ISLANDS
+	jr z, .indoors
 	xor a
 	ldh [hMapAnims], a
 	call LoadStandardMenuHeader

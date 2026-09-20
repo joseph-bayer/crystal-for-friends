@@ -154,6 +154,8 @@ ENDM
 	map_const SAFARI_ZONE_FUCHSIA_GATE_BETA,                5,  4 ; 89
 	map_const SAFARI_ZONE_BETA,                            10, 18 ; 90
 	map_const VICTORY_ROAD,                                10, 36 ; 91
+	map_const APRICORN_FOREST,                             15, 27 ; 92
+	map_const APRICORN_FOREST_CLEARING,                    10, 10 ; 93
 	endgroup
 
 	newgroup ECRUTEAK                                             ;  4
@@ -499,4 +501,12 @@ ENDM
 	map_const ROUTE_31_VIOLET_GATE,                         5,  4 ; 11
 	endgroup
 
-DEF NUM_MAP_GROUPS EQU const_value ; 26
+	newgroup MYSTERY_ISLANDS                                      ; 27
+; Reached only by the Cianwood sailor, never by a warp or a connection. Their own group so the set
+; can grow without renumbering anything, and so MapGroupRoofs can give them no roof.
+	map_const HIDDEN_GROVE,                                15, 15 ;  1
+	map_const APRICORN_FOREST_OUTSIDE,                     16,  9 ;  2
+	map_const MYSTERY_ISLAND_3,                            10,  9 ;  3
+	endgroup
+
+DEF NUM_MAP_GROUPS EQU const_value ; 27

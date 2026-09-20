@@ -5,21 +5,11 @@ IsInJohto::
 	ld b, a
 	ld a, [wMapNumber]
 	ld c, a
-	call GetWorldMapLocation
+	call GetWorldMapLocationOrBackup
 
 	cp LANDMARK_FAST_SHIP
 	jr z, .Johto
 
-	cp LANDMARK_SPECIAL
-	jr nz, .CheckRegion
-
-	ld a, [wBackupMapGroup]
-	ld b, a
-	ld a, [wBackupMapNumber]
-	ld c, a
-	call GetWorldMapLocation
-
-.CheckRegion:
 	cp KANTO_LANDMARK
 	jr nc, .Kanto
 

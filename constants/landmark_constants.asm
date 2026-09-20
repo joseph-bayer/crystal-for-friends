@@ -105,6 +105,14 @@ DEF KANTO_LANDMARK_LAST EQU const_value - 1
 DEF OTHER_LANDMARK EQU const_value
 	const LANDMARK_FAST_SHIP         ; 5f
 
+; Hidden landmarks. A map on one of these gets its name on the sign when you walk in, and that is
+; all: the Town Map, Fly and the region checks treat it exactly like LANDMARK_SPECIAL, resolving to
+; the backup map through GetWorldMapLocationOrBackup. Past both regions' cursor ranges, so the
+; Pokegear never lands on one. Their table rows carry no real coordinates.
+DEF HIDDEN_LANDMARK EQU const_value
+	const LANDMARK_APRICORN_FOREST   ; 60
+	const LANDMARK_APRICORN_CLEARING ; 61
+
 DEF NUM_LANDMARKS EQU const_value
 
 ; used in CaughtData

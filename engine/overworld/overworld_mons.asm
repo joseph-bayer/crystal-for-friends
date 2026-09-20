@@ -144,6 +144,10 @@ SetUpOverworldMonBattle::
 ; Point the battle at the encounter that was rolled when this mon appeared on the map, instead of
 ; letting it roll its own. Everything else -- form, shininess, DVs, held item -- LoadEnemyMon reads
 ; straight out of the struct, which is why the sprite you walked into and the mon you fight match.
+;
+; wBattleType is left alone. LoadEnemyMon finds the rolled encounter through
+; wOverworldMonBattleSlot, which TryClaimOverworldMonBattle set, so this is an ordinary wild battle
+; -- or a BATTLETYPE_CONTEST one, if the script that started it said so, Park Balls and all.
 	ld a, 1 << 7
 	ld [wBattleScriptFlags], a ; a wild battle, the same flag `loadwildmon` sets
 	call GetOverworldMonBattleEncounter
@@ -158,8 +162,6 @@ SetUpOverworldMonBattle::
 	ld l, c
 	call GetPokemonIDFromIndex
 	ld [wTempWildMonSpecies], a
-	ld a, BATTLETYPE_OVERWORLD_MON
-	ld [wBattleType], a
 	; fallthrough
 
 HidePlayerForOverworldMonBattle:
@@ -240,6 +242,11 @@ ClearOverworldMonEncounters::
 	ld [wOverworldMonBattleSlot], a
 	ld [wOverworldMonShinyPending], a
 	ld [wOverworldMonOnSurface], a
+; And no population, until .RollPopulation finds this map a row. PlacePopulation reads the row
+; pointer as "is this a population map at all", so it must not carry over from the last one.
+	ld [wPopulationRow], a
+	ld [wPopulationRow + 1], a
+	ld [wPopulationPlaced], a
 	ret
 
 INCLUDE "data/maps/overworld_mons.asm"
@@ -262,7 +269,14 @@ RollOverworldMonsOnContinue::
 ;
 ; Rolling here means a reloaded save gets a fresh route, which is the same thing walking out and
 ; back gives you.
+;
+; A population keeps its species across a save (R7): the roll is told to restore them from
+; wPopulationSpecies rather than pick. Everything else about each member rolls afresh.
+	ld a, TRUE
+	ld [wPopulationRestore], a
 	call RollOverworldMons
+	xor a
+	ld [wPopulationRestore], a
 	call UpdateOverworldMonObjectMasks
 	; fallthrough
 
@@ -308,6 +322,8 @@ RollOverworldMons::
 	call ClearOverworldMonEncounters
 	call GetOverworldMonStaticCount
 	ld c, a ; the first slot this map's static mon do not own
+	call .RollPopulation
+	ret c ; a population map fills its own slots and has no grass or water roster
 	ld hl, OverworldWildMonsGrass
 	call .RollTable
 	ld hl, OverworldWildMonsWater
@@ -421,6 +437,9 @@ RollOverworldMons::
 	ld a, [hl]
 	ld [wOverworldMonRollBuffer + OW_MON_MOVE + 1], a
 
+.FinishRoll:
+; The shared tail: form and shininess, DVs, item, then publish. A population member joins here
+; with its species, level, form and perks already in the buffer.
 	call .RollForm
 	call .RollDVs
 	call .RollItem
@@ -583,14 +602,869 @@ RollOverworldMons::
 	and a
 	ret
 
+.RollPopulation:
+; in:  c = the first slot to fill
+; out: carry if this map has a population, in which case its members are rolled. The grass and
+;      water tables are not consulted for such a map. See docs/spec_mon_populations.md.
+	ld hl, MonPopulations
+	call .FindPopulation
+	ret nc
+
+	ld a, l
+	ld [wPopulationRow], a
+	ld a, h
+	ld [wPopulationRow + 1], a
+	ld a, [hli]
+	ld [wPopulationMode], a
+	ld a, [hli]
+	ld b, a ; how many are out at once
+
+	ld a, NUM_OW_MON_SLOTS
+	sub c
+	jr z, .population_done ; every slot is spoken for already
+	cp b
+	jr nc, .got_population_count
+	ld b, a ; the row asks for more than fit
+.got_population_count
+
+	call .GetPopulationRoster
+	call .CountPopulationRoster
+	and a
+	jr z, .population_done ; a roster with nothing in it is a map with nothing on it
+
+; POP_REROLL_STATS is one species for the whole visit: pick once, and every member takes it.
+; POP_REROLL_SPECIES picks again for each member.
+; On a continue the species come back from the save instead (R7).
+	ld a, [wPopulationMode]
+	cp POP_REROLL_STATS
+	call z, .RestoreOrPickEntry ; one species for the visit: settled before the loop
+
+.population_loop
+	ld a, [wPopulationMode]
+	cp POP_REROLL_STATS
+	call nz, .RestoreOrPickEntry
+	push bc
+	call .RollOnePopulationSlot
+	pop bc
+	inc c
+	dec b
+	jr nz, .population_loop
+
+.population_done
+	scf
+	ret
+
+.FindEntryForSavedSpecies:
+; in:  c = a slot
+; out: carry and wPopulationEntry set, when the roster has an entry for the species saved in that
+;      slot. Preserves bc.
+	push bc
+; Roster first: .GetPopulationRoster steps with de and .CountPopulationRoster scratches e, so the
+; saved species is read only once both are done. Reading it first cost a round trip.
+	call .GetPopulationRoster
+	call .CountPopulationRoster
+	ld b, a
+	push hl
+	ld a, c
+	add a
+	ld e, a
+	ld d, 0
+	ld hl, wPopulationSpecies
+	add hl, de
+	ld a, [hli]
+	ld e, a
+	ld d, [hl] ; de = the saved species
+	pop hl
+	or d
+	jr z, .no_saved_species
+.saved_species_loop
+	inc hl ; past the weight
+	ld a, [hli]
+	cp e
+	jr nz, .saved_species_miss
+	ld a, [hl]
+	cp d
+	jr z, .saved_species_found
+.saved_species_miss
+; hl is on the species' high byte either way; the next entry's weight is POP_MON_LENGTH - 2 on
+	ld a, l
+	add POP_MON_LENGTH - 2
+	ld l, a
+	adc h
+	sub l
+	ld h, a
+	dec b
+	jr nz, .saved_species_loop
+.no_saved_species
+	pop bc
+	and a
+	ret
+
+.saved_species_found
+	dec hl
+	dec hl ; back to the entry's weight, where an entry starts
+	ld a, l
+	ld [wPopulationEntry], a
+	ld a, h
+	ld [wPopulationEntry + 1], a
+	pop bc
+	scf
+	ret
+
+.FindPopulation:
+; in:  hl = MonPopulations
+; out: carry and hl = this map's row past the map id, or no carry when the map has no row.
+;      Preserves bc.
+	ld a, [hli]
+	cp -1
+	jr z, .no_population
+	ld d, a
+	ld a, [hli]
+	ld e, a
+	ld a, [wMapGroup]
+	cp d
+	jr nz, .skip_population
+	ld a, [wMapNumber]
+	cp e
+	jr nz, .skip_population
+	scf
+	ret
+
+.skip_population
+	ld de, POP_DATA_LENGTH - 2
+	add hl, de
+	jr .FindPopulation
+
+.no_population
+	and a
+	ret
+
+.GetPopulationRoster:
+; out: hl = the first roster entry of this map's row. Preserves bc.
+	ld hl, wPopulationRow
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	ld de, 1 + 1 + MAX_SPAWN_AREAS * SPAWN_AREA_LENGTH ; past the mode, the count and the areas
+	add hl, de
+	ret
+
+.CountPopulationRoster:
+; in:  hl = the roster
+; out: a = how many of its entries are real. Preserves bc and hl.
+; The padding end_population writes is species 0, so the first empty entry is the end of the list.
+	push bc
+	push hl
+	lb bc, 0, NUM_POP_MON
+.count_population_loop
+	inc hl ; past the weight
+	ld a, [hli]
+	ld e, a
+	ld a, [hli]
+	or e
+	jr z, .counted_population
+	ld a, l
+	add POP_MON_LENGTH - 3 ; the rest of the entry
+	ld l, a
+	adc h
+	sub l
+	ld h, a
+	inc b
+	dec c
+	jr nz, .count_population_loop
+.counted_population
+	ld a, b
+	pop hl
+	pop bc
+	ret
+
+.RestoreOrPickEntry:
+; in:  c = the slot being filled. Leaves the entry to draw from in wPopulationEntry. Preserves bc.
+; On a continue, and only then, the entry whose species this slot had when the game was saved; if
+; the save holds no species for it, or one no longer in the roster, it falls through to a pick.
+	ld a, [wPopulationRestore]
+	and a
+	jr z, .PickPopulationEntry
+	call .FindEntryForSavedSpecies
+	ret c
+	; fallthrough
+
+.PickPopulationEntry:
+; Pick a roster entry by weight and leave it in wPopulationEntry. Preserves bc.
+; The same subtract-as-you-go walk as .RollOneSlot, stopped at the last real entry rather than the
+; last column, so a roster adding to less than 100 lands on its last entry more often instead of
+; on the padding.
+	push bc
+	call .GetPopulationRoster
+	call .CountPopulationRoster
+	ld d, a
+	dec d ; entries left to step over before the last one takes whatever is left
+.pick_reroll
+	call Random
+	cp 100
+	jr nc, .pick_reroll
+	inc a ; 1 <= a <= 100
+	ld b, a
+.pick_loop
+	ld a, d
+	and a
+	jr z, .picked
+	ld a, [hl]
+	cp b
+	jr nc, .picked
+	ld e, a
+	ld a, b
+	sub e
+	ld b, a
+	ld a, l
+	add POP_MON_LENGTH
+	ld l, a
+	adc h
+	sub l
+	ld h, a
+	dec d
+	jr .pick_loop
+
+.picked
+	ld a, l
+	ld [wPopulationEntry], a
+	ld a, h
+	ld [wPopulationEntry + 1], a
+	pop bc
+	ret
+
+.RollOnePopulationSlot:
+; in: c = the 0-based slot, wPopulationEntry = the roster entry it draws from
+	ld a, c
+	ld [wOverworldMonRollSlot], a
+
+	ld hl, wPopulationEntry
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	inc hl ; past the weight
+	ld a, [hli]
+	ld [wOverworldMonRollBuffer + OW_MON_SPECIES], a
+	ld a, [hli]
+	ld [wOverworldMonRollBuffer + OW_MON_SPECIES + 1], a
+
+; And into the save block, so a continue can put the same species back (R7).
+	push hl
+	ld a, c
+	add a
+	ld e, a
+	ld d, 0
+	ld hl, wPopulationSpecies
+	add hl, de
+	ld a, [wOverworldMonRollBuffer + OW_MON_SPECIES]
+	ld [hli], a
+	ld a, [wOverworldMonRollBuffer + OW_MON_SPECIES + 1]
+	ld [hl], a
+	pop hl
+
+; Level: uniform over the entry's range. RandomRange never returns for a range of zero, and pop_mon
+; refuses a max below its min, so the range here is always at least one.
+	ld a, [hli] ; min
+	ld b, a
+	ld a, [hli] ; max
+	sub b
+	inc a ; how many levels the range spans
+	push hl
+	call RandomRange ; preserves bc
+	pop hl
+	add b
+	ld [wOverworldMonRollBuffer + OW_MON_LEVEL], a
+
+	ld a, [hli]
+	bit POP_WILD_FORM_F, a
+	jr z, .form_fixed
+; POP_WILD_FORM: the random form a grass encounter of this species gets, from WildFormTable, so a
+; contest Scyther can be any of its colours -- and the battle agrees, because LoadEnemyMon takes a
+; wandering mon's rolled form whole. CheckForMultipleWildForms clobbers bc, de and hl.
+	push bc
+	push hl
+	ld hl, wOverworldMonRollBuffer + OW_MON_SPECIES
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	farcall CheckForMultipleWildForms ; hl = the species index; carry and a = a form when it has any
+	jr c, .got_wild_form
+	xor a ; PLAIN_FORM
+.got_wild_form
+	pop hl
+	pop bc
+.form_fixed
+	ld [wOverworldMonRollBuffer + OW_MON_FORM], a
+	ld a, [hl]
+	ld [wOverworldMonRollBuffer + OW_MON_PERKS], a
+
+; No extra-move column: a member knows nothing beyond what its level taught it.
+	ld a, LOW(NO_MOVE)
+	ld [wOverworldMonRollBuffer + OW_MON_MOVE], a
+	ld a, HIGH(NO_MOVE)
+	ld [wOverworldMonRollBuffer + OW_MON_MOVE + 1], a
+	jmp .FinishRoll
+
+RerollPopulation::
+; After a battle on a population map: roll every member again (R5). In POP_REROLL_STATS the species
+; picked for this visit stays -- wPopulationEntry still names it -- and each member draws a new
+; level, form, shininess, DVs and item. In POP_REROLL_SPECIES each member draws a new entry too.
+; Every member is then marked unplaced, so the reload places all of them afresh, the one that was
+; standing on your tile included.
+;
+; Runs from OverworldMonBattleScript before reloadmapafterbattle, once EndOverworldMonBattle has
+; emptied the fought slot. Does nothing at all on a map without a population.
+	ld hl, wPopulationRow
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	or h
+	ret z
+
+	inc hl ; past the mode
+; GetOverworldMonStaticCount promises only a and uses b as scratch, so the count is read after it,
+; not held across it. Holding it across cost a round trip with the emulator.
+	push hl
+	call GetOverworldMonStaticCount
+	ld c, a ; the first slot the population owns
+	pop hl
+	ld a, [hl]
+	ld b, a ; how many are out at once
+	ld a, c
+	cpl
+	add NUM_OW_MON_SLOTS + 1 ; a = NUM_OW_MON_SLOTS - c, the slots left
+	ret z
+	cp b
+	jr nc, .got_count
+	ld b, a ; the row asks for more than fit
+.got_count
+
+	xor a
+	ld [wPopulationPlaced], a
+
+.loop
+	push bc
+; Clear this slot's surface bit before the roll ORs a fresh one in; static slots below c are
+; left alone.
+	call PlacePopulation.SlotBit ; a = 1 << c
+	cpl
+	ld hl, wOverworldMonOnSurface
+	and [hl]
+	ld [hl], a
+	ld a, [wPopulationMode]
+	cp POP_REROLL_STATS
+	call nz, RollOverworldMons.PickPopulationEntry ; species mode picks again per member
+	call RollOverworldMons.RollOnePopulationSlot
+	pop bc
+	inc c
+	dec b
+	jr nz, .loop
+	ret
+
+PlacePopulationAndSpawn::
+; The map setup command for MapSetupScript_ReloadMap, which skips LoadMapObjects. Returns at once
+; on a map without a population, so the script is unchanged everywhere else.
+;
+; Writing a map object only decides where the thing stands the next time it is spawned, so the
+; members still standing -- the ones you did not fight -- are taken down first. That is the
+; deletion half of `disappear`, without its mask. The masks are then rebuilt the same way
+; LoadMapObjects rebuilds them, which unmasks the one `disappear` masked now that its slot is
+; refilled and keeps any empty slot hidden. Then the placement pass a warp uses, and the spawner a
+; warp uses, with the LCD off exactly as a warp has it.
+;
+; None of this touches the arrival path: PlacePopulation itself only writes map objects.
+	ld hl, wPopulationRow
+	ld a, [hli]
+	or [hl]
+	ret z
+
+	ld b, 1
+	ld de, wMap1Object
+.takedown_loop
+	ld hl, MAPOBJECT_TYPE
+	add hl, de
+	ld a, [hl]
+	cp OBJECTTYPE_WILDMON
+	jr nz, .takedown_next
+	ld hl, MAPOBJECT_SPRITE
+	add hl, de
+	ld a, [hl]
+	sub SPRITE_OW_MON
+	cp NUM_OW_MON_SLOTS
+	jr nc, .takedown_next
+	ld a, b
+	push bc
+	push de
+	call ApplyDeletionToMapObject ; nothing to do when it has no struct
+	pop de
+	pop bc
+.takedown_next
+	ld hl, MAPOBJECT_LENGTH
+	add hl, de
+	ld d, h
+	ld e, l
+	inc b
+	ld a, b
+	cp NUM_OBJECTS
+	jr nz, .takedown_loop
+
+	call UpdateOverworldMonObjectMasks
+	call PlacePopulation
+	farcall InitializeVisibleSprites
+; The wandering-mon palette table only resets in LoadMapObjects, which this script skips, and in
+; species mode every reshuffle brings new species. Left alone, the four entries are spent after a
+; couple of battles and every newcomer falls back to palette 0 -- red. So the table is rebuilt from
+; the objects now standing, the same way the continue path does it.
+	jmp RefreshOverworldMonPalettes
+
+PlacePopulation::
+; Give every member of this map's population a tile inside one of its spawn areas, and write it
+; into the member's map object. See docs/spec_mon_populations.md, "Placement".
+;
+; Runs from LoadMapObjects, right before InitializeVisibleSprites: after LoadBlockData and the
+; tileset, which the collision test needs, and before anything is spawned. It writes map objects
+; only. Spawning is left to the pass that follows, the same one a warp uses, and to the edge
+; spawner as members scroll in. Nothing else in the engine spawns object structs from inside map
+; setup, and this does not start.
+;
+; A slot that already has a tile keeps it: map objects come back from ROM on every warp, and the
+; tile has to be put back each time.
+	ld hl, wPopulationRow
+	ld a, [hli]
+	or [hl]
+	ret z ; not a population map
+
+	call .Bounds
+	call .SeedPlacement
+
+	ld b, 1
+	ld de, wMap1Object
+.loop
+	push de
+
+	ld hl, MAPOBJECT_TYPE
+	add hl, de
+	ld a, [hl]
+	cp OBJECTTYPE_WILDMON
+	jr nz, .next
+
+	ld hl, MAPOBJECT_SPRITE
+	add hl, de
+	ld a, [hl]
+	sub SPRITE_OW_MON
+	cp NUM_OW_MON_SLOTS
+	jr nc, .next
+
+	ld c, a ; the slot this object stands for
+
+; An empty slot has no member in it, so there is nothing to place.
+	push bc
+	ld e, c
+	call GetOverworldMonEncounter
+	ld a, [hli]
+	or [hl]
+	pop bc
+	jr z, .next
+
+	call .SlotBit
+	ld hl, wPopulationPlaced
+	and [hl]
+	jr nz, .have_tile
+
+	push bc
+	call .ScatterMember
+	pop bc
+	jr nc, .next ; nowhere valid to stand; it keeps the tile its object_event declared
+
+; Remember the tile against the slot, then fall through to apply it.
+	call .SlotBit
+	ld hl, wPopulationPlaced
+	or [hl]
+	ld [hl], a
+	call .PositionPointer
+	ld a, d
+	ld [hli], a
+	ld [hl], e
+
+.have_tile
+	call .PositionPointer
+	ld a, [hli]
+	add 4 ; map coordinates to object ones
+	ld d, a
+	ld a, [hl]
+	add 4
+	ld e, a
+; CopyDECoordsToMapObject is in bank 2, and it returns with bc pointing at the map object: GetMapObject
+; leaves the address there. farcall keeps registers safe across the trampoline, not across the
+; callee, so the object index has to be stacked. Without this every member after the first was
+; written to whatever object number the address's high byte happened to name.
+	push bc
+	farcall CopyDECoordsToMapObject ; b = the object, de = its new tile
+	pop bc
+
+.next
+	pop de
+	ld hl, MAPOBJECT_LENGTH
+	add hl, de
+	ld d, h
+	ld e, l
+	inc b
+	ld a, b
+	cp NUM_OBJECTS
+	jr nz, .loop
+	ret
+
+.SlotBit:
+; in:  c = a slot
+; out: a = 1 << c. Preserves bc, de, hl.
+	push bc
+	ld b, c
+	inc b
+	xor a
+	scf
+.slot_bit_loop
+	rla ; after slot + 1 rotations a is 1 << slot
+	dec b
+	jr nz, .slot_bit_loop
+	pop bc
+	ret
+
+.PositionPointer:
+; in:  c = a slot
+; out: hl = its entry in wPopulationPositions. Preserves bc, de.
+	ld a, c
+	add a
+	ld l, a
+	ld h, 0
+	push de
+	ld de, wPopulationPositions
+	add hl, de
+	pop de
+	ret
+
+.Areas:
+; out: hl = this map's first spawn area
+	ld hl, wPopulationRow
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	inc hl ; past the mode
+	inc hl ; and the count
+	ret
+
+.Bounds:
+; The smallest rectangle around every area this map lists, into wPopulationBounds. Tiles are drawn
+; from that rectangle and kept only if they fall inside an area, which is uniform over the areas'
+; union without any arithmetic wider than a byte. A map that lists no areas gets the whole map.
+	ld hl, wPopulationBounds
+	ld a, -1
+	ld [hli], a ; x1
+	ld [hli], a ; y1
+	xor a
+	ld [hli], a ; x2
+	ld [hl], a  ; y2
+
+	call .Areas
+	ld c, MAX_SPAWN_AREAS
+.bounds_loop
+	ld a, [hli] ; x1
+	ld d, a
+	ld a, [hli] ; y1
+	ld e, a
+	ld a, [hli] ; x2
+	ld b, a
+	or d
+	or e
+	or [hl]
+	jr z, .bounds_next ; an unused area is all zero
+	ld a, [wPopulationBounds]
+	cp d
+	jr c, .x1_ok
+	ld a, d
+	ld [wPopulationBounds], a
+.x1_ok
+	ld a, [wPopulationBounds + 1]
+	cp e
+	jr c, .y1_ok
+	ld a, e
+	ld [wPopulationBounds + 1], a
+.y1_ok
+	ld a, [wPopulationBounds + 2]
+	cp b
+	jr nc, .x2_ok
+	ld a, b
+	ld [wPopulationBounds + 2], a
+.x2_ok
+	ld a, [wPopulationBounds + 3]
+	cp [hl]
+	jr nc, .bounds_next
+	ld a, [hl]
+	ld [wPopulationBounds + 3], a
+.bounds_next
+	inc hl ; past y2
+	dec c
+	jr nz, .bounds_loop
+
+	ld a, [wPopulationBounds]
+	cp -1
+	ret nz ; at least one area, so the rectangle is real
+
+; No areas: the whole map, in tiles.
+	ld hl, wPopulationBounds
+	xor a
+	ld [hli], a
+	ld [hli], a
+	ld a, [wMapWidth]
+	add a ; blocks to tiles
+	dec a
+	ld [hli], a
+	ld a, [wMapHeight]
+	add a
+	dec a
+	ld [hl], a
+	ret
+
+.ScatterMember:
+; in:  c = the slot being placed
+; out: carry and d, e = a tile for it in map coordinates, or no carry after POP_PLACE_TRIES.
+	ld b, POP_PLACE_TRIES
+.try
+	push bc
+	ld a, [wPopulationBounds + 2]
+	ld hl, wPopulationBounds
+	sub [hl]
+	inc a ; the rectangle's width
+	call .PlacementRandomRange ; preserves bc
+	ld hl, wPopulationBounds
+	add [hl]
+	ld b, a ; x
+	ld a, [wPopulationBounds + 3]
+	ld hl, wPopulationBounds + 1
+	sub [hl]
+	inc a ; its height
+	call .PlacementRandomRange
+	ld hl, wPopulationBounds + 1
+	add [hl]
+	ld e, a ; y
+	ld d, b ; x
+	pop bc
+	call .TileIsFree
+	ret c
+	dec b
+	jr nz, .try
+	ret ; no carry: .TileIsFree left it clear
+
+.TileIsFree:
+; in:  d = x, e = y, in map coordinates
+; out: carry when a member may stand there. Preserves bc and de.
+	call .InAnArea
+	ret nc
+
+; The player, with a margin either way.
+	ld a, [wXCoord]
+	sub d
+	call .Abs
+	cp POP_PLAYER_MARGIN + 1
+	jr nc, .not_by_player
+	ld a, [wYCoord]
+	sub e
+	call .Abs
+	cp POP_PLAYER_MARGIN + 1
+	jr c, .taken
+.not_by_player
+
+; Anything else already standing there: another member placed a moment ago, since its tile is
+; written straight into its map object, or an NPC.
+	push bc
+	push de
+	ld a, d
+	add 4
+	ld d, a
+	ld a, e
+	add 4
+	ld e, a ; object coordinates
+	ld hl, wMap1Object + MAPOBJECT_SPRITE ; hl walks the sprite bytes
+	ld b, NUM_OBJECTS - 1
+.object_loop
+	ld a, [hl]
+	and a
+	jr z, .object_next
+	push hl
+	ld a, l
+	add MAPOBJECT_Y_COORD - MAPOBJECT_SPRITE ; a map object holds y, then x
+	ld l, a
+	adc h
+	sub l
+	ld h, a
+	ld a, [hli]
+	cp e
+	jr nz, .object_clear
+	ld a, [hl]
+	cp d
+.object_clear
+	pop hl
+	jr z, .taken_pop
+.object_next
+	ld a, l
+	add MAPOBJECT_LENGTH
+	ld l, a
+	adc h
+	sub l
+	ld h, a
+	dec b
+	jr nz, .object_loop
+
+; Land, by the tileset collision. GetCoordTileCollision wants object coordinates -- d and e are
+; already those -- and it and GetBlockLocation use bc and de as scratch. Both are on the stack.
+	call GetCoordTileCollision
+	call GetTilePermission
+	pop de
+	pop bc
+	and a ; LAND_TILE
+	jr nz, .taken
+	scf
+	ret
+
+.taken_pop
+	pop de
+	pop bc
+.taken
+	and a
+	ret
+
+.InAnArea:
+; in:  d = x, e = y. Carry if inside one of this map's spawn areas, or if it lists none.
+; Preserves bc and de.
+	push bc
+	push de
+	call .Areas
+	lb bc, 0, MAX_SPAWN_AREAS ; b becomes non-zero once a real area has been seen
+.area_loop
+	push hl ; this area's start, so a miss part-way through can step cleanly to the next
+	ld a, [hli]
+	or [hl]
+	inc hl
+	or [hl]
+	inc hl
+	or [hl]
+	jr z, .area_next ; unused: all four bytes zero
+	inc b
+	pop hl
+	push hl
+	ld a, d
+	cp [hl] ; x1
+	jr c, .area_next ; left of it
+	inc hl
+	ld a, e
+	cp [hl] ; y1
+	jr c, .area_next ; above it
+	inc hl
+	ld a, [hli] ; x2
+	cp d
+	jr c, .area_next ; right of it
+	ld a, [hl] ; y2
+	cp e
+	jr c, .area_next ; below it
+	pop hl
+	pop de
+	pop bc
+	scf
+	ret
+
+.area_next
+	pop hl
+	ld a, l
+	add SPAWN_AREA_LENGTH
+	ld l, a
+	adc h
+	sub l
+	ld h, a
+	dec c
+	jr nz, .area_loop
+	ld a, b
+	pop de
+	pop bc
+	and a
+	ret nz ; there are areas and this tile is in none of them
+	scf ; there are no areas: anywhere inside the bounds, which .Bounds made the whole map
+	ret
+
+.Abs:
+	bit 7, a
+	ret z
+	cpl
+	inc a
+	ret
+
+.SeedPlacement:
+; Placement rolls its own numbers. Random adds the hardware divider to a running byte, and the
+; divider ticks once every 256 cycles; with the LCD off nothing else moves it, and the draws in a
+; placement pass come a few dozen cycles apart, so each one adds very nearly the same constant.
+; That locks x to y, and it makes a member's 32 tries walk one short line of tiles -- one tile,
+; when the constant happens to be a multiple of the range. The line under the player is then
+; rejected 32 times over, and the member falls back to where it already stood: on the player.
+;
+; So the hardware generator is used once per pass, to seed a 16-bit xorshift, and every draw after
+; that comes from the xorshift. Full period, no relation between consecutive draws, and a
+; different starting point on every pass.
+	ldh a, [hRandomAdd]
+	ld [wPopulationSeed], a
+	ldh a, [hRandomSub]
+	ld [wPopulationSeed + 1], a
+	ld hl, wPopulationSeed
+	or [hl]
+	ret nz
+	inc [hl] ; a zero seed would stay zero forever
+	ret
+
+.PlacementRandom:
+; xorshift16: x ^= x << 7; x ^= x >> 9; x ^= x << 8. Out: a = the new low byte. Preserves bc, de.
+	push bc
+	ld hl, wPopulationSeed
+	ld a, [hli]
+	ld c, a
+	ld b, [hl] ; bc = x
+	ld h, b
+	ld l, c
+rept 7
+	add hl, hl
+endr
+	ld a, l
+	xor c
+	ld c, a
+	ld a, h
+	xor b
+	ld b, a ; x ^= x << 7
+	srl a ; a is still the high byte
+	xor c
+	ld c, a ; x ^= x >> 9 -- only the low byte is touched
+	xor b
+	ld b, a ; x ^= x << 8 -- only the high byte is touched
+	ld hl, wPopulationSeed
+	ld a, c
+	ld [hli], a
+	ld [hl], b
+	pop bc
+	ret
+
+.PlacementRandomRange:
+; in:  a = a range, 1..255
+; out: a = 0 to range - 1. Preserves bc and de. hl is clobbered.
+	push bc
+	ld c, a
+	call .PlacementRandom
+	call SimpleDivide ; a = a mod c
+	pop bc
+	ret
+
 ApplyOverworldMonMove::
 ; Give the mon the extra move its roster entry named, on top of whatever its level taught it.
 ; A wild encounter has nowhere to carry a move, which is what makes egg moves on a wandering mon
 ; worth having at all.
 ; Called from LoadEnemyMon after FillMoves and before the PP fill, so the move gets its PP free.
-	ld a, [wBattleType]
-	cp BATTLETYPE_OVERWORLD_MON
-	ret nz
+	ld a, [wOverworldMonBattleSlot]
+	and a
+	ret z
 	call GetOverworldMonBattleEncounter
 	ld de, OW_MON_MOVE
 	add hl, de
@@ -725,3 +1599,4 @@ UpdateOverworldMonObjectMasks::
 	ret
 
 INCLUDE "data/wild/overworld_mons.asm"
+INCLUDE "data/wild/mon_populations.asm"

@@ -106,6 +106,7 @@ SuicuneSpriteGFX::             INCBIN "gfx/sprites/suicune.2bpp"
 EnteiSpriteGFX::               INCBIN "gfx/sprites/entei.2bpp"
 RaikouSpriteGFX::              INCBIN "gfx/sprites/raikou.2bpp"
 StandingYoungsterSpriteGFX::   INCBIN "gfx/sprites/standing_youngster.2bpp"
+BigSnorlaxApricornSpriteGFX::  INCBIN "gfx/sprites/big_snorlax_apricorn.2bpp"
 
 SECTION "Sprites 3", ROMX
 

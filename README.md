@@ -139,6 +139,7 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
 	| Scizor	| Dusty Rose		| Evolve Teal Scyther |
 	| Pinsir	| Vine Green		| Bug Catching Contest |
 	| Scizor	| Slate Gray		| Bug Catching Contest |
+	| Snorlax	| Full Belly		| The Snorlax asleep in the Apricorn Forest clearing |
   - *NOTE:* Some forms will have a symbol that goes along with them to indicate that they're different. Not all forms will have this.
 
 - **Misc.**
@@ -148,6 +149,8 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Happiness
     - Happiness goes up by 2 points every other step cycle instead of 1
     - Leveling up, Haircuts, Daisy grooming, and battling gym leaders give more happiness.
+  - Simplified the clock reset
+    - Hold **Down + B + Select** at the title screen, then confirm
 
 - **Code Credits**
   - Please See the Crystal Shire Engine in the Crystal Shire Engine README that has been pasted below. The Crystal Shire Engine is a great base with code from many talented developers.
@@ -155,6 +158,7 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Untying shininess from DVs partially based on a similar implementation in [Polished Crystal](https://github.com/Rangi42/polishedcrystal)
   - New shiny check algorithm [Polished Crystal](https://github.com/Rangi42/polishedcrystal)
   - Follower Mon code [Vulcandth](https://github.com/vulcandth) and [AtmaBuster](https://github.com/AtmaBuster)
+  - The simplified clock reset follows the [Simplify the Clock Reset Procedure](https://github.com/pret/pokecrystal/wiki/Simplify-the-Clock-Reset-Procedure) tutorial by [SonicRay100](https://github.com/SonicRay100) from the pret/pokecrystal wiki
 - **Art Credits**
   - SCMidna for Surfing Pikachu front sprites
   - bloodless for Flying Pikachu back sprite

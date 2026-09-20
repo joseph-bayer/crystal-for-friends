@@ -54,3 +54,46 @@ DEF OW_WILDMON_LENGTH EQU _RS
 
 ; map id, how many can be out at once, the chance each one shows up, then morn/day/nite rosters
 DEF OW_WILDDATA_LENGTH EQU 2 + 1 + 1 + NUM_OW_WILDMON * OW_WILDMON_LENGTH * 3
+
+
+; Populations (see data/wild/mon_populations.asm and docs/spec_mon_populations.md). A standing
+; group of wandering mon on a few special maps, which reshuffles when you battle one rather than
+; when you leave. A map has a population or an area roster, never both.
+;
+; The mode says what a battle rerolls. POP_REROLL_STATS also means one species per visit: the
+; whole population is that species until you leave.
+	const_def
+	const POP_REROLL_SPECIES ; every member draws a new species after a battle
+	const POP_REROLL_STATS   ; every member keeps its species and draws new DVs, shininess, item, form
+
+DEF NUM_POP_MON EQU 10     ; the most entries a roster can hold; short ones are padded
+DEF MAX_SPAWN_AREAS EQU 8  ; rectangles a member may be placed in; none listed means the whole map
+
+; weight, species, level range, form, perks -- the route tables' columns plus the contest's level
+; range, and no extra-move column. Weights are out of 100 like the route tables.
+rsreset
+DEF POP_MON_WEIGHT    rb ; 0
+DEF POP_MON_SPECIES   rw ; 1 ; a 16-bit index; 0 ends the roster early
+DEF POP_MON_MIN_LEVEL rb ; 3
+DEF POP_MON_MAX_LEVEL rb ; 4
+DEF POP_MON_FORM      rb ; 5
+DEF POP_MON_PERKS     rb ; 6 ; OW_PERK_* flags, or 0; the engine adds none of its own
+DEF POP_MON_LENGTH EQU _RS
+
+; In a pop_mon form column: not a form, but "roll one the way a grass encounter does", from
+; WildFormTable in the battle core. A species with no entry there comes out plain. Bit 6 is free
+; between FORM_MASK and SHINY_MASK, so this cannot be mistaken for either.
+DEF POP_WILD_FORM_F EQU 6
+DEF POP_WILD_FORM EQU 1 << POP_WILD_FORM_F
+
+DEF SPAWN_AREA_LENGTH EQU 4 ; x1, y1, x2, y2 in map tiles, inclusive; all zero when unused
+
+; Placement. How many tiles to try before leaving a member on its object_event tile -- bounded,
+; never a search, so a map with nowhere valid to stand cannot spin with the LCD off. And how close
+; to the player a member may land: none within this many tiles either way. Members wander with
+; NOCLIP, and one placed adjacent walks onto you before you have taken a step.
+DEF POP_PLACE_TRIES EQU 32
+DEF POP_PLAYER_MARGIN EQU 2
+
+; map id, mode, how many are out at once, the spawn areas, then the roster
+DEF POP_DATA_LENGTH EQU 2 + 1 + 1 + MAX_SPAWN_AREAS * SPAWN_AREA_LENGTH + NUM_POP_MON * POP_MON_LENGTH

@@ -2392,6 +2392,9 @@ wBattleMode::
 	db
 
 wTempWildMonSpecies:: db
+; The form byte a scripted encounter asked for through loadwildmon, shiny bit included. Read once
+; by LoadEnemyMon and cleared, so it cannot leak into the next chance encounter.
+wTempWildMonForm:: db
 
 wOtherTrainerClass::
 ; class (Youngster, Bug Catcher, etc.) of opposing trainer
@@ -2681,6 +2684,12 @@ wFollowerPalette:: ds 2 * 2 ; the follower's two arranged colors, for PAL_OW_FOL
 wOverworldMonPals:: ds (NUM_OW_MON_PALS + 1) * OW_MON_PAL_LENGTH
 wNumOverworldMonPals:: db
 
+; The species of each population member on the current map, one 16-bit index per slot, 0 for a
+; slot with none. The one part of a population that survives a save (R7 in
+; docs/spec_mon_populations.md): a continue keeps these and rolls everything else afresh. Written
+; by every roll of a member, so a species-mode reroll keeps it current too.
+wPopulationSpecies:: ds NUM_OW_MON_SLOTS * 2
+
 wMapObjects::
 wPlayerObject:: map_object wPlayer ; player is map object 0
 ; wMap1Object - wMap15Object
@@ -2946,7 +2955,11 @@ wUnusedTwoDayTimer:: db
 wUnusedTwoDayTimerStartDate:: db
 
 wMobileOrCable_LastSelection:: db
-	ds 9
+; Which island the mystery-island boat went to last, plus one, so that the zero a fresh save starts
+; with means "never sailed". Carved out of the dead mobile-adapter padding below, which keeps it
+; inside the save block without shifting anything after it.
+wMysteryIslandLast:: db
+	ds 8
 wBuenasPassword:: db
 wBlueCardBalance:: db
 wDailyRematchFlags:: ds 4
@@ -3126,6 +3139,22 @@ wOverworldMonRollBuffer:: ds OW_MON_ENCOUNTER_LENGTH
 wOverworldMonRollCount:: db   ; how many this map can have out at once
 wOverworldMonRollChance:: db  ; the chance each one shows up
 wOverworldMonRollSlot:: db    ; the 0-based slot being filled
+
+; The population this map carries, if any -- see docs/spec_mon_populations.md. Rolled on entry
+; like everything above; nothing here survives a save.
+wPopulationRow:: dw   ; its row in MonPopulations, past the map id
+wPopulationMode:: db  ; POP_REROLL_SPECIES or POP_REROLL_STATS
+wPopulationEntry:: dw ; the roster entry the member being rolled draws from
+
+; Where each member stands, in map coordinates, and which slots have been placed at all. Map
+; objects are re-read from ROM on every warp, so the chosen tiles have to live here to be
+; reapplied. The bounds are the smallest rectangle around this map's spawn areas, worked out once
+; per placement pass.
+wPopulationPositions:: ds NUM_OW_MON_SLOTS * 2
+wPopulationPlaced:: db  ; one bit per slot
+wPopulationBounds:: ds SPAWN_AREA_LENGTH
+wPopulationSeed:: dw ; placement's own generator; see PlacePopulation.PlacementRandom
+wPopulationRestore:: db ; TRUE while the continue path rolls: keep wPopulationSpecies
 
 ; Set when a roll turns up a shiny, cleared once the chime has played. The sound cannot be played
 ; at roll time -- that happens inside HandleNewMap, with InitSound and the map music still to come.

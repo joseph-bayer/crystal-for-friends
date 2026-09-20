@@ -248,7 +248,7 @@ DoFollowerInteraction:
 	pop bc
 	jp .get_row
 
-RestoreFollowerAfterMovement:
+RestoreFollowerAfterMovement::
 ; `step_end` restores an object's movement type out of its map object, and a scripted movement
 ; leaves wFollowerNextMovement wherever the sequence stopped. Either one drops the follower out of
 ; the SPRITEMOVEDATA_FOLLOWEROBJ state machine, so it keeps walking but stops hopping ledges and

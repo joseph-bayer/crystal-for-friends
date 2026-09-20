@@ -2038,6 +2038,22 @@ GetWorldMapLocation::
 
 	jmp PopBCDEHL
 
+GetWorldMapLocationOrBackup::
+; The landmark of the map in bc, except that a map with no place of its own -- LANDMARK_SPECIAL,
+; or a hidden landmark -- answers with the backup map's landmark instead, and leaves bc on the
+; backup map. This is where the Town Map, Fly and the region checks should take the player to be.
+	call GetWorldMapLocation
+	and a ; cp LANDMARK_SPECIAL
+	jr z, .backup
+	cp HIDDEN_LANDMARK
+	ret c
+.backup
+	ld a, [wBackupMapGroup]
+	ld b, a
+	ld a, [wBackupMapNumber]
+	ld c, a
+	jr GetWorldMapLocation
+
 GetMapMusic::
 	push hl
 	push bc

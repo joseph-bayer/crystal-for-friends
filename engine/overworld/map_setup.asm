@@ -80,6 +80,7 @@ LoadMapObjects:
 	call RunMapCallback
 	farcall LoadObjectMasks
 	farcall UpdateOverworldMonObjectMasks ; after the masks are rebuilt, before the objects spawn
+	farcall PlacePopulation ; population members get their tiles; the map objects hold ROM ones
 	farjp InitializeVisibleSprites
 
 ResetPlayerObjectAction:

@@ -32,7 +32,7 @@ sym_banks = {}
 rst_addrs = (0x00, 0x08, 0x10, 0x18, 0x20, 0x28, 0x30, 0x38)
 rst_funcs = {}
 
-with open(sys.argv[1], 'r') as f:
+with open(sys.argv[1], 'r', encoding='utf-8') as f:
 	for line in f:
 		if (m := re.match(sym_rx, line)):
 			bank, addr, label = m.groups()
@@ -54,7 +54,7 @@ for filename in iglob('**/*.asm', recursive=True):
 	cur_label = None
 	cur_bank = None
 	suppressing = False
-	with open(filename, 'r') as f:
+	with open(filename, 'r', encoding='utf-8') as f:
 		for i, line in enumerate(f, 1):
 			if (m := re.match(def_rx, line)):
 				label, bank = get_label_bank(m)

@@ -50,20 +50,10 @@ RegionCheck:
 	ld b, a
 	ld a, [wMapNumber]
 	ld c, a
-	call GetWorldMapLocation
+	call GetWorldMapLocationOrBackup
 	cp LANDMARK_FAST_SHIP ; S.S. Aqua
 	jr z, .johto
-	cp LANDMARK_SPECIAL
-	jr nz, .checkagain
 
-; In a special map, get the backup map group / map id
-	ld a, [wBackupMapGroup]
-	ld b, a
-	ld a, [wBackupMapNumber]
-	ld c, a
-	call GetWorldMapLocation
-
-.checkagain
 	cp KANTO_LANDMARK
 	jr c, .johto
 

@@ -171,7 +171,7 @@ hDMATransfer:: db
 hMobile:: db
 hSystemBooted:: db
 
-hClockResetTrigger:: db
+	ds 1 ; unused (was hClockResetTrigger, state for the old multi-stage clock reset)
 
 hFarCallSavedA:: db
 hFarCallSavedHL::

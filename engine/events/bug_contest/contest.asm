@@ -21,7 +21,7 @@ BugCatchingContestOverScript::
 	waitbutton
 	sjump BugCatchingContestReturnToGateScript
 
-BugCatchingContestOutOfBallsScript:
+BugCatchingContestOutOfBallsScript::
 	playsound SFX_ELEVATOR_END
 	opentext
 	writetext BugCatchingContestIsOverText

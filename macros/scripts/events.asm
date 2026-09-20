@@ -604,6 +604,11 @@ MACRO loadwildmon
 	db loadwildmon_command
 	dw \1 ; pokemon
 	db \2 ; level
+	if _NARG >= 3
+		db \3 ; form, optionally | SHINY_MASK
+	else
+		db PLAIN_FORM
+	endc
 ENDM
 
 	const loadtrainer_command ; $5e

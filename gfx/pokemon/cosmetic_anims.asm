@@ -3,6 +3,12 @@ PikachuSurfAnimation: 		INCLUDE "gfx/pokemon/pikachu_surf/anim.asm"
 PikachuFlyAnimation:  		INCLUDE "gfx/pokemon/pikachu_fly/anim.asm"
 PikachuRBAnimation:  		INCLUDE "gfx/pokemon/pikachu_rb/anim.asm"
 
+GolbatPlainAnimation:		INCLUDE "gfx/pokemon/golbat/anim.asm"
+GolbatRocketAnimation:		INCLUDE "gfx/pokemon/golbat_rocket/anim.asm"
+
+SnorlaxPlainAnimation:		INCLUDE "gfx/pokemon/snorlax/anim.asm"
+SnorlaxApricornAnimation:	INCLUDE "gfx/pokemon/snorlax_apricorn/anim.asm"
+
 ShucklePlainAnimation:		INCLUDE "gfx/pokemon/shuckle/anim.asm"
 ShuckleShuckieNeutralAnimation: INCLUDE "gfx/pokemon/shuckle/anim.asm"
 ShuckleShuckieHappyAnimation: 	INCLUDE "gfx/pokemon/shuckle_shuckie_happy/anim.asm"

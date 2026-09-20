@@ -163,6 +163,29 @@ OverworldWildMonsGrass:
 	ow_wildmon 12, YANMA,      14, PLAIN_FORM, 0,                  NO_MOVE
 	end_ow_wildmons
 
+; The park outside the contest. Its grass table's first four slots per time of day, with the slot
+; odds they have there (30, 30, 20, 10); the remainder lands on the fourth, as a short roster does.
+; The Persian owns slot 1, so these three take SPRITE_OW_MON_2..4.
+	def_ow_wildmons NATIONAL_PARK
+	db 3 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+	; morn
+	ow_wildmon 30, NIDORAN_M,  14, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, NIDORAN_F,  15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, SUNKERN,    17, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, WEEDLE,     10, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 30, NIDORAN_F,  15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, NIDORAN_M,  14, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, WEEDLE,     10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, SUNKERN,    13, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 30, PSYDUCK,    13, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, MURKROW,    17, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, SPINARAK,   14, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, HOOTHOOT,   15, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
 	def_ow_wildmons ROUTE_36
 	db 2 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
@@ -506,6 +529,27 @@ OverworldWildMonsGrass:
 	ow_wildmon 32, VENONAT,    12, PLAIN_FORM, 0,                  NO_MOVE
 	ow_wildmon 21, PARAS,      12, PLAIN_FORM, 0,                  NO_MOVE
 	ow_wildmon 11, HOOTHOOT,   12, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+; Apricorn Forest starts from Ilex Forest's roster; adjust as the forest takes shape.
+	def_ow_wildmons APRICORN_FOREST
+	db 4 ; how many can be out at once -- one SPRITE_OW_MON_n object each
+	db 100 percent ; the chance each one shows up
+	; morn
+	ow_wildmon 31, TEDDIURSA,  23, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 32, BEEDRILL,   24, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 26, DODUO,      25, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, VOLTORB,    26, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 31, TEDDIURSA,  23, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 32, BEEDRILL,   24, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 26, DODUO,      25, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, VOLTORB,    26, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 36, TEDDIURSA,  23, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 32, BEEDRILL,   24, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 21, DODUO,      25, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 11, VOLTORB,    26, PLAIN_FORM, 0,                  NO_MOVE
 	end_ow_wildmons
 
 	def_ow_wildmons MOUNT_MORTAR_1F_INSIDE
@@ -1455,12 +1499,12 @@ OverworldWildMonsWater:
 	; morn
 	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
 	ow_wildmon 30, SHELLDER,   21, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 10, CORSOLA,    22, PLAIN_FORM, 0, ROCK_SLIDE
+	ow_wildmon 10, CORSOLA,    22, PLAIN_FORM, OW_PERK_ON_SURFACE, ROCK_SLIDE
 	ow_wildmon 1,  TENTACRUEL, 25, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
 	; day
 	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
 	ow_wildmon 30, SHELLDER,   21, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 10, CORSOLA,    22, PLAIN_FORM, 0, ROCK_SLIDE
+	ow_wildmon 10, CORSOLA,    22, PLAIN_FORM, OW_PERK_ON_SURFACE, ROCK_SLIDE
 	ow_wildmon 1,  TENTACRUEL, 25, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
 	; nite
 	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
@@ -1555,17 +1599,17 @@ OverworldWildMonsWater:
 	; morn
 	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
 	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 10, CORSOLA,    20, PLAIN_FORM, 0,                  ROCK_SLIDE
+	ow_wildmon 10, CORSOLA,    20, PLAIN_FORM, OW_PERK_ON_SURFACE, ROCK_SLIDE
 	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
 	; day
 	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
 	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 10, CORSOLA,    20, PLAIN_FORM, 0,                  ROCK_SLIDE
+	ow_wildmon 10, CORSOLA,    20, PLAIN_FORM, OW_PERK_ON_SURFACE, ROCK_SLIDE
 	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
 	; nite
 	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
 	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 10, CORSOLA,    20, PLAIN_FORM, 0,                  ROCK_SLIDE
+	ow_wildmon 10, CORSOLA,    20, PLAIN_FORM, OW_PERK_ON_SURFACE, ROCK_SLIDE
 	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
 	end_ow_wildmons
 
@@ -1595,17 +1639,17 @@ OverworldWildMonsWater:
 	; morn
 	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
 	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 10, CORSOLA,    20, PLAIN_FORM, 0,                  ROCK_SLIDE
+	ow_wildmon 10, CORSOLA,    20, PLAIN_FORM, OW_PERK_ON_SURFACE, ROCK_SLIDE
 	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
 	; day
 	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
 	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 10, CORSOLA,    20, PLAIN_FORM, 0,                  ROCK_SLIDE
+	ow_wildmon 10, CORSOLA,    20, PLAIN_FORM, OW_PERK_ON_SURFACE, ROCK_SLIDE
 	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
 	; nite
 	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
 	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 10, CORSOLA,    20, PLAIN_FORM, 0,                  ROCK_SLIDE
+	ow_wildmon 10, CORSOLA,    20, PLAIN_FORM, OW_PERK_ON_SURFACE, ROCK_SLIDE
 	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
 	end_ow_wildmons
 

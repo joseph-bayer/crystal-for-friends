@@ -6013,9 +6013,11 @@ LoadEnemyMon:
 .WildItem:
 ; An overworld mon brought its item with it -- everything about it was decided when it appeared on
 ; the map, so that the sprite you walked up to and the mon you are fighting are the same one.
-	ld a, [wBattleType]
-	cp BATTLETYPE_OVERWORLD_MON
-	jr nz, .not_overworld_mon_item
+; wOverworldMonBattleSlot is non-zero exactly when the battle is against one; it is not a battle
+; type, so the Bug Catching Contest keeps BATTLETYPE_CONTEST while fighting a wandering mon.
+	ld a, [wOverworldMonBattleSlot]
+	and a
+	jr z, .not_overworld_mon_item
 	farcall GetOverworldMonBattleEncounter ; hl = the rolled encounter
 	ld bc, OW_MON_ITEM
 	add hl, bc
@@ -6105,9 +6107,9 @@ LoadEnemyMon:
 
 ; Roaming monsters (Entei, Raikou) work differently
 ; They have their own structs, which are shorter than normal
-	ld a, [wBattleType]
-	cp BATTLETYPE_OVERWORLD_MON
-	jr nz, .not_overworld_mon_dvs
+	ld a, [wOverworldMonBattleSlot]
+	and a
+	jr z, .not_overworld_mon_dvs
 	farcall GetOverworldMonBattleEncounter
 	ld bc, OW_MON_DVS
 	add hl, bc
@@ -6174,6 +6176,15 @@ LoadEnemyMon:
 
 ; Species-specfic: 
 .CheckMultipleWildFormPokemon:
+; A wandering mon's form was settled when it appeared on the map, and .generate_shininess below
+; takes it whole. Skip the random wild form for one, or the battle's Scyther is not the sprite's.
+	ld a, [wOverworldMonBattleSlot]
+	and a
+	jr nz, .Magikarp
+; Likewise a scripted encounter that named its form (loadwildmon); .generate_shininess takes it.
+	ld a, [wTempWildMonForm]
+	and a
+	jr nz, .Magikarp
 ; Check if this Pokémon has multiple forms using the table
 	ld a, [wTempEnemyMonSpecies]
 	call GetPokemonIndexFromID
@@ -6487,9 +6498,9 @@ LoadEnemyMon:
 	ld [wEnemyMonForm], a
 
 .generate_shininess
-	ld a, [wBattleType]
-	cp BATTLETYPE_OVERWORLD_MON
-	jr nz, .not_overworld_mon_form
+	ld a, [wOverworldMonBattleSlot]
+	and a
+	jr z, .not_overworld_mon_form
 ; The form byte carries the cosmetic form *and* the shiny bit, and it was settled when the mon
 ; appeared on the map. Taking it whole is what stops an ordinary-looking sprite from turning into
 ; a shiny -- or into a different form -- the moment the battle starts.
@@ -6501,6 +6512,17 @@ LoadEnemyMon:
 	jmp .Finish
 
 .not_overworld_mon_form
+; A scripted encounter's form, from loadwildmon: taken whole, shiny bit and all, and used up.
+	ld a, [wTempWildMonForm]
+	and a
+	jr z, .no_script_form
+	ld [wEnemyMonForm], a
+	xor a
+	ld [wTempWildMonForm], a
+	jmp .Finish
+
+.no_script_form
+	ld a, [wBattleType]
 	cp BATTLETYPE_FORCESHINY
 	jr nz, .generate_roam_mon_shininess
 	ld a, [wEnemyMonForm]

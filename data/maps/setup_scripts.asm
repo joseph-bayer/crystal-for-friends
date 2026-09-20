@@ -146,6 +146,10 @@ MapSetupScript_ReloadMap:
 	mapsetup LoadConnectionBlockData
 	mapsetup LoadMapGraphics
 	mapsetup DecompressMetatiles
+; A population map's members were rerolled on the way out of the battle; this places them again --
+; it needs the blocks reloaded above and the tileset collision -- and puts up the ones on screen.
+; Returns at once on any other map.
+	mapsetup PlacePopulationAndSpawn
 	mapsetup LoadMapTimeOfDay
 	mapsetup EnableLCD
 	mapsetup LoadMapPalettes

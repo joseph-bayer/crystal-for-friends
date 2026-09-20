@@ -28,3 +28,6 @@ UnownZIcon::       INCBIN "gfx/icons/unown_z.2bpp"
 PikachuPlainIcon:: INCBIN "gfx/icons/pikachu.2bpp"
 PikachuSurfIcon::  INCBIN "gfx/icons/pikachu_surf.2bpp"
 PikachuFlyIcon::   INCBIN "gfx/icons/pikachu_fly.2bpp"
+
+SnorlaxPlainIcon::    INCBIN "gfx/icons/snorlax.2bpp" ; a copy in this bank; see adding_cosmetic_forms.md
+SnorlaxApricornIcon:: INCBIN "gfx/icons/snorlax_apricorn.2bpp"

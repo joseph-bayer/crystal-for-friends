@@ -49,7 +49,7 @@ CosmeticFormPicPointersTable::
 	dw 0					; JIGGLYPUFF (27) - no cosmetic forms
 	dw 0					; WIGGLYTUFF (28) - no cosmetic forms
 	dw 0					; ZUBAT (29) - no cosmetic forms
-	dw 0					; GOLBAT (2a) - no cosmetic forms
+	dw GolbatPicPointers			; GOLBAT (2a) - has cosmetic forms
 	dw 0					; ODDISH (2b) - no cosmetic forms
 	dw 0					; GLOOM (2c) - no cosmetic forms
 	dw 0					; VILEPLUME (2d) - no cosmetic forms
@@ -150,7 +150,7 @@ CosmeticFormPicPointersTable::
 	dw 0					; KABUTO (8c) - no cosmetic forms
 	dw 0					; KABUTOPS (8d) - no cosmetic forms
 	dw 0					; AERODACTYL (8e) - no cosmetic forms
-	dw 0					; SNORLAX (8f) - no cosmetic forms
+	dw SnorlaxPicPointers		; SNORLAX (8f) - has cosmetic forms
 	dw 0					; ARTICUNO (90) - no cosmetic forms
 	dw 0					; ZAPDOS (91) - no cosmetic forms
 	dw 0					; MOLTRES (92) - no cosmetic forms
@@ -273,6 +273,24 @@ PikachuPicPointers::
 	dba PikachuRBFrontpic
 	dba PikachuRBBackpic
 	assert_table_length NUM_PIKACHU_FORMS
+
+GolbatPicPointers::
+; entries correspond to Golbat's forms, two apiece
+	table_width 3 * 2
+	dba GolbatFrontpic
+	dba GolbatBackpic
+	dba GolbatRocketFrontpic
+	dba GolbatBackpic ; the Rocket form shares Golbat's back sprite
+	assert_table_length NUM_GOLBAT_FORMS
+
+SnorlaxPicPointers::
+; entries correspond to Snorlax's forms, two apiece
+	table_width 3 * 2
+	dba SnorlaxFrontpic
+	dba SnorlaxBackpic
+	dba SnorlaxApricornFrontpic
+	dba SnorlaxBackpic ; shares Snorlax's back, drawn in the form's colours
+	assert_table_length NUM_SNORLAX_FORMS
 
 ShucklePicPointers::
 ; entries correspond to Shuckle's forms, two apiece

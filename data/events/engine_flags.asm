@@ -198,5 +198,6 @@ EngineFlags:
 
 	engine_flag wSwarmFlags, SWARMFLAGS_DUNSPARCE_SWARM_F
 	engine_flag wSwarmFlags, SWARMFLAGS_YANMA_SWARM_F
+	engine_flag wSwarmFlags, SWARMFLAGS_MYSTERY_ISLAND_F
 
 	assert_table_length NUM_ENGINE_FLAGS

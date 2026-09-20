@@ -190,31 +190,16 @@ TownMap_GetCurrentLandmark:
 	ld b, a
 	ld a, [wMapNumber]
 	ld c, a
-	call GetWorldMapLocation
-	cp LANDMARK_SPECIAL
-	ret nz
-	ld a, [wBackupMapGroup]
-	ld b, a
-	ld a, [wBackupMapNumber]
-	ld c, a
-	jmp GetWorldMapLocation
+	jmp GetWorldMapLocationOrBackup
 
 TownMap_InitCursorAndPlayerIconPositions:
 	ld a, [wMapGroup]
 	ld b, a
 	ld a, [wMapNumber]
 	ld c, a
-	call GetWorldMapLocation
+	call GetWorldMapLocationOrBackup
 	cp LANDMARK_FAST_SHIP
 	jr z, .FastShip
-	cp LANDMARK_SPECIAL
-	jr nz, .LoadLandmark
-	ld a, [wBackupMapGroup]
-	ld b, a
-	ld a, [wBackupMapNumber]
-	ld c, a
-	call GetWorldMapLocation
-.LoadLandmark:
 	ld [wPokegearMapPlayerIconLandmark], a
 	ld [wPokegearMapCursorLandmark], a
 	ret
@@ -1390,7 +1375,7 @@ RadioChannels:
 	ld a, [wTimeOfDay]
 	and a
 	jmp z, LoadStation_PokedexShow
-	jr LoadStation_OaksPokemonTalk
+	jmp LoadStation_OaksPokemonTalk
 
 .PokemonMusic:
 	call .InJohto
@@ -1430,8 +1415,8 @@ RadioChannels:
 	jmp LoadStation_LetsAllSing
 
 .PokeFluteRadio:
-	call .InJohto
-	jr c, .NoSignal
+	call .PokeFluteInRange
+	jr nc, .NoSignal
 	ld a, [wPokegearFlags]
 	bit POKEGEAR_EXPN_CARD_F, a
 	jr z, .NoSignal
@@ -1469,6 +1454,44 @@ RadioChannels:
 
 .johto
 	scf
+	ret
+
+.PokeFluteInRange:
+; Carry if the Poke Flute broadcast reaches here: anywhere in Kanto, as before, and the mystery
+; islands, which get this one station the way the Ruins of Alph and Lake of Rage get theirs. It is
+; the broadcast that wakes the Snorlax asleep in the Apricorn Forest clearing, and the expansion
+; card is still required either way, so the Snorlax stays behind Kanto.
+;
+; This and the two routines it calls sit after .NoSignal on purpose: putting them any earlier
+; pushes .NoSignal out of jr range for the channels above.
+	call .OnMysteryIsland
+	ret c
+	call .InJohto
+	ccf ; in range exactly when not in Johto
+	ret
+
+.OnMysteryIsland:
+; Carry if the player is on one of the islands the Cianwood sailor visits. The outdoor islands are
+; a map group of their own; the Apricorn Forest and its clearing sit in the dungeons group instead,
+; so they are picked out by their hidden landmarks, which nothing else uses.
+; wPokegearMapPlayerIconLandmark is no help here -- on any of these maps it answers with the
+; mainland map that was sailed from.
+	ld a, [wMapGroup]
+	ld b, a
+	cp MAPGROUP_MYSTERY_ISLANDS
+	jr z, .on_mystery_island
+	ld a, [wMapNumber]
+	ld c, a
+	call GetWorldMapLocation
+	cp HIDDEN_LANDMARK
+	jr c, .not_on_mystery_island
+
+.on_mystery_island
+	scf
+	ret
+
+.not_on_mystery_island
+	and a
 	ret
 
 LoadStation_OaksPokemonTalk:
@@ -2174,18 +2197,8 @@ FlyMap:
 	ld b, a
 	ld a, [wMapNumber]
 	ld c, a
-	call GetWorldMapLocation
-; If we're not in a valid location, i.e. Pokecenter floor 2F,
-; the backup map information is used.
-	cp LANDMARK_SPECIAL
-	jr nz, LoadMapForRegion
-	ld a, [wBackupMapGroup]
-	ld b, a
-	ld a, [wBackupMapNumber]
-	ld c, a
-	call GetWorldMapLocation
-  jr LoadMapForRegion
-  ret
+; A map with no place of its own, i.e. Pokecenter floor 2F, answers with the backup map's.
+	call GetWorldMapLocationOrBackup
 
 ; a = location in region that player would like to display the map of
 LoadMapForRegion:
@@ -2215,17 +2228,7 @@ LoadMapForRegion:
 	ld b, a
 	ld a, [wMapNumber]
 	ld c, a
-	call GetWorldMapLocation
-  ; If we're not in a valid location, i.e. Pokecenter floor 2F,
-  ; the backup map information is used.
-	cp LANDMARK_SPECIAL
-	jr nz, .DoneJohto
-	ld a, [wBackupMapGroup]
-	ld b, a
-	ld a, [wBackupMapNumber]
-	ld c, a
-	call GetWorldMapLocation
-.DoneJohto
+	call GetWorldMapLocationOrBackup
 	jmp TownMapPlayerIcon
 
 .KantoFlyMap:

@@ -66,3 +66,4 @@ MapSetupCommands:
 	add_mapsetup MapPlayerCoordWarped ; 33
 	add_mapsetup MapPlayerCoordConnected ; 34
 	add_mapsetup RollOverworldMonsOnContinue ; 35
+	add_mapsetup PlacePopulationAndSpawn ; 36

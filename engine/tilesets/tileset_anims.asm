@@ -77,6 +77,9 @@ TilesetForestAnim::
 	dw NULL,  StandingTileFrame8
 	dw NULL,  DoneTileAnimation
 
+; The islands began as a copy of Johto, water and flowers in the same tiles; if either moves in
+; islands.png this needs a table of its own.
+TilesetIslandsAnim::
 TilesetJohtoAnim::
 	dw vTiles2 tile $14, AnimateWaterTile
 	dw NULL,  DoNothing ; WaitTileAnimation

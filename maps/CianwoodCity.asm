@@ -12,11 +12,13 @@
 	const CIANWOODCITY_EUSINE
 	const CIANWOODCITY_SUICUNE
 	const CIANWOODCITY_WILD_MON_1
+	const CIANWOODCITY_MYSTERY_ISLAND_SAILOR
 
 CianwoodCity_MapScripts:
 	def_scene_scripts
 	scene_script CianwoodCityNoop1Scene, SCENE_CIANWOODCITY_NOOP
 	scene_script CianwoodCityNoop2Scene, SCENE_CIANWOODCITY_SUICUNE_AND_EUSINE
+	scene_script CianwoodCityArriveFromIslandScene, SCENE_CIANWOODCITY_ARRIVE_FROM_ISLAND
 
 	def_callbacks
 	callback MAPCALLBACK_NEWMAP, CianwoodCityFlypointAndSuicuneCallback
@@ -25,6 +27,13 @@ CianwoodCityNoop1Scene:
 	end
 
 CianwoodCityNoop2Scene:
+	end
+
+; Stepping off the boat. The follower needs no movement of its own -- ApplyMovementToFollower queues
+; the player's scripted steps for it, so it walks off one tile behind.
+CianwoodCityArriveFromIslandScene:
+	applymovement PLAYER, CianwoodCityPlayerDisembarkMovement
+	setscene SCENE_CIANWOODCITY_NOOP
 	end
 
 CianwoodCityFlypointAndSuicuneCallback:
@@ -375,6 +384,187 @@ CianwoodPokeSeerSignText:
 	line "AHEAD"
 	done
 
+CianwoodCityMysteryIslandSailorScript:
+	faceplayer
+	opentext
+; One trip a day. The flag lives in wSwarmFlags, which CheckDailyResetTimer already clears when the
+; RTC day rolls over, so nothing has to remember to reset it.
+	checkflag ENGINE_MYSTERY_ISLAND
+	iftrue .AlreadySailedToday
+	writetext CianwoodCityMysteryIslandSailorAskText
+	yesorno
+	iffalse .Declined
+	writetext CianwoodCityMysteryIslandSailorSetSailText
+	waitbutton
+	closetext
+; RollMysteryIsland leaves the island index in wScriptVar and will not repeat the last trip's.
+; warp needs a literal map, so the index has to be branched on -- a new island means one more
+; ifequal here, and the highest index falls through.
+	setflag ENGINE_MYSTERY_ISLAND
+; Everyone boards before the warp. The canoe is the three tiles at (27-29, 36): you take (29, 36),
+; the follower lands on (28, 36) by trailing a step behind you, and the sailor takes (27, 36) last.
+; The follower gets no `applymovement` of its own -- a scripted one would drop it out of the follow
+; state machine and need RestoreFollowerAfterMovement to put it back.
+;
+; You can be on any of three tiles when you talk to him, so the route aboard is picked from which
+; way you are facing -- after `faceplayer` that is still your own facing, which is the one that had
+; to point at him for the conversation to start at all. Every route ends the same way, stepping into
+; (28, 36) and then on to (29, 36), which is what leaves the follower amidships.
+	readvar VAR_FACING
+	ifequal RIGHT, .BoardFromWestOfHim
+	ifequal LEFT,  .BoardFromEastOfHim
+	applymovement PLAYER, CianwoodCityPlayerBoardMovement
+	sjump .Aboard
+
+.BoardFromWestOfHim:
+	applymovement PLAYER, CianwoodCityPlayerBoardFromWestMovement
+	sjump .Aboard
+
+.BoardFromEastOfHim:
+	applymovement PLAYER, CianwoodCityPlayerBoardFromEastMovement
+
+.Aboard:
+; He casts off last, so his walk down the dock is never the thing you are waiting on and never has
+; to route around wherever you happened to be standing. It also gives the follower, which trails a
+; step behind, time to take its seat before the warp.
+	applymovement CIANWOODCITY_MYSTERY_ISLAND_SAILOR, CianwoodCitySailorBoardMovement
+if DEF(_DEBUG)
+; Pick the island instead of rolling for it, so one can be tested without sailing over and over.
+;
+; The timing is pinned from both sides. It cannot go any earlier, because `readvar VAR_FACING`
+; above writes the menu's own answer slot, wScriptVar, and would overwrite the choice. It cannot go
+; any later, because the crossing below fades the screen to black, and a menu drawn on that is a
+; menu nobody can read.
+	opentext
+	loadmenu .DebugIslandMenuHeader
+	verticalmenu
+	closewindow
+	closetext
+endc
+	farscall MysteryIslandCrossingScript
+	callasm QueueMysteryIslandArrival
+if DEF(_DEBUG)
+	callasm ChooseMysteryIslandFromDebugMenu
+else
+	callasm RollMysteryIsland
+endc
+	ifequal 1, .ApricornForest
+	ifequal 2, .Island3
+	warpfacing LEFT, HIDDEN_GROVE, 4, 10
+	end
+
+.ApricornForest:
+	warpfacing LEFT, APRICORN_FOREST_OUTSIDE, 14, 9
+	end
+
+.Island3:
+	warpfacing DOWN, MYSTERY_ISLAND_3, 11, 4
+	end
+
+if DEF(_DEBUG)
+.DebugIslandMenuHeader:
+	db MENU_BACKUP_TILES ; flags
+	menu_coords 0, 2, SCREEN_WIDTH - 1, TEXTBOX_Y - 1
+	dw .DebugIslandMenuData
+	db 1 ; default option
+
+.DebugIslandMenuData:
+	db STATICMENU_CURSOR ; flags
+	db 4 ; items
+	db "HIDDEN GROVE@"
+	db "APRICORN FOREST@"
+	db "MYSTERY ISLE 3@"
+	db "RANDOM@"
+endc
+
+.Declined:
+	writetext CianwoodCityMysteryIslandSailorDeclinedText
+	waitbutton
+	closetext
+	end
+
+.AlreadySailedToday:
+	writetext CianwoodCityMysteryIslandSailorTiredText
+	waitbutton
+	closetext
+	end
+
+; From his spot at the head of the dock (27, 34) straight down into the near seat (27, 36), which
+; the other two have already stepped past by the time he casts off.
+CianwoodCitySailorBoardMovement:
+	step DOWN  ; (27, 35)
+	step DOWN  ; (27, 36)
+	turn_head RIGHT
+	step_end
+
+; The three ways aboard, by where you were standing when you talked to him. All of them finish
+; (28, 36) then (29, 36), and none of them crosses (27, 34) while he is still standing on it.
+
+; From (27, 35), the tile he faces.
+CianwoodCityPlayerBoardMovement:
+	step DOWN  ; (27, 36)
+	step RIGHT ; (28, 36)
+	step RIGHT ; (29, 36), your seat
+	step_end
+
+; From (26, 34), the shore end of the dock.
+CianwoodCityPlayerBoardFromWestMovement:
+	step DOWN  ; (26, 35)
+	step RIGHT ; (27, 35)
+	step DOWN  ; (27, 36)
+	step RIGHT ; (28, 36)
+	step RIGHT ; (29, 36)
+	step_end
+
+; From (28, 34), out along the dock past him. The short way -- straight down and across.
+CianwoodCityPlayerBoardFromEastMovement:
+	step DOWN  ; (28, 35)
+	step DOWN  ; (28, 36)
+	step RIGHT ; (29, 36)
+	step_end
+
+; Coming back, straight up out of your seat onto the dock. It keeps clear of (27, 34), where the
+; sailor is standing again by the time you land.
+CianwoodCityPlayerDisembarkMovement:
+	step UP    ; (29, 35), onto the dock
+	turn_head DOWN
+	step_end
+
+CianwoodCityMysteryIslandSailorAskText:
+	text "I run a boat out"
+	line "to an island."
+
+	para "I never know quite"
+	line "which one the"
+
+	para "current will take"
+	line "us to."
+
+	para "Want to come"
+	line "along?"
+	done
+
+CianwoodCityMysteryIslandSailorSetSailText:
+	text "Then climb aboard!"
+	done
+
+CianwoodCityMysteryIslandSailorDeclinedText:
+	text "Suit yourself."
+	line "I'll be here."
+	done
+
+CianwoodCityMysteryIslandSailorTiredText:
+	text "Another trip out"
+	line "to an island?"
+
+	para "Sorry, kid. My"
+	line "arms are sore!"
+
+	para "Come back tomorrow"
+	line "after I've had"
+	cont "some rest."
+	done
+
 CianwoodCity_MapEvents:
 	db 0, 0 ; filler
 
@@ -418,3 +608,4 @@ CianwoodCity_MapEvents:
 ; Palette 0 so they take the mon's own colors, and the event flag is -1 -- whether one is standing
 ; here is decided by whether its slot holds a rolled mon, not by a flag.
 	object_event 13, 23, SPRITE_OW_MON_1, SPRITEMOVEDATA_SWIM_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1
+	object_event 27, 34, SPRITE_SAILOR, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, CianwoodCityMysteryIslandSailorScript, -1

@@ -91,12 +91,23 @@ InitMapNameSign::
 	ret
 
 .CheckMovingWithinLandmark:
+; z: no sign. Same landmark as before, or coming out of a special map -- except that a hidden
+; landmark announces itself from anywhere, since the maps around one are usually special
+; themselves (Apricorn Forest from its outside map).
 	ld a, [wCurLandmark]
 	ld c, a
 	ld a, [wPrevLandmark]
 	cp c
 	ret z
+	ld a, c
+	cp HIDDEN_LANDMARK
+	jr nc, .hidden
+	ld a, [wPrevLandmark]
 	and a ; cp SPECIAL_MAP
+	ret
+
+.hidden
+	or a ; a >= HIDDEN_LANDMARK, so nz
 	ret
 
 .CheckSpecialMap:

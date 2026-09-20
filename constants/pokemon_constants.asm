@@ -324,6 +324,18 @@ DEF NUM_UNOWN EQU const_value ; 26
   ; TODO: const PIKACHU_PARTY_HAT_FORM ; 4
 DEF NUM_PIKACHU_FORMS EQU const_value ; 4
 
+; Golbat forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const GOLBAT_PLAIN_FORM   ; 0
+  const GOLBAT_ROCKET_FORM  ; 1 -- Team Rocket's; every Rocket Golbat is one
+DEF NUM_GOLBAT_FORMS EQU const_value ; 2
+
+; Snorlax forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const SNORLAX_PLAIN_FORM    ; 0
+  const SNORLAX_APRICORN_FORM ; 1 -- the one asleep in the Apricorn Forest clearing
+DEF NUM_SNORLAX_FORMS EQU const_value ; 2
+
 ; Shuckle forms
   const_def 0 ; Note that forms are now 0-indexed
   const SHUCKLE_PLAIN_FORM    	    ; 0

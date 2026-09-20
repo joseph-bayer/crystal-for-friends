@@ -77,6 +77,56 @@ MACRO end_ow_wildmons
 		"def_ow_wildmons {CURRENT_OW_WILDMONS_MAP}: expected {d:OW_WILDDATA_LENGTH} bytes"
 ENDM
 
+MACRO def_population
+;\1: map id
+;\2: POP_REROLL_SPECIES or POP_REROLL_STATS
+;\3: how many are out at once -- one SPRITE_OW_MON_n object each, capped by NUM_OW_MON_SLOTS
+; Opens one map's population. Fixed width like the area tables, so a row can be skipped by adding
+; a constant rather than walked. spawn_area rows come first, then pop_mon rows, then
+; end_population.
+	REDEF CURRENT_POP_LABEL EQUS "._def_population_\1"
+	REDEF CURRENT_POP_MAP EQUS "\1"
+	REDEF CURRENT_POP_AREAS = 0
+	REDEF CURRENT_POP_MONS = 0
+	{CURRENT_POP_LABEL}:
+	map_id \1
+	db \2, \3
+ENDM
+
+MACRO spawn_area
+;\1, \2: top-left x, y  \3, \4: bottom-right x, y -- map tiles, inclusive
+	assert CURRENT_POP_MONS == 0, "def_population {CURRENT_POP_MAP}: spawn_area after pop_mon"
+	assert CURRENT_POP_AREAS < MAX_SPAWN_AREAS, "def_population {CURRENT_POP_MAP}: more than {d:MAX_SPAWN_AREAS} spawn areas"
+	assert \1 <= \3 && \2 <= \4, "def_population {CURRENT_POP_MAP}: spawn_area corners are the wrong way round"
+	db \1, \2, \3, \4
+	REDEF CURRENT_POP_AREAS = CURRENT_POP_AREAS + 1
+ENDM
+
+MACRO pop_mon
+;\1: weight, out of 100
+;\2: species
+;\3, \4: level range, inclusive
+;\5: form byte: a *_FORM constant, optionally | SHINY_MASK for one that is always shiny
+;\6: OW_PERK_* flags, or 0
+	if CURRENT_POP_MONS == 0
+		ds (MAX_SPAWN_AREAS - CURRENT_POP_AREAS) * SPAWN_AREA_LENGTH, 0 ; unused areas are all zero
+	endc
+	assert \3 <= \4, "def_population {CURRENT_POP_MAP}: a level range with its max below its min"
+	assert \1 > 0, "def_population {CURRENT_POP_MAP}: a weight of zero can never be picked"
+	db \1
+	dw \2
+	db \3, \4, \5, \6
+	REDEF CURRENT_POP_MONS = CURRENT_POP_MONS + 1
+	assert CURRENT_POP_MONS <= NUM_POP_MON, "def_population {CURRENT_POP_MAP}: more than {d:NUM_POP_MON} entries"
+ENDM
+
+MACRO end_population
+; Pads the roster out to NUM_POP_MON. The padding is species 0, which is what the reader stops on.
+	assert CURRENT_POP_MONS > 0, "def_population {CURRENT_POP_MAP}: no pop_mon rows"
+	ds POP_DATA_LENGTH - (@ - {CURRENT_POP_LABEL}), 0
+	assert POP_DATA_LENGTH == @ - {CURRENT_POP_LABEL}, "def_population {CURRENT_POP_MAP}: wrong size"
+ENDM
+
 MACRO def_grass_wildmons
 ;\1: map id
 	REDEF CURRENT_GRASS_WILDMONS_MAP EQUS "\1"

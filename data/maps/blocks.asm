@@ -897,4 +897,19 @@ BattleTowerOutside_Blocks:
 GoldenrodDeptStoreRoof_Blocks:
 	INCBIN "maps/GoldenrodDeptStoreRoof.ablk"
 
+HiddenGrove_Blocks:
+	INCBIN "maps/HiddenGrove.ablk"
+
+ApricornForestOutside_Blocks:
+	INCBIN "maps/ApricornForestOutside.ablk"
+
+ApricornForest_Blocks:
+	INCBIN "maps/ApricornForest.ablk"
+
+ApricornForestClearing_Blocks:
+	INCBIN "maps/ApricornForestClearing.ablk"
+
+MysteryIsland3_Blocks:
+	INCBIN "maps/MysteryIsland3.ablk"
+
 ENDSECTION

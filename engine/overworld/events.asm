@@ -360,7 +360,12 @@ CheckTileEvent:
 	ret
 
 .not_pit
+; A warp panel is a warp pad: the same warp, wrapped in the Teleport animation (WarpPadScript).
+	cp COLL_WARP_PANEL
+	ld a, PLAYEREVENT_WARP_PAD
+	jr z, .got_event
 	ld a, PLAYEREVENT_WARP
+.got_event
 	scf
 	ret
 
@@ -1011,6 +1016,7 @@ PlayerEventScriptPointers:
 	dba OverworldWhiteoutScript ; PLAYEREVENT_WHITEOUT
 	dba HatchEggScript          ; PLAYEREVENT_HATCH
 	dba ChangeDirectionScript   ; PLAYEREVENT_JOYCHANGEFACING
+	dba WarpPadScript           ; PLAYEREVENT_WARP_PAD
 	dba InvalidEventScript      ; (NUM_PLAYER_EVENTS)
 	assert_table_length NUM_PLAYER_EVENTS + 1
 
@@ -1043,6 +1049,34 @@ LandAfterPitfallScript:
 	earthquake 16
 	end
 
+WarpPadScript:
+; A warp taken from a COLL_WARP_PANEL tile: Saffron Gym, Tin Tower's upper floors, the Rocket
+; base, the Apricorn clearing. The warp itself is the ordinary one; this wraps it in the Teleport
+; move's animation the way Yellow's pads do -- spin up and away before the fade, spin back down
+; after it. The follower rides in its ball across the load, as it does through a pit fall, and
+; steps out on the first step.
+	playsound SFX_WARP_TO
+	applymovement PLAYER, .Rise
+; The follower goes the same way, a beat behind, when there is one out to go.
+	callasm FollowerIsOut
+	iffalse .NoFollower
+	applymovement FOLLOWER, .Rise
+	callasm RestoreFollowerAfterMovement
+.NoFollower:
+	newloadmap MAPSETUP_DOOR
+	callasm FollowerInBall
+	playsound SFX_WARP_FROM
+	applymovement PLAYER, .Descend
+	end
+
+.Rise:
+	teleport_from
+	step_end
+
+.Descend:
+	teleport_to
+	step_end
+
 EdgeWarpScript:
 	reloadend MAPSETUP_CONNECTION
 
@@ -1068,6 +1102,24 @@ _CheckActiveFollowerBallAnim::
 	farcall SpawnPokeballOpening
 	pop bc
 	ret
+
+FollowerIsOut:
+; wScriptVar = TRUE when a follower is on the map and not in its ball, i.e. there is a sprite a
+; script can move. FALSE for nobody following, or one recalled into its ball.
+	ld a, [wFollowerFlags]
+	and FOLLOWER_INVISIBLE | 1 << FOLLOWER_IN_POKEBALL_F
+	jr nz, .hidden
+	ld a, [wFollowerPartySlot]
+	and a
+	jr z, .done
+	ld a, TRUE
+.done
+	ld [wScriptVar], a
+	ret
+
+.hidden
+	xor a
+	jr .done
 
 FollowerInBall:
 	push bc
@@ -1377,12 +1429,36 @@ OverworldMonBattleScript:
 ; left and re-entered. `disappear` both deletes the object and sets its event flag, and the flag is
 ; one of the EVENT_TEMPORARY_UNTIL_MAP_RELOAD_* set, which clears on the next HandleNewMap -- the
 ; same boundary the reroll happens on.
+; During the Bug Catching Contest a member is a contest catch like any other bug in the park:
+; Park Balls, the one-catch rule, the scoring, and the walk back to the gate when the balls run
+; out. Only the battle type and the tail differ; the encounter is the rolled one either way.
+	checkflag ENGINE_BUG_CONTEST_TIMER
+	iftrue .Contest
 	callasm SetUpOverworldMonBattle
 	startbattle
 	callasm EndOverworldMonBattle
 	disappear LAST_TALKED
+; On a population map every member is rerolled here and the reload that follows places them all
+; again -- the one you fought included, refilled. `disappear` stays: a deleted object cannot
+; trigger, so you cannot come back from the battle into another one. Does nothing on other maps.
+	callasm RerollPopulation
 	reloadmapafterbattle
 	end
+
+.Contest:
+	loadvar VAR_BATTLETYPE, BATTLETYPE_CONTEST
+	callasm SetUpOverworldMonBattle
+	startbattle
+	callasm EndOverworldMonBattle
+	disappear LAST_TALKED
+	callasm RerollPopulation
+	reloadmapafterbattle
+	readmem wParkBallsRemaining
+	iffalse .OutOfBalls
+	end
+
+.OutOfBalls:
+	farsjump BugCatchingContestOutOfBallsScript
 
 CanEncounterWildMon::
 	ld hl, wStatusFlags

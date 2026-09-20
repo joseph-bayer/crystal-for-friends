@@ -49,7 +49,7 @@ CosmeticFormFramePointersTable:
 	dw 0					; JIGGLYPUFF (27) - no cosmetic forms
 	dw 0					; WIGGLYTUFF (28) - no cosmetic forms
 	dw 0					; ZUBAT (29) - no cosmetic forms
-	dw 0					; GOLBAT (2a) - no cosmetic forms
+	dw GolbatFramesPointers		; GOLBAT (2a) - has cosmetic forms
 	dw 0					; ODDISH (2b) - no cosmetic forms
 	dw 0					; GLOOM (2c) - no cosmetic forms
 	dw 0					; VILEPLUME (2d) - no cosmetic forms
@@ -150,7 +150,7 @@ CosmeticFormFramePointersTable:
 	dw 0					; KABUTO (8c) - no cosmetic forms
 	dw 0					; KABUTOPS (8d) - no cosmetic forms
 	dw 0					; AERODACTYL (8e) - no cosmetic forms
-	dw 0					; SNORLAX (8f) - no cosmetic forms
+	dw SnorlaxFramesPointers		; SNORLAX (8f) - has cosmetic forms
 	dw 0					; ARTICUNO (90) - no cosmetic forms
 	dw 0					; ZAPDOS (91) - no cosmetic forms
 	dw 0					; MOLTRES (92) - no cosmetic forms
@@ -268,6 +268,18 @@ PikachuFramesPointers:
 	dw PikachuFlyFrames
 	dw PikachuRBFrames
 	assert_table_length NUM_PIKACHU_FORMS
+
+GolbatFramesPointers:
+	table_width 2
+	dw GolbatPlainFrames
+	dw GolbatRocketFrames
+	assert_table_length NUM_GOLBAT_FORMS
+
+SnorlaxFramesPointers:
+	table_width 2
+	dw SnorlaxPlainFrames
+	dw SnorlaxApricornFrames
+	assert_table_length NUM_SNORLAX_FORMS
 
 ShuckleFramesPointers:
 	table_width 2

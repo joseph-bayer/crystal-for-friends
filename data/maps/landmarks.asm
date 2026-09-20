@@ -104,6 +104,9 @@ Landmarks:
 	landmark  12, 100, TohjoFallsName
 	landmark  20,  68, Route28Name
 	landmark 140, 116, FastShipName
+; hidden landmarks: sign only, never drawn on the map, so the coordinates are unused
+	landmark   0,   0, ApricornForestName
+	landmark   0,   0, ApricornClearingName
 	assert_table_length NUM_LANDMARKS
 
 NewBarkTownName:     db "NEW BARK<BSP>TOWN@"
@@ -197,6 +200,8 @@ DarkCaveName:        db "DARK CAVE@"
 IlexForestName:      db "ILEX<BSP>FOREST@"
 BurnedTowerName:     db "BURNED<BSP>TOWER@"
 FastShipName:        db "FAST SHIP@"
+ApricornForestName:  db "APRICORN<BSP>FOREST@"
+ApricornClearingName: db "APRICORN<BSP>CLEARING@"
 DiglettsCaveName:    db "DIGLETT'S<BSP>CAVE@"
 TohjoFallsName:      db "TOHJO FALLS@"
 UndergroundName:     db "UNDERGROUND@"

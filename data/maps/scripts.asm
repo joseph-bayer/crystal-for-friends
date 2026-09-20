@@ -483,4 +483,10 @@ SECTION "Map Scripts 25", ROMX
 INCLUDE "maps/SilverCaveOutside.asm"
 INCLUDE "maps/Route10North.asm"
 
+INCLUDE "maps/HiddenGrove.asm"
+INCLUDE "maps/ApricornForestOutside.asm"
+INCLUDE "maps/ApricornForest.asm"
+INCLUDE "maps/ApricornForestClearing.asm"
+INCLUDE "maps/MysteryIsland3.asm"
+
 ENDSECTION
