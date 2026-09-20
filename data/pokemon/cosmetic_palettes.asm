@@ -38,6 +38,16 @@ INCBIN	"gfx/pokemon/charizard_rocket/normal.gbcpal", middle_colors ; built from 
 INCLUDE "gfx/pokemon/charizard/shiny.pal"
 	assert_table_length NUM_CHARIZARD_FORMS
 
+CrobatPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/crobat/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/crobat/shiny.pal"
+INCBIN	"gfx/pokemon/crobat_rocket/normal.gbcpal", middle_colors ; built from the front alone, see the Makefile
+; A shiny Rocket Crobat takes the ordinary shiny Crobat colours, by design.
+INCLUDE "gfx/pokemon/crobat/shiny.pal"
+	assert_table_length NUM_CROBAT_FORMS
+
 ArbokPalettes:
 	; 2 middle palettes, normal and shiny, with 2 colors each
 	table_width COLOR_SIZE * 2 * 2

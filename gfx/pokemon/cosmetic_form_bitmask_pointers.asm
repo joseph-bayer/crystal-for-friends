@@ -176,7 +176,7 @@ CosmeticFormBitmaskPointersTable:
 	dw 0					; LEDIAN (a6) - no cosmetic forms
 	dw 0					; SPINARAK (a7) - no cosmetic forms
 	dw 0					; ARIADOS (a8) - no cosmetic forms
-	dw 0					; CROBAT (a9) - no cosmetic forms
+	dw CrobatBitmasksPointers		; CROBAT (a9) - has cosmetic forms
 	dw 0					; CHINCHOU (aa) - no cosmetic forms
 	dw 0					; LANTURN (ab) - no cosmetic forms
 	dw 0					; PICHU (ac) - no cosmetic forms
@@ -286,6 +286,12 @@ WeezingBitmasksPointers:
 	dw WeezingPlainBitmask
 	dw WeezingRocketBitmask
 	assert_table_length NUM_WEEZING_FORMS
+
+CrobatBitmasksPointers:
+	table_width 2
+	dw CrobatPlainBitmask
+	dw CrobatRocketBitmask
+	assert_table_length NUM_CROBAT_FORMS
 
 ArbokBitmasksPointers:
 	table_width 2

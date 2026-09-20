@@ -176,7 +176,7 @@ CosmeticFormAnimationPointerTable:
 	dw 0					; LEDIAN (a6) - no cosmetic forms
 	dw 0					; SPINARAK (a7) - no cosmetic forms
 	dw 0					; ARIADOS (a8) - no cosmetic forms
-	dw 0					; CROBAT (a9) - no cosmetic forms
+	dw CrobatAnimationPointers		; CROBAT (a9) - has cosmetic forms
 	dw 0					; CHINCHOU (aa) - no cosmetic forms
 	dw 0					; LANTURN (ab) - no cosmetic forms
 	dw 0					; PICHU (ac) - no cosmetic forms
@@ -432,7 +432,7 @@ CosmeticFormIdleAnimationPointers:
 	dw 0                           		; LEDIAN (a6) - no cosmetic forms
 	dw 0                           		; SPINARAK (a7) - no cosmetic forms
 	dw 0                           		; ARIADOS (a8) - no cosmetic forms
-	dw 0                           		; CROBAT (a9) - no cosmetic forms
+	dw CrobatAnimationIdlePointers		; CROBAT (a9) - has cosmetic forms
 	dw 0                           		; CHINCHOU (aa) - no cosmetic forms
 	dw 0                           		; LANTURN (ab) - no cosmetic forms
 	dw 0                           		; PICHU (ac) - no cosmetic forms
@@ -544,6 +544,12 @@ WeezingAnimationPointers:
 	dw WeezingRocketAnimation
 	assert_table_length NUM_WEEZING_FORMS
 
+CrobatAnimationPointers:
+	table_width 2
+	dw CrobatPlainAnimation
+	dw CrobatRocketAnimation
+	assert_table_length NUM_CROBAT_FORMS
+
 ArbokAnimationPointers:
 	table_width 2
 	dw ArbokPlainAnimation
@@ -632,6 +638,12 @@ WeezingAnimationIdlePointers:
 	dw WeezingPlainAnimationIdle
 	dw WeezingRocketAnimationIdle
 	assert_table_length NUM_WEEZING_FORMS
+
+CrobatAnimationIdlePointers:
+	table_width 2
+	dw CrobatPlainAnimationIdle
+	dw CrobatRocketAnimationIdle
+	assert_table_length NUM_CROBAT_FORMS
 
 ArbokAnimationIdlePointers:
 	table_width 2

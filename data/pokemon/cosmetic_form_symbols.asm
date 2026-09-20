@@ -176,7 +176,7 @@ CosmeticFormSymbols::
 	dw 0					; LEDIAN (a6)
 	dw 0					; SPINARAK (a7)
 	dw 0					; ARIADOS (a8)
-	dw 0					; CROBAT (a9)
+	dw CrobatFormSymbols			; CROBAT (a9)
 	dw 0					; CHINCHOU (aa)
 	dw 0					; LANTURN (ab)
 	dw 0					; PICHU (ac)
@@ -286,6 +286,12 @@ WeezingFormSymbols:
 	db 0
 	db "<ROCKET_LOGO>"
 	assert_table_length NUM_WEEZING_FORMS
+
+CrobatFormSymbols:
+	table_width 1
+	db 0
+	db "<ROCKET_LOGO>"
+	assert_table_length NUM_CROBAT_FORMS
 
 ArbokFormSymbols:
 	table_width 1

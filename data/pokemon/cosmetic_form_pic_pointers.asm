@@ -176,7 +176,7 @@ CosmeticFormPicPointersTable::
 	dw 0					; LEDIAN (a6) - no cosmetic forms
 	dw 0					; SPINARAK (a7) - no cosmetic forms
 	dw 0					; ARIADOS (a8) - no cosmetic forms
-	dw 0					; CROBAT (a9) - no cosmetic forms
+	dw CrobatPicPointers			; CROBAT (a9) - has cosmetic forms
 	dw 0					; CHINCHOU (aa) - no cosmetic forms
 	dw 0					; LANTURN (ab) - no cosmetic forms
 	dw 0					; PICHU (ac) - no cosmetic forms
@@ -300,6 +300,15 @@ WeezingPicPointers::
 	dba WeezingRocketFrontpic
 	dba WeezingBackpic ; shares Weezing's back; the form keeps Weezing's colours
 	assert_table_length NUM_WEEZING_FORMS
+
+CrobatPicPointers::
+; entries correspond to Crobat's forms, two apiece
+	table_width 3 * 2
+	dba CrobatFrontpic
+	dba CrobatBackpic
+	dba CrobatRocketFrontpic
+	dba CrobatBackpic ; shares Crobat's back, drawn in the form's colours
+	assert_table_length NUM_CROBAT_FORMS
 
 ArbokPicPointers::
 ; entries correspond to Arbok's forms, two apiece

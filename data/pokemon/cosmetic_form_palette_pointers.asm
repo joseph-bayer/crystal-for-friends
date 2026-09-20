@@ -176,7 +176,7 @@ CosmeticFormPalettePointersTable:
 	dw 0					; LEDIAN (a6)
 	dw 0					; SPINARAK (a7)
 	dw 0					; ARIADOS (a8)
-	dw 0					; CROBAT (a9)
+	dw CrobatPalettes			; CROBAT (a9)
 	dw 0					; CHINCHOU (aa)
 	dw 0					; LANTURN (ab)
 	dw 0					; PICHU (ac)

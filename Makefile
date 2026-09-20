@@ -203,6 +203,10 @@ gfx/pokemon/golbat_rocket/front.2bpp: rgbgfx += --colors gbc:$(word 2,$^)
 gfx/pokemon/arbok_rocket/normal.gbcpal: gfx/pokemon/arbok_rocket/front.gbcpal
 	tools/gbcpal $(tools/gbcpal) $@ $^
 
+# Rocket Crobat, same again
+gfx/pokemon/crobat_rocket/normal.gbcpal: gfx/pokemon/crobat_rocket/front.gbcpal
+	tools/gbcpal $(tools/gbcpal) $@ $^
+
 # Unown letters share one normal.gbcpal
 unown_pngs := $(wildcard gfx/pokemon/unown_*/front.png) $(wildcard gfx/pokemon/unown_*/back.png)
 $(foreach png, $(unown_pngs),\

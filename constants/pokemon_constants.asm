@@ -334,6 +334,13 @@ DEF NUM_CHARIZARD_FORMS EQU const_value ; 2
   const WEEZING_ROCKET_FORM ; 1 -- Team Rocket's; every Rocket Weezing is one
 DEF NUM_WEEZING_FORMS EQU const_value ; 2
 
+; Crobat forms
+; Numbered in parallel with Golbat's, so a Rocket Golbat stays Rocket when it evolves
+  const_def 0 ; Note that forms are now 0-indexed
+  const CROBAT_PLAIN_FORM  ; 0
+  const CROBAT_ROCKET_FORM ; 1 -- Team Rocket's; every Rocket Crobat is one
+DEF NUM_CROBAT_FORMS EQU const_value ; 2
+
 ; Pikachu forms
   const_def 0 ; Note that forms are now 0-indexed
   const PIKACHU_PLAIN_FORM  ; 0

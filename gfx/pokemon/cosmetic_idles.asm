@@ -12,6 +12,9 @@ CharizardRocketAnimationIdle:		INCLUDE "gfx/pokemon/charizard_rocket/anim_idle.a
 WeezingPlainAnimationIdle:		INCLUDE "gfx/pokemon/weezing/anim_idle.asm"
 WeezingRocketAnimationIdle:		INCLUDE "gfx/pokemon/weezing_rocket/anim_idle.asm"
 
+CrobatPlainAnimationIdle:		INCLUDE "gfx/pokemon/crobat/anim_idle.asm"
+CrobatRocketAnimationIdle:		INCLUDE "gfx/pokemon/crobat_rocket/anim_idle.asm"
+
 ArbokPlainAnimationIdle:		INCLUDE "gfx/pokemon/arbok/anim_idle.asm"
 ArbokRocketAnimationIdle:	INCLUDE "gfx/pokemon/arbok_rocket/anim_idle.asm"
 
