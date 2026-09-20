@@ -3,6 +3,9 @@ PikachuSurfFrames: 		INCLUDE "gfx/pokemon/pikachu_surf/frames.asm"
 PikachuFlyFrames:  		INCLUDE "gfx/pokemon/pikachu_fly/frames.asm"
 PikachuRBFrames:  		INCLUDE "gfx/pokemon/pikachu_rb/frames.asm"
 
+ArbokPlainFrames:		INCLUDE "gfx/pokemon/arbok/frames.asm"
+ArbokRocketFrames:		INCLUDE "gfx/pokemon/arbok_rocket/frames.asm"
+
 GolbatPlainFrames:		INCLUDE "gfx/pokemon/golbat/frames.asm"
 GolbatRocketFrames:		INCLUDE "gfx/pokemon/golbat_rocket/frames.asm"
 

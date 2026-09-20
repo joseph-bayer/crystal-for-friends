@@ -2579,7 +2579,7 @@ GruntMGroup:
 	db PLAIN_FORM
 	db 36
 	dw ARBOK
-	db PLAIN_FORM
+	db ARBOK_ROCKET_FORM
 	db 36
 	dw MUK
 	db PLAIN_FORM
@@ -2667,7 +2667,7 @@ GruntMGroup:
 	db GOLBAT_ROCKET_FORM
 	db 37
 	dw ARBOK
-	db PLAIN_FORM
+	db ARBOK_ROCKET_FORM
 	db -1 ; end
 
 	next_list_item ; GRUNTM (26) - UNUSED
@@ -2685,13 +2685,16 @@ GruntMGroup:
 	db -1 ; end
 
 	next_list_item ; GRUNTM (28)
-	db "GRUNT@", TRAINERTYPE_NORMAL
+	db "GRUNT@", TRAINERTYPE_FORM
 	db 28
 	dw RATICATE
+	db PLAIN_FORM
 	db 28
 	dw ARBOK
+	db ARBOK_ROCKET_FORM
 	db 28
 	dw MUK
+	db PLAIN_FORM
 	db -1 ; end
 
 	next_list_item ; GRUNTM (29)
@@ -2712,7 +2715,7 @@ GruntMGroup:
 	db GOLBAT_ROCKET_FORM
 	db 30
 	dw ARBOK
-	db PLAIN_FORM
+	db ARBOK_ROCKET_FORM
 	db -1 ; end
 
 	next_list_item ; GRUNTM (31)
@@ -5313,37 +5316,46 @@ SECTION "Executive F Trainer Party", ROMX
 
 ExecutiveFGroup:
 	next_list_item ; EXECUTIVEF (1)
-	db "EXECUTIVE@", TRAINERTYPE_MOVES
+	db "EXECUTIVE@", TRAINERTYPE_FORM | TRAINERTYPE_MOVES
 	db 39
 	dw ARBOK
+	db ARBOK_ROCKET_FORM
 	dw SCREECH, BITE, GLARE, NO_MOVE
 	db 40
 	dw PERSIAN
+	db PLAIN_FORM
 	dw BITE, SCREECH, CHARM, NO_MOVE
 	db 39
 	dw VILEPLUME
+	db PLAIN_FORM
 	dw SLEEP_POWDER, SLUDGE_BOMB, NO_MOVE, NO_MOVE
 	db 40
 	dw GYARADOS
+	db PLAIN_FORM
 	dw STRENGTH, TWISTER, GUST, NO_MOVE
 	db 40
 	dw MURKROW
+	db PLAIN_FORM
 	dw PURSUIT, TOXIC, FAINT_ATTACK, NO_MOVE
 	db -1 ; end
 
 	next_list_item ; EXECUTIVEF (2)
-	db "EXECUTIVE@", TRAINERTYPE_MOVES
+	db "EXECUTIVE@", TRAINERTYPE_FORM | TRAINERTYPE_MOVES
 	db 31
 	dw ARBOK
+	db ARBOK_ROCKET_FORM
 	dw LEER, SLUDGE_BOMB, BITE, NO_MOVE
 	db 30
 	dw PERSIAN
+	db PLAIN_FORM
 	dw FAINT_ATTACK, PAY_DAY, MUD_SLAP, NO_MOVE
 	db 30
 	dw VILEPLUME
+	db PLAIN_FORM
 	dw SWEET_SCENT, SLEEP_POWDER, SLUDGE_BOMB, NO_MOVE
 	db 31
 	dw MURKROW
+	db PLAIN_FORM
 	dw PURSUIT, TOXIC, FAINT_ATTACK, NO_MOVE
 	db -1 ; end
 
@@ -5992,43 +6004,55 @@ GruntFGroup:
 	db -1 ; end
 
 	next_list_item ; GRUNTF (2)
-	db "GRUNT@", TRAINERTYPE_NORMAL
+	db "GRUNT@", TRAINERTYPE_FORM
 	db 35
 	dw ARBOK
+	db ARBOK_ROCKET_FORM
 	db 35
 	dw GLOOM
+	db PLAIN_FORM
 	db -1 ; end
 
 	next_list_item ; GRUNTF (3)
-	db "GRUNT@", TRAINERTYPE_NORMAL
+	db "GRUNT@", TRAINERTYPE_FORM
 	db 35
 	dw VILEPLUME
+	db PLAIN_FORM
 	db 35
 	dw PINSIR
+	db PLAIN_FORM
 	db 35
 	dw ARBOK
+	db ARBOK_ROCKET_FORM
 	db 36
 	dw MURKROW
+	db PLAIN_FORM
 	db -1 ; end
 
 	next_list_item ; GRUNTF (4)
-	db "GRUNT@", TRAINERTYPE_NORMAL
+	db "GRUNT@", TRAINERTYPE_FORM
 	db 36
 	dw ARBOK
+	db ARBOK_ROCKET_FORM
 	db 35
 	dw GLOOM
+	db PLAIN_FORM
 	db 36
 	dw ARIADOS
+	db PLAIN_FORM
 	db 36
 	dw VILEPLUME
+	db PLAIN_FORM
 	db -1 ; end
 
 	next_list_item ; GRUNTF (5)
-	db "GRUNT@", TRAINERTYPE_NORMAL
+	db "GRUNT@", TRAINERTYPE_FORM
 	db 28
 	dw ARBOK
+	db ARBOK_ROCKET_FORM
 	db 28
 	dw SNEASEL
+	db PLAIN_FORM
 	db -1 ; end
 
 	end_list_items

@@ -287,4 +287,5 @@ IconPaletteOrders:
 ;	dwbb SMEARGLE, SMEARGLE_BLUE_FORM, ICON_PAL_SWAP
 
 IconPaletteOrderForms:
+	dwbb ARBOK, ARBOK_ROCKET_FORM, 0
 	dw 0 ; terminator -- add entries above this line

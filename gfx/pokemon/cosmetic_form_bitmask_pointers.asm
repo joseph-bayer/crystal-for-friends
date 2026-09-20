@@ -31,7 +31,7 @@ CosmeticFormBitmaskPointersTable:
 	dw 0					; SPEAROW (15) - no cosmetic forms
 	dw 0					; FEAROW (16) - no cosmetic forms
 	dw 0					; EKANS (17) - no cosmetic forms
-	dw 0					; ARBOK (18) - no cosmetic forms
+	dw ArbokBitmasksPointers		; ARBOK (18) - has cosmetic forms
 	dw PikachuBitmasksPointers		; PIKACHU (19) - has cosmetic forms
 	dw 0					; RAICHU (1a) - no cosmetic forms
 	dw 0					; SANDSHREW (1b) - no cosmetic forms
@@ -268,6 +268,12 @@ PikachuBitmasksPointers:
 	dw PikachuFlyBitmask
 	dw PikachuRBBitmask
 	assert_table_length NUM_PIKACHU_FORMS
+
+ArbokBitmasksPointers:
+	table_width 2
+	dw ArbokPlainBitmask
+	dw ArbokRocketBitmask
+	assert_table_length NUM_ARBOK_FORMS
 
 GolbatBitmasksPointers:
 	table_width 2

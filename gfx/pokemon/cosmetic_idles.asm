@@ -3,6 +3,9 @@ PikachuSurfAnimationIdle: 		INCLUDE "gfx/pokemon/pikachu_surf/anim_idle.asm"
 PikachuFlyAnimationIdle:  		INCLUDE "gfx/pokemon/pikachu_fly/anim_idle.asm"
 PikachuRBAnimationIdle:  		INCLUDE "gfx/pokemon/pikachu_rb/anim_idle.asm"
 
+ArbokPlainAnimationIdle:		INCLUDE "gfx/pokemon/arbok/anim_idle.asm"
+ArbokRocketAnimationIdle:	INCLUDE "gfx/pokemon/arbok_rocket/anim_idle.asm"
+
 GolbatPlainAnimationIdle:		INCLUDE "gfx/pokemon/golbat/anim_idle.asm"
 GolbatRocketAnimationIdle:		INCLUDE "gfx/pokemon/golbat_rocket/anim_idle.asm"
 

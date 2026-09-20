@@ -31,7 +31,7 @@ CosmeticFormAnimationPointerTable:
 	dw 0					; SPEAROW (15) - no cosmetic forms
 	dw 0					; FEAROW (16) - no cosmetic forms
 	dw 0					; EKANS (17) - no cosmetic forms
-	dw 0					; ARBOK (18) - no cosmetic forms
+	dw ArbokAnimationPointers		; ARBOK (18) - has cosmetic forms
 	dw PikachuAnimationPointers		; PIKACHU (19) - has cosmetic forms
 	dw 0					; RAICHU (1a) - no cosmetic forms
 	dw 0					; SANDSHREW (1b) - no cosmetic forms
@@ -287,7 +287,7 @@ CosmeticFormIdleAnimationPointers:
 	dw 0                           		; SPEAROW (15) - no cosmetic forms
 	dw 0                           		; FEAROW (16) - no cosmetic forms
 	dw 0                           		; EKANS (17) - no cosmetic forms
-	dw 0                           		; ARBOK (18) - no cosmetic forms
+	dw ArbokAnimationIdlePointers		; ARBOK (18) - has cosmetic forms
 	dw PikachuAnimationIdlePointers		; PIKACHU (19) - has cosmetic forms
 	dw 0                           		; RAICHU (1a) - no cosmetic forms
 	dw 0                           		; SANDSHREW (1b) - no cosmetic forms
@@ -526,6 +526,12 @@ PikachuAnimationPointers:
 	dw PikachuRBAnimation
 	assert_table_length NUM_PIKACHU_FORMS
 
+ArbokAnimationPointers:
+	table_width 2
+	dw ArbokPlainAnimation
+	dw ArbokRocketAnimation
+	assert_table_length NUM_ARBOK_FORMS
+
 GolbatAnimationPointers:
 	table_width 2
 	dw GolbatPlainAnimation
@@ -590,6 +596,12 @@ PikachuAnimationIdlePointers:
 	dw PikachuFlyAnimationIdle
 	dw PikachuRBAnimationIdle
 	assert_table_length NUM_PIKACHU_FORMS
+
+ArbokAnimationIdlePointers:
+	table_width 2
+	dw ArbokPlainAnimationIdle
+	dw ArbokRocketAnimationIdle
+	assert_table_length NUM_ARBOK_FORMS
 
 GolbatAnimationIdlePointers:
 	table_width 2

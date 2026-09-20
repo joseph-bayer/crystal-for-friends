@@ -324,6 +324,12 @@ DEF NUM_UNOWN EQU const_value ; 26
   ; TODO: const PIKACHU_PARTY_HAT_FORM ; 4
 DEF NUM_PIKACHU_FORMS EQU const_value ; 4
 
+; Arbok forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const ARBOK_PLAIN_FORM  ; 0
+  const ARBOK_ROCKET_FORM ; 1 -- Team Rocket's; every Rocket Arbok is one
+DEF NUM_ARBOK_FORMS EQU const_value ; 2
+
 ; Golbat forms
   const_def 0 ; Note that forms are now 0-indexed
   const GOLBAT_PLAIN_FORM   ; 0

@@ -3,6 +3,9 @@ PikachuSurfAnimation: 		INCLUDE "gfx/pokemon/pikachu_surf/anim.asm"
 PikachuFlyAnimation:  		INCLUDE "gfx/pokemon/pikachu_fly/anim.asm"
 PikachuRBAnimation:  		INCLUDE "gfx/pokemon/pikachu_rb/anim.asm"
 
+ArbokPlainAnimation:		INCLUDE "gfx/pokemon/arbok/anim.asm"
+ArbokRocketAnimation:		INCLUDE "gfx/pokemon/arbok_rocket/anim.asm"
+
 GolbatPlainAnimation:		INCLUDE "gfx/pokemon/golbat/anim.asm"
 GolbatRocketAnimation:		INCLUDE "gfx/pokemon/golbat_rocket/anim.asm"
 

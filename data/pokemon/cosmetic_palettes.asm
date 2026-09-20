@@ -18,6 +18,16 @@ INCBIN	"gfx/pokemon/pikachu_rb/normal.gbcpal", middle_colors
 INCLUDE "gfx/pokemon/pikachu/shiny.pal"
 	assert_table_length NUM_PIKACHU_FORMS
 
+ArbokPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/arbok/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/arbok/shiny.pal"
+INCBIN	"gfx/pokemon/arbok_rocket/normal.gbcpal", middle_colors
+; A shiny Rocket Arbok takes the ordinary shiny Arbok colours, by design.
+INCLUDE "gfx/pokemon/arbok/shiny.pal"
+	assert_table_length NUM_ARBOK_FORMS
+
 GolbatPalettes:
 	; 2 middle palettes, normal and shiny, with 2 colors each
 	table_width COLOR_SIZE * 2 * 2

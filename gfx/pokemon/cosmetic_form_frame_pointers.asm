@@ -31,7 +31,7 @@ CosmeticFormFramePointersTable:
 	dw 0					; SPEAROW (15) - no cosmetic forms
 	dw 0					; FEAROW (16) - no cosmetic forms
 	dw 0					; EKANS (17) - no cosmetic forms
-	dw 0					; ARBOK (18) - no cosmetic forms
+	dw ArbokFramesPointers		; ARBOK (18) - has cosmetic forms
 	dw PikachuFramesPointers		; PIKACHU (19) - has cosmetic forms
 	dw 0					; RAICHU (1a) - no cosmetic forms
 	dw 0					; SANDSHREW (1b) - no cosmetic forms
@@ -268,6 +268,12 @@ PikachuFramesPointers:
 	dw PikachuFlyFrames
 	dw PikachuRBFrames
 	assert_table_length NUM_PIKACHU_FORMS
+
+ArbokFramesPointers:
+	table_width 2
+	dw ArbokPlainFrames
+	dw ArbokRocketFrames
+	assert_table_length NUM_ARBOK_FORMS
 
 GolbatFramesPointers:
 	table_width 2

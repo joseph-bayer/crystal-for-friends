@@ -31,7 +31,7 @@ CosmeticFormSymbols::
 	dw 0					; SPEAROW (15)
 	dw 0					; FEAROW (16)
 	dw 0					; EKANS (17)
-	dw 0					; ARBOK (18)
+	dw ArbokFormSymbols		; ARBOK (18)
 	dw PikachuFormSymbols			; PIKACHU (19)
 	dw 0					; RAICHU (1a)
 	dw 0					; SANDSHREW (1b)
@@ -268,6 +268,12 @@ PikachuFormSymbols:
 	db 0
 	db "<CARTRIDGE>"
 	assert_table_length NUM_PIKACHU_FORMS
+
+ArbokFormSymbols:
+	table_width 1
+	db 0
+	db "<ROCKET_LOGO>"
+	assert_table_length NUM_ARBOK_FORMS
 
 GolbatFormSymbols:
 	table_width 1

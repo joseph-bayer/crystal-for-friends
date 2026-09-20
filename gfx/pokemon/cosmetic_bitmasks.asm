@@ -3,6 +3,9 @@ PikachuSurfBitmask: 		INCLUDE "gfx/pokemon/pikachu_surf/bitmask.asm"
 PikachuFlyBitmask:  		INCLUDE "gfx/pokemon/pikachu_fly/bitmask.asm"
 PikachuRBBitmask:  		INCLUDE "gfx/pokemon/pikachu_rb/bitmask.asm"
 
+ArbokPlainBitmask:		INCLUDE "gfx/pokemon/arbok/bitmask.asm"
+ArbokRocketBitmask:		INCLUDE "gfx/pokemon/arbok_rocket/bitmask.asm"
+
 GolbatPlainBitmask:		INCLUDE "gfx/pokemon/golbat/bitmask.asm"
 GolbatRocketBitmask:		INCLUDE "gfx/pokemon/golbat_rocket/bitmask.asm"
 

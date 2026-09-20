@@ -31,7 +31,7 @@ CosmeticFormPicPointersTable::
 	dw 0					; SPEAROW (15) - no cosmetic forms
 	dw 0					; FEAROW (16) - no cosmetic forms
 	dw 0					; EKANS (17) - no cosmetic forms
-	dw 0					; ARBOK (18) - no cosmetic forms
+	dw ArbokPicPointers		; ARBOK (18) - has cosmetic forms
 	dw PikachuPicPointers			; PIKACHU (19) - has cosmetic forms
 	dw 0					; RAICHU (1a) - no cosmetic forms
 	dw 0					; SANDSHREW (1b) - no cosmetic forms
@@ -273,6 +273,15 @@ PikachuPicPointers::
 	dba PikachuRBFrontpic
 	dba PikachuRBBackpic
 	assert_table_length NUM_PIKACHU_FORMS
+
+ArbokPicPointers::
+; entries correspond to Arbok's forms, two apiece
+	table_width 3 * 2
+	dba ArbokFrontpic
+	dba ArbokBackpic
+	dba ArbokRocketFrontpic
+	dba ArbokRocketBackpic
+	assert_table_length NUM_ARBOK_FORMS
 
 GolbatPicPointers::
 ; entries correspond to Golbat's forms, two apiece

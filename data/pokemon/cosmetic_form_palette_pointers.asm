@@ -31,7 +31,7 @@ CosmeticFormPalettePointersTable:
 	dw 0					; SPEAROW (15)
 	dw 0					; FEAROW (16)
 	dw 0					; EKANS (17)
-	dw 0					; ARBOK (18)
+	dw ArbokPalettes		; ARBOK (18)
 	dw PikachuPalettes			; PIKACHU (19)
 	dw 0					; RAICHU (1a)
 	dw 0					; SANDSHREW (1b)
