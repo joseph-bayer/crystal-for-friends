@@ -169,6 +169,7 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Sage for Arbok sprite used by Rockets. Colors modified from original.
   - Sage for Charmeleon sprite. Colors modified from original.
   - Sage for Charizard sprite used by Rockets. Color modified from original.
+  - Sage for Weezing sprite.
 
 
 ## Below, you will find the original readme for the CrystalShireEngine

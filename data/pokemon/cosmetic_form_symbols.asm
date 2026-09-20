@@ -117,7 +117,7 @@ CosmeticFormSymbols::
 	dw 0					; HITMONCHAN (6b)
 	dw 0					; LICKITUNG (6c)
 	dw 0					; KOFFING (6d)
-	dw 0					; WEEZING (6e)
+	dw WeezingFormSymbols			; WEEZING (6e)
 	dw 0					; RHYHORN (6f)
 	dw 0					; RHYDON (70)
 	dw 0					; CHANSEY (71)
@@ -280,6 +280,12 @@ CharizardFormSymbols:
 	db 0
 	db "<ROCKET_LOGO>"
 	assert_table_length NUM_CHARIZARD_FORMS
+
+WeezingFormSymbols:
+	table_width 1
+	db 0
+	db "<ROCKET_LOGO>"
+	assert_table_length NUM_WEEZING_FORMS
 
 ArbokFormSymbols:
 	table_width 1

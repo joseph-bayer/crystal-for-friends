@@ -117,7 +117,7 @@ CosmeticFormFramePointersTable:
 	dw 0					; HITMONCHAN (6b) - no cosmetic forms
 	dw 0					; LICKITUNG (6c) - no cosmetic forms
 	dw 0					; KOFFING (6d) - no cosmetic forms
-	dw 0					; WEEZING (6e) - no cosmetic forms
+	dw WeezingFramesPointers		; WEEZING (6e) - has cosmetic forms
 	dw 0					; RHYHORN (6f) - no cosmetic forms
 	dw 0					; RHYDON (70) - no cosmetic forms
 	dw 0					; CHANSEY (71) - no cosmetic forms
@@ -280,6 +280,12 @@ CharizardFramesPointers:
 	dw CharizardPlainFrames
 	dw CharizardRocketFrames
 	assert_table_length NUM_CHARIZARD_FORMS
+
+WeezingFramesPointers:
+	table_width 2
+	dw WeezingPlainFrames
+	dw WeezingRocketFrames
+	assert_table_length NUM_WEEZING_FORMS
 
 ArbokFramesPointers:
 	table_width 2

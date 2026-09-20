@@ -189,6 +189,11 @@ gfx/pokemon/charmeleon_rocket/normal.gbcpal: gfx/pokemon/charmeleon_rocket/front
 gfx/pokemon/charizard_rocket/normal.gbcpal: gfx/pokemon/charizard_rocket/front.gbcpal
 	tools/gbcpal $(tools/gbcpal) $@ $^
 
+# Rocket Weezing has no back sprite and is drawn in Weezing's own colours,
+# so it takes the species' palette instead of building one of its own
+gfx/pokemon/weezing_rocket/front.2bpp: gfx/pokemon/weezing_rocket/front.png gfx/pokemon/weezing/normal.gbcpal
+gfx/pokemon/weezing_rocket/front.2bpp: rgbgfx += --colors gbc:$(word 2,$^)
+
 # Unown letters share one normal.gbcpal
 unown_pngs := $(wildcard gfx/pokemon/unown_*/front.png) $(wildcard gfx/pokemon/unown_*/back.png)
 $(foreach png, $(unown_pngs),\

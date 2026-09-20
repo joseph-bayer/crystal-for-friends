@@ -117,7 +117,7 @@ CosmeticFormBitmaskPointersTable:
 	dw 0					; HITMONCHAN (6b) - no cosmetic forms
 	dw 0					; LICKITUNG (6c) - no cosmetic forms
 	dw 0					; KOFFING (6d) - no cosmetic forms
-	dw 0					; WEEZING (6e) - no cosmetic forms
+	dw WeezingBitmasksPointers		; WEEZING (6e) - has cosmetic forms
 	dw 0					; RHYHORN (6f) - no cosmetic forms
 	dw 0					; RHYDON (70) - no cosmetic forms
 	dw 0					; CHANSEY (71) - no cosmetic forms
@@ -280,6 +280,12 @@ CharizardBitmasksPointers:
 	dw CharizardPlainBitmask
 	dw CharizardRocketBitmask
 	assert_table_length NUM_CHARIZARD_FORMS
+
+WeezingBitmasksPointers:
+	table_width 2
+	dw WeezingPlainBitmask
+	dw WeezingRocketBitmask
+	assert_table_length NUM_WEEZING_FORMS
 
 ArbokBitmasksPointers:
 	table_width 2

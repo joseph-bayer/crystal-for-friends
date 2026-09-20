@@ -9,6 +9,9 @@ CharmeleonRocketBitmask:	INCLUDE "gfx/pokemon/charmeleon_rocket/bitmask.asm"
 CharizardPlainBitmask:		INCLUDE "gfx/pokemon/charizard/bitmask.asm"
 CharizardRocketBitmask:		INCLUDE "gfx/pokemon/charizard_rocket/bitmask.asm"
 
+WeezingPlainBitmask:		INCLUDE "gfx/pokemon/weezing/bitmask.asm"
+WeezingRocketBitmask:		INCLUDE "gfx/pokemon/weezing_rocket/bitmask.asm"
+
 ArbokPlainBitmask:		INCLUDE "gfx/pokemon/arbok/bitmask.asm"
 ArbokRocketBitmask:		INCLUDE "gfx/pokemon/arbok_rocket/bitmask.asm"
 

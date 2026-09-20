@@ -117,7 +117,7 @@ CosmeticFormPicPointersTable::
 	dw 0					; HITMONCHAN (6b) - no cosmetic forms
 	dw 0					; LICKITUNG (6c) - no cosmetic forms
 	dw 0					; KOFFING (6d) - no cosmetic forms
-	dw 0					; WEEZING (6e) - no cosmetic forms
+	dw WeezingPicPointers			; WEEZING (6e) - has cosmetic forms
 	dw 0					; RHYHORN (6f) - no cosmetic forms
 	dw 0					; RHYDON (70) - no cosmetic forms
 	dw 0					; CHANSEY (71) - no cosmetic forms
@@ -291,6 +291,15 @@ CharizardPicPointers::
 	dba CharizardRocketFrontpic
 	dba CharizardBackpic ; shares Charizard's back, drawn in the form's colours
 	assert_table_length NUM_CHARIZARD_FORMS
+
+WeezingPicPointers::
+; entries correspond to Weezing's forms, two apiece
+	table_width 3 * 2
+	dba WeezingFrontpic
+	dba WeezingBackpic
+	dba WeezingRocketFrontpic
+	dba WeezingBackpic ; shares Weezing's back; the form keeps Weezing's colours
+	assert_table_length NUM_WEEZING_FORMS
 
 ArbokPicPointers::
 ; entries correspond to Arbok's forms, two apiece

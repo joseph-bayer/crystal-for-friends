@@ -117,7 +117,7 @@ CosmeticFormAnimationPointerTable:
 	dw 0					; HITMONCHAN (6b) - no cosmetic forms
 	dw 0					; LICKITUNG (6c) - no cosmetic forms
 	dw 0					; KOFFING (6d) - no cosmetic forms
-	dw 0					; WEEZING (6e) - no cosmetic forms
+	dw WeezingAnimationPointers		; WEEZING (6e) - has cosmetic forms
 	dw 0					; RHYHORN (6f) - no cosmetic forms
 	dw 0					; RHYDON (70) - no cosmetic forms
 	dw 0					; CHANSEY (71) - no cosmetic forms
@@ -373,7 +373,7 @@ CosmeticFormIdleAnimationPointers:
 	dw 0                           		; HITMONCHAN (6b) - no cosmetic forms
 	dw 0                           		; LICKITUNG (6c) - no cosmetic forms
 	dw 0                           		; KOFFING (6d) - no cosmetic forms
-	dw 0                           		; WEEZING (6e) - no cosmetic forms
+	dw WeezingAnimationIdlePointers		; WEEZING (6e) - has cosmetic forms
 	dw 0                           		; RHYHORN (6f) - no cosmetic forms
 	dw 0                           		; RHYDON (70) - no cosmetic forms
 	dw 0                           		; CHANSEY (71) - no cosmetic forms
@@ -538,6 +538,12 @@ CharizardAnimationPointers:
 	dw CharizardRocketAnimation
 	assert_table_length NUM_CHARIZARD_FORMS
 
+WeezingAnimationPointers:
+	table_width 2
+	dw WeezingPlainAnimation
+	dw WeezingRocketAnimation
+	assert_table_length NUM_WEEZING_FORMS
+
 ArbokAnimationPointers:
 	table_width 2
 	dw ArbokPlainAnimation
@@ -620,6 +626,12 @@ CharizardAnimationIdlePointers:
 	dw CharizardPlainAnimationIdle
 	dw CharizardRocketAnimationIdle
 	assert_table_length NUM_CHARIZARD_FORMS
+
+WeezingAnimationIdlePointers:
+	table_width 2
+	dw WeezingPlainAnimationIdle
+	dw WeezingRocketAnimationIdle
+	assert_table_length NUM_WEEZING_FORMS
 
 ArbokAnimationIdlePointers:
 	table_width 2

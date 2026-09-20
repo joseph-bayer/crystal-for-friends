@@ -328,6 +328,12 @@ DEF NUM_CHARMELEON_FORMS EQU const_value ; 2
   const CHARIZARD_ROCKET_FORM ; 1 -- Team Rocket's
 DEF NUM_CHARIZARD_FORMS EQU const_value ; 2
 
+; Weezing forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const WEEZING_PLAIN_FORM  ; 0
+  const WEEZING_ROCKET_FORM ; 1 -- Team Rocket's; every Rocket Weezing is one
+DEF NUM_WEEZING_FORMS EQU const_value ; 2
+
 ; Pikachu forms
   const_def 0 ; Note that forms are now 0-indexed
   const PIKACHU_PLAIN_FORM  ; 0
