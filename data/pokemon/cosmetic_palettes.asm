@@ -18,6 +18,15 @@ INCBIN	"gfx/pokemon/pikachu_rb/normal.gbcpal", middle_colors
 INCLUDE "gfx/pokemon/pikachu/shiny.pal"
 	assert_table_length NUM_PIKACHU_FORMS
 
+GolbatPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/golbat/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/golbat/shiny.pal"
+INCBIN	"gfx/pokemon/golbat_rocket/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/golbat_rocket/shiny.pal"
+	assert_table_length NUM_GOLBAT_FORMS
+
 SnorlaxPalettes:
 	; 2 middle palettes, normal and shiny, with 2 colors each
 	table_width COLOR_SIZE * 2 * 2

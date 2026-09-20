@@ -177,10 +177,6 @@ gfx/trainers/kris.2bpp: gfx/trainers/kris.png gfx/trainers/kris.gbcpal
 gfx/pokemon/egg/front.2bpp: gfx/pokemon/egg/front.png gfx/pokemon/egg/front.gbcpal
 gfx/pokemon/egg/front.2bpp: rgbgfx += --colors gbc:$(word 2,$^)
 
-# Rocket Golbat is drawn in Golbat's colors and has no back sprite of its own, so it takes Golbat's palette
-gfx/pokemon/golbat_rocket/front.2bpp: gfx/pokemon/golbat_rocket/front.png gfx/pokemon/golbat/normal.gbcpal
-gfx/pokemon/golbat_rocket/front.2bpp: rgbgfx += --colors gbc:$(word 2,$^)
-
 # Apricorn Snorlax has its own colours but no back sprite, so its palette comes from the front alone
 gfx/pokemon/snorlax_apricorn/normal.gbcpal: gfx/pokemon/snorlax_apricorn/front.gbcpal
 	tools/gbcpal $(tools/gbcpal) $@ $^

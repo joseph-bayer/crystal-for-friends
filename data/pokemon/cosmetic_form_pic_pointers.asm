@@ -280,7 +280,7 @@ GolbatPicPointers::
 	dba GolbatFrontpic
 	dba GolbatBackpic
 	dba GolbatRocketFrontpic
-	dba GolbatBackpic ; the Rocket form shares Golbat's back sprite
+	dba GolbatRocketBackpic
 	assert_table_length NUM_GOLBAT_FORMS
 
 SnorlaxPicPointers::

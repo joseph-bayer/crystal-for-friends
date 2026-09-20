@@ -49,7 +49,7 @@ CosmeticFormPalettePointersTable:
 	dw 0					; JIGGLYPUFF (27)
 	dw 0					; WIGGLYTUFF (28)
 	dw 0					; ZUBAT (29)
-	dw 0					; GOLBAT (2a)
+	dw GolbatPalettes			; GOLBAT (2a)
 	dw 0					; ODDISH (2b)
 	dw 0					; GLOOM (2c)
 	dw 0					; VILEPLUME (2d)
