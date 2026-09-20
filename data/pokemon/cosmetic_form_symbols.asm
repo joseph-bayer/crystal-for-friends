@@ -12,7 +12,7 @@ CosmeticFormSymbols::
 	dw 0					; IVYSAUR (02)
 	dw 0					; VENUSAUR (03)
 	dw 0					; CHARMANDER (04)
-	dw 0					; CHARMELEON (05)
+	dw CharmeleonFormSymbols		; CHARMELEON (05)
 	dw 0					; CHARIZARD (06)
 	dw 0					; SQUIRTLE (07)
 	dw 0					; WARTORTLE (08)
@@ -268,6 +268,12 @@ PikachuFormSymbols:
 	db 0
 	db "<CARTRIDGE>"
 	assert_table_length NUM_PIKACHU_FORMS
+
+CharmeleonFormSymbols:
+	table_width 1
+	db 0
+	db "<ROCKET_LOGO>"
+	assert_table_length NUM_CHARMELEON_FORMS
 
 ArbokFormSymbols:
 	table_width 1

@@ -12,7 +12,7 @@ CosmeticFormAnimationPointerTable:
 	dw 0					; IVYSAUR (02) - no cosmetic forms
 	dw 0					; VENUSAUR (03) - no cosmetic forms
 	dw 0					; CHARMANDER (04) - no cosmetic forms
-	dw 0					; CHARMELEON (05) - no cosmetic forms
+	dw CharmeleonAnimationPointers		; CHARMELEON (05) - has cosmetic forms
 	dw 0					; CHARIZARD (06) - no cosmetic forms
 	dw 0					; SQUIRTLE (07) - no cosmetic forms
 	dw 0					; WARTORTLE (08) - no cosmetic forms
@@ -268,7 +268,7 @@ CosmeticFormIdleAnimationPointers:
 	dw 0                           		; IVYSAUR (02) - no cosmetic forms
 	dw 0                           		; VENUSAUR (03) - no cosmetic forms
 	dw 0                           		; CHARMANDER (04) - no cosmetic forms
-	dw 0                           		; CHARMELEON (05) - no cosmetic forms
+	dw CharmeleonAnimationIdlePointers	; CHARMELEON (05) - has cosmetic forms
 	dw 0                           		; CHARIZARD (06) - no cosmetic forms
 	dw 0                           		; SQUIRTLE (07) - no cosmetic forms
 	dw 0                           		; WARTORTLE (08) - no cosmetic forms
@@ -526,6 +526,12 @@ PikachuAnimationPointers:
 	dw PikachuRBAnimation
 	assert_table_length NUM_PIKACHU_FORMS
 
+CharmeleonAnimationPointers:
+	table_width 2
+	dw CharmeleonPlainAnimation
+	dw CharmeleonRocketAnimation
+	assert_table_length NUM_CHARMELEON_FORMS
+
 ArbokAnimationPointers:
 	table_width 2
 	dw ArbokPlainAnimation
@@ -596,6 +602,12 @@ PikachuAnimationIdlePointers:
 	dw PikachuFlyAnimationIdle
 	dw PikachuRBAnimationIdle
 	assert_table_length NUM_PIKACHU_FORMS
+
+CharmeleonAnimationIdlePointers:
+	table_width 2
+	dw CharmeleonPlainAnimationIdle
+	dw CharmeleonRocketAnimationIdle
+	assert_table_length NUM_CHARMELEON_FORMS
 
 ArbokAnimationIdlePointers:
 	table_width 2

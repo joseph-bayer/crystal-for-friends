@@ -12,7 +12,7 @@ CosmeticFormFramePointersTable:
 	dw 0					; IVYSAUR (02) - no cosmetic forms
 	dw 0					; VENUSAUR (03) - no cosmetic forms
 	dw 0					; CHARMANDER (04) - no cosmetic forms
-	dw 0					; CHARMELEON (05) - no cosmetic forms
+	dw CharmeleonFramesPointers		; CHARMELEON (05) - has cosmetic forms
 	dw 0					; CHARIZARD (06) - no cosmetic forms
 	dw 0					; SQUIRTLE (07) - no cosmetic forms
 	dw 0					; WARTORTLE (08) - no cosmetic forms
@@ -268,6 +268,12 @@ PikachuFramesPointers:
 	dw PikachuFlyFrames
 	dw PikachuRBFrames
 	assert_table_length NUM_PIKACHU_FORMS
+
+CharmeleonFramesPointers:
+	table_width 2
+	dw CharmeleonPlainFrames
+	dw CharmeleonRocketFrames
+	assert_table_length NUM_CHARMELEON_FORMS
 
 ArbokFramesPointers:
 	table_width 2

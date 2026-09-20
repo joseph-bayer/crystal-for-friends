@@ -315,6 +315,12 @@ endc
 	const UNOWN_Z ; 25
 DEF NUM_UNOWN EQU const_value ; 26
 
+; Charmeleon forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const CHARMELEON_PLAIN_FORM  ; 0
+  const CHARMELEON_ROCKET_FORM ; 1 -- Team Rocket's
+DEF NUM_CHARMELEON_FORMS EQU const_value ; 2
+
 ; Pikachu forms
   const_def 0 ; Note that forms are now 0-indexed
   const PIKACHU_PLAIN_FORM  ; 0

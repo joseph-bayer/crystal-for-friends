@@ -181,6 +181,10 @@ gfx/pokemon/egg/front.2bpp: rgbgfx += --colors gbc:$(word 2,$^)
 gfx/pokemon/snorlax_apricorn/normal.gbcpal: gfx/pokemon/snorlax_apricorn/front.gbcpal
 	tools/gbcpal $(tools/gbcpal) $@ $^
 
+# Rocket Charmeleon likewise has its own colours but no back sprite
+gfx/pokemon/charmeleon_rocket/normal.gbcpal: gfx/pokemon/charmeleon_rocket/front.gbcpal
+	tools/gbcpal $(tools/gbcpal) $@ $^
+
 # Unown letters share one normal.gbcpal
 unown_pngs := $(wildcard gfx/pokemon/unown_*/front.png) $(wildcard gfx/pokemon/unown_*/back.png)
 $(foreach png, $(unown_pngs),\

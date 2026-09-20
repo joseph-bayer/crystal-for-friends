@@ -12,7 +12,7 @@ CosmeticFormPicPointersTable::
 	dw 0					; IVYSAUR (02) - no cosmetic forms
 	dw 0					; VENUSAUR (03) - no cosmetic forms
 	dw 0					; CHARMANDER (04) - no cosmetic forms
-	dw 0					; CHARMELEON (05) - no cosmetic forms
+	dw CharmeleonPicPointers		; CHARMELEON (05) - has cosmetic forms
 	dw 0					; CHARIZARD (06) - no cosmetic forms
 	dw 0					; SQUIRTLE (07) - no cosmetic forms
 	dw 0					; WARTORTLE (08) - no cosmetic forms
@@ -273,6 +273,15 @@ PikachuPicPointers::
 	dba PikachuRBFrontpic
 	dba PikachuRBBackpic
 	assert_table_length NUM_PIKACHU_FORMS
+
+CharmeleonPicPointers::
+; entries correspond to Charmeleon's forms, two apiece
+	table_width 3 * 2
+	dba CharmeleonFrontpic
+	dba CharmeleonBackpic
+	dba CharmeleonRocketFrontpic
+	dba CharmeleonBackpic ; shares Charmeleon's back, drawn in the form's colours
+	assert_table_length NUM_CHARMELEON_FORMS
 
 ArbokPicPointers::
 ; entries correspond to Arbok's forms, two apiece
