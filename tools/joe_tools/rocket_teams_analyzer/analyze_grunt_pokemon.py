@@ -60,79 +60,102 @@ def parse_trainer_data(file_path: str) -> Tuple[Dict[str, List[str]], Dict[str, 
     return dict(grunt_m_pokemon), dict(grunt_f_pokemon), dict(executive_m_pokemon), dict(executive_f_pokemon)
 
 def parse_grunt_section(section: str, pokemon_dict: Dict[str, List[str]], trainer_type: str, unused_trainers: set = None):
-    """Parse a grunt section and extract pokemon data."""
-    
+    """Parse a grunt section and extract pokemon data.
+
+    Each trainer becomes a list of (species, form) tuples. Form is PLAIN_FORM
+    when the trainer's party does not carry TRAINERTYPE_FORM.
+    """
+
     if unused_trainers is None:
         unused_trainers = set()
-    
+
     # Split by next_list_item to get individual trainers
     trainers = re.split(r'\s*next_list_item\s*;', section)[1:]  # Skip the first empty element
-    
-    for i, trainer_data in enumerate(trainers, 1):
-        trainer_id = f"{trainer_type}_{i}"
-        
+
+    for index, trainer_data in enumerate(trainers, 1):
+        trainer_id = f"{trainer_type}_{index}"
+
         # Skip unused trainers
         if trainer_id in unused_trainers:
             print(f"Skipping unused trainer: {trainer_id}")
             continue
-        
-        # Parse trainer structure based on trainer type
+
         lines = trainer_data.split('\n')
         current_pokemon = []
+
+        # The party header line carries the TRAINERTYPE_* flags, which decide
+        # what follows each species: a form byte, a move word, both, or neither.
         has_moves = False
-        
-        # Find trainer type first
+        has_form = False
         for line in lines:
-            line = line.strip()
-            if 'TRAINERTYPE_MOVES' in line:
-                has_moves = True
+            if '"@"' in line or re.search(r'db\s+"[^"]*@"', line):
+                has_moves = 'TRAINERTYPE_MOVES' in line
+                has_form = 'TRAINERTYPE_FORM' in line
                 break
-            elif 'TRAINERTYPE_NORMAL' in line:
-                has_moves = False
-                break
-        
-        # Parse pokemon based on structure
+
         i = 0
         while i < len(lines):
             line = lines[i].strip()
-            
-            # Skip empty lines, comments, trainer name lines, and end markers
-            if (not line or line.startswith(';') or 
-                line == 'db -1 ; end' or
-                (line.startswith('db ') and '"@"' in line)):
-                i += 1
-                continue
-            
+
             # Level line (db XX) - pokemon comes next
             if re.match(r'^db\s+\d+$', line):
                 i += 1
-                # Next line should be pokemon (dw POKEMON_NAME)
-                if i < len(lines):
-                    pokemon_line = lines[i].strip()
-                    pokemon_match = re.match(r'dw\s+([A-Z_][A-Z0-9_]*)', pokemon_line)
-                    if pokemon_match:
-                        current_pokemon.append(pokemon_match.group(1))
+                if i >= len(lines):
+                    break
+                pokemon_match = re.match(r'dw\s+([A-Z_][A-Z0-9_]*)', lines[i].strip())
+                if not pokemon_match:
+                    continue
+                species = pokemon_match.group(1)
+                i += 1
+
+                form = 'PLAIN_FORM'
+                if has_form and i < len(lines):
+                    form_match = re.match(r'db\s+([A-Z_][A-Z0-9_ |]*)', lines[i].strip())
+                    if form_match:
+                        form = form_match.group(1).strip()
                         i += 1
-                        
-                        # If this trainer has moves, skip the move line
-                        if has_moves and i < len(lines):
-                            move_line = lines[i].strip()
-                            # Move lines are either single moves or comma-separated moves
-                            if move_line.startswith('dw '):
-                                i += 1
+
+                if has_moves and i < len(lines):
+                    if lines[i].strip().startswith('dw '):
+                        i += 1
+
+                current_pokemon.append((species, form))
                 continue
-            
+
             i += 1
-        
+
         if current_pokemon:
             pokemon_dict[trainer_id] = current_pokemon
+
+
+def form_flags(form: str) -> List[str]:
+    """Split a form expression like 'GOLBAT_ROCKET_FORM | SHINY_MASK' into parts."""
+    return [part.strip() for part in form.split('|')]
+
+
+def is_rocket_form(form: str) -> bool:
+    """True if any part of the form expression is a Team Rocket form."""
+    return any(part.endswith('_ROCKET_FORM') for part in form_flags(form))
+
+
+def species_of(team: List[tuple]) -> List[str]:
+    """Species names only, dropping form info."""
+    return [species for species, _form in team]
+
+
+def describe_mon(species: str, form: str) -> str:
+    """Render a mon as 'SPECIES' or 'SPECIES (FORM)' for the detail listing."""
+    if form == 'PLAIN_FORM':
+        return species
+    return f"{species} ({form})"
+
 
 def analyze_pokemon_usage(pokemon_data: Dict[str, List[str]], trainer_type: str) -> Counter:
     """Analyze pokemon usage frequency."""
     all_pokemon = []
     for trainer_pokemon in pokemon_data.values():
-        all_pokemon.extend(trainer_pokemon)
-    
+        all_pokemon.extend(species_of(trainer_pokemon))
+
     return Counter(all_pokemon)
 
 def print_combined_usage_stats(grunt_m_usage: Counter, grunt_f_usage: Counter, grunt_m_count: int, grunt_f_count: int):
@@ -281,6 +304,59 @@ def print_executive_comparison(executive_m_usage: Counter, executive_f_usage: Co
             count = executive_f_usage[pokemon]
             print(f"  {pokemon:<15} - {count} times")
 
+def print_rocket_form_coverage(groups: List[Tuple[str, Dict[str, List[tuple]]]]):
+    """Report how many teams are missing a Team Rocket form mon."""
+
+    print(f"\n{'='*50}")
+    print("ROCKET FORM COVERAGE")
+    print(f"{'='*50}")
+
+    grand_total = 0
+    grand_without = 0
+    teams_without = []
+
+    for label, data in groups:
+        total = len(data)
+        if not total:
+            continue
+        without = [tid for tid, team in data.items()
+                   if not any(is_rocket_form(form) for _species, form in team)]
+        with_count = total - len(without)
+
+        grand_total += total
+        grand_without += len(without)
+        teams_without.extend(f"{tid}" for tid in without)
+
+        pct_without = (len(without) / total) * 100
+        pct_with = (with_count / total) * 100
+        print(f"{label:<12} - {total:2d} teams | with: {with_count:2d} ({pct_with:5.1f}%) | "
+              f"without: {len(without):2d} ({pct_without:5.1f}%)")
+
+    if grand_total:
+        pct = (grand_without / grand_total) * 100
+        print("-" * 50)
+        print(f"{'ALL ROCKETS':<12} - {grand_total:2d} teams | with: {grand_total - grand_without:2d} "
+              f"({100 - pct:5.1f}%) | without: {grand_without:2d} ({pct:5.1f}%)")
+        print(f"\nPercentage of teams WITHOUT a Rocket form mon: {pct:.1f}%")
+
+    # Which Rocket forms are in use, and how often
+    form_usage = Counter()
+    for _label, data in groups:
+        for team in data.values():
+            for _species, form in team:
+                if is_rocket_form(form):
+                    form_usage[form] += 1
+    if form_usage:
+        print("\nRocket forms in use:")
+        for form, count in form_usage.most_common():
+            print(f"  {form:<30} - {count} times")
+
+    if teams_without:
+        print(f"\nTeams with no Rocket form mon ({len(teams_without)}):")
+        for tid in teams_without:
+            print(f"  {tid}")
+
+
 def main():
     """Main function to run the analysis."""
     
@@ -312,7 +388,15 @@ def main():
         
         # Print executive comparison
         print_executive_comparison(executive_m_usage, executive_f_usage)
-        
+
+        # Print Rocket form coverage
+        print_rocket_form_coverage([
+            ("GruntM", grunt_m_data),
+            ("GruntF", grunt_f_data),
+            ("ExecutiveM", executive_m_data),
+            ("ExecutiveF", executive_f_data),
+        ])
+
         # Print trainer details if requested
         print(f"\n{'='*50}")
         print("DETAILED TRAINER BREAKDOWN")
@@ -322,22 +406,22 @@ def main():
         
         print("\nGruntM trainers:")
         for trainer_id in sorted(grunt_m_data.keys(), key=lambda x: int(x.split('_')[1])):
-            pokemon_list = ", ".join(grunt_m_data[trainer_id])
+            pokemon_list = ", ".join(describe_mon(*mon) for mon in grunt_m_data[trainer_id])
             print(f"  {trainer_id:<10}: {pokemon_list}")
         
         print("\nGruntF trainers:")
         for trainer_id in sorted(grunt_f_data.keys(), key=lambda x: int(x.split('_')[1])):
-            pokemon_list = ", ".join(grunt_f_data[trainer_id])
+            pokemon_list = ", ".join(describe_mon(*mon) for mon in grunt_f_data[trainer_id])
             print(f"  {trainer_id:<10}: {pokemon_list}")
         
         print("\nExecutiveM trainers:")
         for trainer_id in sorted(executive_m_data.keys(), key=lambda x: int(x.split('_')[1])):
-            pokemon_list = ", ".join(executive_m_data[trainer_id])
+            pokemon_list = ", ".join(describe_mon(*mon) for mon in executive_m_data[trainer_id])
             print(f"  {trainer_id:<12}: {pokemon_list}")
         
         print("\nExecutiveF trainers:")
         for trainer_id in sorted(executive_f_data.keys(), key=lambda x: int(x.split('_')[1])):
-            pokemon_list = ", ".join(executive_f_data[trainer_id])
+            pokemon_list = ", ".join(describe_mon(*mon) for mon in executive_f_data[trainer_id])
             print(f"  {trainer_id:<12}: {pokemon_list}")
             
     except FileNotFoundError:
