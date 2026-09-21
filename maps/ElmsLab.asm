@@ -1250,14 +1250,16 @@ AideText_FollowerTip:
 	line "#MON likes"
 	cont "walking with you!"
 
-	para "Open your party and"
-	line "press SELECT on"
-	cont "another one to have"
-	cont "it come out instead."
+	para "Open your party"
+	line "and press SELECT"
+	cont "on a #MON"
+	cont "to have it follow"
+	cont "you around."
 
-	para "Press SELECT on the"
-	line "one following you"
-	cont "to send it back to"
+	para "Press SELECT on"
+	line "a #MON who's"
+	cont "following you to"
+	cont "send it back to"
 	cont "its BALL."
 	done
 
