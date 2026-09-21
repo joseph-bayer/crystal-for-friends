@@ -681,11 +681,14 @@ ENDM
 	ld a, [hl]
 	cp SPRITE_FOLLOWER
 	jr z, .no_npc
-; A wandering Pokemon is walked onto rather than bumped into -- standing on its tile is what
+; A wandering wild Pokemon is walked onto rather than bumped into -- standing on its tile is what
 ; starts the battle. Only the player passes through: other NPCs still route around it, the same
 ; way they do around the follower.
-	sub SPRITE_OW_MON
-	cp NUM_OW_MON_SLOTS
+;
+; The test is on the object's type, not on its sprite. The SPRITE_OW_MON_* slots also carry the
+; Pokemon that stand about as scenery or as script NPCs -- the Rocket base Electrode, the National
+; Park Persian, the Ilex Forest Farfetch'd -- and those are solid like any other NPC.
+	call .CheckWanderingWildMon
 	jr c, .no_npc
 
 	call .CheckStrengthBoulder
@@ -700,6 +703,32 @@ ENDM
 
 .no_bump
 	ld a, 2
+	ret
+
+.CheckWanderingWildMon:
+; in:  bc = an object struct
+; out: carry if it is a wandering wild Pokemon, the kind walking onto starts a battle with.
+;      Preserves bc.
+	push bc
+	ld hl, OBJECT_MAP_OBJECT_INDEX
+	add hl, bc
+	ld a, [hl]
+	inc a
+	jr z, .not_wandering_wild_mon ; -1: no map object behind this struct
+	dec a
+	call GetMapObject ; bc = the map object
+	ld hl, MAPOBJECT_TYPE
+	add hl, bc
+	ld a, [hl]
+	cp OBJECTTYPE_WILDMON
+	jr nz, .not_wandering_wild_mon
+	pop bc
+	scf
+	ret
+
+.not_wandering_wild_mon
+	pop bc
+	and a
 	ret
 
 .CheckStrengthBoulder:
