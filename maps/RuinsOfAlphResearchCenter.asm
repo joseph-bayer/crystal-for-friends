@@ -331,37 +331,35 @@ FossilScientist:
 	db "CANCEL@"
 
 FossilScientistIntroText:
-	text "Hiya!"
-
-	para "I am important"
-	line "doctor!"
+	text "Hi!"
 
 	para "I study here rare"
 	line "#MON fossils!"
 
-	para "You! Have you a"
+	para "You! Do you have a"
 	line "fossil for me?"
 	done
 
 FossilScientistNoText:
-	text "No! Is too bad!"
+	text "No? That's too"
+	line "bad!"
 
-	para "You come again!"
+	para "If you find a"
+	line "fossil, I'll be"
+	cont "here!"
 	done
 
 FossilScientistPartyFullText:
-	text "No! Is too bad!"
-
-	para "Your party is"
+	text "Your party is"
 	line "already full!"
 	done
 
 FossilScientistTimeText:
-	text "I take a little"
-	line "time!"
+	text "It'll take some"
+	line "time."
 
-	para "You go for walk a"
-	line "little while!"
+	para "Maybe go for a" 
+	line "walk."
 	done
 
 FossilScientistDoneText:
@@ -375,7 +373,7 @@ FossilScientistMonText:
 	text "Oh! That is"
 	line "a fossil!"
 
-	para "It is fossil of"
+	para "It's a fossil of"
 	line "@"
 	text_ram wStringBuffer3
 	text ", a"
@@ -390,8 +388,8 @@ FossilScientistMonText:
 	done
 
 FossilScientistGiveText:
-	text "So! You hurry and"
-	line "give me that!"
+	text "Quick!"
+	line "Hand it over!"
 
 	para "<PLAYER> handed"
 	line "over the fossil."
