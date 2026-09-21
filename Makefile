@@ -207,6 +207,10 @@ gfx/pokemon/arbok_rocket/normal.gbcpal: gfx/pokemon/arbok_rocket/front.gbcpal
 gfx/pokemon/crobat_rocket/normal.gbcpal: gfx/pokemon/crobat_rocket/front.gbcpal
 	tools/gbcpal $(tools/gbcpal) $@ $^
 
+# Rocket Electrode, same again
+gfx/pokemon/electrode_rocket/normal.gbcpal: gfx/pokemon/electrode_rocket/front.gbcpal
+	tools/gbcpal $(tools/gbcpal) $@ $^
+
 # Unown letters share one normal.gbcpal
 unown_pngs := $(wildcard gfx/pokemon/unown_*/front.png) $(wildcard gfx/pokemon/unown_*/back.png)
 $(foreach png, $(unown_pngs),\

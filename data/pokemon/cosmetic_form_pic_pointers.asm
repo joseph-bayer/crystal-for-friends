@@ -108,7 +108,7 @@ CosmeticFormPicPointersTable::
 	dw 0					; KRABBY (62) - no cosmetic forms
 	dw 0					; KINGLER (63) - no cosmetic forms
 	dw 0					; VOLTORB (64) - no cosmetic forms
-	dw 0					; ELECTRODE (65) - no cosmetic forms
+	dw ElectrodePicPointers			; ELECTRODE (65) - has cosmetic forms
 	dw 0					; EXEGGCUTE (66) - no cosmetic forms
 	dw 0					; EXEGGUTOR (67) - no cosmetic forms
 	dw 0					; CUBONE (68) - no cosmetic forms
@@ -309,6 +309,15 @@ CrobatPicPointers::
 	dba CrobatRocketFrontpic
 	dba CrobatBackpic ; shares Crobat's back, drawn in the form's colours
 	assert_table_length NUM_CROBAT_FORMS
+
+ElectrodePicPointers::
+; entries correspond to Electrode's forms, two apiece
+	table_width 3 * 2
+	dba ElectrodeFrontpic
+	dba ElectrodeBackpic
+	dba ElectrodeRocketFrontpic
+	dba ElectrodeBackpic ; shares Electrode's back, drawn in the form's colours
+	assert_table_length NUM_ELECTRODE_FORMS
 
 ArbokPicPointers::
 ; entries correspond to Arbok's forms, two apiece

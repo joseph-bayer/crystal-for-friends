@@ -15,6 +15,9 @@ WeezingRocketBitmask:		INCLUDE "gfx/pokemon/weezing_rocket/bitmask.asm"
 CrobatPlainBitmask:		INCLUDE "gfx/pokemon/crobat/bitmask.asm"
 CrobatRocketBitmask:		INCLUDE "gfx/pokemon/crobat_rocket/bitmask.asm"
 
+ElectrodePlainBitmask:		INCLUDE "gfx/pokemon/electrode/bitmask.asm"
+ElectrodeRocketBitmask:		INCLUDE "gfx/pokemon/electrode_rocket/bitmask.asm"
+
 ArbokPlainBitmask:		INCLUDE "gfx/pokemon/arbok/bitmask.asm"
 ArbokRocketBitmask:		INCLUDE "gfx/pokemon/arbok_rocket/bitmask.asm"
 

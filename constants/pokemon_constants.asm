@@ -341,6 +341,12 @@ DEF NUM_WEEZING_FORMS EQU const_value ; 2
   const CROBAT_ROCKET_FORM ; 1 -- Team Rocket's; every Rocket Crobat is one
 DEF NUM_CROBAT_FORMS EQU const_value ; 2
 
+; Electrode forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const ELECTRODE_PLAIN_FORM  ; 0
+  const ELECTRODE_ROCKET_FORM ; 1 -- Team Rocket's; the six in the Rocket Base
+DEF NUM_ELECTRODE_FORMS EQU const_value ; 2
+
 ; Pikachu forms
   const_def 0 ; Note that forms are now 0-indexed
   const PIKACHU_PLAIN_FORM  ; 0

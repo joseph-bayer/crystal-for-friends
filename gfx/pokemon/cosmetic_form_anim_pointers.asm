@@ -108,7 +108,7 @@ CosmeticFormAnimationPointerTable:
 	dw 0					; KRABBY (62) - no cosmetic forms
 	dw 0					; KINGLER (63) - no cosmetic forms
 	dw 0					; VOLTORB (64) - no cosmetic forms
-	dw 0					; ELECTRODE (65) - no cosmetic forms
+	dw ElectrodeAnimationPointers		; ELECTRODE (65) - has cosmetic forms
 	dw 0					; EXEGGCUTE (66) - no cosmetic forms
 	dw 0					; EXEGGUTOR (67) - no cosmetic forms
 	dw 0					; CUBONE (68) - no cosmetic forms
@@ -364,7 +364,7 @@ CosmeticFormIdleAnimationPointers:
 	dw 0                           		; KRABBY (62) - no cosmetic forms
 	dw 0                           		; KINGLER (63) - no cosmetic forms
 	dw 0                           		; VOLTORB (64) - no cosmetic forms
-	dw 0                           		; ELECTRODE (65) - no cosmetic forms
+	dw ElectrodeAnimationIdlePointers	; ELECTRODE (65) - has cosmetic forms
 	dw 0                           		; EXEGGCUTE (66) - no cosmetic forms
 	dw 0                           		; EXEGGUTOR (67) - no cosmetic forms
 	dw 0                           		; CUBONE (68) - no cosmetic forms
@@ -550,6 +550,12 @@ CrobatAnimationPointers:
 	dw CrobatRocketAnimation
 	assert_table_length NUM_CROBAT_FORMS
 
+ElectrodeAnimationPointers:
+	table_width 2
+	dw ElectrodePlainAnimation
+	dw ElectrodeRocketAnimation
+	assert_table_length NUM_ELECTRODE_FORMS
+
 ArbokAnimationPointers:
 	table_width 2
 	dw ArbokPlainAnimation
@@ -644,6 +650,12 @@ CrobatAnimationIdlePointers:
 	dw CrobatPlainAnimationIdle
 	dw CrobatRocketAnimationIdle
 	assert_table_length NUM_CROBAT_FORMS
+
+ElectrodeAnimationIdlePointers:
+	table_width 2
+	dw ElectrodePlainAnimationIdle
+	dw ElectrodeRocketAnimationIdle
+	assert_table_length NUM_ELECTRODE_FORMS
 
 ArbokAnimationIdlePointers:
 	table_width 2

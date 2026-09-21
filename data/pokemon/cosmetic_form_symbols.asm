@@ -108,7 +108,7 @@ CosmeticFormSymbols::
 	dw 0					; KRABBY (62)
 	dw 0					; KINGLER (63)
 	dw 0					; VOLTORB (64)
-	dw 0					; ELECTRODE (65)
+	dw ElectrodeFormSymbols			; ELECTRODE (65)
 	dw 0					; EXEGGCUTE (66)
 	dw 0					; EXEGGUTOR (67)
 	dw 0					; CUBONE (68)
@@ -292,6 +292,12 @@ CrobatFormSymbols:
 	db 0
 	db "<ROCKET_LOGO>"
 	assert_table_length NUM_CROBAT_FORMS
+
+ElectrodeFormSymbols:
+	table_width 1
+	db 0
+	db "<ROCKET_LOGO>"
+	assert_table_length NUM_ELECTRODE_FORMS
 
 ArbokFormSymbols:
 	table_width 1

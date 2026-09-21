@@ -15,6 +15,9 @@ WeezingRocketFrames:		INCLUDE "gfx/pokemon/weezing_rocket/frames.asm"
 CrobatPlainFrames:		INCLUDE "gfx/pokemon/crobat/frames.asm"
 CrobatRocketFrames:		INCLUDE "gfx/pokemon/crobat_rocket/frames.asm"
 
+ElectrodePlainFrames:		INCLUDE "gfx/pokemon/electrode/frames.asm"
+ElectrodeRocketFrames:		INCLUDE "gfx/pokemon/electrode_rocket/frames.asm"
+
 ArbokPlainFrames:		INCLUDE "gfx/pokemon/arbok/frames.asm"
 ArbokRocketFrames:		INCLUDE "gfx/pokemon/arbok_rocket/frames.asm"
 

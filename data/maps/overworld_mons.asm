@@ -84,7 +84,7 @@ OverworldMonObjects:
 
 	ow_mon_map TEAM_ROCKET_BASE_B2F
 	ow_mon DRAGONITE,  PLAIN_FORM ; Lance's
-	ow_mon ELECTRODE,  PLAIN_FORM ; all six of them
+	ow_mon ELECTRODE,  ELECTRODE_ROCKET_FORM ; all six of them
 
 	ow_mon_map TEAM_ROCKET_BASE_B3F
 	ow_mon MURKROW,    PLAIN_FORM

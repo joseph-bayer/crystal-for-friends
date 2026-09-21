@@ -108,7 +108,7 @@ CosmeticFormFramePointersTable:
 	dw 0					; KRABBY (62) - no cosmetic forms
 	dw 0					; KINGLER (63) - no cosmetic forms
 	dw 0					; VOLTORB (64) - no cosmetic forms
-	dw 0					; ELECTRODE (65) - no cosmetic forms
+	dw ElectrodeFramesPointers		; ELECTRODE (65) - has cosmetic forms
 	dw 0					; EXEGGCUTE (66) - no cosmetic forms
 	dw 0					; EXEGGUTOR (67) - no cosmetic forms
 	dw 0					; CUBONE (68) - no cosmetic forms
@@ -292,6 +292,12 @@ CrobatFramesPointers:
 	dw CrobatPlainFrames
 	dw CrobatRocketFrames
 	assert_table_length NUM_CROBAT_FORMS
+
+ElectrodeFramesPointers:
+	table_width 2
+	dw ElectrodePlainFrames
+	dw ElectrodeRocketFrames
+	assert_table_length NUM_ELECTRODE_FORMS
 
 ArbokFramesPointers:
 	table_width 2

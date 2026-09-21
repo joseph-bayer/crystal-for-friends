@@ -2529,13 +2529,16 @@ GruntMGroup:
 	db -1 ; end
 
 	next_list_item ; GRUNTM (10)
-	db "GRUNT@", TRAINERTYPE_NORMAL
+	db "GRUNT@", TRAINERTYPE_FORM
 	db 35
 	dw EXEGGUTOR
+	db PLAIN_FORM
 	db 35
 	dw ELECTRODE
+	db ELECTRODE_ROCKET_FORM
 	db 35
 	dw ELECTABUZZ
+	db PLAIN_FORM
 	db -1 ; end
 
 	next_list_item ; GRUNTM (11)

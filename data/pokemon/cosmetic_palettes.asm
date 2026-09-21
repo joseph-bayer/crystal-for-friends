@@ -48,6 +48,16 @@ INCBIN	"gfx/pokemon/crobat_rocket/normal.gbcpal", middle_colors ; built from the
 INCLUDE "gfx/pokemon/crobat/shiny.pal"
 	assert_table_length NUM_CROBAT_FORMS
 
+ElectrodePalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/electrode/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/electrode/shiny.pal"
+INCBIN	"gfx/pokemon/electrode_rocket/normal.gbcpal", middle_colors ; built from the front alone, see the Makefile
+; A shiny Rocket Electrode takes the ordinary shiny Electrode colours, by design.
+INCLUDE "gfx/pokemon/electrode/shiny.pal"
+	assert_table_length NUM_ELECTRODE_FORMS
+
 ArbokPalettes:
 	; 2 middle palettes, normal and shiny, with 2 colors each
 	table_width COLOR_SIZE * 2 * 2

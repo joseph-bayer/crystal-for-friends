@@ -108,7 +108,7 @@ CosmeticFormBitmaskPointersTable:
 	dw 0					; KRABBY (62) - no cosmetic forms
 	dw 0					; KINGLER (63) - no cosmetic forms
 	dw 0					; VOLTORB (64) - no cosmetic forms
-	dw 0					; ELECTRODE (65) - no cosmetic forms
+	dw ElectrodeBitmasksPointers		; ELECTRODE (65) - has cosmetic forms
 	dw 0					; EXEGGCUTE (66) - no cosmetic forms
 	dw 0					; EXEGGUTOR (67) - no cosmetic forms
 	dw 0					; CUBONE (68) - no cosmetic forms
@@ -292,6 +292,12 @@ CrobatBitmasksPointers:
 	dw CrobatPlainBitmask
 	dw CrobatRocketBitmask
 	assert_table_length NUM_CROBAT_FORMS
+
+ElectrodeBitmasksPointers:
+	table_width 2
+	dw ElectrodePlainBitmask
+	dw ElectrodeRocketBitmask
+	assert_table_length NUM_ELECTRODE_FORMS
 
 ArbokBitmasksPointers:
 	table_width 2

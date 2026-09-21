@@ -15,6 +15,9 @@ WeezingRocketAnimation:		INCLUDE "gfx/pokemon/weezing_rocket/anim.asm"
 CrobatPlainAnimation:		INCLUDE "gfx/pokemon/crobat/anim.asm"
 CrobatRocketAnimation:		INCLUDE "gfx/pokemon/crobat_rocket/anim.asm"
 
+ElectrodePlainAnimation:	INCLUDE "gfx/pokemon/electrode/anim.asm"
+ElectrodeRocketAnimation:	INCLUDE "gfx/pokemon/electrode_rocket/anim.asm"
+
 ArbokPlainAnimation:		INCLUDE "gfx/pokemon/arbok/anim.asm"
 ArbokRocketAnimation:		INCLUDE "gfx/pokemon/arbok_rocket/anim.asm"
 

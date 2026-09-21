@@ -725,6 +725,7 @@ CharmeleonRocketFrontpic:	INCBIN "gfx/pokemon/charmeleon_rocket/front.animated.2
 CharizardRocketFrontpic:	INCBIN "gfx/pokemon/charizard_rocket/front.animated.2bpp.lz"
 WeezingRocketFrontpic:		INCBIN "gfx/pokemon/weezing_rocket/front.animated.2bpp.lz"
 CrobatRocketFrontpic:		INCBIN "gfx/pokemon/crobat_rocket/front.animated.2bpp.lz"
+ElectrodeRocketFrontpic:	INCBIN "gfx/pokemon/electrode_rocket/front.animated.2bpp.lz"
 ShuckleShuckieNeutralFrontpic:	INCBIN "gfx/pokemon/shuckle/front.animated.2bpp.lz"
 ShuckleShuckieNeutralBackpic:	INCBIN "gfx/pokemon/shuckle/back.2bpp.lz"
 ShuckleShuckieHappyFrontpic:	INCBIN "gfx/pokemon/shuckle_shuckie_happy/front.animated.2bpp.lz"
