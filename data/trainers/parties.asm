@@ -890,9 +890,10 @@ ScientistGroup:
 	db -1 ; end
 
 	next_list_item ; SCIENTIST (2)
-	db "MITCH@", TRAINERTYPE_NORMAL
+	db "MITCH@", TRAINERTYPE_FORM
 	db 28
 	dw ELECTRODE
+	db ELECTRODE_ROCKET_FORM
 	db -1 ; end
 
 	next_list_item ; SCIENTIST (3)
