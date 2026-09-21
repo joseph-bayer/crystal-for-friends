@@ -117,7 +117,20 @@ ReadTrainerPartyPieces:
 
 	ld a, [wOtherTrainerType]
 	and TRAINERTYPE_FORM
-	jr z, .no_form
+	jr nz, .has_form
+	; No form byte in the trainer data, so this mon is plain. TryAddMonToParty seeds
+	; the form from wEnemyMonForm, which still holds the last battle's form (and its
+	; shiny flag), so it has to be cleared here or the mon inherits it.
+	push hl
+	ld a, [wOTPartyCount]
+	dec a
+	ld hl, wOTPartyMon1Form
+	call GetPartyLocation
+	ld [hl], PLAIN_FORM
+	pop hl
+	jr .no_form
+
+.has_form
 	; Has a form, update it in the party data
 	; Start by getting the location of this mon's form from the party data into de
 	push hl
