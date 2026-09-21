@@ -5,6 +5,7 @@
 	const PLAYERSHOUSE2F_BIG_DOLL
 if DEF(_DEBUG)
 	const PLAYERSHOUSE2F_DEBUG_TRADER
+	const PLAYERSHOUSE2F_DEBUG_WARPER
 endc
 
 PlayersHouse2F_MapScripts:
@@ -317,6 +318,30 @@ PlayersRadioText4:
 	done
 
 if DEF(_DEBUG)
+PlayersHouseDebugWarperScript:
+; Drops you straight into the Rocket Base B2F Electrode room, on the tile the B1F
+; stairs arrive at. Talk to him again from down there? No -- walk back up the stairs.
+;
+; He hands over the door passwords on the way, so neither locked door stops you: "hail Giovanni"
+; for the B2F transmitter room, and the Slowpoketail and Raticate tail pair for Giovanni's office
+; on B3F. The doors still have to be opened by talking to them, which is the thing worth testing.
+	faceplayer
+	opentext
+	writetext PlayersHouseDebugWarperText
+	waitbutton
+	closetext
+	setevent EVENT_LEARNED_HAIL_GIOVANNI
+	setevent EVENT_LEARNED_SLOWPOKETAIL
+	setevent EVENT_LEARNED_RATICATE_TAIL
+	warp TEAM_ROCKET_BASE_B2F, 3, 14
+	end
+
+PlayersHouseDebugWarperText:
+	text "DEBUG: to the"
+	line "ROCKET BASE B2F,"
+	cont "passwords and all."
+	done
+
 PlayersHouseDebugTraderScript:
 ; Reaches the trade screen on demand, as often as you like. See NPC_TRADE_DEBUG.
 ; The wrapping matters: trade draws into a text window, so without opentext around it the box
@@ -350,4 +375,5 @@ PlayersHouse2F_MapEvents:
 	object_event  0,  1, SPRITE_BIG_DOLL, SPRITEMOVEDATA_BIGDOLL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, PlayersHouseBigDollScript, EVENT_PLAYERS_HOUSE_2F_BIG_DOLL
 if DEF(_DEBUG)
 	object_event  2,  4, SPRITE_GENTLEMAN, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, PlayersHouseDebugTraderScript, -1
+	object_event  3,  4, SPRITE_ROCKET, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, PlayersHouseDebugWarperScript, -1
 endc
