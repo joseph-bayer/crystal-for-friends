@@ -8,6 +8,7 @@
 	const CIANWOODGYM_BOULDER2
 	const CIANWOODGYM_BOULDER3
 	const CIANWOODGYM_BOULDER4
+	const CIANWOODGYM_POLIWRATH
 
 CianwoodGym_MapScripts:
 	def_scene_scripts
@@ -316,6 +317,18 @@ BlackbeltLungAfterText:
 	cont "shattered…"
 	done
 
+CianwoodGymPoliwrathScript:
+	opentext
+	writetext CianwoodGymPoliwrathText
+	cry POLIWRATH
+	waitbutton
+	closetext
+	end
+
+CianwoodGymPoliwrathText:
+	text "POLIWRATH: Croak!"
+	done
+
 CianwoodGym_MapEvents:
 	db 0, 0 ; filler
 
@@ -339,3 +352,4 @@ CianwoodGym_MapEvents:
 	object_event  3,  7, SPRITE_BOULDER, SPRITEMOVEDATA_STRENGTH_BOULDER, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, CianwoodGymBoulder, -1
 	object_event  4,  7, SPRITE_BOULDER, SPRITEMOVEDATA_STRENGTH_BOULDER, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, CianwoodGymBoulder, -1
 	object_event  5,  7, SPRITE_BOULDER, SPRITEMOVEDATA_STRENGTH_BOULDER, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, CianwoodGymBoulder, -1
+	object_event  3,  1, SPRITE_OW_MON_1, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, CianwoodGymPoliwrathScript, -1

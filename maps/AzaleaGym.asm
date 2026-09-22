@@ -6,6 +6,7 @@
 	const AZALEAGYM_TWIN1
 	const AZALEAGYM_TWIN2
 	const AZALEAGYM_GYM_GUIDE
+	const AZALEAGYM_SCYTHER
 
 AzaleaGym_MapScripts:
 	def_scene_scripts
@@ -359,6 +360,18 @@ AzaleaGymGuideWinText:
 	cont "#MON is bright!"
 	done
 
+AzaleaGymScytherScript:
+	opentext
+	writetext AzaleaGymScytherText
+	cry SCYTHER
+	waitbutton
+	closetext
+	end
+
+AzaleaGymScytherText:
+	text "SCYTHER: Scythaah!"
+	done
+
 AzaleaGym_MapEvents:
 	db 0, 0 ; filler
 
@@ -380,3 +393,4 @@ AzaleaGym_MapEvents:
 	object_event  4, 10, SPRITE_TWIN, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_TRAINER, 1, TrainerTwinsAmyandmay1, -1
 	object_event  5, 10, SPRITE_TWIN, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_TRAINER, 1, TrainerTwinsAmyandmay2, -1
 	object_event  7, 13, SPRITE_GYM_GUIDE, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, AzaleaGymGuideScript, -1
+	object_event  4,  7, SPRITE_OW_MON_1, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, AzaleaGymScytherScript, -1

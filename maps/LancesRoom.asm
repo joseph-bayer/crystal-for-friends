@@ -2,6 +2,7 @@
 	const LANCESROOM_LANCE
 	const LANCESROOM_MARY
 	const LANCESROOM_OAK
+	const LANCESROOM_DRAGONITE
 
 LancesRoom_MapScripts:
 	def_scene_scripts
@@ -355,6 +356,18 @@ LancesRoomMaryNoInterviewText:
 	cont "the interview!"
 	done
 
+LancesRoomDragoniteScript:
+	opentext
+	writetext LancesRoomDragoniteText
+	cry DRAGONITE
+	waitbutton
+	closetext
+	end
+
+LancesRoomDragoniteText:
+	text "DRAGONITE: …"
+	done
+
 LancesRoom_MapEvents:
 	db 0, 0 ; filler
 
@@ -374,3 +387,4 @@ LancesRoom_MapEvents:
 	object_event  5,  3, SPRITE_LANCE, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, LancesRoomLanceScript, -1
 	object_event  4,  7, SPRITE_TEACHER, SPRITEMOVEDATA_STANDING_UP, 0, 0, -1, -1, PAL_NPC_GREEN, OBJECTTYPE_SCRIPT, 0, ObjectEvent, EVENT_LANCES_ROOM_OAK_AND_MARY
 	object_event  4,  7, SPRITE_OAK, SPRITEMOVEDATA_STANDING_UP, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, ObjectEvent, EVENT_LANCES_ROOM_OAK_AND_MARY
+	object_event  6,  3, SPRITE_OW_MON_1, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, LancesRoomDragoniteScript, -1

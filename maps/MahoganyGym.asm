@@ -6,6 +6,7 @@
 	const MAHOGANYGYM_ROCKER2
 	const MAHOGANYGYM_ROCKER3
 	const MAHOGANYGYM_GYM_GUIDE
+	const MAHOGANYGYM_PILOSWINE
 
 MahoganyGym_MapScripts:
 	def_scene_scripts
@@ -383,6 +384,18 @@ MahoganyGymGuideWinText:
 	line "eration gap!"
 	done
 
+MahoganyGymPiloswineScript:
+	opentext
+	writetext MahoganyGymPiloswineText
+	cry PILOSWINE
+	waitbutton
+	closetext
+	end
+
+MahoganyGymPiloswineText:
+	text "PILOSWINE: *SNORT*"
+	done
+
 MahoganyGym_MapEvents:
 	db 0, 0 ; filler
 
@@ -404,3 +417,4 @@ MahoganyGym_MapEvents:
 	object_event  5,  9, SPRITE_ROCKER, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_TRAINER, 1, TrainerBoarderBrad, -1
 	object_event  2,  4, SPRITE_ROCKER, SPRITEMOVEDATA_SPINRANDOM_FAST, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_TRAINER, 1, TrainerBoarderDouglas, -1
 	object_event  7, 15, SPRITE_GYM_GUIDE, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, MahoganyGymGuideScript, -1
+	object_event  4,  3, SPRITE_OW_MON_1, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, MahoganyGymPiloswineScript, -1

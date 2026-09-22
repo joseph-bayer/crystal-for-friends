@@ -1,5 +1,6 @@
 	object_const_def
 	const WILLSROOM_WILL
+	const WILLSROOM_XATU
 
 WillsRoom_MapScripts:
 	def_scene_scripts
@@ -127,6 +128,18 @@ WillScript_WillDefeatText:
 	line "of the ELITE FOUR."
 	done
 
+WillsRoomXatuScript:
+	opentext
+	writetext WillsRoomXatuText
+	cry XATU
+	waitbutton
+	closetext
+	end
+
+WillsRoomXatuText:
+	text "XATU: …"
+	done
+
 WillsRoom_MapEvents:
 	db 0, 0 ; filler
 
@@ -141,3 +154,4 @@ WillsRoom_MapEvents:
 
 	def_object_events
 	object_event  5,  7, SPRITE_WILL, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, WillScript_Battle, -1
+	object_event  4,  7, SPRITE_OW_MON_1, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, WillsRoomXatuScript, -1

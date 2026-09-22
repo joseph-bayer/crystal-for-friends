@@ -5,6 +5,7 @@
 	const FUCHSIAGYM_FUCHSIA_GYM_3
 	const FUCHSIAGYM_FUCHSIA_GYM_4
 	const FUCHSIAGYM_GYM_GUIDE
+	const FUCHSIAGYM_VENOMOTH
 
 FuchsiaGym_MapScripts:
 	def_scene_scripts
@@ -378,6 +379,18 @@ FuchsiaGymGuideWinText:
 	cont "from JOHTO!"
 	done
 
+FuchsiaGymVenomothScript:
+	opentext
+	writetext FuchsiaGymVenomothText
+	cry VENOMOTH
+	waitbutton
+	closetext
+	end
+
+FuchsiaGymVenomothText:
+	text "VENOMOTH: Kwee!"
+	done
+
 FuchsiaGym_MapEvents:
 	db 0, 0 ; filler
 
@@ -398,3 +411,4 @@ FuchsiaGym_MapEvents:
 	object_event  9,  4, SPRITE_FUCHSIA_GYM_3, SPRITEMOVEDATA_SPINRANDOM_FAST, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, PicnickerCindyScript, -1
 	object_event  4,  2, SPRITE_FUCHSIA_GYM_4, SPRITEMOVEDATA_SPINRANDOM_FAST, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, CamperBarryScript, -1
 	object_event  7, 15, SPRITE_GYM_GUIDE, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, FuchsiaGymGuideScript, -1
+	object_event  0, 10, SPRITE_OW_MON_1, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, FuchsiaGymVenomothScript, -1

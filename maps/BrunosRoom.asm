@@ -1,5 +1,6 @@
 	object_const_def
 	const BRUNOSROOM_BRUNO
+	const BRUNOSROOM_MACHAMP
 
 BrunosRoom_MapScripts:
 	def_scene_scripts
@@ -123,6 +124,18 @@ BrunoScript_BrunoDefeatText:
 	line "challenge!"
 	done
 
+BrunosRoomMachampScript:
+	opentext
+	writetext BrunosRoomMachampText
+	cry MACHAMP
+	waitbutton
+	closetext
+	end
+
+BrunosRoomMachampText:
+	text "MACHAMP: Champ!"
+	done
+
 BrunosRoom_MapEvents:
 	db 0, 0 ; filler
 
@@ -138,3 +151,4 @@ BrunosRoom_MapEvents:
 
 	def_object_events
 	object_event  5,  7, SPRITE_BRUNO, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_SCRIPT, 0, BrunoScript_Battle, -1
+	object_event  4,  7, SPRITE_OW_MON_1, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, BrunosRoomMachampScript, -1

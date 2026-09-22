@@ -1,5 +1,6 @@
 	object_const_def
 	const KOGASROOM_KOGA
+	const KOGASROOM_CROBAT
 
 KogasRoom_MapScripts:
 	def_scene_scripts
@@ -128,6 +129,18 @@ KogaScript_KogaDefeatText:
 	cont "abilities to test!"
 	done
 
+KogasRoomCrobatScript:
+	opentext
+	writetext KogasRoomCrobatText
+	cry CROBAT
+	waitbutton
+	closetext
+	end
+
+KogasRoomCrobatText:
+	text "CROBAT: Hwuh!"
+	done
+
 KogasRoom_MapEvents:
 	db 0, 0 ; filler
 
@@ -143,3 +156,4 @@ KogasRoom_MapEvents:
 
 	def_object_events
 	object_event  5,  7, SPRITE_KOGA, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, KogaScript_Battle, -1
+	object_event  4,  7, SPRITE_OW_MON_1, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, KogasRoomCrobatScript, -1

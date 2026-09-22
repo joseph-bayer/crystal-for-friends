@@ -4,6 +4,7 @@
 	const BLACKTHORNGYM1F_COOLTRAINER_M2
 	const BLACKTHORNGYM1F_COOLTRAINER_F
 	const BLACKTHORNGYM1F_GYM_GUIDE
+	const BLACKTHORNGYM1F_KINGDRA
 
 BlackthornGym1F_MapScripts:
 	def_scene_scripts
@@ -384,6 +385,18 @@ BlackthornGymGuideWinText:
 	cont "#MON CHAMPION!"
 	done
 
+BlackthornGym1FKingdraScript:
+	opentext
+	writetext BlackthornGym1FKingdraText
+	cry KINGDRA
+	waitbutton
+	closetext
+	end
+
+BlackthornGym1FKingdraText:
+	text "KINGDRA: Drah!"
+	done
+
 BlackthornGym1F_MapEvents:
 	db 0, 0 ; filler
 
@@ -408,3 +421,4 @@ BlackthornGym1F_MapEvents:
 	object_event  1, 14, SPRITE_COOLTRAINER_M, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_TRAINER, 3, TrainerCooltrainermPaul, -1
 	object_event  9,  2, SPRITE_COOLTRAINER_F, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_TRAINER, 1, TrainerCooltrainerfLola, -1
 	object_event  7, 15, SPRITE_GYM_GUIDE, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, BlackthornGymGuideScript, -1
+	object_event  4,  3, SPRITE_OW_MON_1, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, BlackthornGym1FKingdraScript, -1

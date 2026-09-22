@@ -6,6 +6,7 @@
 	const ECRUTEAKGYM_GRANNY2
 	const ECRUTEAKGYM_GYM_GUIDE
 	const ECRUTEAKGYM_GRAMPS
+	const ECRUTEAKGYM_GENGAR
 
 EcruteakGym_MapScripts:
 	def_scene_scripts
@@ -386,6 +387,18 @@ EcruteakGymClosedText:
 	para "Hohohoho."
 	done
 
+EcruteakGymGengarScript:
+	opentext
+	writetext EcruteakGymGengarText
+	cry GENGAR
+	waitbutton
+	closetext
+	end
+
+EcruteakGymGengarText:
+	text "GENGAR: Gegege…"
+	done
+
 EcruteakGym_MapEvents:
 	db 0, 0 ; filler
 
@@ -438,3 +451,4 @@ EcruteakGym_MapEvents:
 	object_event  7,  9, SPRITE_GRANNY, SPRITEMOVEDATA_STANDING_LEFT, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_TRAINER, 1, TrainerMediumGrace, -1
 	object_event  7, 15, SPRITE_GYM_GUIDE, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, EcruteakGymGuideScript, -1
 	object_event  4, 14, SPRITE_GRAMPS, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_GREEN, OBJECTTYPE_SCRIPT, 0, ObjectEvent, EVENT_ECRUTEAK_GYM_GRAMPS
+	object_event  4,  1, SPRITE_OW_MON_1, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, EcruteakGymGengarScript, -1

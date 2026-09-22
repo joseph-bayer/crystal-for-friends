@@ -5,6 +5,7 @@
 	const CERULEANGYM_SWIMMER_GIRL2
 	const CERULEANGYM_SWIMMER_GUY
 	const CERULEANGYM_GYM_GUIDE
+	const CERULEANGYM_STARMIE
 
 CeruleanGym_MapScripts:
 	def_scene_scripts
@@ -360,6 +361,18 @@ CeruleanGymGuideWinText:
 	cont "great battle!"
 	done
 
+CeruleanGymStarmieScript:
+	opentext
+	writetext CeruleanGymStarmieText
+	cry STARMIE
+	waitbutton
+	closetext
+	end
+
+CeruleanGymStarmieText:
+	text "STARMIE: Hyah!"
+	done
+
 CeruleanGym_MapEvents:
 	db 0, 0 ; filler
 
@@ -381,3 +394,4 @@ CeruleanGym_MapEvents:
 	object_event  1,  9, SPRITE_SWIMMER_GIRL, SPRITEMOVEDATA_STANDING_RIGHT, 0, 0, -1, -1, PAL_NPC_GREEN, OBJECTTYPE_TRAINER, 1, TrainerSwimmerfBriana, EVENT_TRAINERS_IN_CERULEAN_GYM
 	object_event  8,  9, SPRITE_SWIMMER_GUY, SPRITEMOVEDATA_STANDING_LEFT, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_TRAINER, 3, TrainerSwimmermParker, EVENT_TRAINERS_IN_CERULEAN_GYM
 	object_event  7, 13, SPRITE_GYM_GUIDE, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, CeruleanGymGuideScript, EVENT_TRAINERS_IN_CERULEAN_GYM
+	object_event  4,  3, SPRITE_OW_MON_1, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, CeruleanGymStarmieScript, -1

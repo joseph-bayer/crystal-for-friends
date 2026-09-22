@@ -5,6 +5,7 @@
 	const SAFFRONGYM_GRANNY2
 	const SAFFRONGYM_YOUNGSTER2
 	const SAFFRONGYM_GYM_GUIDE
+	const SAFFRONGYM_ALAKAZAM
 
 SaffronGym_MapScripts:
 	def_scene_scripts
@@ -288,6 +289,18 @@ SaffronGymGuideWinText:
 	line "fantastic battle!"
 	done
 
+SaffronGymAlakazamScript:
+	opentext
+	writetext SaffronGymAlakazamText
+	cry ALAKAZAM
+	waitbutton
+	closetext
+	end
+
+SaffronGymAlakazamText:
+	text "ALAKAZAM: …"
+	done
+
 SaffronGym_MapEvents:
 	db 0, 0 ; filler
 
@@ -337,3 +350,4 @@ SaffronGym_MapEvents:
 	object_event  3,  4, SPRITE_GRANNY, SPRITEMOVEDATA_SPINRANDOM_FAST, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_TRAINER, 2, TrainerMediumDoris, -1
 	object_event 17,  4, SPRITE_YOUNGSTER, SPRITEMOVEDATA_SPINRANDOM_FAST, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_TRAINER, 2, TrainerPsychicJared, -1
 	object_event  9, 14, SPRITE_GYM_GUIDE, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, SaffronGymGuideScript, -1
+	object_event 10,  8, SPRITE_OW_MON_1, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, SaffronGymAlakazamScript, -1

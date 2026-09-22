@@ -5,6 +5,7 @@
 	const CELADONGYM_BEAUTY
 	const CELADONGYM_TWIN1
 	const CELADONGYM_TWIN2
+	const CELADONGYM_VICTREEBEL
 
 CeladonGym_MapScripts:
 	def_scene_scripts
@@ -265,6 +266,19 @@ TwinsJoAndZoe2AfterBattleText:
 	line "much stronger!"
 	done
 
+CeladonGymVictreebelScript:
+	opentext
+	writetext CeladonGymVictreebelText
+	cry VICTREEBEL
+	waitbutton
+	closetext
+	end
+
+CeladonGymVictreebelText:
+	text "VICTREEBEL:"
+	line "Treee!"
+	done
+
 CeladonGym_MapEvents:
 	db 0, 0 ; filler
 
@@ -285,3 +299,4 @@ CeladonGym_MapEvents:
 	object_event  3,  5, SPRITE_BEAUTY, SPRITEMOVEDATA_STANDING_RIGHT, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_TRAINER, 2, TrainerBeautyJulia, -1
 	object_event  4, 10, SPRITE_TWIN, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_TRAINER, 1, TrainerTwinsJoAndZoe1, -1
 	object_event  5, 10, SPRITE_TWIN, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_TRAINER, 1, TrainerTwinsJoAndZoe2, -1
+	object_event  4,  3, SPRITE_OW_MON_1, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, CeladonGymVictreebelScript, -1

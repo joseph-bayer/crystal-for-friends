@@ -1,6 +1,7 @@
 	object_const_def
 	const OLIVINEGYM_JASMINE
 	const OLIVINEGYM_GYM_GUIDE
+	const OLIVINEGYM_STEELIX
 
 OlivineGym_MapScripts:
 	def_scene_scripts
@@ -203,6 +204,18 @@ OlivineGymGuidePreText:
 	cont "sionate."
 	done
 
+OlivineGymSteelixScript:
+	opentext
+	writetext OlivineGymSteelixText
+	cry STEELIX
+	waitbutton
+	closetext
+	end
+
+OlivineGymSteelixText:
+	text "STEELIX: Grehehe…"
+	done
+
 OlivineGym_MapEvents:
 	db 0, 0 ; filler
 
@@ -219,3 +232,4 @@ OlivineGym_MapEvents:
 	def_object_events
 	object_event  5,  3, SPRITE_JASMINE, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, OlivineGymJasmineScript, EVENT_OLIVINE_GYM_JASMINE
 	object_event  7, 13, SPRITE_GYM_GUIDE, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, OlivineGymGuideScript, -1
+	object_event  4,  3, SPRITE_OW_MON_1, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, OlivineGymSteelixScript, -1

@@ -5,6 +5,7 @@
 	const GOLDENRODGYM_BEAUTY1
 	const GOLDENRODGYM_BEAUTY2
 	const GOLDENRODGYM_GYM_GUIDE
+	const GOLDENRODGYM_MILTANK
 
 GoldenrodGym_MapScripts:
 	def_scene_scripts
@@ -377,6 +378,18 @@ GoldenrodGymGuideWinText:
 	cont "the ladies here."
 	done
 
+GoldenrodGymMiltankScript:
+	opentext
+	writetext GoldenrodGymMiltankText
+	cry MILTANK
+	waitbutton
+	closetext
+	end
+
+GoldenrodGymMiltankText:
+	text "MILTANK: Mooo!"
+	done
+
 GoldenrodGym_MapEvents:
 	db 0, 0 ; filler
 
@@ -398,3 +411,4 @@ GoldenrodGym_MapEvents:
 	object_event  0,  2, SPRITE_BEAUTY, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_TRAINER, 3, TrainerBeautyVictoria, -1
 	object_event 19,  5, SPRITE_BEAUTY, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_TRAINER, 3, TrainerBeautySamantha, -1
 	object_event  5, 15, SPRITE_GYM_GUIDE, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, GoldenrodGymGuideScript, -1
+	object_event  9,  3, SPRITE_OW_MON_1, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, GoldenrodGymMiltankScript, -1

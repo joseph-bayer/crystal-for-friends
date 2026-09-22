@@ -1,6 +1,7 @@
 	object_const_def
 	const VIRIDIANGYM_BLUE
 	const VIRIDIANGYM_GYM_GUIDE
+	const VIRIDIANGYM_PIDGEOT
 
 ViridianGym_MapScripts:
 	def_scene_scripts
@@ -167,6 +168,18 @@ ViridianGymGuideWinText:
 	line "tears to my eyes."
 	done
 
+ViridianGymPidgeotScript:
+	opentext
+	writetext ViridianGymPidgeotText
+	cry PIDGEOT
+	waitbutton
+	closetext
+	end
+
+ViridianGymPidgeotText:
+	text "PIDGEOT: Bi bibii!"
+	done
+
 ViridianGym_MapEvents:
 	db 0, 0 ; filler
 
@@ -183,3 +196,4 @@ ViridianGym_MapEvents:
 	def_object_events
 	object_event  5,  3, SPRITE_BLUE, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, ViridianGymBlueScript, EVENT_VIRIDIAN_GYM_BLUE
 	object_event  7, 13, SPRITE_GYM_GUIDE, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, ViridianGymGuideScript, EVENT_VIRIDIAN_GYM_BLUE
+	object_event  4,  3, SPRITE_OW_MON_1, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, ViridianGymPidgeotScript, -1

@@ -1,5 +1,6 @@
 	object_const_def
 	const KARENSROOM_KAREN
+	const KARENSROOM_HOUNDOOM
 
 KarensRoom_MapScripts:
 	def_scene_scripts
@@ -131,6 +132,18 @@ KarenScript_KarenDefeatText:
 	line "PION is waiting."
 	done
 
+KarensRoomHoundoomScript:
+	opentext
+	writetext KarensRoomHoundoomText
+	cry HOUNDOOM
+	waitbutton
+	closetext
+	end
+
+KarensRoomHoundoomText:
+	text "HOUNDOOM: Awoooo!"
+	done
+
 KarensRoom_MapEvents:
 	db 0, 0 ; filler
 
@@ -146,3 +159,4 @@ KarensRoom_MapEvents:
 
 	def_object_events
 	object_event  5,  7, SPRITE_KAREN, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, KarenScript_Battle, -1
+	object_event  4,  7, SPRITE_OW_MON_1, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, KarensRoomHoundoomScript, -1

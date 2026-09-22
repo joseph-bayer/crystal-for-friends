@@ -1,6 +1,7 @@
 	object_const_def
 	const SEAFOAMGYM_BLAINE
 	const SEAFOAMGYM_GYM_GUIDE
+	const SEAFOAMGYM_ARCANINE
 
 SeafoamGym_MapScripts:
 	def_scene_scripts
@@ -155,6 +156,18 @@ SeafoamGymGuideWinText2:
 	line "for a building."
 	done
 
+SeafoamGymArcanineScript:
+	opentext
+	writetext SeafoamGymArcanineText
+	cry ARCANINE
+	waitbutton
+	closetext
+	end
+
+SeafoamGymArcanineText:
+	text "ARCANINE: Boof!"
+	done
+
 SeafoamGym_MapEvents:
 	db 0, 0 ; filler
 
@@ -168,3 +181,4 @@ SeafoamGym_MapEvents:
 	def_object_events
 	object_event  5,  2, SPRITE_BLAINE, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_SCRIPT, 0, SeafoamGymBlaineScript, -1
 	object_event  6,  5, SPRITE_GYM_GUIDE, SPRITEMOVEDATA_STANDING_UP, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, SeafoamGymGuideScript, EVENT_SEAFOAM_GYM_GYM_GUIDE
+	object_event  4,  2, SPRITE_OW_MON_1, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, SeafoamGymArcanineScript, -1
