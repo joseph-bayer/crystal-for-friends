@@ -73,9 +73,9 @@ CosmeticFormIconPointersTable:
 	dw 0					; ABRA (3f) - no cosmetic forms
 	dw 0					; KADABRA (40) - no cosmetic forms
 	dw 0					; ALAKAZAM (41) - no cosmetic forms
-	dw 0					; MACHOP (42) - no cosmetic forms
-	dw 0					; MACHOKE (43) - no cosmetic forms
-	dw 0					; MACHAMP (44) - no cosmetic forms
+	dw 0					; MACHOP (42) - RB form reuses the species icon
+	dw 0					; MACHOKE (43) - RB form reuses the species icon
+	dw 0					; MACHAMP (44) - RB form reuses the species icon
 	dw 0					; BELLSPROUT (45) - no cosmetic forms
 	dw 0					; WEEPINBELL (46) - no cosmetic forms
 	dw 0					; VICTREEBEL (47) - no cosmetic forms
@@ -304,3 +304,6 @@ UnownIconPointers:
 	dw UnownYIcon
 	dw UnownZIcon
 	assert_table_length NUM_UNOWN
+
+
+

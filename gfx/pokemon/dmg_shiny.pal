@@ -1,0 +1,7 @@
+; The two middle greens of the Game Boy's pea green screen (8BAC0F and 306230), shared by every
+; RB form's shiny palette. Only the middle pair -- the light and dark ends stay white and black
+; as they are for every other mon, so a shiny RB form reads as green-shaded art rather than as
+; a Game Boy screen.
+
+	RGB 17, 21, 01
+	RGB 06, 12, 06

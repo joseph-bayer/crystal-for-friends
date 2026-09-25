@@ -15,7 +15,7 @@ INCLUDE "gfx/pokemon/pikachu/shiny.pal"
 INCBIN	"gfx/pokemon/pikachu/normal.gbcpal", middle_colors ; Fly: greyscale art, Pikachu's colors
 INCLUDE "gfx/pokemon/pikachu/shiny.pal"
 INCBIN	"gfx/pokemon/pikachu_rb/normal.gbcpal", middle_colors
-INCLUDE "gfx/pokemon/pikachu/shiny.pal"
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
 	assert_table_length NUM_PIKACHU_FORMS
 
 CharmeleonPalettes:
@@ -135,3 +135,30 @@ INCLUDE "gfx/pokemon/pinsir/shiny.pal"
 INCLUDE "gfx/pokemon/pinsir_slate/normal.pal"
 INCLUDE "gfx/pokemon/pinsir/shiny.pal"
 	assert_table_length NUM_PINSIR_FORMS
+
+MachopPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/machop/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/machop/shiny.pal"
+INCBIN	"gfx/pokemon/machop_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_MACHOP_FORMS
+
+MachokePalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/machoke/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/machoke/shiny.pal"
+INCBIN	"gfx/pokemon/machoke_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_MACHOKE_FORMS
+
+MachampPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/machamp/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/machamp/shiny.pal"
+INCBIN	"gfx/pokemon/machamp_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_MACHAMP_FORMS

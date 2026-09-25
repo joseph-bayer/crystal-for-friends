@@ -61,3 +61,12 @@ UnownZFrames:			INCLUDE "gfx/pokemon/unown_z/frames.asm"
 MagikarpPlainFrames:		INCLUDE "gfx/pokemon/magikarp/frames.asm"
 MagikarpXSFrames:		INCLUDE "gfx/pokemon/magikarp_xs/frames.asm"
 MagikarpXLFrames:		INCLUDE "gfx/pokemon/magikarp_xl/frames.asm"
+
+MachopPlainFrames:		INCLUDE "gfx/pokemon/machop/frames.asm"
+MachopRBFrames:		INCLUDE "gfx/pokemon/machop_rb/frames.asm"
+
+MachokePlainFrames:		INCLUDE "gfx/pokemon/machoke/frames.asm"
+MachokeRBFrames:		INCLUDE "gfx/pokemon/machoke_rb/frames.asm"
+
+MachampPlainFrames:		INCLUDE "gfx/pokemon/machamp/frames.asm"
+MachampRBFrames:		INCLUDE "gfx/pokemon/machamp_rb/frames.asm"

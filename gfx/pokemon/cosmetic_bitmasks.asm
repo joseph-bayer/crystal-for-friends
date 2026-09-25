@@ -61,3 +61,12 @@ UnownZBitmasks:			INCLUDE "gfx/pokemon/unown_z/bitmask.asm"
 MagikarpPlainBitmasks:		INCLUDE "gfx/pokemon/magikarp/bitmask.asm"
 MagikarpXSBitmasks:		INCLUDE "gfx/pokemon/magikarp_xs/bitmask.asm"
 MagikarpXLBitmasks:		INCLUDE "gfx/pokemon/magikarp_xl/bitmask.asm"
+
+MachopPlainBitmask:		INCLUDE "gfx/pokemon/machop/bitmask.asm"
+MachopRBBitmask:		INCLUDE "gfx/pokemon/machop_rb/bitmask.asm"
+
+MachokePlainBitmask:		INCLUDE "gfx/pokemon/machoke/bitmask.asm"
+MachokeRBBitmask:		INCLUDE "gfx/pokemon/machoke_rb/bitmask.asm"
+
+MachampPlainBitmask:		INCLUDE "gfx/pokemon/machamp/bitmask.asm"
+MachampRBBitmask:		INCLUDE "gfx/pokemon/machamp_rb/bitmask.asm"

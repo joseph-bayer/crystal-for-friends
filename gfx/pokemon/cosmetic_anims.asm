@@ -61,3 +61,12 @@ UnownZAnimation: 		INCLUDE "gfx/pokemon/unown_z/anim.asm"
 MagikarpPlainAnimation:		INCLUDE "gfx/pokemon/magikarp/anim.asm"
 MagikarpXSAnimation:		INCLUDE "gfx/pokemon/magikarp_xs/anim.asm"
 MagikarpXLAnimation:		INCLUDE "gfx/pokemon/magikarp_xl/anim.asm"
+
+MachopPlainAnimation:		INCLUDE "gfx/pokemon/machop/anim.asm"
+MachopRBAnimation:		INCLUDE "gfx/pokemon/machop_rb/anim.asm"
+
+MachokePlainAnimation:		INCLUDE "gfx/pokemon/machoke/anim.asm"
+MachokeRBAnimation:		INCLUDE "gfx/pokemon/machoke_rb/anim.asm"
+
+MachampPlainAnimation:		INCLUDE "gfx/pokemon/machamp/anim.asm"
+MachampRBAnimation:		INCLUDE "gfx/pokemon/machamp_rb/anim.asm"

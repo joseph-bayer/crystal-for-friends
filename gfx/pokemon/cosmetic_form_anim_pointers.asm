@@ -73,9 +73,9 @@ CosmeticFormAnimationPointerTable:
 	dw 0					; ABRA (3f) - no cosmetic forms
 	dw 0					; KADABRA (40) - no cosmetic forms
 	dw 0					; ALAKAZAM (41) - no cosmetic forms
-	dw 0					; MACHOP (42) - no cosmetic forms
-	dw 0					; MACHOKE (43) - no cosmetic forms
-	dw 0					; MACHAMP (44) - no cosmetic forms
+	dw MachopAnimationPointers		; MACHOP (42) - has cosmetic forms
+	dw MachokeAnimationPointers		; MACHOKE (43) - has cosmetic forms
+	dw MachampAnimationPointers		; MACHAMP (44) - has cosmetic forms
 	dw 0					; BELLSPROUT (45) - no cosmetic forms
 	dw 0					; WEEPINBELL (46) - no cosmetic forms
 	dw 0					; VICTREEBEL (47) - no cosmetic forms
@@ -329,9 +329,9 @@ CosmeticFormIdleAnimationPointers:
 	dw 0                           		; ABRA (3f) - no cosmetic forms
 	dw 0                           		; KADABRA (40) - no cosmetic forms
 	dw 0                           		; ALAKAZAM (41) - no cosmetic forms
-	dw 0                           		; MACHOP (42) - no cosmetic forms
-	dw 0                           		; MACHOKE (43) - no cosmetic forms
-	dw 0                           		; MACHAMP (44) - no cosmetic forms
+	dw MachopAnimationIdlePointers		; MACHOP (42) - has cosmetic forms
+	dw MachokeAnimationIdlePointers		; MACHOKE (43) - has cosmetic forms
+	dw MachampAnimationIdlePointers		; MACHAMP (44) - has cosmetic forms
 	dw 0                           		; BELLSPROUT (45) - no cosmetic forms
 	dw 0                           		; WEEPINBELL (46) - no cosmetic forms
 	dw 0                           		; VICTREEBEL (47) - no cosmetic forms
@@ -718,3 +718,39 @@ MagikarpAnimationIdlePointers:
 	dw MagikarpXSAnimationIdle
 	dw MagikarpXLAnimationIdle
 	assert_table_length NUM_MAGIKARP_FORMS
+
+MachopAnimationPointers:
+	table_width 2
+	dw MachopPlainAnimation
+	dw MachopRBAnimation
+	assert_table_length NUM_MACHOP_FORMS
+
+MachopAnimationIdlePointers:
+	table_width 2
+	dw MachopPlainAnimationIdle
+	dw MachopRBAnimationIdle
+	assert_table_length NUM_MACHOP_FORMS
+
+MachokeAnimationPointers:
+	table_width 2
+	dw MachokePlainAnimation
+	dw MachokeRBAnimation
+	assert_table_length NUM_MACHOKE_FORMS
+
+MachokeAnimationIdlePointers:
+	table_width 2
+	dw MachokePlainAnimationIdle
+	dw MachokeRBAnimationIdle
+	assert_table_length NUM_MACHOKE_FORMS
+
+MachampAnimationPointers:
+	table_width 2
+	dw MachampPlainAnimation
+	dw MachampRBAnimation
+	assert_table_length NUM_MACHAMP_FORMS
+
+MachampAnimationIdlePointers:
+	table_width 2
+	dw MachampPlainAnimationIdle
+	dw MachampRBAnimationIdle
+	assert_table_length NUM_MACHAMP_FORMS

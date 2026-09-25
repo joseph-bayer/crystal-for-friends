@@ -73,9 +73,9 @@ CosmeticFormSymbols::
 	dw 0					; ABRA (3f)
 	dw 0					; KADABRA (40)
 	dw 0					; ALAKAZAM (41)
-	dw 0					; MACHOP (42)
-	dw 0					; MACHOKE (43)
-	dw 0					; MACHAMP (44)
+	dw MachopFormSymbols			; MACHOP (42)
+	dw MachokeFormSymbols			; MACHOKE (43)
+	dw MachampFormSymbols			; MACHAMP (44)
 	dw 0					; BELLSPROUT (45)
 	dw 0					; WEEPINBELL (46)
 	dw 0					; VICTREEBEL (47)
@@ -310,3 +310,21 @@ GolbatFormSymbols:
 	db 0
 	db "<ROCKET_LOGO>"
 	assert_table_length NUM_GOLBAT_FORMS
+
+MachopFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_MACHOP_FORMS
+
+MachokeFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_MACHOKE_FORMS
+
+MachampFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_MACHAMP_FORMS

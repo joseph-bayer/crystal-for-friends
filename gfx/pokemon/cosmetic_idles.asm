@@ -61,3 +61,12 @@ UnownZAnimationIdle:			INCLUDE "gfx/pokemon/unown_z/anim_idle.asm"
 MagikarpPlainAnimationIdle:		INCLUDE "gfx/pokemon/magikarp/anim_idle.asm"
 MagikarpXSAnimationIdle:		INCLUDE "gfx/pokemon/magikarp_xs/anim_idle.asm"
 MagikarpXLAnimationIdle:		INCLUDE "gfx/pokemon/magikarp_xl/anim_idle.asm"
+
+MachopPlainAnimationIdle:		INCLUDE "gfx/pokemon/machop/anim_idle.asm"
+MachopRBAnimationIdle:		INCLUDE "gfx/pokemon/machop_rb/anim_idle.asm"
+
+MachokePlainAnimationIdle:		INCLUDE "gfx/pokemon/machoke/anim_idle.asm"
+MachokeRBAnimationIdle:		INCLUDE "gfx/pokemon/machoke_rb/anim_idle.asm"
+
+MachampPlainAnimationIdle:		INCLUDE "gfx/pokemon/machamp/anim_idle.asm"
+MachampRBAnimationIdle:		INCLUDE "gfx/pokemon/machamp_rb/anim_idle.asm"

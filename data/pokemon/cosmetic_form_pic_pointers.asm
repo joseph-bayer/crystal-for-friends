@@ -73,9 +73,9 @@ CosmeticFormPicPointersTable::
 	dw 0					; ABRA (3f) - no cosmetic forms
 	dw 0					; KADABRA (40) - no cosmetic forms
 	dw 0					; ALAKAZAM (41) - no cosmetic forms
-	dw 0					; MACHOP (42) - no cosmetic forms
-	dw 0					; MACHOKE (43) - no cosmetic forms
-	dw 0					; MACHAMP (44) - no cosmetic forms
+	dw MachopPicPointers			; MACHOP (42) - has cosmetic forms
+	dw MachokePicPointers			; MACHOKE (43) - has cosmetic forms
+	dw MachampPicPointers			; MACHAMP (44) - has cosmetic forms
 	dw 0					; BELLSPROUT (45) - no cosmetic forms
 	dw 0					; WEEPINBELL (46) - no cosmetic forms
 	dw 0					; VICTREEBEL (47) - no cosmetic forms
@@ -424,3 +424,30 @@ MagikarpPicPointers::
 	dba MagikarpXLFrontpic
 	dba MagikarpXLBackpic
 	assert_table_length NUM_MAGIKARP_FORMS
+
+MachopPicPointers::
+; entries correspond to Machop's forms, two apiece
+	table_width 3 * 2
+	dba MachopFrontpic
+	dba MachopBackpic
+	dba MachopRBFrontpic
+	dba MachopRBBackpic
+	assert_table_length NUM_MACHOP_FORMS
+
+MachokePicPointers::
+; entries correspond to Machoke's forms, two apiece
+	table_width 3 * 2
+	dba MachokeFrontpic
+	dba MachokeBackpic
+	dba MachokeRBFrontpic
+	dba MachokeRBBackpic
+	assert_table_length NUM_MACHOKE_FORMS
+
+MachampPicPointers::
+; entries correspond to Machamp's forms, two apiece
+	table_width 3 * 2
+	dba MachampFrontpic
+	dba MachampBackpic
+	dba MachampRBFrontpic
+	dba MachampRBBackpic
+	assert_table_length NUM_MACHAMP_FORMS

@@ -73,9 +73,9 @@ CosmeticFormFramePointersTable:
 	dw 0					; ABRA (3f) - no cosmetic forms
 	dw 0					; KADABRA (40) - no cosmetic forms
 	dw 0					; ALAKAZAM (41) - no cosmetic forms
-	dw 0					; MACHOP (42) - no cosmetic forms
-	dw 0					; MACHOKE (43) - no cosmetic forms
-	dw 0					; MACHAMP (44) - no cosmetic forms
+	dw MachopFramesPointers		; MACHOP (42) - has cosmetic forms
+	dw MachokeFramesPointers		; MACHOKE (43) - has cosmetic forms
+	dw MachampFramesPointers		; MACHAMP (44) - has cosmetic forms
 	dw 0					; BELLSPROUT (45) - no cosmetic forms
 	dw 0					; WEEPINBELL (46) - no cosmetic forms
 	dw 0					; VICTREEBEL (47) - no cosmetic forms
@@ -360,3 +360,21 @@ MagikarpFramesPointers:
 	dw MagikarpXSFrames
 	dw MagikarpXLFrames
 	assert_table_length NUM_MAGIKARP_FORMS
+
+MachopFramesPointers:
+	table_width 2
+	dw MachopPlainFrames
+	dw MachopRBFrames
+	assert_table_length NUM_MACHOP_FORMS
+
+MachokeFramesPointers:
+	table_width 2
+	dw MachokePlainFrames
+	dw MachokeRBFrames
+	assert_table_length NUM_MACHOKE_FORMS
+
+MachampFramesPointers:
+	table_width 2
+	dw MachampPlainFrames
+	dw MachampRBFrames
+	assert_table_length NUM_MACHAMP_FORMS

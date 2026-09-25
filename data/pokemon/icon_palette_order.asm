@@ -288,4 +288,5 @@ IconPaletteOrders:
 
 IconPaletteOrderForms:
 	dwbb ARBOK, ARBOK_ROCKET_FORM, 0
+	dwbb MACHOKE, MACHOKE_RB_FORM, 0
 	dw 0 ; terminator -- add entries above this line

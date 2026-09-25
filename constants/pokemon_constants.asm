@@ -356,6 +356,24 @@ DEF NUM_ELECTRODE_FORMS EQU const_value ; 2
   ; TODO: const PIKACHU_PARTY_HAT_FORM ; 4
 DEF NUM_PIKACHU_FORMS EQU const_value ; 4
 
+; Machop forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const MACHOP_PLAIN_FORM ; 0
+  const MACHOP_RB_FORM    ; 1 -- its Red/Blue sprite
+DEF NUM_MACHOP_FORMS EQU const_value ; 2
+
+; Machoke forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const MACHOKE_PLAIN_FORM ; 0
+  const MACHOKE_RB_FORM    ; 1 -- its Red/Blue sprite
+DEF NUM_MACHOKE_FORMS EQU const_value ; 2
+
+; Machamp forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const MACHAMP_PLAIN_FORM ; 0
+  const MACHAMP_RB_FORM    ; 1 -- its Red/Blue sprite
+DEF NUM_MACHAMP_FORMS EQU const_value ; 2
+
 ; Arbok forms
   const_def 0 ; Note that forms are now 0-indexed
   const ARBOK_PLAIN_FORM  ; 0

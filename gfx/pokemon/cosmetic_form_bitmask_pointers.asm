@@ -73,9 +73,9 @@ CosmeticFormBitmaskPointersTable:
 	dw 0					; ABRA (3f) - no cosmetic forms
 	dw 0					; KADABRA (40) - no cosmetic forms
 	dw 0					; ALAKAZAM (41) - no cosmetic forms
-	dw 0					; MACHOP (42) - no cosmetic forms
-	dw 0					; MACHOKE (43) - no cosmetic forms
-	dw 0					; MACHAMP (44) - no cosmetic forms
+	dw MachopBitmasksPointers		; MACHOP (42) - has cosmetic forms
+	dw MachokeBitmasksPointers		; MACHOKE (43) - has cosmetic forms
+	dw MachampBitmasksPointers		; MACHAMP (44) - has cosmetic forms
 	dw 0					; BELLSPROUT (45) - no cosmetic forms
 	dw 0					; WEEPINBELL (46) - no cosmetic forms
 	dw 0					; VICTREEBEL (47) - no cosmetic forms
@@ -360,3 +360,21 @@ MagikarpBitmasksPointers:
 	dw MagikarpXSBitmasks
 	dw MagikarpXLBitmasks
 	assert_table_length NUM_MAGIKARP_FORMS
+
+MachopBitmasksPointers:
+	table_width 2
+	dw MachopPlainBitmask
+	dw MachopRBBitmask
+	assert_table_length NUM_MACHOP_FORMS
+
+MachokeBitmasksPointers:
+	table_width 2
+	dw MachokePlainBitmask
+	dw MachokeRBBitmask
+	assert_table_length NUM_MACHOKE_FORMS
+
+MachampBitmasksPointers:
+	table_width 2
+	dw MachampPlainBitmask
+	dw MachampRBBitmask
+	assert_table_length NUM_MACHAMP_FORMS
