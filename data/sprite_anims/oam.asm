@@ -153,6 +153,12 @@ SpriteAnimOAMData:
 	spriteanimoam $00, .OAMData_PCMode                   ; SPRITE_ANIM_OAMSET_PC_MODE
 	spriteanimoam $00, .OAMData_PCMode2                  ; SPRITE_ANIM_OAMSET_PC_MODE2
 	spriteanimoam $00, .OAMData_PCPack                   ; SPRITE_ANIM_OAMSET_PC_PACK
+	spriteanimoam $00, .OAMData_MapMonIcon1              ; SPRITE_ANIM_OAMSET_MAP_MON_ICON_1_1
+	spriteanimoam $04, .OAMData_MapMonIcon1              ; SPRITE_ANIM_OAMSET_MAP_MON_ICON_1_2
+	spriteanimoam $00, .OAMData_MapMonIcon2              ; SPRITE_ANIM_OAMSET_MAP_MON_ICON_2_1
+	spriteanimoam $04, .OAMData_MapMonIcon2              ; SPRITE_ANIM_OAMSET_MAP_MON_ICON_2_2
+	spriteanimoam $00, .OAMData_MapMonIcon3              ; SPRITE_ANIM_OAMSET_MAP_MON_ICON_3_1
+	spriteanimoam $04, .OAMData_MapMonIcon3              ; SPRITE_ANIM_OAMSET_MAP_MON_ICON_3_2
 	assert_table_length NUM_SPRITE_ANIM_OAMSETS
 
 .OAMData_1x1_Palette0:
@@ -1150,3 +1156,24 @@ SpriteAnimOAMData:
 	dsprite  0,  0,  1,  0, $30, $4 | OAM_BANK1
 	dsprite  1,  0,  0,  0, $31, $4 | OAM_BANK1
 	dsprite  1,  0,  1,  0, $32, $4 | OAM_BANK1
+
+.OAMData_MapMonIcon1:
+	db 4
+	dbsprite -1, -1,  0,  0, $00, MAP_MON_ICON_FIRST_PAL + 0
+	dbsprite  0, -1,  0,  0, $01, MAP_MON_ICON_FIRST_PAL + 0
+	dbsprite -1,  0,  0,  0, $02, MAP_MON_ICON_FIRST_PAL + 0
+	dbsprite  0,  0,  0,  0, $03, MAP_MON_ICON_FIRST_PAL + 0
+
+.OAMData_MapMonIcon2:
+	db 4
+	dbsprite -1, -1,  0,  0, $00, MAP_MON_ICON_FIRST_PAL + 1
+	dbsprite  0, -1,  0,  0, $01, MAP_MON_ICON_FIRST_PAL + 1
+	dbsprite -1,  0,  0,  0, $02, MAP_MON_ICON_FIRST_PAL + 1
+	dbsprite  0,  0,  0,  0, $03, MAP_MON_ICON_FIRST_PAL + 1
+
+.OAMData_MapMonIcon3:
+	db 4
+	dbsprite -1, -1,  0,  0, $00, MAP_MON_ICON_FIRST_PAL + 2
+	dbsprite  0, -1,  0,  0, $01, MAP_MON_ICON_FIRST_PAL + 2
+	dbsprite -1,  0,  0,  0, $02, MAP_MON_ICON_FIRST_PAL + 2
+	dbsprite  0,  0,  0,  0, $03, MAP_MON_ICON_FIRST_PAL + 2

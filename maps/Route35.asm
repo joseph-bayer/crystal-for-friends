@@ -137,7 +137,7 @@ TrainerBugCatcherArnie:
 	opentext
 	checkflag ENGINE_ARNIE_READY_FOR_REMATCH
 	iftrue .WantsBattle
-	checkflag ENGINE_YANMA_SWARM
+	checkswarm SWARM_YANMA
 	iftrue .YanmaSwarming
 	checkcellnum PHONE_BUG_CATCHER_ARNIE
 	iftrue Route35NumberAcceptedM
@@ -493,4 +493,7 @@ Route35_MapEvents:
 ; Palette 0 so they take the mon's own colors, and the event flag is -1 -- whether one is standing
 ; here is decided by whether its slot holds a rolled mon, not by a flag.
 	object_event 17, 16, SPRITE_OW_MON_1, SPRITEMOVEDATA_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1
-	object_event  6, 27, SPRITE_OW_MON_2, SPRITEMOVEDATA_SWIM_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1
+	object_event 11,  8, SPRITE_OW_MON_2, SPRITEMOVEDATA_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1 ; TODO: placeholder position
+	object_event 16, 23, SPRITE_OW_MON_3, SPRITEMOVEDATA_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1 ; TODO: placeholder position
+; Water mon come after every grass slot -- RollOverworldMons fills grass first -- so this is slot 4.
+	object_event  6, 27, SPRITE_OW_MON_4, SPRITEMOVEDATA_SWIM_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1

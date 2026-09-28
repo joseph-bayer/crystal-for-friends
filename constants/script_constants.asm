@@ -269,11 +269,7 @@ DEF NUM_FRUIT_TREES EQU const_value - 1
 	const DECODESC_CONSOLE    ; 4
 DEF NUM_DECODESCS EQU const_value
 
-; swarm arguments
-; StoreSwarmMapIndices arguments
-	const_def
-	const SWARM_DUNSPARCE ; 0
-	const SWARM_YANMA     ; 1
+; swarm arguments: see constants/swarm_constants.asm
 
 ; ActivateFishingSwarm setval arguments
 	const_def

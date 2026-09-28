@@ -187,6 +187,10 @@ DEF LEGENDARY_SHINY_NUMERATOR EQU 128 ; 128/65536 = 1/512
 DEF BUG_CATCHING_CONTEST_SHINY_NUMERATOR EQU 128 ; 128/65536 = 1/512
 DEF SHINY_EGG_NUMERATOR EQU 16 ; 16/65536 = 1/4096  
 DEF OVERWORLD_MON_SHINY_NUMERATOR EQU 128 ; 128/65536 = 1/512, after the 1/256 check above
+; A mon that came from a swarm.
+; Quirk: In the grass a plain-form swarm that misses this still gets the ordinary roll afterwards, so it
+; lands at about 1/482 rather than exactly 1/512; a swarm with a cosmetic form gets this alone.
+DEF SWARM_SHINY_NUMERATOR EQU 128 ; 128/65536 = 1/512, after the 1/256 check above
 
 ; OW_PERK_EXTRA_SHINY skips the initial 1/256 check, so this numerator is out of 256 on its own rather
 ; than 65536. Done this way so it can be tweaked to higher odds above 1/256

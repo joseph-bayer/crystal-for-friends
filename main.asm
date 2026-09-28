@@ -293,13 +293,18 @@ SECTION "bank23", ROMX
 INCLUDE "engine/tilesets/timeofday_pals.asm"
 INCLUDE "engine/battle/battle_transition.asm"
 INCLUDE "engine/events/field_moves.asm"
-INCLUDE "engine/events/magnet_train.asm"
 INCLUDE "engine/battle/battlestart_copytilemapatonce.asm"
 INCLUDE "engine/sprite_anims/core.asm"
 INCLUDE "engine/gfx/mon_icons.asm"
 
 INCLUDE "data/pokemon/cosmetic_form_icon_pointers.asm"
 INCLUDE "gfx/cosmetic_icons.asm"
+
+
+SECTION "Magnet Train", ROMX
+
+; Moved out of bank23 to make room there. It is only reached through `special`, a far call.
+INCLUDE "engine/events/magnet_train.asm"
 
 
 SECTION "bank24", ROMX

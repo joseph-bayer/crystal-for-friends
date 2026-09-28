@@ -1010,9 +1010,9 @@ ENDM
 
 	const swarm_command ; $a0
 MACRO swarm
+; Starts a swarm: claims a wActiveSwarms slot for it. See data/wild/swarms.asm.
 	db swarm_command
-	db \1 ; flag
-	map_id \2 ; map
+	db \1 ; SWARM_* id
 ENDM
 
 	const halloffame_command ; $a1
@@ -1155,6 +1155,19 @@ ENDM
 	const silentstowfollower_command ; $b8
 MACRO silentstowfollower
 	db silentstowfollower_command
+ENDM
+
+	const checkswarm_command ; $b9
+MACRO checkswarm
+; wScriptVar = TRUE if that swarm is running
+	db checkswarm_command
+	db \1 ; SWARM_* id
+ENDM
+
+	const checkanyswarm_command ; $ba
+MACRO checkanyswarm
+; wScriptVar = TRUE if any swarm is running
+	db checkanyswarm_command
 ENDM
 
 DEF NUM_EVENT_COMMANDS EQU const_value

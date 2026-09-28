@@ -2940,7 +2940,14 @@ wMomItemTriggerBalance:: ds 3
 wDailyResetTimer:: dw
 wDailyFlags1:: db
 wDailyFlags2:: db
-wSwarmFlags:: db
+wDailyFlags3:: db
+; Which swarms are running, as SWARM_* row ids, 0 for an empty slot. Several can be active at
+; once as long as they are on different maps, or on the same map with different terrain -- the
+; phone calls and the radio each claim a slot. Cleared with the daily flags above.
+wActiveSwarms:: ds MAX_ACTIVE_SWARMS
+; The Collection Guild's pick for today, as a SWARM_* id, or 0 if it has not been rolled yet. It
+; only goes into wActiveSwarms once the player hears the broadcast. Cleared with the daily flags.
+wDailySwarm:: db
 wTimerEventStartDay:: db
 
 wFruitTreeFlags:: flag_array NUM_FRUIT_TREES
@@ -2966,8 +2973,6 @@ wDailyRematchFlags:: ds 4
 wDailyPhoneItemFlags:: ds 4
 wDailyPhoneTimeOfDayFlags:: ds 4
 wKenjiBreakTimer:: ds 2 ; Kenji
-wYanmaMapGroup:: db
-wYanmaMapNumber:: db
 wPlayerMonSelection:: ds 3
 	ds 2
 
@@ -3090,8 +3095,6 @@ wEggMon:: box_struct wEggMon
 wBugContestSecondPartySpecies:: db
 wContestMon:: party_struct wContestMon
 
-wDunsparceMapGroup:: db
-wDunsparceMapNumber:: db
 wFishingSwarmFlag:: db
 
 wRoamMon1:: roam_struct wRoamMon1
@@ -3139,6 +3142,15 @@ wOverworldMonRollBuffer:: ds OW_MON_ENCOUNTER_LENGTH
 wOverworldMonRollCount:: db   ; how many this map can have out at once
 wOverworldMonRollChance:: db  ; the chance each one shows up
 wOverworldMonRollSlot:: db    ; the 0-based slot being filled
+
+; The swarm on the terrain being rolled, worked out once per pass. The rows mask says which of this
+; time of day's roster rows it takes over; 0 when the map is not swarming on this terrain.
+wOverworldMonSwarmTerrain:: db ; SWARM_GRASS or SWARM_WATER
+wOverworldMonSwarmRows:: db
+wOverworldMonSwarmSpecies:: dw
+wOverworldMonSwarmForm:: db
+wOverworldMonRollFromSwarm:: db ; nonzero while .RollForm rolls a mon the swarm supplied
+wSwarmRespawnPending:: db ; set by RerollSwarmOverworldMons, spent by PlacePopulationAndSpawn
 
 ; The population this map carries, if any -- see docs/overworld_pokemon.md. Rolled on entry
 ; like everything above; nothing here survives a save.

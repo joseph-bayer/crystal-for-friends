@@ -258,24 +258,6 @@ ActivateFishingSwarm:
 	ld [wFishingSwarmFlag], a
 	ret
 
-StoreSwarmMapIndices::
-	ld a, c
-	and a
-	jr nz, .yanma
-; swarm dark cave violet entrance
-	ld a, d
-	ld [wDunsparceMapGroup], a
-	ld a, e
-	ld [wDunsparceMapNumber], a
-	ret
-
-.yanma
-	ld a, d
-	ld [wYanmaMapGroup], a
-	ld a, e
-	ld [wYanmaMapNumber], a
-	ret
-
 CheckPokerus:
 ; Check if a monster in your party has Pokerus
 	farcall _CheckPokerus

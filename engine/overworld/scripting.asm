@@ -245,6 +245,8 @@ ScriptCommandTable:
 	dw Script_appearfolloweronestep      ; b6
 	dw Script_savefollowercoords         ; b7
 	dw Script_silentstowfollower         ; b8
+	dw Script_checkswarm                 ; b9
+	dw Script_checkanyswarm              ; ba
 	assert_table_length NUM_EVENT_COMMANDS
 
 StartScript:
@@ -640,12 +642,20 @@ Script_fruittree:
 
 Script_swarm:
 	rst GetScriptByte
-	ld c, a
+	farjp StartSwarm
+
+Script_checkswarm:
 	rst GetScriptByte
-	ld d, a
-	rst GetScriptByte
-	ld e, a
-	farjp StoreSwarmMapIndices
+	farcall IsSwarmActive
+	jr SwarmCheckToScriptVar
+
+Script_checkanyswarm:
+	farcall CheckAnySwarm
+SwarmCheckToScriptVar:
+	sbc a ; carry ? $ff : 0
+	and TRUE
+	ld [wScriptVar], a
+	ret
 
 Script_trainertext:
 	rst GetScriptByte

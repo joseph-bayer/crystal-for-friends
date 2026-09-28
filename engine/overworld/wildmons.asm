@@ -212,6 +212,7 @@ TryWildEncounter::
 .no_battle
 	xor a ; BATTLETYPE_NORMAL
 	ld [wTempWildMonSpecies], a
+	ld [wTempWildMonForm], a
 	ld [wBattleType], a
 	ld a, 1
 	and a
@@ -278,6 +279,10 @@ ApplyCleanseTagEffectOnEncounterRate::
 	ret
 
 ChooseWildEncounter:
+; A swarm hands its form to the battle through wTempWildMonForm, and a roll that never becomes
+; a battle (Repel, say) must not leave one behind for whatever wild mon comes next.
+	xor a
+	ld [wTempWildMonForm], a
 	call LoadWildMonDataPointer
 	jr nc, .nowildbattle
 	call CheckEncounterRoamMon
@@ -320,6 +325,7 @@ ChooseWildEncounter:
 	ld b, 0
 	pop hl
 	add hl, bc ; this selects our mon
+	push bc ; c = the slot's offset, for ApplySwarmToWildSlot
 	ld a, [hli]
 	ld b, a
 ; If the Pokemon is encountered by surfing, we need to give the levels some variety.
@@ -347,6 +353,8 @@ ChooseWildEncounter:
 	ld a, [hli]
 	ld h, [hl]
 	ld l, a
+	pop bc
+	call ApplySwarmToWildSlot
 	call ValidateTempWildMonSpecies
 	jr c, .nowildbattle
 
@@ -419,10 +427,6 @@ LoadWildMonDataPointer:
 	jr z, _WaterWildmonLookup
 
 _GrassWildmonLookup:
-	ld hl, SwarmGrassWildMons
-	ld bc, GRASS_WILDDATA_LENGTH
-	call _SwarmWildmonCheck
-	ret c
 	ld hl, JohtoGrassWildMons
 	ld de, KantoGrassWildMons
 	call _JohtoWildmonCheck
@@ -430,10 +434,6 @@ _GrassWildmonLookup:
 	jr _NormalWildmonOK
 
 _WaterWildmonLookup:
-	ld hl, SwarmWaterWildMons
-	ld bc, WATER_WILDDATA_LENGTH
-	call _SwarmWildmonCheck
-	ret c
 	ld hl, JohtoWaterWildMons
 	ld de, KantoWaterWildMons
 	call _JohtoWildmonCheck
@@ -446,45 +446,6 @@ _JohtoWildmonCheck:
 	ret z
 	ld h, d
 	ld l, e
-	ret
-
-_SwarmWildmonCheck:
-	call CopyCurrMapDE
-	push hl
-	ld hl, wSwarmFlags
-	bit SWARMFLAGS_DUNSPARCE_SWARM_F, [hl]
-	pop hl
-	jr z, .CheckYanma
-	ld a, [wDunsparceMapGroup]
-	cp d
-	jr nz, .CheckYanma
-	ld a, [wDunsparceMapNumber]
-	cp e
-	jr nz, .CheckYanma
-	call LookUpWildmonsForMapDE
-	jr nc, _NoSwarmWildmon
-	scf
-	ret
-
-.CheckYanma:
-	push hl
-	ld hl, wSwarmFlags
-	bit SWARMFLAGS_YANMA_SWARM_F, [hl]
-	pop hl
-	jr z, _NoSwarmWildmon
-	ld a, [wYanmaMapGroup]
-	cp d
-	jr nz, _NoSwarmWildmon
-	ld a, [wYanmaMapNumber]
-	cp e
-	jr nz, _NoSwarmWildmon
-	call LookUpWildmonsForMapDE
-	jr nc, _NoSwarmWildmon
-	scf
-	ret
-
-_NoSwarmWildmon:
-	and a
 	ret
 
 _NormalWildmonOK:
@@ -1011,5 +972,380 @@ INCLUDE "data/wild/johto_grass.asm"
 INCLUDE "data/wild/johto_water.asm"
 INCLUDE "data/wild/kanto_grass.asm"
 INCLUDE "data/wild/kanto_water.asm"
-INCLUDE "data/wild/swarm_grass.asm"
-INCLUDE "data/wild/swarm_water.asm"
+GetSwarmRow::
+; in: a = a SWARM_* id
+; out: hl = that swarm's row in SwarmTable
+; Preserves bc and de.
+	push bc
+	dec a ; the ids are 1-based, because 0 means an empty wActiveSwarms slot
+	ld bc, SWARM_ENTRY_LENGTH
+	ld hl, SwarmTable
+	rst AddNTimes
+	pop bc
+	ret
+
+ApplySwarmToWildSlot:
+; A swarm takes some of its map's encounter slots (SWARM_GRASS_SLOTS / SWARM_WATER_SLOTS) and
+; substitutes its own species and form into them. The slot's level stands, so a swarm is
+; route-appropriate wherever it is put, and the map's encounter rate is untouched -- a swarm
+; changes what you meet, not how often.
+; in: hl = the rolled slot's species index, c = that slot's offset in its table (index * 3)
+; out: hl = the species to battle
+	push hl
+; the slot's index, from its offset
+	ld a, c
+	ld c, -1
+.div3
+	inc c
+	sub 3
+	jr nc, .div3
+; the terrain being rolled, and which slots its swarms take
+	call CheckOnWater
+	ld b, SWARM_WATER
+	ld a, SWARM_WATER_SLOTS
+	jr z, .got_terrain
+	ld b, SWARM_GRASS
+	ld a, SWARM_GRASS_SLOTS
+.got_terrain
+; is the rolled slot one of them?
+	inc c
+.find_bit
+	dec c
+	jr z, .test_bit
+	rrca
+	jr .find_bit
+
+.test_bit
+	rrca
+	jr nc, .not_swarmed
+; and is this map swarming, on that terrain?
+	call CopyCurrMapDE
+	call GetActiveSwarmForMap
+	jr nc, .not_swarmed
+
+	ld a, [hli]
+	ld e, a
+	ld a, [hli]
+	ld d, a ; de = the swarm's species
+	ld a, [hl]
+; The form reaches the battle through the same byte loadwildmon uses, which the battle takes whole
+; and skips its own shiny roll for. So the swarm's shininess is rolled into that byte here. A plain
+; form that comes out not shiny is 0, which leaves the battle's ordinary form and shiny rolls in
+; charge -- hence about 1/482 for a plain-form swarm rather than exactly 1/512.
+	call RollSwarmShiny
+	ld [wTempWildMonForm], a
+	pop hl ; the slot's own species, displaced
+	ld h, d
+	ld l, e
+	ret
+
+.not_swarmed
+	pop hl
+	ret
+
+RollSwarmShiny:
+; in: a = a swarm mon's form byte
+; out: a = that byte, with SHINY_MASK set if this one is shiny
+; The same two stages as every other shiny roll: a 1/256 gate, then SWARM_SHINY_NUMERATOR out of 256.
+; A row that is always shiny already carries the bit and keeps it.
+	ld b, a
+	and SHINY_MASK
+	jr nz, .done
+if DEF(_DEBUG) && SWARM_DEBUG_FORCE_SHINY
+	jr .shiny
+endc
+	call Random ; preserves bc
+	and a
+	jr nz, .done ; 255/256 not shiny
+	call Random
+	cp SWARM_SHINY_NUMERATOR
+	jr nc, .done
+.shiny
+	ld a, b
+	or SHINY_MASK
+	ret
+
+.done
+	ld a, b
+	ret
+
+DailySwarmBroadcast::
+; For the Collection Guild's radio station. Rolls today's swarm if that has not happened yet,
+; and loads its names for the broadcast: the species into wMonOrItemNameBuffer and its map's
+; landmark into wStringBuffer1. The swarm only starts once the player hears where it is -- see
+; StartDailySwarm.
+; out: carry if there is a swarm to announce
+	ld a, [wDailySwarm]
+	and a
+	jr nz, .rolled
+
+; Every studied row is equally likely. Count the ones on offer, pick a number below that, then
+; walk the rows again to find it.
+	lb bc, FIRST_STUDIED_SWARM, 0 ; b = the row, c = how many are on offer
+.count
+	ld a, b
+	call .IsOnOffer
+	jr nc, .count_next
+	inc c
+.count_next
+	inc b
+	ld a, b
+	cp NUM_SWARMS + 1
+	jr c, .count
+
+	ld a, c
+	and a
+	ret z ; nothing to report, e.g. before the Elite Four if every row is in Kanto
+	call RandomRange
+	ld c, a
+	ld b, FIRST_STUDIED_SWARM
+.pick
+	ld a, b
+	call .IsOnOffer
+	jr nc, .pick_next
+	ld a, c
+	and a
+	jr z, .picked
+	dec c
+.pick_next
+	inc b
+	jr .pick
+
+.picked
+	ld a, b
+	ld [wDailySwarm], a
+.rolled
+	call GetSwarmRow
+	ld a, [hli]
+	push hl
+	ld h, [hl]
+	ld l, a
+	call GetPokemonIDFromIndex
+	ld [wNamedObjectIndex], a
+	call GetPokemonName
+	ld hl, wStringBuffer1
+	ld de, wMonOrItemNameBuffer
+	ld bc, MON_NAME_LENGTH
+	rst CopyBytes
+	pop hl
+	inc hl
+	inc hl ; past the form, to the map
+	ld a, [hli]
+	ld b, a
+	ld c, [hl]
+	call GetWorldMapLocation
+	ld e, a
+	farcall GetLandmarkName
+	scf
+	ret
+
+.IsOnOffer:
+; in: a = a SWARM_* id
+; out: carry if the Guild can report it. Kanto's rows wait for the Elite Four.
+; Preserves bc.
+	push bc
+	call GetSwarmRow
+	inc hl
+	inc hl
+	inc hl ; past the species and form, to the map
+	ld a, [hli]
+	ld b, a
+	ld c, [hl]
+	call GetWorldMapLocation
+	cp KANTO_LANDMARK
+	jr c, .on_offer
+	ld de, EVENT_BEAT_ELITE_FOUR
+	ld b, CHECK_FLAG
+	call EventFlagAction
+	ld a, c
+	and a
+	jr z, .done
+.on_offer
+	scf
+.done
+	pop bc
+	ret
+
+StartDailySwarm::
+; The player has heard where today's swarm is, so it begins.
+	ld a, [wDailySwarm]
+	and a
+	ret z
+	; fallthrough
+
+StartSwarm::
+; in: a = a SWARM_* id
+; Claims a free wActiveSwarms slot for it. Does nothing if that swarm is already running, if its
+; map already has a swarm of the same terrain, or if every slot is taken.
+	ld c, a
+	call IsSwarmActive
+	ret c
+
+	ld a, c
+	call GetSwarmRow
+	inc hl
+	inc hl
+	inc hl ; past the species and form, to the map
+	ld a, [hli]
+	ld d, a
+	ld a, [hli]
+	ld e, a
+	ld b, [hl] ; its terrain
+	call GetActiveSwarmForMap ; preserves bc
+	ret c
+
+	ld hl, wActiveSwarms
+	ld b, MAX_ACTIVE_SWARMS
+.find_free_slot
+	ld a, [hl]
+	and a
+	jr z, .claim
+	inc hl
+	dec b
+	jr nz, .find_free_slot
+	ret
+
+.claim
+	ld [hl], c
+	ret
+
+GetActiveSwarmIcon::
+; For the Pokégear map, which lives in another bank and so cannot read a SwarmTable row itself.
+; in: a = a wActiveSwarms slot, 0-based
+; out: carry, hl = the swarm's species index, d = its form byte, e = its map's landmark, if that
+; slot holds a swarm
+	ld e, a
+	ld d, 0
+	ld hl, wActiveSwarms
+	add hl, de
+	ld a, [hl]
+	and a
+	ret z ; an empty slot; `and a` has cleared carry
+
+	call GetSwarmRow
+	ld a, [hli]
+	ld e, a
+	ld a, [hli]
+	ld d, a
+	push de ; the species
+	ld a, [hli]
+	push af ; the form
+	ld a, [hli]
+	ld b, a
+	ld c, [hl]
+	call GetWorldMapLocation
+	ld e, a
+	pop af
+	ld d, a
+	pop hl
+	scf
+	ret
+
+IsSwarmActive::
+; in: a = a SWARM_* id
+; out: carry if it is running
+	ld hl, wActiveSwarms
+	ld b, MAX_ACTIVE_SWARMS
+.loop
+	cp [hl] ; an empty slot is 0, which no id is
+	jr z, .yes
+	inc hl
+	dec b
+	jr nz, .loop
+	and a
+	ret
+
+.yes
+	scf
+	ret
+
+CheckAnySwarm::
+; out: carry if any swarm is running
+	ld hl, wActiveSwarms
+	ld b, MAX_ACTIVE_SWARMS
+	xor a
+.loop
+	or [hl]
+	inc hl
+	dec b
+	jr nz, .loop
+	and a
+	ret z
+	scf
+	ret
+
+GetSwarmSpeciesForMap::
+; For the overworld roll, which lives in another bank and so cannot read a SwarmTable row itself.
+; in: d = map group, e = map number, b = SWARM_GRASS or SWARM_WATER
+; out: carry, de = the swarm's species and a = its form byte, if that map is swarming there
+	call GetActiveSwarmForMap
+	ret nc
+	ld a, [hli]
+	ld e, a
+	ld a, [hli]
+	ld d, a
+	ld a, [hl]
+	scf
+	ret
+
+IsMapSwarming::
+; in: d = map group, e = map number
+; out: carry if a swarm of either terrain is running there
+	ld b, SWARM_GRASS
+	call GetActiveSwarmForMap
+	ret c
+	ld b, SWARM_WATER
+	; fallthrough
+
+GetActiveSwarmForMap::
+; Find the swarm running on a map, if one is.
+; in: d = map group, e = map number, b = SWARM_GRASS or SWARM_WATER
+; out: carry and hl = its row in SwarmTable, or no carry
+; The terrain is matched as well as the map, so a grass swarm never reaches a map's surf slots
+; or its swimming overworld mon, and a water swarm never reaches its grass ones.
+	push de
+	push bc
+	ld hl, wActiveSwarms
+	ld c, MAX_ACTIVE_SWARMS
+.loop
+	ld a, [hl]
+	and a
+	jr z, .next ; an empty slot
+
+	push hl ; the slot being read
+	call GetSwarmRow
+	push hl ; the row
+	inc hl
+	inc hl
+	inc hl ; past the species and form, to the map
+	ld a, [hli]
+	cp d
+	jr nz, .no_match
+	ld a, [hli]
+	cp e
+	jr nz, .no_match
+	ld a, [hl]
+	cp b
+	jr nz, .no_match
+
+	pop hl ; the row, which is the answer
+	pop de ; the slot, no longer needed
+	pop bc
+	pop de
+	scf
+	ret
+
+.no_match
+	pop hl ; the row
+	pop hl ; the slot
+.next
+	inc hl
+	dec c
+	jr nz, .loop
+
+	pop bc
+	pop de
+	and a
+	ret
+
+INCLUDE "data/wild/swarms.asm"

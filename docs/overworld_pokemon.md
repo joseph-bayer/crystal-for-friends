@@ -5,6 +5,11 @@ objects, and the ones that now wander a route and can be walked into.
 
 Two features, built in that order, sharing one mechanism.
 
+> **Not yet updated for swarms.** Swarms (`constants/swarm_constants.asm`, `data/wild/swarms.asm`)
+> now substitute into route rosters in `RollOverworldMons`, and a swarming route rerolls its mon after
+> every battle — respawned through `PlacePopulationAndSpawn`, which this document still describes as
+> population-only. The rest of the document is accurate for maps without a swarm.
+
 ## Contents
 
 - [Why they used to be the wrong species](#why-they-used-to-be-the-wrong-species)

@@ -519,8 +519,109 @@ PokegearMap_Init:
 	ld [wPokegearMapCursorObjectPointer], a
 	ld a, b
 	ld [wPokegearMapCursorObjectPointer + 1], a
+	call PokegearMap_InitSwarmIcons
 	ld hl, wJumptableIndex
 	inc [hl]
+	ret
+
+PokegearMap_InitSwarmIcons:
+; Every active swarm on the region being shown gets its mon's icon over its landmark. Each
+; wActiveSwarms slot draws into the icon slot of the same number, so an empty slot, or a swarm on
+; the other region, just leaves its icon slot unused. The icons are made after the cursor, which
+; puts them later in OAM, so the cursor and the player icon both draw over them.
+	assert NUM_MAP_MON_ICONS >= MAX_ACTIVE_SWARMS
+	xor a
+.loop
+	push af
+	farcall GetActiveSwarmIcon
+	jr nc, .next
+	ld a, e
+	call .IsOnShownMap
+	jr nc, .next
+	pop af
+	push af
+	call PokegearMap_InitMonIcon
+.next
+	pop af
+	inc a
+	cp MAX_ACTIVE_SWARMS
+	jr c, .loop
+	farcall ApplyOBPals ; the screen's palettes were pushed before the icons existed
+	ld a, TRUE
+	ldh [hCGBPalUpdate], a
+	ret
+
+.IsOnShownMap:
+; in: a = a landmark
+; out: carry if it is on the region this card is showing
+	cp KANTO_LANDMARK
+	ld a, [wJumptableIndex] ; still the init state here
+	jr nc, .kanto
+	cp POKEGEARSTATE_JOHTOMAPINIT
+	jr .compare
+
+.kanto
+	cp POKEGEARSTATE_KANTOMAPINIT
+.compare
+	scf
+	ret z
+	and a
+	ret
+
+PokegearMap_InitMonIcon:
+; Put a mon's icon on the map, bobbing through both of its frames in its own colors. Written for
+; the swarms, and meant for anything else the map marks with a mon.
+; in: a = the icon slot (0 to NUM_MAP_MON_ICONS - 1), hl = species index, d = form byte,
+;     e = landmark
+	push de ; the landmark
+	push af ; the slot
+	ld a, d
+	ld [wForm], a
+	call GetPokemonIDFromIndex
+	ld [wCurIcon], a
+
+	pop af
+	push af
+	call .FirstTile
+	farcall GetIcon_a ; both frames, reading wCurIcon and wForm
+
+	pop af
+	push af
+	add MAP_MON_ICON_FIRST_PAL
+	ld e, a
+	ld bc, wForm
+	ld a, [wCurIcon]
+	farcall LoadMonIconOBPal
+
+	pop af
+	push af
+	depixel 0, 0
+	add SPRITE_ANIM_OBJ_MAP_MON_ICON_1 ; its frames carry the slot's palette
+	call InitSpriteAnimStruct
+	pop af
+	call .FirstTile
+	ld hl, SPRITEANIMSTRUCT_TILE_ID
+	add hl, bc
+	ld [hl], a
+
+	pop de
+	push bc
+	farcall GetLandmarkCoords
+	pop bc
+	ld hl, SPRITEANIMSTRUCT_XCOORD
+	add hl, bc
+	ld [hl], e
+	ld hl, SPRITEANIMSTRUCT_YCOORD
+	add hl, bc
+	ld [hl], d
+	ret
+
+.FirstTile:
+; a = the slot -> a = its first tile
+	add a
+	add a
+	add a
+	add MAP_MON_ICON_FIRST_TILE
 	ret
 
 PokegearMap_KantoMap:
@@ -1360,6 +1461,7 @@ RadioChannels:
 	dbw 28, .PokemonMusic           ; 07.5
 	dbw 32, .LuckyChannel           ; 08.5
 	dbw 40, .BuenasPassword         ; 10.5
+	dbw 48, LoadStation_SwarmRadio  ; 12.5, nationwide
 	dbw 52, .RuinsOfAlphRadio       ; 13.5
 	dbw 64, .PlacesAndPeople        ; 16.5
 	dbw 72, .LetsAllSing            ; 18.5
@@ -1610,6 +1712,17 @@ LoadStation_PokeFluteRadio:
 	ld de, PokeFluteStationName
 	ret
 
+LoadStation_SwarmRadio:
+	ld a, SWARM_RADIO
+	ld [wCurRadioLine], a
+	xor a
+	ld [wNumRadioLinesPrinted], a
+	ld a, BANK(PlayRadioShow)
+	ld hl, PlayRadioShow
+	call Radio_BackUpFarCallParams
+	ld de, SwarmRadioName
+	ret
+
 LoadStation_EvolutionRadio:
 	ld a, EVOLUTION_RADIO
 	ld [wCurRadioLine], a
@@ -1688,6 +1801,7 @@ UnownStationName:     db "?????@"
 PlacesAndPeopleName:  db "Places & People@"
 LetsAllSingName:      db "Let's All Sing!@"
 PokeFluteStationName: db "# FLUTE@"
+SwarmRadioName:       db "Guild Swarm News@"
 
 _TownMap:
 	ld hl, wOptions

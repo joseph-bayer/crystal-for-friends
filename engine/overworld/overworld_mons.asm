@@ -324,8 +324,12 @@ RollOverworldMons::
 	ld c, a ; the first slot this map's static mon do not own
 	call .RollPopulation
 	ret c ; a population map fills its own slots and has no grass or water roster
+	ld a, SWARM_GRASS
+	ld [wOverworldMonSwarmTerrain], a
 	ld hl, OverworldWildMonsGrass
 	call .RollTable
+	ld a, SWARM_WATER
+	ld [wOverworldMonSwarmTerrain], a
 	ld hl, OverworldWildMonsWater
 ; fallthrough
 
@@ -356,6 +360,11 @@ RollOverworldMons::
 	jr nz, .daytime_loop
 
 .at_roster
+	push bc
+	push hl
+	call .GetSwarmedRows
+	pop hl
+	pop bc
 	ld a, [wOverworldMonRollCount]
 	and a
 	ret z
@@ -417,6 +426,16 @@ RollOverworldMons::
 	jr nz, .weight_loop
 
 .got_entry
+; Is this a row the swarm has taken? Worked out now, because the copy below reuses d.
+	ld a, NUM_OW_WILDMON - 1
+	sub d ; the row's index in the roster
+	call .RowBit
+	ld b, a
+	ld a, [wOverworldMonSwarmRows]
+	and b
+	ld b, a ; nonzero if the swarm has it; the copy leaves b alone
+	ld [wOverworldMonRollFromSwarm], a ; and .RollForm rolls its shininess at the swarm's rate
+
 ; Copy the roster entry into the buffer. The whole encounter is assembled there and published in
 ; one copy, so nothing can ever read a half-rolled mon.
 	inc hl ; past the weight
@@ -437,10 +456,24 @@ RollOverworldMons::
 	ld a, [hl]
 	ld [wOverworldMonRollBuffer + OW_MON_MOVE + 1], a
 
+; A swarm takes the row over: its own species and form, with the row's level, perks and move, so
+; it fits the route the same way it does in the grass. .RollForm below still rolls shininess.
+	ld a, b
+	and a
+	jr z, .FinishRoll
+	ld a, [wOverworldMonSwarmSpecies]
+	ld [wOverworldMonRollBuffer + OW_MON_SPECIES], a
+	ld a, [wOverworldMonSwarmSpecies + 1]
+	ld [wOverworldMonRollBuffer + OW_MON_SPECIES + 1], a
+	ld a, [wOverworldMonSwarmForm]
+	ld [wOverworldMonRollBuffer + OW_MON_FORM], a
+
 .FinishRoll:
 ; The shared tail: form and shininess, DVs, item, then publish. A population member joins here
 ; with its species, level, form and perks already in the buffer.
 	call .RollForm
+	xor a
+	ld [wOverworldMonRollFromSwarm], a ; used up, and never set for a population member
 	call .RollDVs
 	call .RollItem
 
@@ -472,6 +505,115 @@ RollOverworldMons::
 	ld [hl], a
 	ret
 
+.GetSwarmedRows:
+; Which of this roster's rows a swarm takes over: the heaviest first, adding rows while their
+; combined weight keeps moving nearer SWARM_ENCOUNTER_RATE, and never all four -- one row always
+; stays the route's own. Rows are weighted, not fixed-odds slots, so this is how the overworld
+; lands on the same rate the grass does with its slot masks.
+; in: hl = this time of day's roster
+; out: wOverworldMonSwarmRows, and the swarm's species and form when there is one
+	xor a
+	ld [wOverworldMonSwarmRows], a
+	push hl
+	ld a, [wMapGroup]
+	ld d, a
+	ld a, [wMapNumber]
+	ld e, a
+	ld a, [wOverworldMonSwarmTerrain]
+	ld b, a
+	farcall GetSwarmSpeciesForMap
+	pop hl
+	ret nc
+	ld [wOverworldMonSwarmForm], a
+	ld a, e
+	ld [wOverworldMonSwarmSpecies], a
+	ld a, d
+	ld [wOverworldMonSwarmSpecies + 1], a
+
+	lb bc, NUM_OW_WILDMON - 1, 0 ; at most this many rows; the weight taken so far
+.take_loop
+; Find the heaviest row not yet taken: e = its index, d = its weight. A tie keeps the earlier row,
+; and a row of no weight is never taken.
+	push bc
+	push hl
+	lb de, 0, -1
+	ld c, 0
+.scan
+	ld a, c
+	call .RowBit
+	ld b, a
+	ld a, [wOverworldMonSwarmRows]
+	and b
+	jr nz, .scan_next ; already taken
+	ld a, [hl] ; OW_WILDMON_WEIGHT
+	cp d
+	jr c, .scan_next
+	jr z, .scan_next
+	ld d, a
+	ld e, c
+.scan_next
+	ld a, l
+	add OW_WILDMON_LENGTH
+	ld l, a
+	adc h
+	sub l
+	ld h, a
+	inc c
+	ld a, c
+	cp NUM_OW_WILDMON
+	jr nz, .scan
+	pop hl
+	pop bc
+	ld a, e
+	inc a
+	ret z ; nothing left with any weight
+
+; Take it? Always the first. After that only while it lands nearer the rate: freely while the total
+; stays at or under it, and past it only if it overshoots by less than it was short -- which is
+; 2 * total + weight < 2 * rate. The total never exceeds the rate here, so that cannot overflow.
+	ld a, [wOverworldMonSwarmRows]
+	and a
+	jr z, .take
+	ld a, c
+	cp SWARM_ENCOUNTER_RATE
+	ret nc
+	add d
+	cp SWARM_ENCOUNTER_RATE + 1
+	jr c, .take
+	ld a, c
+	add a
+	add d
+	cp 2 * SWARM_ENCOUNTER_RATE
+	ret nc
+.take
+	ld a, e
+	call .RowBit
+	push hl
+	ld hl, wOverworldMonSwarmRows
+	or [hl]
+	ld [hl], a
+	pop hl
+	ld a, c
+	add d
+	ld c, a
+	dec b
+	jr nz, .take_loop
+	ret
+
+.RowBit:
+; a = 1 << a
+	push bc
+	ld b, a
+	inc b
+	xor a
+	scf
+.row_bit_loop
+	rla ; after a + 1 rotations the carry has landed on bit a
+	dec b
+	jr nz, .row_bit_loop
+	pop bc
+	ret
+
 .RollForm:
 	ld a, [wOverworldMonRollBuffer + OW_MON_FORM]
 	and SHINY_MASK
@@ -486,10 +628,19 @@ RollOverworldMons::
 	bit OW_PERK_EXTRA_SHINY_F, a
 	jr nz, .extra_shiny
 
+if DEF(_DEBUG) && SWARM_DEBUG_FORCE_SHINY
+	ld a, [wOverworldMonRollFromSwarm]
+	and a
+	jr nz, .make_shiny
+endc
 	call Random
 	and a
 	ret nz ; 255/256 not shiny, the same gate every other shiny roll uses
 	ld b, OVERWORLD_MON_SHINY_NUMERATOR
+	ld a, [wOverworldMonRollFromSwarm]
+	and a
+	jr z, .roll_shiny
+	ld b, SWARM_SHINY_NUMERATOR
 	jr .roll_shiny
 
 .extra_shiny
@@ -905,6 +1056,118 @@ RollOverworldMons::
 	ld [wOverworldMonRollBuffer + OW_MON_MOVE + 1], a
 	jmp .FinishRoll
 
+RerollSwarmOverworldMons::
+; After a battle on a swarming route: reroll every wandering mon, the way a population rerolls
+; its members (R5), so standing in a swarm is a loop rather than a single pass. The reload that
+; follows respawns them -- see PlacePopulationAndSpawn.
+;
+; Runs from OverworldMonBattleScript before reloadmapafterbattle. Does nothing on a population
+; map, where RerollPopulation has already done this, or on a map with no swarm.
+	ld hl, wPopulationRow
+	ld a, [hli]
+	or [hl]
+	ret nz
+	call IsPlayerMapSwarming
+	ret nc
+	call RollOverworldMons
+
+; The mon you fought is spent, as it would be anywhere else: its slot sits out this reshuffle and
+; returns with the next one. The roll has just refilled it, and it would come back at its map
+; object, a step or two from where it wandered to meet you -- so it is emptied again. It is found
+; through its object because EndOverworldMonBattle has already cleared wOverworldMonBattleSlot.
+	ld a, [wOverworldMonBattleObject]
+	call GetMapObject
+	ld hl, MAPOBJECT_SPRITE
+	add hl, bc
+	ld a, [hl]
+	sub SPRITE_OW_MON
+	ld e, a
+	call GetOverworldMonEncounter
+	xor a
+	ld [hli], a
+	ld [hl], a ; species 0: the slot is empty, which keeps the object masked
+
+	ld a, TRUE
+	ld [wSwarmRespawnPending], a
+	ret
+
+IsPlayerMapSwarming:
+; carry if the map the player is on has a swarm of either terrain
+	ld a, [wMapGroup]
+	ld d, a
+	ld a, [wMapNumber]
+	ld e, a
+	farjp IsMapSwarming
+
+KeepSwarmClearOfPlayer:
+; A route's mon reappear where their map objects stand, not on a tile chosen for them the way a
+; population's members are. So one that would come back within SWARM_RESPAWN_MARGIN of the player
+; -- on your tile, where it would start another battle before you could move -- sits out this
+; reload, and the next roll brings it back. The mon you just fought is already out of it
+; (RerollSwarmOverworldMons); this is for another slot whose object happens to stand where you do.
+	ld b, 1
+	ld de, wMap1Object
+.loop
+	ld hl, MAPOBJECT_TYPE
+	add hl, de
+	ld a, [hl]
+	cp OBJECTTYPE_WILDMON
+	jr nz, .next
+	ld hl, MAPOBJECT_SPRITE
+	add hl, de
+	ld a, [hl]
+	sub SPRITE_OW_MON
+	cp NUM_OW_MON_SLOTS
+	jr nc, .next
+	ld c, a ; its slot
+
+	ld hl, MAPOBJECT_Y_COORD
+	add hl, de
+	ld a, [hli] ; a map object holds y, then x, both 4 more than the map coordinate
+	sub 4
+	push hl
+	ld hl, wYCoord
+	sub [hl]
+	pop hl
+	call .Abs
+	cp SWARM_RESPAWN_MARGIN + 1
+	jr nc, .next
+	ld a, [hl]
+	sub 4
+	push hl
+	ld hl, wXCoord
+	sub [hl]
+	pop hl
+	call .Abs
+	cp SWARM_RESPAWN_MARGIN + 1
+	jr nc, .next
+
+	push de
+	ld e, c
+	call GetOverworldMonEncounter
+	xor a
+	ld [hli], a
+	ld [hl], a ; species 0: the slot is empty, which keeps the object masked
+	pop de
+
+.next
+	ld hl, MAPOBJECT_LENGTH
+	add hl, de
+	ld d, h
+	ld e, l
+	inc b
+	ld a, b
+	cp NUM_OBJECTS
+	jr nz, .loop
+	ret
+
+.Abs:
+	bit 7, a
+	ret z
+	cpl
+	inc a
+	ret
+
 RerollPopulation::
 ; After a battle on a population map: roll every member again (R5). In POP_REROLL_STATS the species
 ; picked for this visit stays -- wPopulationEntry still names it -- and each member draws a new
@@ -976,8 +1239,22 @@ PlacePopulationAndSpawn::
 	ld hl, wPopulationRow
 	ld a, [hli]
 	or [hl]
+	jr nz, .respawn
+; A swarming route rerolls its mon after a battle against one of them (RerollSwarmOverworldMons)
+; and needs them respawned the same way. Only then, though: this script also follows every
+; ordinary grass battle, where the wandering mon have not changed and must be left standing --
+; running here after those is what used to empty them one by one. PlacePopulation below does
+; nothing off a population map, so a route's mon come back where their objects stand -- hence
+; KeepSwarmClearOfPlayer.
+	ld hl, wSwarmRespawnPending
+	ld a, [hl]
+	and a
 	ret z
+	xor a
+	ld [hl], a
+	call KeepSwarmClearOfPlayer
 
+.respawn
 	ld b, 1
 	ld de, wMap1Object
 .takedown_loop

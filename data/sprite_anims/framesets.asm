@@ -72,6 +72,9 @@ SpriteAnimFrameData:
 	dw .Frameset_PCMode
 	dw .Frameset_PCMode2
 	dw .Frameset_PCPack
+	dw .Frameset_MapMonIcon1
+	dw .Frameset_MapMonIcon2
+	dw .Frameset_MapMonIcon3
 	assert_table_length NUM_SPRITE_ANIM_FRAMESETS
 
 .Frameset_00:
@@ -476,4 +479,23 @@ SpriteAnimFrameData:
 
 .Frameset_PCPack:
 	oamframe SPRITE_ANIM_OAMSET_PC_PACK, 32
+	oamrestart
+
+; The Pokégear map's mon icons: the party menu's two-frame bob at its resting pace, but in a
+; palette of their own. A party icon's frames leave the attribute byte alone and the menu patches
+; each OAM entry by position, which the map cannot rely on -- so each icon slot has its palette
+; written into its frames instead.
+.Frameset_MapMonIcon1:
+	oamframe SPRITE_ANIM_OAMSET_MAP_MON_ICON_1_1, 8
+	oamframe SPRITE_ANIM_OAMSET_MAP_MON_ICON_1_2, 8
+	oamrestart
+
+.Frameset_MapMonIcon2:
+	oamframe SPRITE_ANIM_OAMSET_MAP_MON_ICON_2_1, 8
+	oamframe SPRITE_ANIM_OAMSET_MAP_MON_ICON_2_2, 8
+	oamrestart
+
+.Frameset_MapMonIcon3:
+	oamframe SPRITE_ANIM_OAMSET_MAP_MON_ICON_3_1, 8
+	oamframe SPRITE_ANIM_OAMSET_MAP_MON_ICON_3_2, 8
 	oamrestart

@@ -387,7 +387,7 @@ CianwoodPokeSeerSignText:
 CianwoodCityMysteryIslandSailorScript:
 	faceplayer
 	opentext
-; One trip a day. The flag lives in wSwarmFlags, which CheckDailyResetTimer already clears when the
+; One trip a day. The flag lives in wDailyFlags3, which CheckDailyResetTimer already clears when the
 ; RTC day rolls over, so nothing has to remember to reset it.
 	checkflag ENGINE_MYSTERY_ISLAND
 	iftrue .AlreadySailedToday

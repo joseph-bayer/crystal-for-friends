@@ -127,6 +127,18 @@ MACRO end_population
 	assert POP_DATA_LENGTH == @ - {CURRENT_POP_LABEL}, "def_population {CURRENT_POP_MAP}: wrong size"
 ENDM
 
+MACRO swarm_def
+;\1: the species that swarms
+;\2: its form byte -- a *_FORM constant, optionally | SHINY_MASK for one that is always shiny
+;\3: the map it swarms on
+;\4: SWARM_GRASS or SWARM_WATER, the encounters it replaces
+	dw \1
+	db \2
+	map_id \3
+	db \4
+ENDM
+DEF SWARM_ENTRY_LENGTH EQU 2 + 1 + 2 + 1
+
 MACRO def_grass_wildmons
 ;\1: map id
 	REDEF CURRENT_GRASS_WILDMONS_MAP EQUS "\1"

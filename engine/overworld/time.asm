@@ -103,7 +103,11 @@ CheckDailyResetTimer::
 	ld hl, wDailyFlags1
 	ld [hli], a ; wDailyFlags1
 	ld [hli], a ; wDailyFlags2
-	ld [hl], a ; wSwarmFlags
+	ld [hli], a ; wDailyFlags3
+rept MAX_ACTIVE_SWARMS
+	ld [hli], a ; wActiveSwarms
+endr
+	ld [hl], a ; wDailySwarm
 	ld hl, wDailyRematchFlags
 rept 3
 	ld [hli], a

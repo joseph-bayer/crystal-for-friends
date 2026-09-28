@@ -1442,6 +1442,7 @@ OverworldMonBattleScript:
 ; again -- the one you fought included, refilled. `disappear` stays: a deleted object cannot
 ; trigger, so you cannot come back from the battle into another one. Does nothing on other maps.
 	callasm RerollPopulation
+	callasm RerollSwarmOverworldMons ; likewise on a swarming route; does nothing elsewhere
 	reloadmapafterbattle
 	end
 

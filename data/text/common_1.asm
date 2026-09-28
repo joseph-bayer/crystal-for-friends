@@ -557,6 +557,49 @@ _PokedexShowText::
 	text_ram wStringBuffer1
 	text_end
 
+_SwarmRadioText1::
+	text_start
+	line "GUILD: Collectors!"
+	done
+
+_SwarmRadioText2::
+	text_start
+	line "Strange @"
+	text_ram wMonOrItemNameBuffer
+	text_end
+
+_SwarmRadioText3::
+	text_start
+	line "were spotted at"
+	done
+
+_SwarmRadioText4::
+	text_start
+	line "@"
+	text_ram wStringBuffer1
+	text "!"
+	done
+
+_SwarmRadioText5::
+	text_start
+	line "Catch one before"
+	done
+
+_SwarmRadioText6::
+	text_start
+	line "they're gone!"
+	done
+
+_SwarmRadioNoneText1::
+	text_start
+	line "GUILD: No reports"
+	done
+
+_SwarmRadioNoneText2::
+	text_start
+	line "today, collectors."
+	done
+
 ; Pokémon Music Channel / Pokémusic
 
 _BenIntroText1::

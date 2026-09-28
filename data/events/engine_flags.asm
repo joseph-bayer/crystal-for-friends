@@ -123,8 +123,8 @@ EngineFlags:
 	engine_flag wDailyFlags2, DAILYFLAGS2_MOVE_TUTOR_F
 	engine_flag wDailyFlags2, DAILYFLAGS2_BUENAS_PASSWORD_F
 
-	engine_flag wSwarmFlags, SWARMFLAGS_BUENAS_PASSWORD_F
-	engine_flag wSwarmFlags, SWARMFLAGS_GOLDENROD_DEPT_STORE_SALE_F
+	engine_flag wDailyFlags3, DAILYFLAGS3_BUENAS_PASSWORD_F
+	engine_flag wDailyFlags3, DAILYFLAGS3_GOLDENROD_DEPT_STORE_SALE_F
 
 	engine_flag wGameTimerPaused, GAME_TIMER_MOBILE_F
 
@@ -196,8 +196,6 @@ EngineFlags:
 
 	engine_flag wPlayerSpriteSetupFlags, PLAYERSPRITESETUP_FEMALE_TO_MALE_F
 
-	engine_flag wSwarmFlags, SWARMFLAGS_DUNSPARCE_SWARM_F
-	engine_flag wSwarmFlags, SWARMFLAGS_YANMA_SWARM_F
-	engine_flag wSwarmFlags, SWARMFLAGS_MYSTERY_ISLAND_F
+	engine_flag wDailyFlags3, DAILYFLAGS3_MYSTERY_ISLAND_F
 
 	assert_table_length NUM_ENGINE_FLAGS
