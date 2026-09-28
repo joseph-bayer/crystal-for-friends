@@ -70,3 +70,9 @@ MachokeRBAnimation:		INCLUDE "gfx/pokemon/machoke_rb/anim.asm"
 
 MachampPlainAnimation:		INCLUDE "gfx/pokemon/machamp/anim.asm"
 MachampRBAnimation:		INCLUDE "gfx/pokemon/machamp_rb/anim.asm"
+
+TentacoolPlainAnimation:	INCLUDE "gfx/pokemon/tentacool/anim.asm"
+TentacoolRBAnimation:		INCLUDE "gfx/pokemon/tentacool_rb/anim.asm"
+
+TentacruelPlainAnimation:	INCLUDE "gfx/pokemon/tentacruel/anim.asm"
+TentacruelRBAnimation:		INCLUDE "gfx/pokemon/tentacruel_rb/anim.asm"

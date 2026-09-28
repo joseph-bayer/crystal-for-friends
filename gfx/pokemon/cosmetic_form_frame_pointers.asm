@@ -79,8 +79,8 @@ CosmeticFormFramePointersTable:
 	dw 0					; BELLSPROUT (45) - no cosmetic forms
 	dw 0					; WEEPINBELL (46) - no cosmetic forms
 	dw 0					; VICTREEBEL (47) - no cosmetic forms
-	dw 0					; TENTACOOL (48) - no cosmetic forms
-	dw 0					; TENTACRUEL (49) - no cosmetic forms
+	dw TentacoolFramesPointers		; TENTACOOL (48) - has cosmetic forms
+	dw TentacruelFramesPointers		; TENTACRUEL (49) - has cosmetic forms
 	dw 0					; GEODUDE (4a) - no cosmetic forms
 	dw 0					; GRAVELER (4b) - no cosmetic forms
 	dw 0					; GOLEM (4c) - no cosmetic forms
@@ -378,3 +378,15 @@ MachampFramesPointers:
 	dw MachampPlainFrames
 	dw MachampRBFrames
 	assert_table_length NUM_MACHAMP_FORMS
+
+TentacoolFramesPointers:
+	table_width 2
+	dw TentacoolPlainFrames
+	dw TentacoolRBFrames
+	assert_table_length NUM_TENTACOOL_FORMS
+
+TentacruelFramesPointers:
+	table_width 2
+	dw TentacruelPlainFrames
+	dw TentacruelRBFrames
+	assert_table_length NUM_TENTACRUEL_FORMS

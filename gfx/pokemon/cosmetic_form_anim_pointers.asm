@@ -79,8 +79,8 @@ CosmeticFormAnimationPointerTable:
 	dw 0					; BELLSPROUT (45) - no cosmetic forms
 	dw 0					; WEEPINBELL (46) - no cosmetic forms
 	dw 0					; VICTREEBEL (47) - no cosmetic forms
-	dw 0					; TENTACOOL (48) - no cosmetic forms
-	dw 0					; TENTACRUEL (49) - no cosmetic forms
+	dw TentacoolAnimationPointers		; TENTACOOL (48) - has cosmetic forms
+	dw TentacruelAnimationPointers		; TENTACRUEL (49) - has cosmetic forms
 	dw 0					; GEODUDE (4a) - no cosmetic forms
 	dw 0					; GRAVELER (4b) - no cosmetic forms
 	dw 0					; GOLEM (4c) - no cosmetic forms
@@ -335,8 +335,8 @@ CosmeticFormIdleAnimationPointers:
 	dw 0                           		; BELLSPROUT (45) - no cosmetic forms
 	dw 0                           		; WEEPINBELL (46) - no cosmetic forms
 	dw 0                           		; VICTREEBEL (47) - no cosmetic forms
-	dw 0                           		; TENTACOOL (48) - no cosmetic forms
-	dw 0                           		; TENTACRUEL (49) - no cosmetic forms
+	dw TentacoolAnimationIdlePointers		; TENTACOOL (48) - has cosmetic forms
+	dw TentacruelAnimationIdlePointers		; TENTACRUEL (49) - has cosmetic forms
 	dw 0                           		; GEODUDE (4a) - no cosmetic forms
 	dw 0                           		; GRAVELER (4b) - no cosmetic forms
 	dw 0                           		; GOLEM (4c) - no cosmetic forms
@@ -754,3 +754,27 @@ MachampAnimationIdlePointers:
 	dw MachampPlainAnimationIdle
 	dw MachampRBAnimationIdle
 	assert_table_length NUM_MACHAMP_FORMS
+
+TentacoolAnimationPointers:
+	table_width 2
+	dw TentacoolPlainAnimation
+	dw TentacoolRBAnimation
+	assert_table_length NUM_TENTACOOL_FORMS
+
+TentacoolAnimationIdlePointers:
+	table_width 2
+	dw TentacoolPlainAnimationIdle
+	dw TentacoolRBAnimationIdle
+	assert_table_length NUM_TENTACOOL_FORMS
+
+TentacruelAnimationPointers:
+	table_width 2
+	dw TentacruelPlainAnimation
+	dw TentacruelRBAnimation
+	assert_table_length NUM_TENTACRUEL_FORMS
+
+TentacruelAnimationIdlePointers:
+	table_width 2
+	dw TentacruelPlainAnimationIdle
+	dw TentacruelRBAnimationIdle
+	assert_table_length NUM_TENTACRUEL_FORMS

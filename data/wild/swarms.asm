@@ -12,8 +12,9 @@
 
 SwarmTable::
 	table_width SWARM_ENTRY_LENGTH, SwarmTable
-	swarm_def DUNSPARCE, PLAIN_FORM, DARK_CAVE_VIOLET_ENTRANCE, SWARM_GRASS
-	swarm_def YANMA,     PLAIN_FORM, ROUTE_35,                  SWARM_GRASS
+	swarm_def DUNSPARCE, PLAIN_FORM,        DARK_CAVE_VIOLET_ENTRANCE, SWARM_GRASS
+	swarm_def YANMA,     PLAIN_FORM,        ROUTE_35,                  SWARM_GRASS
 ; From here on, the Collection Guild's radio station picks one row a day (DailySwarmBroadcast).
-	swarm_def MACHOP,    MACHOP_RB_FORM, ROUTE_45,              SWARM_GRASS
+	swarm_def MACHOP,    MACHOP_RB_FORM,    ROUTE_45,                  SWARM_GRASS
+	swarm_def TENTACOOL, TENTACOOL_RB_FORM, VERMILION_CITY,            SWARM_WATER ; after the Elite Four
 	assert_table_length NUM_SWARMS

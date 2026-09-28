@@ -79,8 +79,8 @@ CosmeticFormPicPointersTable::
 	dw 0					; BELLSPROUT (45) - no cosmetic forms
 	dw 0					; WEEPINBELL (46) - no cosmetic forms
 	dw 0					; VICTREEBEL (47) - no cosmetic forms
-	dw 0					; TENTACOOL (48) - no cosmetic forms
-	dw 0					; TENTACRUEL (49) - no cosmetic forms
+	dw TentacoolPicPointers			; TENTACOOL (48) - has cosmetic forms
+	dw TentacruelPicPointers			; TENTACRUEL (49) - has cosmetic forms
 	dw 0					; GEODUDE (4a) - no cosmetic forms
 	dw 0					; GRAVELER (4b) - no cosmetic forms
 	dw 0					; GOLEM (4c) - no cosmetic forms
@@ -451,3 +451,21 @@ MachampPicPointers::
 	dba MachampRBFrontpic
 	dba MachampRBBackpic
 	assert_table_length NUM_MACHAMP_FORMS
+
+TentacoolPicPointers::
+; entries correspond to Tentacool's forms, two apiece
+	table_width 3 * 2
+	dba TentacoolFrontpic
+	dba TentacoolBackpic
+	dba TentacoolRBFrontpic
+	dba TentacoolRBBackpic
+	assert_table_length NUM_TENTACOOL_FORMS
+
+TentacruelPicPointers::
+; entries correspond to Tentacruel's forms, two apiece
+	table_width 3 * 2
+	dba TentacruelFrontpic
+	dba TentacruelBackpic
+	dba TentacruelRBFrontpic
+	dba TentacruelRBBackpic
+	assert_table_length NUM_TENTACRUEL_FORMS

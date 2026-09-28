@@ -70,3 +70,9 @@ MachokeRBFrames:		INCLUDE "gfx/pokemon/machoke_rb/frames.asm"
 
 MachampPlainFrames:		INCLUDE "gfx/pokemon/machamp/frames.asm"
 MachampRBFrames:		INCLUDE "gfx/pokemon/machamp_rb/frames.asm"
+
+TentacoolPlainFrames:		INCLUDE "gfx/pokemon/tentacool/frames.asm"
+TentacoolRBFrames:		INCLUDE "gfx/pokemon/tentacool_rb/frames.asm"
+
+TentacruelPlainFrames:		INCLUDE "gfx/pokemon/tentacruel/frames.asm"
+TentacruelRBFrames:		INCLUDE "gfx/pokemon/tentacruel_rb/frames.asm"

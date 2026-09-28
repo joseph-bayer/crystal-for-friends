@@ -374,6 +374,18 @@ DEF NUM_MACHOKE_FORMS EQU const_value ; 2
   const MACHAMP_RB_FORM    ; 1 -- its Red/Blue sprite
 DEF NUM_MACHAMP_FORMS EQU const_value ; 2
 
+; Tentacool forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const TENTACOOL_PLAIN_FORM ; 0
+  const TENTACOOL_RB_FORM    ; 1 -- its Red/Blue sprite
+DEF NUM_TENTACOOL_FORMS EQU const_value ; 2
+
+; Tentacruel forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const TENTACRUEL_PLAIN_FORM ; 0
+  const TENTACRUEL_RB_FORM    ; 1 -- its Red/Blue sprite
+DEF NUM_TENTACRUEL_FORMS EQU const_value ; 2
+
 ; Arbok forms
   const_def 0 ; Note that forms are now 0-indexed
   const ARBOK_PLAIN_FORM  ; 0

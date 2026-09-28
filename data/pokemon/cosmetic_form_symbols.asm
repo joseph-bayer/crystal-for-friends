@@ -79,8 +79,8 @@ CosmeticFormSymbols::
 	dw 0					; BELLSPROUT (45)
 	dw 0					; WEEPINBELL (46)
 	dw 0					; VICTREEBEL (47)
-	dw 0					; TENTACOOL (48)
-	dw 0					; TENTACRUEL (49)
+	dw TentacoolFormSymbols			; TENTACOOL (48)
+	dw TentacruelFormSymbols			; TENTACRUEL (49)
 	dw 0					; GEODUDE (4a)
 	dw 0					; GRAVELER (4b)
 	dw 0					; GOLEM (4c)
@@ -328,3 +328,15 @@ MachampFormSymbols:
 	db 0
 	db "<CARTRIDGE>"
 	assert_table_length NUM_MACHAMP_FORMS
+
+TentacoolFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_TENTACOOL_FORMS
+
+TentacruelFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_TENTACRUEL_FORMS

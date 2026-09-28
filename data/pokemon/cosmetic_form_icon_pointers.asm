@@ -79,8 +79,8 @@ CosmeticFormIconPointersTable:
 	dw 0					; BELLSPROUT (45) - no cosmetic forms
 	dw 0					; WEEPINBELL (46) - no cosmetic forms
 	dw 0					; VICTREEBEL (47) - no cosmetic forms
-	dw 0					; TENTACOOL (48) - no cosmetic forms
-	dw 0					; TENTACRUEL (49) - no cosmetic forms
+	dw 0					; TENTACOOL (48) - RB form reuses the species icon
+	dw 0					; TENTACRUEL (49) - RB form reuses the species icon
 	dw 0					; GEODUDE (4a) - no cosmetic forms
 	dw 0					; GRAVELER (4b) - no cosmetic forms
 	dw 0					; GOLEM (4c) - no cosmetic forms

@@ -162,3 +162,21 @@ INCLUDE "gfx/pokemon/machamp/shiny.pal"
 INCBIN	"gfx/pokemon/machamp_rb/normal.gbcpal", middle_colors
 INCLUDE "gfx/pokemon/dmg_shiny.pal"
 	assert_table_length NUM_MACHAMP_FORMS
+
+TentacoolPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/tentacool/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/tentacool/shiny.pal"
+INCBIN	"gfx/pokemon/tentacool_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_TENTACOOL_FORMS
+
+TentacruelPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/tentacruel/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/tentacruel/shiny.pal"
+INCBIN	"gfx/pokemon/tentacruel_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_TENTACRUEL_FORMS

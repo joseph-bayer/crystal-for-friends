@@ -70,3 +70,9 @@ MachokeRBBitmask:		INCLUDE "gfx/pokemon/machoke_rb/bitmask.asm"
 
 MachampPlainBitmask:		INCLUDE "gfx/pokemon/machamp/bitmask.asm"
 MachampRBBitmask:		INCLUDE "gfx/pokemon/machamp_rb/bitmask.asm"
+
+TentacoolPlainBitmask:		INCLUDE "gfx/pokemon/tentacool/bitmask.asm"
+TentacoolRBBitmask:		INCLUDE "gfx/pokemon/tentacool_rb/bitmask.asm"
+
+TentacruelPlainBitmask:		INCLUDE "gfx/pokemon/tentacruel/bitmask.asm"
+TentacruelRBBitmask:		INCLUDE "gfx/pokemon/tentacruel_rb/bitmask.asm"

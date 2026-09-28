@@ -140,6 +140,11 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
 	| Pinsir	| Vine Green		| Bug Catching Contest |
 	| Scizor	| Slate Gray		| Bug Catching Contest |
 	| Snorlax	| Full Belly		| The Snorlax asleep in the Apricorn Forest clearing |
+	| Tentacool     | Red/Blue              | Tune into channel 12.5 |
+	| Tentacruel    | Red/Blue              | Tune into channel 12.5 |
+	| Machop        | Red/Blue              | Tune into channel 12.5 |
+	| Machoke       | Red/Blue              | Tune into channel 12.5 |
+	| Machamp       | Red/Blue              | Tune into channel 12.5 |
   - *NOTE:* Some forms will have a symbol that goes along with them to indicate that they're different. Not all forms will have this.
 
 - **Misc.**

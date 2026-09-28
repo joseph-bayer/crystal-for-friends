@@ -70,3 +70,9 @@ MachokeRBAnimationIdle:		INCLUDE "gfx/pokemon/machoke_rb/anim_idle.asm"
 
 MachampPlainAnimationIdle:		INCLUDE "gfx/pokemon/machamp/anim_idle.asm"
 MachampRBAnimationIdle:		INCLUDE "gfx/pokemon/machamp_rb/anim_idle.asm"
+
+TentacoolPlainAnimationIdle:		INCLUDE "gfx/pokemon/tentacool/anim_idle.asm"
+TentacoolRBAnimationIdle:		INCLUDE "gfx/pokemon/tentacool_rb/anim_idle.asm"
+
+TentacruelPlainAnimationIdle:		INCLUDE "gfx/pokemon/tentacruel/anim_idle.asm"
+TentacruelRBAnimationIdle:		INCLUDE "gfx/pokemon/tentacruel_rb/anim_idle.asm"

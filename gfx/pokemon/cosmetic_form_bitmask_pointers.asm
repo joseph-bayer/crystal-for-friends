@@ -79,8 +79,8 @@ CosmeticFormBitmaskPointersTable:
 	dw 0					; BELLSPROUT (45) - no cosmetic forms
 	dw 0					; WEEPINBELL (46) - no cosmetic forms
 	dw 0					; VICTREEBEL (47) - no cosmetic forms
-	dw 0					; TENTACOOL (48) - no cosmetic forms
-	dw 0					; TENTACRUEL (49) - no cosmetic forms
+	dw TentacoolBitmasksPointers		; TENTACOOL (48) - has cosmetic forms
+	dw TentacruelBitmasksPointers		; TENTACRUEL (49) - has cosmetic forms
 	dw 0					; GEODUDE (4a) - no cosmetic forms
 	dw 0					; GRAVELER (4b) - no cosmetic forms
 	dw 0					; GOLEM (4c) - no cosmetic forms
@@ -378,3 +378,15 @@ MachampBitmasksPointers:
 	dw MachampPlainBitmask
 	dw MachampRBBitmask
 	assert_table_length NUM_MACHAMP_FORMS
+
+TentacoolBitmasksPointers:
+	table_width 2
+	dw TentacoolPlainBitmask
+	dw TentacoolRBBitmask
+	assert_table_length NUM_TENTACOOL_FORMS
+
+TentacruelBitmasksPointers:
+	table_width 2
+	dw TentacruelPlainBitmask
+	dw TentacruelRBBitmask
+	assert_table_length NUM_TENTACRUEL_FORMS
