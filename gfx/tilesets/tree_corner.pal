@@ -1,0 +1,6 @@
+; PAL_BG_TREE_CORNER: green (see bg_tiles.pal) with color 0 replaced by yellow's color 2, for tree
+; tiles whose corners border orange ground. Loaded into the roof slot on tilesets with no roofs.
+	RGB 31,16,01, 12,25,01, 05,14,00, 07,07,07 ; morn
+	RGB 31,16,01, 12,25,01, 05,14,00, 07,07,07 ; day
+	RGB 16,14,10, 08,13,19, 00,11,13, 00,00,00 ; nite
+	RGB 25,12,01, 10,19,01, 04,10,00, 06,05,05 ; eve

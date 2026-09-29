@@ -1292,6 +1292,14 @@ LoadMapPals:
 	ldh [rSVBK], a
 	farcall ClearSavedObjPals
 
+; Tilesets with no roofs give the roof slot to PAL_BG_TREE_CORNER. Checked before the environment,
+; since Forest maps are CAVE and never reach the roof write below.
+	ld a, [wMapTileset]
+	cp TILESET_FOREST
+	jr z, .tree_corner
+	cp TILESET_ISLANDS
+	jr z, .tree_corner
+
 	ld a, [wEnvironment]
 	cp TOWN
 	jr z, .outside
@@ -1320,6 +1328,19 @@ LoadMapPals:
 .morn_day
 	ld de, wBGPals1 palette PAL_BG_ROOF color 1
 	ld bc, 4
+	ld a, BANK(wBGPals1)
+	jmp FarCopyWRAM
+
+.tree_corner
+; The whole slot becomes PAL_BG_TREE_CORNER for this time of day, and the roof write is skipped: it
+; would clobber colors 1 and 2 of the tree palette on an outdoor map like the Islands.
+	ld a, [wTimeOfDayPal]
+	maskbits NUM_DAYTIMES
+	ld hl, TreeCornerPals
+	ld bc, 1 palettes
+	rst AddNTimes
+	ld de, wBGPals1 palette PAL_BG_TREE_CORNER
+	ld bc, 1 palettes
 	ld a, BANK(wBGPals1)
 	jmp FarCopyWRAM
 
@@ -1353,6 +1374,12 @@ RoofPals:
 	table_width COLOR_SIZE * 3 * 2
 INCLUDE "gfx/tilesets/roofs.pal"
 	assert_table_length NUM_MAP_GROUPS + 1
+
+TreeCornerPals:
+; PAL_BG_TREE_CORNER, one palette per time of day (see LoadMapPals)
+	table_width 1 palettes
+INCLUDE "gfx/tilesets/tree_corner.pal"
+	assert_table_length NUM_DAYTIMES
 
 DiplomaPalettes:
 INCLUDE "gfx/diploma/diploma.pal"

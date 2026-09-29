@@ -56,3 +56,8 @@ DEF ROOF_LENGTH EQU 9
 	const PAL_BG_BROWN  ; 5
 	const PAL_BG_ROOF   ; 6
 	const PAL_BG_TEXT   ; 7
+
+; The Forest and Islands tilesets have no roofs, so LoadMapPals gives their roof slot to tree tiles
+; whose corners border orange ground instead (gfx/tilesets/tree_corner.pal). An attribute byte
+; selects it as 6.
+DEF PAL_BG_TREE_CORNER EQU PAL_BG_ROOF

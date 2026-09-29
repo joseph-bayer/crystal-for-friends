@@ -35,3 +35,11 @@
 	tilecoll WALL, WALL, WALL, CAVE ; 22
 	tilecoll WALL, WALL, CAVE, WALL ; 23
 	tilecoll WARP_PANEL, FLOOR, FLOOR, FLOOR ; 24
+	tilecoll WALL, WALL, WALL, WALL ; 25
+	tilecoll WALL, WALL, WALL, WALL ; 26
+	tilecoll WALL, WALL, WALL, WALL ; 27
+	tilecoll WALL, WALL, WALL, WALL ; 28
+	tilecoll WALL, WALL, WALL, WALL ; 29
+	tilecoll WALL, WALL, WALL, WALL ; 2a
+	tilecoll WATER, WATER, BUOY, BUOY ; 2b
+	tilecoll WATER, WATER, BUOY, BUOY ; 2c
