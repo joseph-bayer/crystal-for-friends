@@ -46,6 +46,5 @@ RockTunnelB1F_MapEvents:
 ; order RollOverworldMons fills them in -- so these have to stay numbered that way.
 ; The event flag is -1: whether one is standing here is decided by whether its slot holds a
 ; rolled mon, not by a flag.
-; TODO: place these. They are parked in the bottom-right corner of the map. Two in the grass.
 	object_event 19, 19, SPRITE_OW_MON_1, SPRITEMOVEDATA_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1
 	object_event  7,  9, SPRITE_OW_MON_2, SPRITEMOVEDATA_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1
