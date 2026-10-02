@@ -144,7 +144,7 @@ OverworldWildMonsGrass:
 	end_ow_wildmons
 
 	def_ow_wildmons ROUTE_35
-	db 1 ; how many can be out at once
+	db 3 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
 	ow_wildmon 33, SNUBBULL,   15, PLAIN_FORM, 0,                  NO_MOVE
@@ -412,7 +412,7 @@ OverworldWildMonsGrass:
 	end_ow_wildmons
 
 	def_ow_wildmons DARK_CAVE_VIOLET_ENTRANCE
-	db 2 ; how many can be out at once
+	db 3 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
 	ow_wildmon 51, ZUBAT,       2, PLAIN_FORM, 0,                  NO_MOVE
@@ -1408,69 +1408,66 @@ OverworldWildMonsWater:
 ; JOHTO WATER - OUTSIDE 
 ; ======================
 
-; Whether a water Pokemon rides on top or sits in the water is a property of the species, not of
-; the map: OW_PERK_ON_SURFACE keeps it above the waterline, and leaving the perk off lets
-; SPRITEMOVEDATA_SWIM_WANDER_NOCLIP's OVERHEAD bit sink its lower half behind the water tile.
-; Quagsire, Wooper, Horsea and Mantine swim in it. Goldeen, Seaking, Magikarp and Shellder float
-; on it. Keep new entries consistent with the same species elsewhere.
+; Whether a water Pokemon rides on top of the water or swims in it is decided by its species, in
+; data/wild/surface_mons.asm, not by these rows.
 	def_ow_wildmons CHERRYGROVE_CITY
 	db 1 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, 0,                  AURORA_BEAM
 	; day
-	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, 0,                  AURORA_BEAM
 	; nite
-	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, 0,                  AURORA_BEAM
 	end_ow_wildmons
 
 	def_ow_wildmons ROUTE_32
 	db 1 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 59, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
+	ow_wildmon 59, TENTACOOL,  15, PLAIN_FORM, 0,                  RAPID_SPIN
 	ow_wildmon 30, QUAGSIRE,   20, PLAIN_FORM, 0,                  NO_MOVE
-	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 1,  TENTACRUEL, 23, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 1,  TENTACRUEL, 23, PLAIN_FORM, 0,                  AURORA_BEAM
 	; day
-	ow_wildmon 59, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
+	ow_wildmon 59, TENTACOOL,  15, PLAIN_FORM, 0,                  RAPID_SPIN
 	ow_wildmon 30, QUAGSIRE,   20, PLAIN_FORM, 0,                  NO_MOVE
-	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 1,  TENTACRUEL, 23, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 1,  TENTACRUEL, 23, PLAIN_FORM, 0,                  AURORA_BEAM
 	; nite
-	ow_wildmon 59, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
+	ow_wildmon 59, TENTACOOL,  15, PLAIN_FORM, 0,                  RAPID_SPIN
 	ow_wildmon 30, QUAGSIRE,   20, PLAIN_FORM, 0,                  NO_MOVE
-	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 1,  TENTACRUEL, 23, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 1,  TENTACRUEL, 23, PLAIN_FORM, 0,                  AURORA_BEAM
 	end_ow_wildmons
 
 	def_ow_wildmons ROUTE_34
 	db 1 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, 0,                  AURORA_BEAM
 	; day
-	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, 0,                  AURORA_BEAM
 	; nite
-	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 10, TENTACRUEL, 20, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, 0,                  AURORA_BEAM
 	end_ow_wildmons
 
 	def_ow_wildmons ROUTE_35
@@ -1497,80 +1494,80 @@ OverworldWildMonsWater:
 	db 2 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 30, SHELLDER,   21, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 10, CORSOLA,    22, PLAIN_FORM, OW_PERK_ON_SURFACE, ROCK_SLIDE
-	ow_wildmon 1,  TENTACRUEL, 25, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 30, SHELLDER,   21, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, CORSOLA,    22, PLAIN_FORM, 0,                  ROCK_SLIDE
+	ow_wildmon 1,  TENTACRUEL, 25, PLAIN_FORM, 0,                  AURORA_BEAM
 	; day
-	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 30, SHELLDER,   21, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 10, CORSOLA,    22, PLAIN_FORM, OW_PERK_ON_SURFACE, ROCK_SLIDE
-	ow_wildmon 1,  TENTACRUEL, 25, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 30, SHELLDER,   21, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, CORSOLA,    22, PLAIN_FORM, 0,                  ROCK_SLIDE
+	ow_wildmon 1,  TENTACRUEL, 25, PLAIN_FORM, 0,                  AURORA_BEAM
 	; nite
-	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 30, SHELLDER,   21, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 30, SHELLDER,   21, PLAIN_FORM, 0,                  NO_MOVE
 	ow_wildmon 10, STARYU,     22, PLAIN_FORM, 0, CONFUSE_RAY
-	ow_wildmon 1,  TENTACRUEL, 25, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 1,  TENTACRUEL, 25, PLAIN_FORM, 0,                  AURORA_BEAM
 	end_ow_wildmons
 
 	def_ow_wildmons ROUTE_41
 	db 2 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 50, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
+	ow_wildmon 50, TENTACOOL,  20, PLAIN_FORM, 0,                  RAPID_SPIN
 	ow_wildmon 30, HORSEA,     21, PLAIN_FORM, 0,                  NO_MOVE
 	ow_wildmon 10, MANTINE,    22, PLAIN_FORM, 0,                  NO_MOVE
-	ow_wildmon 10, CHINCHOU,   25, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, CHINCHOU,   25, PLAIN_FORM, 0,                  NO_MOVE
 	; day
-	ow_wildmon 50, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
+	ow_wildmon 50, TENTACOOL,  20, PLAIN_FORM, 0,                  RAPID_SPIN
 	ow_wildmon 30, HORSEA,     21, PLAIN_FORM, 0,                  NO_MOVE
 	ow_wildmon 10, MANTINE,    22, PLAIN_FORM, 0,                  NO_MOVE
-	ow_wildmon 10, CHINCHOU,   25, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, CHINCHOU,   25, PLAIN_FORM, 0,                  NO_MOVE
 	; nite
-	ow_wildmon 50, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
+	ow_wildmon 50, TENTACOOL,  20, PLAIN_FORM, 0,                  RAPID_SPIN
 	ow_wildmon 30, HORSEA,     21, PLAIN_FORM, 0,                  NO_MOVE
 	ow_wildmon 10, MANTINE,    22, PLAIN_FORM, 0,                  NO_MOVE
-	ow_wildmon 10, CHINCHOU,   25, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 10, CHINCHOU,   25, PLAIN_FORM, 0,                  NO_MOVE
 	end_ow_wildmons
 
 	def_ow_wildmons ROUTE_42
 	db 2 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 59, REMORAID,   21, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 30, GOLDEEN,    20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 10, SEAKING,    25, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
-	ow_wildmon 1,  SEAKING,    28, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
+	ow_wildmon 59, REMORAID,   21, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, GOLDEEN,    20, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, SEAKING,    25, PLAIN_FORM, 0,                  PSYBEAM
+	ow_wildmon 1,  SEAKING,    28, PLAIN_FORM, 0,                  PSYBEAM
 	; day
-	ow_wildmon 59, REMORAID,   21, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 30, GOLDEEN,    20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 10, SEAKING,    25, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
-	ow_wildmon 1,  SEAKING,    28, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
+	ow_wildmon 59, REMORAID,   21, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, GOLDEEN,    20, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, SEAKING,    25, PLAIN_FORM, 0,                  PSYBEAM
+	ow_wildmon 1,  SEAKING,    28, PLAIN_FORM, 0,                  PSYBEAM
 	; nite
-	ow_wildmon 59, REMORAID,   21, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 30, GOLDEEN,    20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 10, SEAKING,    25, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
-	ow_wildmon 1,  SEAKING,    28, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
+	ow_wildmon 59, REMORAID,   21, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, GOLDEEN,    20, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, SEAKING,    25, PLAIN_FORM, 0,                  PSYBEAM
+	ow_wildmon 1,  SEAKING,    28, PLAIN_FORM, 0,                  PSYBEAM
 	end_ow_wildmons
 
 	def_ow_wildmons ROUTE_43
 	db 1 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 59, MAGIKARP,   20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 30, MAGIKARP,   15, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 10, MAGIKARP,   10, PLAIN_FORM, OW_PERK_ON_SURFACE, BUBBLE
-	ow_wildmon 1,  MAGIKARP,   13, PLAIN_FORM, OW_PERK_ON_SURFACE, BUBBLE
+	ow_wildmon 59, MAGIKARP,   20, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, MAGIKARP,   15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, MAGIKARP,   10, PLAIN_FORM, 0,                  BUBBLE
+	ow_wildmon 1,  MAGIKARP,   13, PLAIN_FORM, 0,                  BUBBLE
 	; day
-	ow_wildmon 59, MAGIKARP,   20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 30, MAGIKARP,   15, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 10, MAGIKARP,   10, PLAIN_FORM, OW_PERK_ON_SURFACE, BUBBLE
-	ow_wildmon 1,  MAGIKARP,   13, PLAIN_FORM, OW_PERK_ON_SURFACE, BUBBLE
+	ow_wildmon 59, MAGIKARP,   20, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, MAGIKARP,   15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, MAGIKARP,   10, PLAIN_FORM, 0,                  BUBBLE
+	ow_wildmon 1,  MAGIKARP,   13, PLAIN_FORM, 0,                  BUBBLE
 	; nite
-	ow_wildmon 59, MAGIKARP,   20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 30, MAGIKARP,   15, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 10, MAGIKARP,   10, PLAIN_FORM, OW_PERK_ON_SURFACE, BUBBLE
-	ow_wildmon 1,  MAGIKARP,   13, PLAIN_FORM, OW_PERK_ON_SURFACE, BUBBLE
+	ow_wildmon 59, MAGIKARP,   20, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, MAGIKARP,   15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, MAGIKARP,   10, PLAIN_FORM, 0,                  BUBBLE
+	ow_wildmon 1,  MAGIKARP,   13, PLAIN_FORM, 0,                  BUBBLE
 	end_ow_wildmons
 
 	def_ow_wildmons ROUTE_44
@@ -1597,20 +1594,20 @@ OverworldWildMonsWater:
 	db 1 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 10, CORSOLA,    20, PLAIN_FORM, OW_PERK_ON_SURFACE, ROCK_SLIDE
-	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 10, CORSOLA,    20, PLAIN_FORM, 0,                  ROCK_SLIDE
+	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, 0,                  AURORA_BEAM
 	; day
-	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 10, CORSOLA,    20, PLAIN_FORM, OW_PERK_ON_SURFACE, ROCK_SLIDE
-	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 10, CORSOLA,    20, PLAIN_FORM, 0,                  ROCK_SLIDE
+	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, 0,                  AURORA_BEAM
 	; nite
-	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 10, CORSOLA,    20, PLAIN_FORM, OW_PERK_ON_SURFACE, ROCK_SLIDE
-	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 10, CORSOLA,    20, PLAIN_FORM, 0,                  ROCK_SLIDE
+	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, 0,                  AURORA_BEAM
 	end_ow_wildmons
 
 	def_ow_wildmons ECRUTEAK_CITY
@@ -1637,40 +1634,40 @@ OverworldWildMonsWater:
 	db 1 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 10, CORSOLA,    20, PLAIN_FORM, OW_PERK_ON_SURFACE, ROCK_SLIDE
-	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
+	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 10, CORSOLA,    20, PLAIN_FORM, 0,                  ROCK_SLIDE
+	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, 0,                  RAPID_SPIN
 	; day
-	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 10, CORSOLA,    20, PLAIN_FORM, OW_PERK_ON_SURFACE, ROCK_SLIDE
-	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 10, CORSOLA,    20, PLAIN_FORM, 0,                  ROCK_SLIDE
+	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, 0,                  AURORA_BEAM
 	; nite
-	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 10, CORSOLA,    20, PLAIN_FORM, OW_PERK_ON_SURFACE, ROCK_SLIDE
-	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 10, CORSOLA,    20, PLAIN_FORM, 0,                  ROCK_SLIDE
+	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, 0,                  AURORA_BEAM
 	end_ow_wildmons
 
 	def_ow_wildmons OLIVINE_PORT
 	db 1 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 10, CHINCHOU,   20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 10, CHINCHOU,   20, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, 0,                  AURORA_BEAM
 	; day
-	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 10, CHINCHOU,   20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 10, CHINCHOU,   20, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, 0,                  AURORA_BEAM
 	; nite
-	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, RAPID_SPIN
-	ow_wildmon 10, CHINCHOU,   20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, 0,                  RAPID_SPIN
+	ow_wildmon 10, CHINCHOU,   20, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 18, PLAIN_FORM, 0,                  AURORA_BEAM
 	end_ow_wildmons
 
 	def_ow_wildmons VIOLET_CITY
@@ -1698,20 +1695,20 @@ OverworldWildMonsWater:
 	db 100 percent ; the chance each one shows up
 ; Magikarp only, by design since the story on the lake is focused on Red Gyarados.
 	; morn
-	ow_wildmon 40, MAGIKARP,   10, PLAIN_FORM,       OW_PERK_ON_SURFACE, FLAIL
-	ow_wildmon 30, MAGIKARP,   15, PLAIN_FORM,       OW_PERK_ON_SURFACE, FLAIL
-	ow_wildmon 20, MAGIKARP,   20, PLAIN_FORM,       OW_PERK_ON_SURFACE, FLAIL
-	ow_wildmon 10, MAGIKARP,   25, PLAIN_FORM,       OW_PERK_ON_SURFACE, FLAIL
+	ow_wildmon 40, MAGIKARP,   10, PLAIN_FORM,       0,                  FLAIL
+	ow_wildmon 30, MAGIKARP,   15, PLAIN_FORM,       0,                  FLAIL
+	ow_wildmon 20, MAGIKARP,   20, PLAIN_FORM,       0,                  FLAIL
+	ow_wildmon 10, MAGIKARP,   25, PLAIN_FORM,       0,                  FLAIL
 	; day
-	ow_wildmon 40, MAGIKARP,   10, PLAIN_FORM,       OW_PERK_ON_SURFACE, FLAIL
-	ow_wildmon 30, MAGIKARP,   15, PLAIN_FORM,       OW_PERK_ON_SURFACE, FLAIL
-	ow_wildmon 20, MAGIKARP,   20, PLAIN_FORM,       OW_PERK_ON_SURFACE, FLAIL
-	ow_wildmon 10, MAGIKARP,   25, PLAIN_FORM,       OW_PERK_ON_SURFACE, FLAIL
+	ow_wildmon 40, MAGIKARP,   10, PLAIN_FORM,       0,                  FLAIL
+	ow_wildmon 30, MAGIKARP,   15, PLAIN_FORM,       0,                  FLAIL
+	ow_wildmon 20, MAGIKARP,   20, PLAIN_FORM,       0,                  FLAIL
+	ow_wildmon 10, MAGIKARP,   25, PLAIN_FORM,       0,                  FLAIL
 	; nite
-	ow_wildmon 40, MAGIKARP,   10, PLAIN_FORM,       OW_PERK_ON_SURFACE, FLAIL
-	ow_wildmon 30, MAGIKARP,   15, PLAIN_FORM,       OW_PERK_ON_SURFACE, FLAIL
-	ow_wildmon 20, MAGIKARP,   20, PLAIN_FORM,       OW_PERK_ON_SURFACE, FLAIL
-	ow_wildmon 10, MAGIKARP,   25, PLAIN_FORM,       OW_PERK_ON_SURFACE, FLAIL
+	ow_wildmon 40, MAGIKARP,   10, PLAIN_FORM,       0,                  FLAIL
+	ow_wildmon 30, MAGIKARP,   15, PLAIN_FORM,       0,                  FLAIL
+	ow_wildmon 20, MAGIKARP,   20, PLAIN_FORM,       0,                  FLAIL
+	ow_wildmon 10, MAGIKARP,   25, PLAIN_FORM,       0,                  FLAIL
 	end_ow_wildmons
 
 
@@ -1744,40 +1741,40 @@ OverworldWildMonsWater:
 	db 2 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 59, MAGIKARP,   15, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 30, MAGIKARP,   10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 10, MAGIKARP,    5, PLAIN_FORM, OW_PERK_ON_SURFACE, BUBBLE
-	ow_wildmon 1,  MAGIKARP,    8, PLAIN_FORM, OW_PERK_ON_SURFACE, BUBBLE
+	ow_wildmon 59, MAGIKARP,   15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, MAGIKARP,   10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, MAGIKARP,    5, PLAIN_FORM, 0,                  BUBBLE
+	ow_wildmon 1,  MAGIKARP,    8, PLAIN_FORM, 0,                  BUBBLE
 	; day
-	ow_wildmon 59, MAGIKARP,   15, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 30, MAGIKARP,   10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 10, MAGIKARP,    5, PLAIN_FORM, OW_PERK_ON_SURFACE, BUBBLE
-	ow_wildmon 1,  MAGIKARP,    8, PLAIN_FORM, OW_PERK_ON_SURFACE, BUBBLE
+	ow_wildmon 59, MAGIKARP,   15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, MAGIKARP,   10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, MAGIKARP,    5, PLAIN_FORM, 0,                  BUBBLE
+	ow_wildmon 1,  MAGIKARP,    8, PLAIN_FORM, 0,                  BUBBLE
 	; nite
-	ow_wildmon 59, MAGIKARP,   15, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 30, MAGIKARP,   10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 10, MAGIKARP,    5, PLAIN_FORM, OW_PERK_ON_SURFACE, BUBBLE
-	ow_wildmon 1,  MAGIKARP,    8, PLAIN_FORM, OW_PERK_ON_SURFACE, BUBBLE
+	ow_wildmon 59, MAGIKARP,   15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, MAGIKARP,   10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, MAGIKARP,    5, PLAIN_FORM, 0,                  BUBBLE
+	ow_wildmon 1,  MAGIKARP,    8, PLAIN_FORM, 0,                  BUBBLE
 	end_ow_wildmons
 
 	def_ow_wildmons DARK_CAVE_VIOLET_ENTRANCE
 	db 1 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 59, MAGIKARP,   15, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 30, MAGIKARP,   10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 10, MAGIKARP,    5, PLAIN_FORM, OW_PERK_ON_SURFACE, BUBBLE
-	ow_wildmon 1,  MAGIKARP,    8, PLAIN_FORM, OW_PERK_ON_SURFACE, BUBBLE
+	ow_wildmon 59, MAGIKARP,   15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, MAGIKARP,   10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, MAGIKARP,    5, PLAIN_FORM, 0,                  BUBBLE
+	ow_wildmon 1,  MAGIKARP,    8, PLAIN_FORM, 0,                  BUBBLE
 	; day
-	ow_wildmon 59, MAGIKARP,   15, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 30, MAGIKARP,   10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 10, MAGIKARP,    5, PLAIN_FORM, OW_PERK_ON_SURFACE, BUBBLE
-	ow_wildmon 1,  MAGIKARP,    8, PLAIN_FORM, OW_PERK_ON_SURFACE, BUBBLE
+	ow_wildmon 59, MAGIKARP,   15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, MAGIKARP,   10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, MAGIKARP,    5, PLAIN_FORM, 0,                  BUBBLE
+	ow_wildmon 1,  MAGIKARP,    8, PLAIN_FORM, 0,                  BUBBLE
 	; nite
-	ow_wildmon 59, MAGIKARP,   15, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 30, MAGIKARP,   10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 10, MAGIKARP,    5, PLAIN_FORM, OW_PERK_ON_SURFACE, BUBBLE
-	ow_wildmon 1,  MAGIKARP,    8, PLAIN_FORM, OW_PERK_ON_SURFACE, BUBBLE
+	ow_wildmon 59, MAGIKARP,   15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, MAGIKARP,   10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, MAGIKARP,    5, PLAIN_FORM, 0,                  BUBBLE
+	ow_wildmon 1,  MAGIKARP,    8, PLAIN_FORM, 0,                  BUBBLE
 	end_ow_wildmons
 
 	def_ow_wildmons ILEX_FOREST
@@ -1804,60 +1801,60 @@ OverworldWildMonsWater:
 	db 3 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 59, GOLDEEN,    20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 59, GOLDEEN,    20, PLAIN_FORM, 0,                  NO_MOVE
 	ow_wildmon 30, MARILL,     25, PLAIN_FORM, 0,                  NO_MOVE
-	ow_wildmon 10, SEAKING,    25, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
-	ow_wildmon 1,  SEAKING,    28, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
+	ow_wildmon 10, SEAKING,    25, PLAIN_FORM, 0,                  PSYBEAM
+	ow_wildmon 1,  SEAKING,    28, PLAIN_FORM, 0,                  PSYBEAM
 	; day
-	ow_wildmon 59, GOLDEEN,    20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 59, GOLDEEN,    20, PLAIN_FORM, 0,                  NO_MOVE
 	ow_wildmon 30, MARILL,     25, PLAIN_FORM, 0,                  NO_MOVE
-	ow_wildmon 10, SEAKING,    25, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
-	ow_wildmon 1,  SEAKING,    28, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
+	ow_wildmon 10, SEAKING,    25, PLAIN_FORM, 0,                  PSYBEAM
+	ow_wildmon 1,  SEAKING,    28, PLAIN_FORM, 0,                  PSYBEAM
 	; nite
-	ow_wildmon 59, GOLDEEN,    20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 59, GOLDEEN,    20, PLAIN_FORM, 0,                  NO_MOVE
 	ow_wildmon 30, MARILL,     25, PLAIN_FORM, 0,                  NO_MOVE
-	ow_wildmon 10, SEAKING,    25, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
-	ow_wildmon 1,  SEAKING,    28, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
+	ow_wildmon 10, SEAKING,    25, PLAIN_FORM, 0,                  PSYBEAM
+	ow_wildmon 1,  SEAKING,    28, PLAIN_FORM, 0,                  PSYBEAM
 	end_ow_wildmons
 
 	def_ow_wildmons MOUNT_MORTAR_B1F
 	db 3 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 59, GOLDEEN,    15, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 59, GOLDEEN,    15, PLAIN_FORM, 0,                  NO_MOVE
 	ow_wildmon 30, MARILL,     20, PLAIN_FORM, 0,                  NO_MOVE
-	ow_wildmon 10, SEAKING,    20, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
-	ow_wildmon 1,  SEAKING,    23, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
+	ow_wildmon 10, SEAKING,    20, PLAIN_FORM, 0,                  PSYBEAM
+	ow_wildmon 1,  SEAKING,    23, PLAIN_FORM, 0,                  PSYBEAM
 	; day
-	ow_wildmon 59, GOLDEEN,    15, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 59, GOLDEEN,    15, PLAIN_FORM, 0,                  NO_MOVE
 	ow_wildmon 30, MARILL,     20, PLAIN_FORM, 0,                  NO_MOVE
-	ow_wildmon 10, SEAKING,    20, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
-	ow_wildmon 1,  SEAKING,    23, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
+	ow_wildmon 10, SEAKING,    20, PLAIN_FORM, 0,                  PSYBEAM
+	ow_wildmon 1,  SEAKING,    23, PLAIN_FORM, 0,                  PSYBEAM
 	; nite
-	ow_wildmon 59, GOLDEEN,    15, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 59, GOLDEEN,    15, PLAIN_FORM, 0,                  NO_MOVE
 	ow_wildmon 30, MARILL,     20, PLAIN_FORM, 0,                  NO_MOVE
-	ow_wildmon 10, SEAKING,    20, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
-	ow_wildmon 1,  SEAKING,    23, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
+	ow_wildmon 10, SEAKING,    20, PLAIN_FORM, 0,                  PSYBEAM
+	ow_wildmon 1,  SEAKING,    23, PLAIN_FORM, 0,                  PSYBEAM
 	end_ow_wildmons
 
 	def_ow_wildmons SILVER_CAVE_ROOM_2
 	db 2 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 59, SEAKING,    35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 59, SEAKING,    35, PLAIN_FORM, 0,                  NO_MOVE
 	ow_wildmon 30, GOLDUCK,    35, PLAIN_FORM, 0,                  NO_MOVE
-	ow_wildmon 10, GOLDEEN,    35, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
-	ow_wildmon 1,  GOLDEEN,    38, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
+	ow_wildmon 10, GOLDEEN,    35, PLAIN_FORM, 0,                  PSYBEAM
+	ow_wildmon 1,  GOLDEEN,    38, PLAIN_FORM, 0,                  PSYBEAM
 	; day
-	ow_wildmon 59, SEAKING,    35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 59, SEAKING,    35, PLAIN_FORM, 0,                  NO_MOVE
 	ow_wildmon 30, GOLDUCK,    35, PLAIN_FORM, 0,                  NO_MOVE
-	ow_wildmon 10, GOLDEEN,    35, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
-	ow_wildmon 1,  GOLDEEN,    38, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
+	ow_wildmon 10, GOLDEEN,    35, PLAIN_FORM, 0,                  PSYBEAM
+	ow_wildmon 1,  GOLDEEN,    38, PLAIN_FORM, 0,                  PSYBEAM
 	; nite
-	ow_wildmon 59, SEAKING,    35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
+	ow_wildmon 59, SEAKING,    35, PLAIN_FORM, 0,                  NO_MOVE
 	ow_wildmon 30, GOLDUCK,    35, PLAIN_FORM, 0,                  NO_MOVE
-	ow_wildmon 10, GOLDEEN,    35, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
-	ow_wildmon 1,  GOLDEEN,    38, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
+	ow_wildmon 10, GOLDEEN,    35, PLAIN_FORM, 0,                  PSYBEAM
+	ow_wildmon 1,  GOLDEEN,    38, PLAIN_FORM, 0,                  PSYBEAM
 	end_ow_wildmons
 
 	def_ow_wildmons SLOWPOKE_WELL_B1F
@@ -1948,100 +1945,100 @@ OverworldWildMonsWater:
 	db 4 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 59, TENTACOOL,  25, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
+	ow_wildmon 59, TENTACOOL,  25, PLAIN_FORM, 0,                  HAZE
 	ow_wildmon 30, QUAGSIRE,   25, PLAIN_FORM, 0,                  NO_MOVE
-	ow_wildmon 10, QWILFISH,   25, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 1,  TENTACRUEL, 28, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 10, QWILFISH,   25, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 1,  TENTACRUEL, 28, PLAIN_FORM, 0,                  AURORA_BEAM
 	; day
-	ow_wildmon 59, TENTACOOL,  25, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
+	ow_wildmon 59, TENTACOOL,  25, PLAIN_FORM, 0,                  HAZE
 	ow_wildmon 30, QUAGSIRE,   25, PLAIN_FORM, 0,                  NO_MOVE
-	ow_wildmon 10, QWILFISH,   25, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 1,  TENTACRUEL, 28, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 10, QWILFISH,   25, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 1,  TENTACRUEL, 28, PLAIN_FORM, 0,                  AURORA_BEAM
 	; nite
-	ow_wildmon 59, TENTACOOL,  25, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
+	ow_wildmon 59, TENTACOOL,  25, PLAIN_FORM, 0,                  HAZE
 	ow_wildmon 30, QUAGSIRE,   25, PLAIN_FORM, 0,                  NO_MOVE
-	ow_wildmon 10, QWILFISH,   25, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 1,  TENTACRUEL, 28, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 10, QWILFISH,   25, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 1,  TENTACRUEL, 28, PLAIN_FORM, 0,                  AURORA_BEAM
 	end_ow_wildmons
 
 	def_ow_wildmons ROUTE_13
 	db 2 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 59, TENTACOOL,  25, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
+	ow_wildmon 59, TENTACOOL,  25, PLAIN_FORM, 0,                  HAZE
 	ow_wildmon 30, QUAGSIRE,   25, PLAIN_FORM, 0,                  NO_MOVE
-	ow_wildmon 10, QWILFISH,   25, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 1,  TENTACRUEL, 28, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 10, QWILFISH,   25, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 1,  TENTACRUEL, 28, PLAIN_FORM, 0,                  AURORA_BEAM
 	; day
-	ow_wildmon 59, TENTACOOL,  25, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
+	ow_wildmon 59, TENTACOOL,  25, PLAIN_FORM, 0,                  HAZE
 	ow_wildmon 30, QUAGSIRE,   25, PLAIN_FORM, 0,                  NO_MOVE
-	ow_wildmon 10, QWILFISH,   25, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 1,  TENTACRUEL, 28, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 10, QWILFISH,   25, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 1,  TENTACRUEL, 28, PLAIN_FORM, 0,                  AURORA_BEAM
 	; nite
-	ow_wildmon 59, TENTACOOL,  25, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
+	ow_wildmon 59, TENTACOOL,  25, PLAIN_FORM, 0,                  HAZE
 	ow_wildmon 30, QUAGSIRE,   25, PLAIN_FORM, 0,                  NO_MOVE
-	ow_wildmon 10, QWILFISH,   25, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 1,  TENTACRUEL, 28, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 10, QWILFISH,   25, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 1,  TENTACRUEL, 28, PLAIN_FORM, 0,                  AURORA_BEAM
 	end_ow_wildmons
 
 	def_ow_wildmons ROUTE_19
 	db 3 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 10, CORSOLA,    35, PLAIN_FORM, OW_PERK_ON_SURFACE, ROCK_SLIDE
-	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 10, CORSOLA,    35, PLAIN_FORM, 0,                  ROCK_SLIDE
+	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, 0,                  AURORA_BEAM
 	; day
-	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 10, CORSOLA,    35, PLAIN_FORM, OW_PERK_ON_SURFACE, ROCK_SLIDE
-	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 10, CORSOLA,    35, PLAIN_FORM, 0,                  ROCK_SLIDE
+	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, 0,                  AURORA_BEAM
 	; nite
-	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 10, CORSOLA,    35, PLAIN_FORM, OW_PERK_ON_SURFACE, ROCK_SLIDE
-	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 10, CORSOLA,    35, PLAIN_FORM, 0,                  ROCK_SLIDE
+	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, 0,                  AURORA_BEAM
 	end_ow_wildmons
 
 	def_ow_wildmons ROUTE_20
 	db 4 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, 0,                  AURORA_BEAM
 	; day
-	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, 0,                  AURORA_BEAM
 	; nite
-	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, 0,                  AURORA_BEAM
 	end_ow_wildmons
 
 	def_ow_wildmons ROUTE_21
 	db 3 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, 0,                  AURORA_BEAM
 	; day
-	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, 0,                  AURORA_BEAM
 	; nite
-	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, 0,                  AURORA_BEAM
 	end_ow_wildmons
 
 	def_ow_wildmons ROUTE_22
@@ -2068,80 +2065,80 @@ OverworldWildMonsWater:
 	db 1 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 59, GOLDEEN,    10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 30, GOLDEEN,     5, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 10, SEAKING,    10, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
-	ow_wildmon 1,  GOLDEEN,     8, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
+	ow_wildmon 59, GOLDEEN,    10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, GOLDEEN,     5, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, SEAKING,    10, PLAIN_FORM, 0,                  PSYBEAM
+	ow_wildmon 1,  GOLDEEN,     8, PLAIN_FORM, 0,                  PSYBEAM
 	; day
-	ow_wildmon 59, GOLDEEN,    10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 30, GOLDEEN,     5, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 10, SEAKING,    10, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
-	ow_wildmon 1,  GOLDEEN,     8, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
+	ow_wildmon 59, GOLDEEN,    10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, GOLDEEN,     5, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, SEAKING,    10, PLAIN_FORM, 0,                  PSYBEAM
+	ow_wildmon 1,  GOLDEEN,     8, PLAIN_FORM, 0,                  PSYBEAM
 	; nite
-	ow_wildmon 59, GOLDEEN,    10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 30, GOLDEEN,     5, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 10, SEAKING,    10, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
-	ow_wildmon 1,  GOLDEEN,     8, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
+	ow_wildmon 59, GOLDEEN,    10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, GOLDEEN,     5, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, SEAKING,    10, PLAIN_FORM, 0,                  PSYBEAM
+	ow_wildmon 1,  GOLDEEN,     8, PLAIN_FORM, 0,                  PSYBEAM
 	end_ow_wildmons
 
 	def_ow_wildmons ROUTE_25
 	db 2 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 59, GOLDEEN,    10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 30, GOLDEEN,     5, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 10, SEAKING,    10, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
-	ow_wildmon 1,  GOLDEEN,     8, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
+	ow_wildmon 59, GOLDEEN,    10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, GOLDEEN,     5, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, SEAKING,    10, PLAIN_FORM, 0,                  PSYBEAM
+	ow_wildmon 1,  GOLDEEN,     8, PLAIN_FORM, 0,                  PSYBEAM
 	; day
-	ow_wildmon 59, GOLDEEN,    10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 30, GOLDEEN,     5, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 10, SEAKING,    10, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
-	ow_wildmon 1,  GOLDEEN,     8, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
+	ow_wildmon 59, GOLDEEN,    10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, GOLDEEN,     5, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, SEAKING,    10, PLAIN_FORM, 0,                  PSYBEAM
+	ow_wildmon 1,  GOLDEEN,     8, PLAIN_FORM, 0,                  PSYBEAM
 	; nite
-	ow_wildmon 59, GOLDEEN,    10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 30, GOLDEEN,     5, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 10, SEAKING,    10, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
-	ow_wildmon 1,  GOLDEEN,     8, PLAIN_FORM, OW_PERK_ON_SURFACE, PSYBEAM
+	ow_wildmon 59, GOLDEEN,    10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, GOLDEEN,     5, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, SEAKING,    10, PLAIN_FORM, 0,                  PSYBEAM
+	ow_wildmon 1,  GOLDEEN,     8, PLAIN_FORM, 0,                  PSYBEAM
 	end_ow_wildmons
 
 	def_ow_wildmons ROUTE_26
 	db 2 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 59, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 30, TENTACOOL,  25, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 10, CHINCHOU,   30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  30, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 30, TENTACOOL,  25, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 10, CHINCHOU,   30, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, 0,                  AURORA_BEAM
 	; day
-	ow_wildmon 59, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 30, TENTACOOL,  25, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 10, CHINCHOU,   30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  30, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 30, TENTACOOL,  25, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 10, CHINCHOU,   30, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, 0,                  AURORA_BEAM
 	; nite
-	ow_wildmon 59, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 30, TENTACOOL,  25, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 10, CHINCHOU,   30, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  30, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 30, TENTACOOL,  25, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 10, CHINCHOU,   30, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, 0,                  AURORA_BEAM
 	end_ow_wildmons
 
 	def_ow_wildmons ROUTE_27
 	db 3 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 10, CHINCHOU,   20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 10, CHINCHOU,   20, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, 0,                  AURORA_BEAM
 	; day
-	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 10, CHINCHOU,   20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 10, CHINCHOU,   20, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, 0,                  AURORA_BEAM
 	; nite
-	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 10, CHINCHOU,   20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 30, TENTACOOL,  15, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 10, CHINCHOU,   20, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, 0,                  AURORA_BEAM
 	end_ow_wildmons
 
 	def_ow_wildmons ROUTE_28
@@ -2188,100 +2185,100 @@ OverworldWildMonsWater:
 	db 2 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, 0,                  AURORA_BEAM
 	; day
-	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, 0,                  AURORA_BEAM
 	; nite
-	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, 0,                  AURORA_BEAM
 	end_ow_wildmons
 
 	def_ow_wildmons FUCHSIA_CITY
 	db 1 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 59, MAGIKARP,   20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 30, MAGIKARP,   15, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 10, MAGIKARP,   10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  MAGIKARP,   13, PLAIN_FORM, OW_PERK_ON_SURFACE, BUBBLE
+	ow_wildmon 59, MAGIKARP,   20, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, MAGIKARP,   15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, MAGIKARP,   10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  MAGIKARP,   13, PLAIN_FORM, 0,                  BUBBLE
 	; day
-	ow_wildmon 59, MAGIKARP,   20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 30, MAGIKARP,   15, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 10, MAGIKARP,   10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  MAGIKARP,   13, PLAIN_FORM, OW_PERK_ON_SURFACE, BUBBLE
+	ow_wildmon 59, MAGIKARP,   20, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, MAGIKARP,   15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, MAGIKARP,   10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  MAGIKARP,   13, PLAIN_FORM, 0,                  BUBBLE
 	; nite
-	ow_wildmon 59, MAGIKARP,   20, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 30, MAGIKARP,   15, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 10, MAGIKARP,   10, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  MAGIKARP,   13, PLAIN_FORM, OW_PERK_ON_SURFACE, BUBBLE
+	ow_wildmon 59, MAGIKARP,   20, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, MAGIKARP,   15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, MAGIKARP,   10, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  MAGIKARP,   13, PLAIN_FORM, 0,                  BUBBLE
 	end_ow_wildmons
 
 	def_ow_wildmons PALLET_TOWN
 	db 1 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, 0,                  AURORA_BEAM
 	; day
-	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, 0,                  AURORA_BEAM
 	; nite
-	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, 0,                  AURORA_BEAM
 	end_ow_wildmons
 
 	def_ow_wildmons VERMILION_CITY
 	db 4 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, 0,                  AURORA_BEAM
 	; day
-	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, 0,                  AURORA_BEAM
 	; nite
-	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, 0,                  AURORA_BEAM
 	end_ow_wildmons
 
 	def_ow_wildmons VERMILION_PORT
 	db 1 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
-	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, 0,                  AURORA_BEAM
 	; day
-	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, 0,                  AURORA_BEAM
 	; nite
-	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, OW_PERK_ON_SURFACE, HAZE
-	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, OW_PERK_ON_SURFACE, NO_MOVE
-	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, OW_PERK_ON_SURFACE, AURORA_BEAM
+	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 30, TENTACOOL,  30, PLAIN_FORM, 0,                  HAZE
+	ow_wildmon 10, LANTURN,    35, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 1,  TENTACRUEL, 33, PLAIN_FORM, 0,                  AURORA_BEAM
 	end_ow_wildmons
 
 	def_ow_wildmons VIRIDIAN_CITY

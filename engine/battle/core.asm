@@ -6107,9 +6107,14 @@ LoadEnemyMon:
 
 ; Roaming monsters (Entei, Raikou) work differently
 ; They have their own structs, which are shorter than normal
+; Roaming beasts are met as wandering mon, so check for one first: their DVs live in the roam
+; struct, fixed at the first meeting.
+	ld a, [wBattleType]
+	cp BATTLETYPE_ROAMING
+	jr z, .roam_mon_dvs
 	ld a, [wOverworldMonBattleSlot]
 	and a
-	jr z, .not_overworld_mon_dvs
+	jr z, .GenerateDVs
 	farcall GetOverworldMonBattleEncounter
 	ld bc, OW_MON_DVS
 	add hl, bc
@@ -6118,9 +6123,7 @@ LoadEnemyMon:
 	ld c, [hl]
 	jr .UpdateDVs
 
-.not_overworld_mon_dvs
-	cp BATTLETYPE_ROAMING
-	jr nz, .GenerateDVs
+.roam_mon_dvs
 
 ; Grab HP
 	call GetRoamMonHP
@@ -6523,6 +6526,8 @@ LoadEnemyMon:
 
 .no_script_form
 	ld a, [wBattleType]
+	cp BATTLETYPE_SUICUNE
+	jr z, .suicune_form
 	cp BATTLETYPE_FORCESHINY
 	jr nz, .generate_roam_mon_shininess
 	ld a, [wEnemyMonForm]
@@ -6554,6 +6559,13 @@ LoadEnemyMon:
 	ld [hl], a
 	ld [wEnemyMonForm], a
 
+	jr .Finish
+
+.suicune_form
+; Suicune's form was rolled before its sprite appeared (RollBeastsAtBurnedTower,
+; RollTinTowerSuicuneShiny), so the battle uses it as stored.
+	ld a, [wRoamMon3Form]
+	ld [wEnemyMonForm], a
 	jr .Finish
 
 .generate_bug_catching_contest_shininess
@@ -8735,7 +8747,8 @@ BattleEnd_HandleRoamMons:
 	call GetRoamMonHP
 	ld a, [wEnemyMonHP + 1]
 	ld [hl], a
-	jr .update_roam_mons
+	ld a, [wTempEnemyMonSpecies] ; this one moves on; any other on this map holds still
+	farjp UpdateRoamMonsAfterBattle
 
 .caught_or_defeated_roam_mon
 	call GetRoamMonHP
@@ -8752,9 +8765,8 @@ BattleEnd_HandleRoamMons:
 	call BattleRandom
 	and $f
 	ret nz
-
-.update_roam_mons
-	farjp UpdateRoamMons
+	xor a ; no roamer was fought, so every one on this map holds still
+	farjp UpdateRoamMonsAfterBattle
 
 GetRoamMonMapGroup:
 	ld a, [wTempEnemyMonSpecies]

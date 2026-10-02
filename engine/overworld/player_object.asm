@@ -341,19 +341,24 @@ CopyMapObjectToObjectStruct:
 	call GetSpriteVTile
 	ld [wTempObjectCopySpriteVTile], a
 
-	ld a, [hl]
-	call GetSpritePalette
-	ld [wTempObjectCopyPalette], a
-
+; An object's own palette wins, so check it first: asking for a mon sprite's palette claims one of
+; the few mon-color entries, which an overridden object would waste.
 	ld hl, MAPOBJECT_PALETTE
 	add hl, bc
 	ld a, [hl]
 	and a
-	jr z, .skip_color_override
+	jr z, .sprite_palette
 	dec a
+	jr .got_palette
+
+.sprite_palette
+	ld hl, MAPOBJECT_SPRITE
+	add hl, bc
+	ld a, [hl]
+	call GetSpritePalette
+.got_palette
 	ld [wTempObjectCopyPalette], a
 
-.skip_color_override
 	ld hl, MAPOBJECT_MOVEMENT
 	add hl, bc
 	ld a, [hl]

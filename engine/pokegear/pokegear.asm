@@ -519,17 +519,18 @@ PokegearMap_Init:
 	ld [wPokegearMapCursorObjectPointer], a
 	ld a, b
 	ld [wPokegearMapCursorObjectPointer + 1], a
-	call PokegearMap_InitSwarmIcons
+	call PokegearMap_InitMonIcons
 	ld hl, wJumptableIndex
 	inc [hl]
 	ret
 
-PokegearMap_InitSwarmIcons:
+PokegearMap_InitMonIcons:
 ; Every active swarm on the region being shown gets its mon's icon over its landmark. Each
 ; wActiveSwarms slot draws into the icon slot of the same number, so an empty slot, or a swarm on
-; the other region, just leaves its icon slot unused. The icons are made after the cursor, which
-; puts them later in OAM, so the cursor and the player icon both draw over them.
-	assert NUM_MAP_MON_ICONS >= MAX_ACTIVE_SWARMS
+; the other region, just leaves its icon slot unused. Raikou and Entei follow in the two slots
+; after those. The icons are made after the cursor, which puts them later in OAM, so the cursor
+; and the player icon both draw over them.
+	assert NUM_MAP_MON_ICONS >= MAX_ACTIVE_SWARMS + 2
 	xor a
 .loop
 	push af
@@ -546,9 +547,56 @@ PokegearMap_InitSwarmIcons:
 	inc a
 	cp MAX_ACTIVE_SWARMS
 	jr c, .loop
+
+; Raikou and Entei, while they roam, in their stored form. Drawn after the swarms, so a swarm on the
+; same route sits on top.
+	ld a, [wRoamMon1Form]
+	ld d, a
+	ld a, [wRoamMon1MapGroup]
+	ld b, a
+	ld a, [wRoamMon1MapNumber]
+	ld c, a
+	ld a, [wRoamMon1Species]
+	ld e, MAX_ACTIVE_SWARMS
+	call .RoamerIcon
+	ld a, [wRoamMon2Form]
+	ld d, a
+	ld a, [wRoamMon2MapGroup]
+	ld b, a
+	ld a, [wRoamMon2MapNumber]
+	ld c, a
+	ld a, [wRoamMon2Species]
+	ld e, MAX_ACTIVE_SWARMS + 1
+	call .RoamerIcon
+
 	farcall ApplyOBPals ; the screen's palettes were pushed before the icons existed
 	ld a, TRUE
 	ldh [hCGBPalUpdate], a
+	ret
+
+.RoamerIcon:
+; in: a = a roamer's species ID, bc = its map, d = its form, e = the icon slot
+; A roamer that isn't out (not yet released, or caught or defeated) has species 0.
+	and a
+	ret z
+	push de
+	call GetPokemonIndexFromID ; hl = the species index
+	ld a, b
+	cp GROUP_N_A
+	jr z, .no_roamer_icon
+	push hl
+	call GetWorldMapLocation
+	pop hl
+	ld c, a ; its landmark
+	call .IsOnShownMap
+	jr nc, .no_roamer_icon
+	pop de
+	ld a, e ; the icon slot
+	ld e, c
+	jr PokegearMap_InitMonIcon
+
+.no_roamer_icon
+	pop de
 	ret
 
 .IsOnShownMap:
@@ -569,8 +617,8 @@ PokegearMap_InitSwarmIcons:
 	ret
 
 PokegearMap_InitMonIcon:
-; Put a mon's icon on the map, bobbing through both of its frames in its own colors. Written for
-; the swarms, and meant for anything else the map marks with a mon.
+; Put a mon's icon on the map, bobbing through both of its frames in its own colors: the swarms,
+; and the roaming beasts.
 ; in: a = the icon slot (0 to NUM_MAP_MON_ICONS - 1), hl = species index, d = form byte,
 ;     e = landmark
 	push de ; the landmark

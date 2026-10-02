@@ -6,6 +6,7 @@
 if DEF(_DEBUG)
 	const PLAYERSHOUSE2F_DEBUG_TRADER
 	const PLAYERSHOUSE2F_DEBUG_WARPER
+	const PLAYERSHOUSE2F_DEBUG_BEASTS
 endc
 
 PlayersHouse2F_MapScripts:
@@ -67,6 +68,7 @@ if DEF(_DEBUG)
 	giveitem MASTER_BALL, 99
 	giveitem BICYCLE
 	giveitem GOOD_ROD
+	giveitem PASS ; Magnet Train
 	giveitem THUNDERSTONE, 10
 	giveitem FIRE_STONE, 10
 	giveitem WATER_STONE, 10
@@ -115,6 +117,7 @@ if DEF(_DEBUG)
 	setevent EVENT_BEAT_BLAINE
 	setevent EVENT_BEAT_BLUE
 	setevent EVENT_BEAT_ELITE_FOUR
+	setevent EVENT_RESTORED_POWER_TO_KANTO ; Magnet Train
 	; fly anywhere
 	setflag ENGINE_FLYPOINT_NEW_BARK
 	setflag ENGINE_FLYPOINT_CHERRYGROVE
@@ -156,12 +159,17 @@ if DEF(_DEBUG)
 	givepokemove HEADBUTT,   wPartyMon3, 2
 	givepokemove WATERFALL,  wPartyMon3, 3
 
+	; TESTING: RB forms -- these three take the last party slots, so the usual occupants are
+	; commented out below. Restore them and comment these out when done.
+	; givepoke MACHOP, 20, NO_ITEM, MACHOP_RB_FORM
+	; givepoke MACHOKE, 30, NO_ITEM, MACHOKE_RB_FORM
+	givepoke MACHAMP, 40, NO_ITEM, MACHAMP_RB_FORM | SHINY_MASK
 	givepoke AMPHAROS, 50
 	givepoke GENGAR, 50
 	; A form Pikachu to make the follower, for the doll test below.
 	; givepoke PIKACHU, 50, NO_ITEM, PIKACHU_FLY_FORM
 	; An egg, for testing egg followers -- select it in the party and it walks around with you.
-	giveegg TOGEPI, EGG_LEVEL
+	; giveegg TOGEPI, EGG_LEVEL
 	; givepoke DITTO, 50
 
 	; DEBUG: CHECK If two Pokemon with same DEF and SPEC DVs can breed
@@ -237,6 +245,12 @@ if DEF(_DEBUG)
 	; givepoke SCYTHER, 50, LEFTOVERS
 	; givepoke ONIX, 50, LEFTOVERS
 	; givepoke SEADRA, 50, LEFTOVERS
+
+	; TESTING: start both vanilla swarms, so Dark Cave and Route 35 can be checked without
+	; waiting on a phone call. Talk to the radio again to restart them after the daily reset
+	; clears them at midnight.
+	swarm SWARM_DUNSPARCE
+	swarm SWARM_YANMA
 
 	; intro events
 	addcellnum PHONE_MOM
@@ -352,6 +366,138 @@ PlayersHouseDebugTraderScript:
 	waitbutton
 	closetext
 	end
+
+PlayersHouseDebugBeastsScript:
+; Debug tools for the legendary beasts.
+	faceplayer
+	opentext
+	writetext PlayersHouseDebugBeastsText
+	loadmenu .MenuHeader
+	verticalmenu
+	closewindow
+	ifequal 1, .PostRelease
+	ifequal 2, .ReplayTower
+	ifequal 3, .ToggleShiny
+	ifequal 4, .ToggleFollow
+	closetext
+	end
+
+.PostRelease:
+; Everything ReleaseTheBeasts leaves behind, without playing it, plus the Map Card.
+	setevent EVENT_RELEASED_THE_BEASTS
+	setevent EVENT_BURNED_TOWER_B1F_BEASTS_1
+	setevent EVENT_BURNED_TOWER_B1F_BEASTS_2
+	clearevent EVENT_EUSINE_IN_BURNED_TOWER
+	setmapscene BURNED_TOWER_B1F, SCENE_BURNEDTOWERB1F_NOOP
+	special InitRoamMons
+	setmapscene ECRUTEAK_GYM, SCENE_ECRUTEAKGYM_NOOP
+	setmapscene CIANWOOD_CITY, SCENE_CIANWOODCITY_SUICUNE_AND_EUSINE
+	clearevent EVENT_SAW_SUICUNE_AT_CIANWOOD_CITY
+	setevent EVENT_ECRUTEAK_GYM_GRAMPS
+	clearevent EVENT_ECRUTEAK_CITY_GRAMPS
+	setevent EVENT_BURNED_TOWER_MORTY
+	setevent EVENT_BURNED_TOWER_1F_EUSINE
+	setflag ENGINE_MAP_CARD
+	writetext PlayersHouseDebugBeastsReleasedText
+	waitbutton
+	closetext
+	end
+
+.ReplayTower:
+; Reset B1F to its new-game state and drop in where the fall from 1F lands, below the trigger.
+	clearevent EVENT_RELEASED_THE_BEASTS
+	setevent EVENT_BURNED_TOWER_B1F_BEASTS_1
+	clearevent EVENT_BURNED_TOWER_B1F_BEASTS_2
+	setevent EVENT_EUSINE_IN_BURNED_TOWER
+	setmapscene BURNED_TOWER_B1F, SCENE_BURNEDTOWERB1F_RELEASE_THE_BEASTS
+	closetext
+	warp BURNED_TOWER_B1F, 10, 9
+	end
+
+.ToggleShiny:
+; Makes RollLegendaryShiny always hit.
+	checkevent EVENT_DEBUG_FORCE_SHINY_BEASTS
+	iftrue .ShinyOff
+	setevent EVENT_DEBUG_FORCE_SHINY_BEASTS
+	writetext PlayersHouseDebugBeastsShinyOnText
+	waitbutton
+	closetext
+	end
+
+.ShinyOff:
+	clearevent EVENT_DEBUG_FORCE_SHINY_BEASTS
+	writetext PlayersHouseDebugBeastsShinyOffText
+	waitbutton
+	closetext
+	end
+
+.ToggleFollow:
+; Roamers that are out land on each roaming route the player walks onto (by connection or door;
+; warps and Fly don't move roamers).
+	checkevent EVENT_DEBUG_BEASTS_FOLLOW_PLAYER
+	iftrue .FollowOff
+	setevent EVENT_DEBUG_BEASTS_FOLLOW_PLAYER
+	writetext PlayersHouseDebugBeastsFollowOnText
+	waitbutton
+	closetext
+	end
+
+.FollowOff:
+	clearevent EVENT_DEBUG_BEASTS_FOLLOW_PLAYER
+	writetext PlayersHouseDebugBeastsFollowOffText
+	waitbutton
+	closetext
+	end
+
+.MenuHeader:
+	db MENU_BACKUP_TILES ; flags
+	menu_coords 0, 0, 15, TEXTBOX_Y - 1
+	dw .MenuData
+	db 1 ; default option
+
+.MenuData:
+	db STATICMENU_CURSOR ; flags
+	db 5 ; items
+	db "POST-RELEASE@"
+	db "REPLAY TOWER@"
+	db "FORCE SHINY@"
+	db "BEASTS FOLLOW@"
+	db "CANCEL@"
+
+PlayersHouseDebugBeastsText:
+	text "DEBUG: legendary"
+	line "beasts."
+	done
+
+PlayersHouseDebugBeastsShinyOnText:
+	text "DEBUG: beasts will"
+	line "now always roll"
+	cont "shiny."
+	done
+
+PlayersHouseDebugBeastsShinyOffText:
+	text "DEBUG: beasts roll"
+	line "shiny at the usual"
+	cont "1/512 again."
+	done
+
+PlayersHouseDebugBeastsFollowOnText:
+	text "DEBUG: beasts that"
+	line "are out follow you"
+	cont "onto routes."
+	done
+
+PlayersHouseDebugBeastsFollowOffText:
+	text "DEBUG: beasts roam"
+	line "on their own again."
+	done
+
+PlayersHouseDebugBeastsReleasedText:
+	text "DEBUG: the beasts"
+	line "are roaming, and"
+	cont "you have the MAP"
+	cont "CARD."
+	done
 endc
 
 PlayersHouse2F_MapEvents:
@@ -376,4 +522,5 @@ PlayersHouse2F_MapEvents:
 if DEF(_DEBUG)
 	object_event  2,  4, SPRITE_GENTLEMAN, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, PlayersHouseDebugTraderScript, -1
 	object_event  3,  4, SPRITE_ROCKET, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, PlayersHouseDebugWarperScript, -1
+	object_event  1,  4, SPRITE_SUPER_NERD, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, PlayersHouseDebugBeastsScript, -1
 endc

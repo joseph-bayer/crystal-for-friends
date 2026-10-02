@@ -27,7 +27,6 @@ The script extracts data from the following files:
 - `constants/pokemon_constants.asm` - Pokemon name constants
 - `data/wild/kanto_grass.asm` - Kanto wild encounters
 - `data/wild/johto_grass.asm` - Johto wild encounters  
-- `data/wild/swarm_grass.asm` - Swarm encounters
 - `maps/*.asm` - Gift Pokemon (excludes PlayersHouse2F.asm and unused/ folder)
 - `data/pokemon/evos_attacks_kanto.asm` - Evolution data
 - `data/pokemon/evos_attacks_johto.asm` - Evolution data

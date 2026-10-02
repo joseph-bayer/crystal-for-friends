@@ -339,8 +339,9 @@ SpriteMovementData::
 ;
 ; OVERHEAD sinks it to the waist. Every facing marks its bottom two tiles RELATIVE_ATTRIBUTES (see
 ; data/sprites/facings.asm), and .InitSprite turns OVERHEAD into OAM_PRIO on exactly those -- so the
-; lower half draws behind the water tile it is standing in and the upper half stays on top. A mon
-; whose roster entry sets OW_PERK_ON_SURFACE has this taken back off in CopySpriteMovementData.
+; lower half draws behind the water tile it is standing in and the upper half stays on top. A
+; species in SurfaceRidingMons (data/wild/surface_mons.asm) has this taken back off in
+; CopySpriteMovementData.
 	db SPRITEMOVEFN_MON_WANDER ; movement function
 	db DOWN ; facing
 	db OBJECT_ACTION_STAND ; action

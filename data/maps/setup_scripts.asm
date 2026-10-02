@@ -88,6 +88,7 @@ MapSetupScript_Connection:
 	mapsetup SuspendMapAnims
 	mapsetup EnterMapConnection
 	mapsetup LoadMapAttributes
+	mapsetup UpdateRoamMons
 	mapsetup HandleNewMap
 	mapsetup MapPlayerCoordConnected
 	mapsetup LoadBlockData
@@ -102,7 +103,6 @@ MapSetupScript_Connection:
 	mapsetup InitMapNameSign
 	mapsetup ApplyMapPalettes
 	mapsetup LoadWildMonData
-	mapsetup UpdateRoamMons
 	mapsetup ActivateMapAnims
 	db -1 ; end
 
@@ -114,6 +114,7 @@ MapSetupScript_Train:
 	mapsetup EnterMapWarp
 	mapsetup LoadMapAttributes
 	mapsetup GetWarpDestCoords
+	mapsetup UpdateRoamMons ; first, so HandleNewMap places a roaming beast where it is now
 	mapsetup HandleNewMap
 	mapsetup MapPlayerCoordWarped
 	mapsetup LoadBlockData
@@ -133,7 +134,6 @@ MapSetupScript_Train:
 	mapsetup FadeInPalettes
 	mapsetup ActivateMapAnims
 	mapsetup LoadWildMonData
-	mapsetup UpdateRoamMons
 	db -1 ; end
 
 MapSetupScript_ReloadMap:

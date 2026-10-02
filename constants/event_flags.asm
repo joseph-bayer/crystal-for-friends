@@ -1477,5 +1477,10 @@
 	const EVENT_APRICORN_FOREST_BERRY
 	const EVENT_APRICORN_FOREST_HP_UP
 
+; Debug builds only: the beast debug menu's force-shiny toggle, read by RollLegendaryShiny
+	const EVENT_DEBUG_FORCE_SHINY_BEASTS
+; Debug builds only: the beast debug menu's follow toggle, read by UpdateRoamMons
+	const EVENT_DEBUG_BEASTS_FOLLOW_PLAYER
+
 	const_next 2048
 DEF NUM_EVENTS EQU const_value ; 800

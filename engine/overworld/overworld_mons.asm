@@ -162,6 +162,13 @@ SetUpOverworldMonBattle::
 	ld l, c
 	call GetPokemonIDFromIndex
 	ld [wTempWildMonSpecies], a
+; A roaming beast's slot fights as a roamer: HP and DVs from its roam struct, fleeing, and moving
+; on afterwards. CleanUpBattleRAM resets wBattleType.
+	call IsOverworldMonBattleBeast
+	jr nc, .not_beast
+	ld a, BATTLETYPE_ROAMING
+	ld [wBattleType], a
+.not_beast
 	; fallthrough
 
 HidePlayerForOverworldMonBattle:
@@ -197,6 +204,21 @@ EndOverworldMonBattle::
 	ld a, [wOverworldMonBattleSlot]
 	and a
 	ret z
+; A beast fought here has moved on or been caught, so forget its slot.
+	ld b, a
+	ld hl, wOverworldMonBeastSlots
+	ld c, 2
+.forget_beast
+	ld a, [hl]
+	cp b
+	jr nz, .next_beast
+	xor a
+	ld [hl], a
+.next_beast
+	inc hl
+	dec c
+	jr nz, .forget_beast
+	ld a, b
 	dec a
 	ld e, a
 	call GetOverworldMonEncounter
@@ -242,6 +264,8 @@ ClearOverworldMonEncounters::
 	ld [wOverworldMonBattleSlot], a
 	ld [wOverworldMonShinyPending], a
 	ld [wOverworldMonOnSurface], a
+	ld [wOverworldMonBeastSlots], a
+	ld [wOverworldMonBeastSlots + 1], a
 ; And no population, until .RollPopulation finds this map a row. PlacePopulation reads the row
 ; pointer as "is this a population map at all", so it must not carry over from the last one.
 	ld [wPopulationRow], a
@@ -295,7 +319,16 @@ RefreshOverworldMonPalettes:
 	ld a, [hl]
 	sub SPRITE_OW_MON
 	cp NUM_OW_MON_SLOTS
-	jr nc, .next
+	jr c, .rederive
+; Other mon-colored objects, like a legendary beast's sprite, lost their index to the reset too.
+	push hl
+	ld hl, OBJECT_PAL_INDEX
+	add hl, bc
+	ld a, [hl]
+	pop hl
+	cp PAL_OW_MON
+	jr c, .next
+.rederive
 	ld a, [hl]
 	call GetSpritePalette ; preserves bc, and re-runs the whole colour lookup for this mon
 	ld hl, OBJECT_PAL_INDEX
@@ -320,14 +353,19 @@ RollOverworldMons::
 ; mon, then its grass slots, then its water ones -- so a map's SPRITE_OW_MON_* objects have to be
 ; numbered the same way.
 	call ClearOverworldMonEncounters
+	ld a, SWARM_GRASS ; before the population too, which is always on land
+	ld [wOverworldMonSwarmTerrain], a
 	call GetOverworldMonStaticCount
 	ld c, a ; the first slot this map's static mon do not own
 	call .RollPopulation
 	ret c ; a population map fills its own slots and has no grass or water roster
-	ld a, SWARM_GRASS
-	ld [wOverworldMonSwarmTerrain], a
 	ld hl, OverworldWildMonsGrass
+	push bc ; c = the first grass slot
 	call .RollTable
+	pop de ; e = the first grass slot, and c is now one past the last
+	push bc
+	call PlaceRoamingBeasts
+	pop bc
 	ld a, SWARM_WATER
 	ld [wOverworldMonSwarmTerrain], a
 	ld hl, OverworldWildMonsWater
@@ -456,8 +494,9 @@ RollOverworldMons::
 	ld a, [hl]
 	ld [wOverworldMonRollBuffer + OW_MON_MOVE + 1], a
 
-; A swarm takes the row over: its own species and form, with the row's level, perks and move, so
-; it fits the route the same way it does in the grass. .RollForm below still rolls shininess.
+; A swarm takes the row over with its own species and form, keeping the row's level so it fits the
+; route. The row's perks and extra move belong to the species it displaces, so neither carries over.
+; .RollForm still rolls shininess.
 	ld a, b
 	and a
 	jr z, .FinishRoll
@@ -467,6 +506,11 @@ RollOverworldMons::
 	ld [wOverworldMonRollBuffer + OW_MON_SPECIES + 1], a
 	ld a, [wOverworldMonSwarmForm]
 	ld [wOverworldMonRollBuffer + OW_MON_FORM], a
+	assert NO_MOVE == 0
+	xor a
+	ld [wOverworldMonRollBuffer + OW_MON_MOVE], a
+	ld [wOverworldMonRollBuffer + OW_MON_MOVE + 1], a
+	ld [wOverworldMonRollBuffer + OW_MON_PERKS], a
 
 .FinishRoll:
 ; The shared tail: form and shininess, DVs, item, then publish. A population member joins here
@@ -486,11 +530,13 @@ RollOverworldMons::
 	ld bc, OW_MON_ENCOUNTER_LENGTH
 	rst CopyBytes
 
-; Note whether this one rides on the surface, so CopySpriteMovementData can take OVERHEAD back off
-; its object without reaching into the roster from ROM0.
-	ld a, [wOverworldMonRollBuffer + OW_MON_PERKS]
-	bit OW_PERK_ON_SURFACE_F, a
-	ret z
+; Note whether a water mon rides on the surface (SurfaceRidingMons), so CopySpriteMovementData can
+; take OVERHEAD back off its object without a lookup from ROM0.
+	ld a, [wOverworldMonSwarmTerrain]
+	cp SWARM_WATER
+	ret nz
+	call .RidesOnSurface
+	ret nc
 	ld a, [wOverworldMonRollSlot]
 	ld b, a
 	inc b
@@ -723,6 +769,25 @@ endc
 	ld a, NO_ITEM
 .store_item
 	ld [wOverworldMonRollBuffer + OW_MON_ITEM], a
+	ret
+
+.RidesOnSurface:
+; out: carry if the rolled species is in SurfaceRidingMons
+	ld hl, SurfaceRidingMons
+.surface_loop
+	ld a, [hli]
+	ld e, a
+	ld a, [hli]
+	ld d, a
+	or e
+	ret z ; the end; `or e` has cleared carry
+	ld a, [wOverworldMonRollBuffer + OW_MON_SPECIES]
+	cp e
+	jr nz, .surface_loop
+	ld a, [wOverworldMonRollBuffer + OW_MON_SPECIES + 1]
+	cp d
+	jr nz, .surface_loop
+	scf
 	ret
 
 .FindMap:
@@ -1056,6 +1121,251 @@ endc
 	ld [wOverworldMonRollBuffer + OW_MON_MOVE + 1], a
 	jmp .FinishRoll
 
+PlaceRoamingBeasts:
+; Raikou and Entei, while on this map, each take a random grass slot that rolled a mon. The
+; encounter comes from the roam struct (species, level, DVs and form), and each appearance gets the
+; 1/512 shiny roll. With both here and only one slot, whichever goes first takes it.
+; in: e = this map's first grass slot, c = one past its last
+	ld a, [wOverworldMonRerolling]
+	and a
+	jmp nz, RestoreRoamingBeasts
+
+; The candidates: grass slots that rolled a mon.
+	ld b, a ; 0
+.candidate_loop
+	ld a, e
+	cp c
+	jr nc, .got_candidates
+	push hl
+	call GetOverworldMonEncounter ; preserves everything else
+	ld a, [hli]
+	or [hl]
+	pop hl
+	jr z, .next_candidate
+	ld a, e
+	call OverworldMonSlotBit
+	or b
+	ld b, a
+.next_candidate
+	inc e
+	jr .candidate_loop
+
+.got_candidates
+	ld a, b
+	ld [wOverworldMonBeastCandidates], a
+	and a
+	ret z
+
+; A coin toss decides which beast goes first.
+	call Random
+	rrca
+	jr c, .entei_first
+	call .Raikou
+	jr .Entei
+
+.entei_first
+	call .Entei
+.Raikou:
+	ld hl, wRoamMon1Species
+	ld de, wOverworldMonBeastSlots
+	jr .Place
+
+.Entei:
+	ld hl, wRoamMon2Species
+	ld de, wOverworldMonBeastSlots + 1
+.Place:
+; in: hl = the beast's roam struct, de = its entry in wOverworldMonBeastSlots
+	ld a, [hli]
+	and a
+	ret z ; not out: not released yet, or caught or defeated
+	ld b, a ; its species ID
+	inc hl ; past the level
+	ld a, [wMapGroup]
+	cp [hl]
+	ret nz
+	inc hl
+	ld a, [wMapNumber]
+	cp [hl]
+	ret nz
+	dec hl
+	dec hl
+	dec hl ; back to the species
+
+; A random candidate slot: count them, pick one, find it.
+	push hl
+	push de
+	ld a, [wOverworldMonBeastCandidates]
+	and a
+	jr z, .no_slot
+	ld c, 0
+	ld d, a
+.count
+	srl d
+	jr nc, .count_next
+	inc c
+.count_next
+	jr nz, .count
+	ld a, c
+	call RandomRange ; a = which of the candidates, 0-based
+	ld c, a
+	ld a, [wOverworldMonBeastCandidates]
+	ld d, a
+	ld e, -1 ; the slot
+.find
+	inc e
+	srl d
+	jr nc, .find
+	ld a, c
+	and a
+	jr z, .found
+	dec c
+	jr .find
+
+.found
+; e = the slot. Take it from the candidates.
+	ld a, e
+	call OverworldMonSlotBit
+	cpl
+	ld hl, wOverworldMonBeastCandidates
+	and [hl]
+	ld [hl], a
+	ld a, e
+	pop de
+	inc a ; 1-based
+	ld [de], a
+	dec a
+	ld [wOverworldMonRollSlot], a
+	pop hl ; the roam struct
+
+; Assemble the encounter in the roll buffer, as .FinishRoll does, and publish it in one copy.
+	push hl
+	ld a, [hli] ; species ID
+	push hl
+	call GetPokemonIndexFromID
+	ld a, l
+	ld [wOverworldMonRollBuffer + OW_MON_SPECIES], a
+	ld a, h
+	ld [wOverworldMonRollBuffer + OW_MON_SPECIES + 1], a
+	pop hl
+	ld a, [hli] ; level
+	ld [wOverworldMonRollBuffer + OW_MON_LEVEL], a
+	inc hl ; past the map group
+	inc hl ; past the map number
+	inc hl ; past the HP
+	ld a, [hli]
+	ld [wOverworldMonRollBuffer + OW_MON_DVS], a
+	ld a, [hli]
+	ld [wOverworldMonRollBuffer + OW_MON_DVS + 1], a
+	farcall RollLegendaryShiny ; hl = its form byte
+	ld a, [hl]
+	ld [wOverworldMonRollBuffer + OW_MON_FORM], a
+	pop hl
+	xor a
+	ld [wOverworldMonRollBuffer + OW_MON_ITEM], a
+	ld [wOverworldMonRollBuffer + OW_MON_PERKS], a
+	assert NO_MOVE == 0
+	ld [wOverworldMonRollBuffer + OW_MON_MOVE], a
+	ld [wOverworldMonRollBuffer + OW_MON_MOVE + 1], a
+	ld a, [wOverworldMonRollSlot]
+	jr PublishBeastEncounter
+
+.no_slot
+	pop de
+	pop hl
+	ret
+
+SaveRoamingBeasts:
+; Set aside the slots the beasts hold, and their encounters, for RestoreRoamingBeasts.
+	ld a, [wOverworldMonBeastSlots]
+	ld [wOverworldMonBeastSaveSlots], a
+	ld de, wOverworldMonBeastSave
+	call .Save
+	ld a, [wOverworldMonBeastSlots + 1]
+	ld [wOverworldMonBeastSaveSlots + 1], a
+	ld de, wOverworldMonBeastSave + OW_MON_ENCOUNTER_LENGTH
+.Save:
+; in: a = a beast's slot, 1-based or 0, de = where its encounter goes
+	and a
+	ret z
+	dec a
+	push de
+	ld e, a
+	call GetOverworldMonEncounter
+	pop de
+	ld bc, OW_MON_ENCOUNTER_LENGTH
+	rst CopyBytes
+	ret
+
+RestoreRoamingBeasts:
+; Stands in for PlaceRoamingBeasts during a swarm reroll: each beast goes back into its own slot,
+; unchanged, with no new shiny roll.
+	ld a, [wOverworldMonBeastSaveSlots]
+	ld [wOverworldMonBeastSlots], a
+	ld hl, wOverworldMonBeastSave
+	call .Restore
+	ld a, [wOverworldMonBeastSaveSlots + 1]
+	ld [wOverworldMonBeastSlots + 1], a
+	ld hl, wOverworldMonBeastSave + OW_MON_ENCOUNTER_LENGTH
+.Restore:
+; in: a = a beast's slot, 1-based or 0, hl = its saved encounter
+	and a
+	ret z
+	dec a
+	push af
+	ld de, wOverworldMonRollBuffer
+	ld bc, OW_MON_ENCOUNTER_LENGTH
+	rst CopyBytes
+	pop af
+	; fallthrough
+
+PublishBeastEncounter:
+; Copy the roll buffer into slot a. A beast is on land, so clear its surface bit.
+	push af
+	ld e, a
+	call GetOverworldMonEncounter
+	ld d, h
+	ld e, l
+	ld hl, wOverworldMonRollBuffer
+	ld bc, OW_MON_ENCOUNTER_LENGTH
+	rst CopyBytes
+	pop af
+	call OverworldMonSlotBit
+	cpl
+	ld hl, wOverworldMonOnSurface
+	and [hl]
+	ld [hl], a
+	ret
+
+OverworldMonSlotBit:
+; in: a = a 0-based slot; out: a = 1 << slot. Preserves everything else.
+	push bc
+	ld b, a
+	inc b
+	xor a
+	scf
+.loop
+	rla
+	dec b
+	jr nz, .loop
+	pop bc
+	ret
+
+IsOverworldMonBattleBeast::
+; out: carry if the battle about to start is against a roaming beast's slot
+	ld a, [wOverworldMonBattleSlot]
+	and a
+	ret z
+	ld hl, wOverworldMonBeastSlots
+	cp [hl]
+	scf
+	ret z
+	inc hl
+	cp [hl]
+	scf
+	ret z
+	and a
+	ret
+
 RerollSwarmOverworldMons::
 ; After a battle on a swarming route: reroll every wandering mon, the way a population rerolls
 ; its members (R5), so standing in a swarm is a loop rather than a single pass. The reload that
@@ -1069,7 +1379,13 @@ RerollSwarmOverworldMons::
 	ret nz
 	call IsPlayerMapSwarming
 	ret nc
+; A roaming beast standing here stays: set its slot aside, and have the roll put it back.
+	call SaveRoamingBeasts
+	ld a, TRUE
+	ld [wOverworldMonRerolling], a
 	call RollOverworldMons
+	xor a
+	ld [wOverworldMonRerolling], a
 
 ; The mon you fought is spent, as it would be anywhere else: its slot sits out this reshuffle and
 ; returns with the next one. The roll has just refilled it, and it would come back at its map
@@ -1876,4 +2192,5 @@ UpdateOverworldMonObjectMasks::
 	ret
 
 INCLUDE "data/wild/overworld_mons.asm"
+INCLUDE "data/wild/surface_mons.asm"
 INCLUDE "data/wild/mon_populations.asm"

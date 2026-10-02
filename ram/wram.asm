@@ -3152,6 +3152,18 @@ wOverworldMonSwarmForm:: db
 wOverworldMonRollFromSwarm:: db ; nonzero while .RollForm rolls a mon the swarm supplied
 wSwarmRespawnPending:: db ; set by RerollSwarmOverworldMons, spent by PlacePopulationAndSpawn
 
+; The wandering slot each roaming beast took this visit, 1-based, 0 for none: Raikou, then Entei.
+wOverworldMonBeastSlots:: ds 2
+wOverworldMonBeastCandidates:: db ; scratch for PlaceRoamingBeasts: the grass slots that rolled a mon
+; RerollSwarmOverworldMons keeps the beasts through its reroll: their slots and encounters wait here.
+wOverworldMonRerolling:: db
+wOverworldMonBeastSaveSlots:: ds 2
+wOverworldMonBeastSave:: ds 2 * OW_MON_ENCOUNTER_LENGTH
+; Set while a battle moves the roamers: one on the player's map holds still, unless its species ID
+; is wRoamMonsHoldExcept (the roamer just fought).
+wRoamMonsHold:: db
+wRoamMonsHoldExcept:: db
+
 ; The population this map carries, if any -- see docs/overworld_pokemon.md. Rolled on entry
 ; like everything above; nothing here survives a save.
 wPopulationRow:: dw   ; its row in MonPopulations, past the map id

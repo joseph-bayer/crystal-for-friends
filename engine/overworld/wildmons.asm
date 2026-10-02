@@ -285,8 +285,7 @@ ChooseWildEncounter:
 	ld [wTempWildMonForm], a
 	call LoadWildMonDataPointer
 	jr nc, .nowildbattle
-	call CheckEncounterRoamMon
-	jr c, .startwildbattle
+; Roaming beasts aren't met in the grass, only as wandering mon, so one can't be caught twice.
 
 	inc hl
 	inc hl
@@ -491,6 +490,53 @@ LookUpWildmonsForMapDE:
 	scf
 	ret
 
+RollBeastsAtBurnedTower::
+; Called as the Burned Tower scene starts, before the beasts wake. Each gets a fresh form, shiny at
+; 1/512, so soft-resetting before the scene hunts all three at once. Suicune doesn't roam, so its
+; form goes in the otherwise unused wRoamMon3, for Tin Tower.
+	ld hl, wRoamMon1Form
+	call .Reroll
+	ld hl, wRoamMon2Form
+	call .Reroll
+	ld hl, wRoamMon3Form
+.Reroll:
+	ld [hl], PLAIN_FORM
+	jr RollLegendaryShiny
+
+RollTinTowerSuicuneShiny::
+; As Tin Tower 1F loads with Suicune there: another 1/512 chance if it isn't shiny yet, rolled
+; before its sprite appears.
+	ld hl, wRoamMon3Form
+	; fallthrough
+
+RollLegendaryShiny:
+; in: hl = a legendary's form byte
+; Sets its shiny bit at 1/512 (1/256, then LEGENDARY_SHINY_NUMERATOR/256). Shiny stays shiny.
+	ld a, [hl]
+	and SHINY_MASK
+	ret nz
+if DEF(_DEBUG)
+	push hl
+	ld de, EVENT_DEBUG_FORCE_SHINY_BEASTS
+	ld b, CHECK_FLAG
+	call EventFlagAction
+	pop hl
+	ld a, c
+	and a
+	jr nz, .shiny
+endc
+	call Random
+	and a
+	ret nz ; 255/256 not shiny
+	call Random
+	cp LEGENDARY_SHINY_NUMERATOR
+	ret nc ; 128/256 still not shiny
+.shiny
+	ld a, [hl]
+	or SHINY_MASK
+	ld [hl], a
+	ret
+
 InitRoamMons:
 ; initialize wRoamMon structs
 
@@ -526,60 +572,32 @@ InitRoamMons:
 
 	ret
 
-CheckEncounterRoamMon:
-	push hl
-; Don't trigger an encounter if we're on water.
-	call CheckOnWater
-	jr z, .DontEncounterRoamMon
-; Load the current map group and number to de
-	call CopyCurrMapDE
-; Randomly select a beast.
-	call Random
-	cp 100 ; 25/64 chance
-	jr nc, .DontEncounterRoamMon
-	and %00000011 ; Of that, a 3/4 chance.  Running total: 75/256, or around 29.3%.
-	jr z, .DontEncounterRoamMon
-	dec a ; 1/3 chance that it's Entei, 1/3 chance that it's Raikou
-; Compare its current location with yours
-	ld hl, wRoamMon1MapGroup
-	ld c, a
-	ld b, 0
-	ld a, 8 ; length of the roam_struct
-	rst AddNTimes
-	ld a, d
-	cp [hl]
-	jr nz, .DontEncounterRoamMon
-	inc hl
-	ld a, e
-	cp [hl]
-	jr nz, .DontEncounterRoamMon
-; We've decided to take on a beast, so stage its information for battle.
-	dec hl
-	dec hl
-	dec hl
-	ld a, [hli]
-	ld [wTempWildMonSpecies], a
-	ld a, [hl]
-	ld [wCurPartyLevel], a
-	ld a, BATTLETYPE_ROAMING
-	ld [wBattleType], a
-
-	pop hl
-	scf
-	ret
-
-.DontEncounterRoamMon:
-	pop hl
-	and a
+UpdateRoamMonsAfterBattle::
+; After a battle: a roamer on the player's map holds still until the player leaves, except the one
+; just fought.
+; in: a = the species ID of the roamer just fought, or 0 after any other battle
+	ld [wRoamMonsHoldExcept], a
+	ld a, TRUE
+	ld [wRoamMonsHold], a
+	call UpdateRoamMons
+	xor a
+	ld [wRoamMonsHold], a
 	ret
 
 UpdateRoamMons:
+if DEF(_DEBUG)
+	call .DebugFollowPlayer
+	jmp c, _BackUpMapIndices
+endc
 	ld a, [wRoamMon1MapGroup]
 	cp GROUP_N_A
 	jr z, .SkipRaikou
 	ld b, a
 	ld a, [wRoamMon1MapNumber]
 	ld c, a
+	ld a, [wRoamMon1Species]
+	call .IsHeldHere
+	jr z, .SkipRaikou
 	call .Update
 	ld a, b
 	ld [wRoamMon1MapGroup], a
@@ -593,6 +611,9 @@ UpdateRoamMons:
 	ld b, a
 	ld a, [wRoamMon2MapNumber]
 	ld c, a
+	ld a, [wRoamMon2Species]
+	call .IsHeldHere
+	jr z, .SkipEntei
 	call .Update
 	ld a, b
 	ld [wRoamMon2MapGroup], a
@@ -614,6 +635,82 @@ UpdateRoamMons:
 
 .Finished:
 	jmp _BackUpMapIndices
+
+.IsHeldHere:
+; in: a = a roamer's species ID, bc = its map
+; out: z if it holds still: a battle's move, on the player's map, and not the one fought
+	ld e, a
+	ld a, [wRoamMonsHold]
+	and a
+	jr z, .moves
+	ld a, [wRoamMonsHoldExcept]
+	cp e
+	jr z, .moves
+	ld a, [wMapGroup]
+	cp b
+	ret nz
+	ld a, [wMapNumber]
+	cp c
+	ret
+
+.moves
+	or 1
+	ret
+
+if DEF(_DEBUG)
+.DebugFollowPlayer:
+; The debug menu's BEASTS FOLLOW: on a map change onto a roaming route, the roamers land on it too.
+; out: carry if it put them here
+	ld a, [wRoamMonsHold]
+	and a
+	ret nz ; a battle's move: leave that alone
+	ld de, EVENT_DEBUG_BEASTS_FOLLOW_PLAYER
+	ld b, CHECK_FLAG
+	call EventFlagAction
+	ld a, c
+	and a
+	ret z
+	ld a, [wMapGroup]
+	ld b, a
+	ld a, [wMapNumber]
+	ld c, a
+	ld hl, RoamMaps
+.follow_search
+	ld a, [hl]
+	cp -1
+	ret z ; not a roaming route; `cp -1` has cleared carry
+	cp b
+	jr nz, .follow_next
+	inc hl
+	ld a, [hld]
+	cp c
+	jr z, .follow_here
+.follow_next
+	ld a, [hli]
+	and a
+	jr nz, .follow_next
+	jr .follow_search
+
+.follow_here
+	ld a, [wRoamMon1MapGroup]
+	cp GROUP_N_A
+	jr z, .follow_entei
+	ld a, b
+	ld [wRoamMon1MapGroup], a
+	ld a, c
+	ld [wRoamMon1MapNumber], a
+.follow_entei
+	ld a, [wRoamMon2MapGroup]
+	cp GROUP_N_A
+	jr z, .followed
+	ld a, b
+	ld [wRoamMon2MapGroup], a
+	ld a, c
+	ld [wRoamMon2MapNumber], a
+.followed
+	scf
+	ret
+endc
 
 .Update:
 	ld hl, RoamMaps

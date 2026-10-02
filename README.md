@@ -47,14 +47,14 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - The ball that a Pokemon is caught in is displayed on the stats screen
 
 - **Wild Held Item Rebalance**
-	- Wild Pokemon are more likely to hold items
+  - Wild Pokemon are more likely to hold items
 
 	| Common Item | Rare Item |
 	|----------------|-------------------|
 	| **40%** *(+17%)* | **10%** *(+8%)* |
 
 - **Flee Mechanic Upgrades**
-	- Only Roaming Legendaries flee wild battles
+  - Only Roaming Legendaries flee wild battles
 
 - **Hidden Power Upgrades**
   - Base Power is always 60 Credits: [Grate Oracle Lewot](https://github.com/Grate-Oracle-Lewot)
@@ -80,8 +80,9 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   	| One shiny parent | **1/64** |
   	| Two shiny parents | **1/32** |
   - Roaming Legendarys
-    - Every time you encounter one, it has a **1/512** chance to be shiny
-    - Once you encounter a shiny roaming mon, it will remain shiny for all subsequent encounters
+    - When the beasts are first seen in Burned Tower, they will each have a 1/512 chance of appearing as shiny (and will remain shiny as they roam). This makes them soft-resetable all at the same time.
+    - After that, every time one turns up on the route you're on, it has another **1/512** chance to be shiny
+    - Once you see a shiny roaming mon in the overworld, it will remain shiny for all subsequent encounters. You do not need to actually encounter the mon in battle for this to happen.
 
 - **Breeding Upgrades** 
   - Fewer step cycles required to hatch eggs
@@ -108,6 +109,7 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
 
 - **New and Updated Daily Events**
   - Bug Catching Contest now appears on Sundays as well (on top of Tuesdays, Thursdays, and Saturdays)
+  - A Sailor in Cianwood will take you to a mystery island once a day, where you can find new places to explore, rare Pokemon, and more
 
 - **Wild Pokemon in the Overworld**
   - Many routes and towns have Pokemon wandering in the open
@@ -118,6 +120,13 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Some turn up in forms you cannot find any other way
   - A chime plays when you walk into an area that has a shiny in it
   - Who turns up is decided fresh each time you enter an area, so it is worth passing back through
+
+- **Roaming Legendaries**
+  - Roaming legendaries appear in the overworld now instead of in the grass
+  - The location of the roaming legendaries can be tracked on the Pokegear map 
+  - A roaming legendary stays put while you're on its route, so you can walk up to it. It only moves on when you leave, or after you battle it
+  - The Guide Gent in Cherrygrove gives you the Map Card even if you turn down his tour, so everyone can track them
+  - Check the Shininess section about updates to shiny mechanics surrounding the roaming legendaries
 
 - **New Cosmetic Forms**
 	| Species	| Form			| How to Obtain |

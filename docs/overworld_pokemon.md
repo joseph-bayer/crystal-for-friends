@@ -5,11 +5,6 @@ objects, and the ones that now wander a route and can be walked into.
 
 Two features, built in that order, sharing one mechanism.
 
-> **Not yet updated for swarms.** Swarms (`constants/swarm_constants.asm`, `data/wild/swarms.asm`)
-> now substitute into route rosters in `RollOverworldMons`, and a swarming route rerolls its mon after
-> every battle — respawned through `PlacePopulationAndSpawn`, which this document still describes as
-> population-only. The rest of the document is accurate for maps without a swarm.
-
 ## Contents
 
 - [Why they used to be the wrong species](#why-they-used-to-be-the-wrong-species)
@@ -23,6 +18,8 @@ Two features, built in that order, sharing one mechanism.
 - [Meeting one](#meeting-one)
 - [Saving and loading](#saving-and-loading)
 - [Populations](#populations)
+- [Swarms](#swarms)
+- [Roaming beasts](#roaming-beasts)
 - [Bugs worth remembering](#bugs-worth-remembering)
 - [Known gaps](#known-gaps)
 
@@ -131,6 +128,7 @@ battle — with the mon you were looking at.
 | `OBJECTTYPE_WILDMON`, the proximity and talk triggers, the battle script | `engine/overworld/events.asm` |
 | The roll, the masks, the battle setup | `engine/overworld/overworld_mons.asm` |
 | Rosters | `data/wild/overworld_mons.asm` |
+| Which water species ride on the surface | `data/wild/surface_mons.asm` |
 | Struct, perks, table shape | `constants/overworld_mon_constants.asm` |
 | Reading the roll instead of rolling | `engine/battle/core.asm`, in `LoadEnemyMon` |
 
@@ -138,6 +136,13 @@ An object opts in with `OBJECTTYPE_WILDMON`, a `SPRITE_OW_MON_*` sprite, palette
 takes the mon's own colors, and `SPRITEMOVEDATA_WANDER_NOCLIP` (or `SWIM_WANDER_NOCLIP` on water).
 Its event flag is usually `-1`: whether one is standing there is decided by whether its slot holds
 a mon, not by a flag.
+
+**On water, a mon swims in it or rides on top by species.** `SWIM_WANDER_NOCLIP` sinks a mon to
+the waist. The species listed in `SurfaceRidingMons` (`data/wild/surface_mons.asm`) — Tentacool,
+Magikarp, Goldeen and the like — float instead: the water pass sets the slot's bit in
+`wOverworldMonOnSurface`, and `CopySpriteMovementData` takes `OVERHEAD` back off its object. A
+roster row has no say, so a new water row or a swarm can't get it wrong. Adding a floating species
+is one line in that list.
 
 **A flag other than `-1` reads inverted on these objects.** Everywhere else in the game an event
 flag hides an object once it is *set*; on an `OBJECTTYPE_WILDMON` object it does the opposite — the
@@ -278,7 +283,8 @@ change when a step *begins*, not when the sprite arrives, so without that a mon 
 triggers while it is still visibly a tile away.
 
 **Any finished battle spends it** — beaten, caught or run from, it is gone until the route is left
-and re-entered. `wBattleResult` could tell those apart; nothing consults it, because there is
+and re-entered. Two kinds of map reshuffle after a battle instead: a population (see
+[Populations](#populations)) and a swarming route (see [Swarms](#swarms)). `wBattleResult` could tell those apart; nothing consults it, because there is
 nothing to decide.
 
 Two touches around the encounter: the player and the follower are hidden for the battle transition
@@ -337,6 +343,87 @@ How it differs from a route roster, in one line each:
   encounter gets, at roll time, so sprite and battle agree. The engine imposes no perk.
 - **The contest** runs on `NATIONAL_PARK_BUG_CONTEST`, so no gate is needed; while the contest
   timer runs a member battle takes `BATTLETYPE_CONTEST` and the contest's out-of-balls tail.
+
+
+## Swarms
+
+A swarm (`data/wild/swarms.asm`, constants in `constants/swarm_constants.asm`) takes over part of
+a route's wandering mon as well as its grass or surf encounters. This section covers the wandering
+side; the encounter side is `ApplySwarmToWildSlot` in `engine/overworld/wildmons.asm`.
+
+| Piece | Where |
+| --- | --- |
+| Which rows a swarm takes | `RollOverworldMons.GetSwarmedRows` in `engine/overworld/overworld_mons.asm` |
+| Substituting a taken row | the swarm branch of `RollOverworldMons.RollOneSlot` |
+| Post-battle reroll | `RerollSwarmOverworldMons`, called from `OverworldMonBattleScript` |
+| Respawn after the reroll | `PlacePopulationAndSpawn` in `MapSetupScript_ReloadMap`, gated on `wSwarmRespawnPending` |
+| Keeping a respawn off the player's tile | `KeepSwarmClearOfPlayer`, margin `SWARM_RESPAWN_MARGIN` |
+
+- **Which rows.** Per terrain pass, `GetSwarmedRows` takes the roster's heaviest rows while their
+  combined weight moves nearer `SWARM_ENCOUNTER_RATE` (60%), and never all four, so one row always
+  stays the route's own. Rows are weighted rather than fixed-odds slots, which is why this differs
+  from the grass's slot masks.
+- **A taken row** gets the swarm's species and form and keeps the row's level. It does not keep the
+  row's perks or extra move, which belong to the species it displaced. On water, whether it floats
+  comes from its species, as for any water mon. Its shininess is rolled at `SWARM_SHINY_NUMERATOR`.
+- **After a battle with one of its wandering mon**, a swarming route rerolls every slot, so standing
+  in a swarm is a loop. The fought mon's slot is emptied again, so it doesn't reappear a tile or two
+  from where it was met; it comes back with the next reroll. The reload's `PlacePopulationAndSpawn`
+  respawns the route only when `wSwarmRespawnPending` says a reroll happened, so ordinary grass
+  battles leave the wandering mon standing.
+- **Respawning on the player.** A route's mon reappear at their map object's tile, so
+  `KeepSwarmClearOfPlayer` empties any rerolled slot whose tile is the player's: it would start a
+  battle at once. It comes back with the next reroll.
+- **Roaming beasts** standing on a swarming route survive the reroll; see [Roaming beasts](#roaming-beasts).
+- **Debug.** `SWARM_DEBUG_FORCE_SHINY` makes every swarm mon shiny in a debug build.
+
+
+## Roaming beasts
+
+Raikou and Entei are met as wandering mon, never in the grass. A beast on the player's route takes
+one of its grass slots for the visit, and the battle against it is a roamer battle.
+
+| Piece | Where |
+| --- | --- |
+| Placement after the grass pass, slot markers | `PlaceRoamingBeasts`, `wOverworldMonBeastSlots` in `engine/overworld/overworld_mons.asm` |
+| Kept through a swarm reroll | `SaveRoamingBeasts` / `RestoreRoamingBeasts`, called from `RerollSwarmOverworldMons` |
+| Roamer battle from a slot | `IsOverworldMonBattleBeast` in `SetUpOverworldMonBattle`; `EndOverworldMonBattle` forgets the slot |
+| Moving, and holding still after battles | `UpdateRoamMons` / `UpdateRoamMonsAfterBattle` in `engine/overworld/wildmons.asm` |
+| Shininess rolls | `RollBeastsAtBurnedTower`, `RollTinTowerSuicuneShiny`, `RollLegendaryShiny` in `engine/overworld/wildmons.asm` |
+| Beast sprites in their own colors | `_GetSpritePalette.GetBeast` in `engine/overworld/overworld.asm` |
+| Pokégear map icons | `PokegearMap_InitMonIcons` in `engine/pokegear/pokegear.asm`, icon slots 3 and 4 |
+| Debug tools | the Super Nerd in the player's room, debug builds only (`PlayersHouseDebugBeastsScript`) |
+
+How it works:
+
+- **Placement.** After the grass pass, each beast whose roam struct names this map takes a random
+  grass slot that rolled a mon. The encounter comes from the roam struct (species, level, DVs and
+  form), with nothing kept from the row it displaces. Each placement rolls 1/512 for shininess,
+  and a shiny stays shiny. With both beasts here and one slot, a coin toss picks which appears.
+- **Moving.** `UpdateRoamMons` runs *before* `HandleNewMap` in the connection and door setup
+  scripts, so the roll sees where the beasts are for this visit, and the Pokégear agrees with the
+  sprite. Warps and Fly don't run it; Fly runs `JumpRoamMons`. After a battle, a roamer on the
+  player's map holds still unless it is the one just fought.
+- **The battle.** A beast's slot fights as `BATTLETYPE_ROAMING`: HP carries over, DVs are fixed
+  at the first meeting, it flees on its first turn, and `BattleEnd_HandleRoamMons` moves it on or
+  clears it. `LoadEnemyMon` checks for a roamer *before* the wanderer slot's DVs, since the battle
+  is both.
+- **Swarms.** A swarm's post-battle reroll leaves a beast standing: its slot and encounter are set
+  aside, and put back in place of a fresh placement.
+- **Shininess before the route.** The Burned Tower scene rolls all three beasts as they wake, so
+  soft-resetting before it hunts them together. Suicune doesn't roam; its form lives in the
+  otherwise unused `wRoamMon3Form`, gets one more roll as Tin Tower 1F loads, and its battle there
+  takes it as stored.
+- **Debug.** *FORCE SHINY* makes every legendary roll hit. *BEASTS FOLLOW* lands any beast that's
+  out on each roaming route the player walks onto, since a roamer always leaves its route on a map
+  change.
+
+Known gaps:
+
+- On Routes 33, 39, 42, 43 and 44 there is only one grass slot, so with both beasts there only one
+  can be met that visit. The Pokégear still shows both.
+- `KeepSwarmClearOfPlayer` can empty a beast's slot after a swarm battle if its spawn tile is the
+  player's tile, which leaves it out for the rest of the visit.
 
 
 ## Bugs worth remembering

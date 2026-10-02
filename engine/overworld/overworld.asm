@@ -575,9 +575,13 @@ _GetSpritePalette::
 	ld a, c
 	cp SPRITE_FOLLOWER
 	jr z, .follower
+	call .GetBeast
+	jr c, .is_beast
+	ld a, c
 	call GetMonSprite
 	jr c, .is_pokemon
 
+.sprite_table
 	ld hl, OverworldSprites + SPRITEDATA_PALETTE
 	dec a
 	ld c, a
@@ -592,12 +596,7 @@ _GetSpritePalette::
 ; icon, which leaves the species in wCurIcon and the form in wForm -- everything the color lookup
 ; wants, and it does not matter which path got here: a mon slot, a SpriteMons id, a doll's
 ; variable sprite or a day-care mon all arrive with those two set.
-	ld a, [wCurIcon]
-	and a
-	jr z, .no_mon_palette
-	ld bc, wForm
-	farcall GetArrangedMonIconColors ; bc = the light color, de = the dark one
-	call ClaimOverworldMonPalette
+	call .MonColors
 	jr c, .no_mon_palette ; every index is spoken for; fall back to a flat overworld color
 	ld c, a
 	ret
@@ -606,6 +605,73 @@ _GetSpritePalette::
 	xor a
 	ld c, a
 	ret
+
+.is_beast
+; With no mon-color index free, a beast keeps its classic sprite-table color.
+	push bc ; c = the sprite
+	call .MonColors
+	pop bc
+	jr c, .beast_classic
+	ld c, a
+	ret
+
+.beast_classic
+	ld a, c
+	jr .sprite_table
+
+.MonColors:
+; out: a = the claimed mon-color index, or carry if there is no mon or no free index
+	ld a, [wCurIcon]
+	and a
+	scf
+	ret z
+	ld bc, wForm
+	farcall GetArrangedMonIconColors ; bc = the light color, de = the dark one
+	jr ClaimOverworldMonPalette
+
+.GetBeast:
+; The legendary beasts' sprites are colored from the beast itself, by its stored form, so a shiny
+; one looks shiny. An object's own palette still overrides this, which keeps the statues silver.
+; in: c = a sprite id
+; out: carry, with wCurIcon and wForm set, if it is one of the three
+	ld hl, .Beasts
+.beast_loop
+	ld a, [hli]
+	and a
+	ret z ; not a beast; `and a` has cleared carry
+	cp c
+	jr z, .found_beast
+	inc hl
+	inc hl
+	inc hl
+	inc hl
+	jr .beast_loop
+
+.found_beast
+	ld a, [hli]
+	ld e, a
+	ld a, [hli]
+	ld d, a ; de = the species index
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	ld a, [hl] ; its stored form
+	ld [wForm], a
+	ld h, d
+	ld l, e
+	call GetPokemonIDFromIndex
+	ld [wCurIcon], a
+	scf
+	ret
+
+.Beasts:
+	db SPRITE_RAIKOU
+	dw RAIKOU, wRoamMon1Form
+	db SPRITE_ENTEI
+	dw ENTEI, wRoamMon2Form
+	db SPRITE_SUICUNE
+	dw SUICUNE, wRoamMon3Form ; Suicune doesn't roam, but its form is kept here
+	db 0 ; end
 
 .follower
 ; The follower is colored from the mon's own palette -- the two colors its battle sprite uses,
