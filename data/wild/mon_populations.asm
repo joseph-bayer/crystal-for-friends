@@ -39,4 +39,11 @@ MonPopulations:
 	pop_mon  5, PINSIR,     13, 14, POP_WILD_FORM, 0
 	end_population
 
+; The Ruins of Alph Inner Chamber: Unown, once a puzzle is solved. Each takes a random unlocked
+; letter, whatever the form column says, and none appear before (RollOverworldMons.RollUnownLetter).
+; Every battle reshuffles all four, letters included. No spawn areas: anywhere on the floor.
+	def_population RUINS_OF_ALPH_INNER_CHAMBER, POP_REROLL_STATS, 4
+	pop_mon 100, UNOWN, 5, 5, PLAIN_FORM, 0
+	end_population
+
 	db -1 ; end

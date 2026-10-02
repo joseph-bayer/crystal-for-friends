@@ -159,11 +159,6 @@ if DEF(_DEBUG)
 	givepokemove HEADBUTT,   wPartyMon3, 2
 	givepokemove WATERFALL,  wPartyMon3, 3
 
-	; TESTING: RB forms -- these three take the last party slots, so the usual occupants are
-	; commented out below. Restore them and comment these out when done.
-	; givepoke MACHOP, 20, NO_ITEM, MACHOP_RB_FORM
-	; givepoke MACHOKE, 30, NO_ITEM, MACHOKE_RB_FORM
-	givepoke MACHAMP, 40, NO_ITEM, MACHAMP_RB_FORM | SHINY_MASK
 	givepoke AMPHAROS, 50
 	givepoke GENGAR, 50
 	; A form Pikachu to make the follower, for the doll test below.
@@ -246,9 +241,8 @@ if DEF(_DEBUG)
 	; givepoke ONIX, 50, LEFTOVERS
 	; givepoke SEADRA, 50, LEFTOVERS
 
-	; TESTING: start both vanilla swarms, so Dark Cave and Route 35 can be checked without
-	; waiting on a phone call. Talk to the radio again to restart them after the daily reset
-	; clears them at midnight.
+	; Start the Dunsparce and Yanma swarms, so Dark Cave and Route 35 can be checked without waiting on
+	; a phone call. The daily reset clears them at midnight; use the radio again to restart them.
 	swarm SWARM_DUNSPARCE
 	swarm SWARM_YANMA
 
@@ -368,10 +362,10 @@ PlayersHouseDebugTraderScript:
 	end
 
 PlayersHouseDebugBeastsScript:
-; Debug tools for the legendary beasts.
+; Debug tools for the legendary beasts and the wandering Unown. The menu takes the whole screen
+; height, over where the text box would be, so there is no title text.
 	faceplayer
 	opentext
-	writetext PlayersHouseDebugBeastsText
 	loadmenu .MenuHeader
 	verticalmenu
 	closewindow
@@ -379,6 +373,9 @@ PlayersHouseDebugBeastsScript:
 	ifequal 2, .ReplayTower
 	ifequal 3, .ToggleShiny
 	ifequal 4, .ToggleFollow
+	ifequal 5, .UnlockUnown
+	ifequal 6, .RelockUnown
+	ifequal 7, .ToTheRuins
 	closetext
 	end
 
@@ -449,24 +446,104 @@ PlayersHouseDebugBeastsScript:
 	closetext
 	end
 
+.UnlockUnown:
+; The next letter group in puzzle order, as solving that puzzle would. Only the flag: the puzzles,
+; the Inner Chamber's tourists and its presence scene are left as they are.
+	checkflag ENGINE_UNLOCKED_UNOWNS_A_TO_K
+	iffalse .UnlockAToK
+	checkflag ENGINE_UNLOCKED_UNOWNS_L_TO_R
+	iffalse .UnlockLToR
+	checkflag ENGINE_UNLOCKED_UNOWNS_S_TO_W
+	iffalse .UnlockSToW
+	checkflag ENGINE_UNLOCKED_UNOWNS_X_TO_Z
+	iffalse .UnlockXToZ
+	writetext PlayersHouseDebugUnownAllText
+	sjump .UnownDone
+
+.UnlockAToK:
+	setflag ENGINE_UNLOCKED_UNOWNS_A_TO_K
+	writetext PlayersHouseDebugUnownAToKText
+	sjump .UnownDone
+
+.UnlockLToR:
+	setflag ENGINE_UNLOCKED_UNOWNS_L_TO_R
+	writetext PlayersHouseDebugUnownLToRText
+	sjump .UnownDone
+
+.UnlockSToW:
+	setflag ENGINE_UNLOCKED_UNOWNS_S_TO_W
+	writetext PlayersHouseDebugUnownSToWText
+	sjump .UnownDone
+
+.UnlockXToZ:
+	setflag ENGINE_UNLOCKED_UNOWNS_X_TO_Z
+	writetext PlayersHouseDebugUnownXToZText
+	sjump .UnownDone
+
+.RelockUnown:
+; Back to before any puzzle: no wandering Unown and no floor encounters in the Inner Chamber.
+	clearflag ENGINE_UNLOCKED_UNOWNS_A_TO_K
+	clearflag ENGINE_UNLOCKED_UNOWNS_L_TO_R
+	clearflag ENGINE_UNLOCKED_UNOWNS_S_TO_W
+	clearflag ENGINE_UNLOCKED_UNOWNS_X_TO_Z
+	writetext PlayersHouseDebugUnownRelockedText
+.UnownDone:
+	waitbutton
+	closetext
+	end
+
+.ToTheRuins:
+; In front of the Inner Chamber's door on Ruins of Alph Outside, where the Unown are.
+	closetext
+	warp RUINS_OF_ALPH_OUTSIDE, 10, 14
+	end
+
 .MenuHeader:
 	db MENU_BACKUP_TILES ; flags
-	menu_coords 0, 0, 15, TEXTBOX_Y - 1
+	menu_coords 0, 0, 15, SCREEN_HEIGHT - 1 ; eight items, two rows apart: the whole height
 	dw .MenuData
 	db 1 ; default option
 
 .MenuData:
 	db STATICMENU_CURSOR ; flags
-	db 5 ; items
+	db 8 ; items
 	db "POST-RELEASE@"
 	db "REPLAY TOWER@"
 	db "FORCE SHINY@"
 	db "BEASTS FOLLOW@"
+	db "UNLOCK UNOWN@"
+	db "RELOCK UNOWN@"
+	db "RUINS OF ALPH@"
 	db "CANCEL@"
 
-PlayersHouseDebugBeastsText:
-	text "DEBUG: legendary"
-	line "beasts."
+PlayersHouseDebugUnownAToKText:
+	text "DEBUG: UNOWN A-K"
+	line "unlocked."
+	done
+
+PlayersHouseDebugUnownLToRText:
+	text "DEBUG: UNOWN L-R"
+	line "unlocked."
+	done
+
+PlayersHouseDebugUnownSToWText:
+	text "DEBUG: UNOWN S-W"
+	line "unlocked."
+	done
+
+PlayersHouseDebugUnownXToZText:
+	text "DEBUG: UNOWN X-Z"
+	line "unlocked."
+	done
+
+PlayersHouseDebugUnownAllText:
+	text "DEBUG: every UNOWN"
+	line "is unlocked."
+	done
+
+PlayersHouseDebugUnownRelockedText:
+	text "DEBUG: every UNOWN"
+	line "is locked again."
 	done
 
 PlayersHouseDebugBeastsShinyOnText:

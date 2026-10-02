@@ -144,6 +144,12 @@ Magikarp, Goldeen and the like — float instead: the water pass sets the slot's
 roster row has no say, so a new water row or a swarm can't get it wrong. Adding a floating species
 is one line in that list.
 
+**An Unown shows an unlocked letter, by species.** `RollOverworldMons.RollUnownLetter`, first in the
+shared roll tail, gives any wandering Unown a random letter from the unlocked groups — the floor's
+own pick, `GetUnownLetter` and `CheckUnownLetter` — whatever its row's form column says. With no
+group unlocked it publishes the slot empty instead, which is also `ChooseWildEncounter`'s gate on
+the floor: `CheckUnownLetter` rejects every letter then, and its retry loop would never end.
+
 **A flag other than `-1` reads inverted on these objects.** Everywhere else in the game an event
 flag hides an object once it is *set*; on an `OBJECTTYPE_WILDMON` object it does the opposite — the
 mon appears only once that event has happened. `UpdateOverworldMonObjectMasks` checks it before
@@ -172,7 +178,7 @@ mon, and testing that leaves the battle type free for the contest.
 | --- | --- | --- |
 | Held item | `.UpdateItem` | take the rolled item |
 | DVs | `.GenerateDVs` | take the rolled DVs |
-| Form and shininess | `.generate_shininess` | take the rolled form byte whole |
+| Form and shininess | `.check_unown`, before the Unown letter roll | take the rolled form byte whole (`.overworld_mon_form`) |
 
 The move is applied by `ApplyOverworldMonMove`, after `FillMoves` and before the PP fill so it gets
 PP for free. It fills an empty slot, or replaces move 1 if the mon already knows four. **It is
@@ -317,8 +323,8 @@ next section.
 ## Populations
 
 A second kind of wandering mon, for a few special maps: a standing group that **reshuffles every
-time you battle one of its members** rather than rerolling when you leave. Hidden Grove and the
-Bug Catching Contest use it. This is the map of where it lives.
+time you battle one of its members** rather than rerolling when you leave. Hidden Grove, the
+Bug Catching Contest and the Ruins of Alph Inner Chamber use it. This is the map of where it lives.
 
 | Piece | Where |
 | --- | --- |
@@ -334,8 +340,8 @@ How it differs from a route roster, in one line each:
 
 - A map has a population **or** an area roster, never both; the population roll fills the slots
   and the grass and water tables are not consulted.
-- **Placement**: members are scattered over authored rectangles, on land, clear of the player and
-  of every other object, from a 16-bit xorshift seeded once per pass — the hardware RNG is nearly
+- **Placement**: members are scattered over authored rectangles (anywhere on the map when a
+  population lists none), on land, clear of the player and of every other object, from a 16-bit xorshift seeded once per pass — the hardware RNG is nearly
   constant with the LCD off. The pass writes map objects only; `InitializeVisibleSprites` spawns.
 - **Two modes.** `POP_REROLL_STATS`: one species for the visit, every battle rerolls level, DVs,
   shininess, item and form. `POP_REROLL_SPECIES`: every battle rerolls species too.
@@ -343,6 +349,12 @@ How it differs from a route roster, in one line each:
   encounter gets, at roll time, so sprite and battle agree. The engine imposes no perk.
 - **The contest** runs on `NATIONAL_PARK_BUG_CONTEST`, so no gate is needed; while the contest
   timer runs a member battle takes `BATTLETYPE_CONTEST` and the contest's out-of-balls tail.
+- **The Inner Chamber** holds four Unown, level 5, anywhere on its floor, alongside its floor
+  encounters (4% per step). The gate and the letters are the Unown species rule (see
+  [Wandering wild Pokémon](#wandering-wild-pokémon)), so they appear from the first solved puzzle —
+  which drops you into the chamber, already populated — and every battle reshuffles the letters
+  too. In debug builds the Super Nerd in the player's room unlocks the next letter group, relocks
+  them all, or warps you to the chamber's door.
 
 
 ## Swarms

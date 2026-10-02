@@ -6472,6 +6472,11 @@ LoadEnemyMon:
 
 .check_unown
 ; Wild Form Generation
+; A wandering mon's letter was picked when it was rolled, and its form byte is taken whole below.
+; Skipping the letter loop for one also means the loop can never spin with no letter unlocked.
+	ld a, [wOverworldMonBattleSlot]
+	and a
+	jr nz, .overworld_mon_form
 	; If Unown, generate form
 	ld a, [wTempEnemyMonSpecies]
 	call GetPokemonIndexFromID
@@ -6504,6 +6509,7 @@ LoadEnemyMon:
 	ld a, [wOverworldMonBattleSlot]
 	and a
 	jr z, .not_overworld_mon_form
+.overworld_mon_form
 ; The form byte carries the cosmetic form *and* the shiny bit, and it was settled when the mon
 ; appeared on the map. Taking it whole is what stops an ordinary-looking sprite from turning into
 ; a shiny -- or into a different form -- the moment the battle starts.
@@ -6690,7 +6696,7 @@ CheckSleepingTreeMon:
 
 INCLUDE "data/wild/treemons_asleep.asm"
 
-CheckUnownLetter:
+CheckUnownLetter::
 ; Return carry if the Unown letter hasn't been unlocked yet
 
 	ld a, [wUnlockedUnowns]

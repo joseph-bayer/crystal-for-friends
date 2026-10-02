@@ -146,6 +146,30 @@ For the islands the practical path is: keep `ROUTE` and the outdoor colors while
 Johto's, and only add a special palette if the islands' own art needs colors the outdoor eight do
 not have. Paint in Aseprite against `bg_tiles.pal` and the choice is obvious.
 
+### One extra palette: reuse a slot the tileset leaves empty
+
+The eight slots are all spoken for on outdoor maps (gray, red, green, water, yellow, brown, roof,
+text), and the text slot can't be borrowed because text boxes draw with it. So a tileset that needs
+**one** extra palette can only have it in a slot that tileset never uses. The Forest and Islands
+tilesets have no roofs, so their roof slot is free, and it carries `PAL_BG_TREE_CORNER` instead:
+green with color 0 swapped for yellow's orange, for tree tiles whose corners border orange ground.
+
+- **Colors:** `gfx/tilesets/tree_corner.pal`, one palette per time of day, loaded as `TreeCornerPals`.
+- **Loading:** `LoadMapPals` (`engine/gfx/color.asm`) checks `wMapTileset` right after the map
+  palettes are built, before the environment test, since Forest maps are `CAVE` and never reach
+  the roof write. It copies the slot's colors and skips the roof write, which would otherwise
+  overwrite colors 1 and 2 on an outdoor map. To give another roofless tileset the palette, add a
+  `cp TILESET_*` there.
+- **Tiles:** set the attribute's palette bits to 6 (`PAL_BG_TREE_CORNER`) for the tiles that need it.
+
+Before reusing a slot like this, check two things for the tileset:
+
+- **No tile uses the slot already:** count the palette bits in its `*_attributes.bin`.
+- **No sprite on its maps borrows the slot:** check for `PAL_OW_COPY_BG_*` sprites, whose colors
+  come from a BG slot.
+
+Polished Map doesn't know about the override, so it previews those tiles in the slot's usual colors.
+
 
 ## Animations
 

@@ -515,12 +515,24 @@ RollOverworldMons::
 .FinishRoll:
 ; The shared tail: form and shininess, DVs, item, then publish. A population member joins here
 ; with its species, level, form and perks already in the buffer.
+	call .RollUnownLetter
+	jr nc, .not_locked_unown
+; An Unown before any letter is unlocked: publish the slot empty, so nothing stands here. A reroll
+; would otherwise leave the previous mon in it.
+	xor a
+	ld [wOverworldMonRollBuffer + OW_MON_SPECIES], a
+	ld [wOverworldMonRollBuffer + OW_MON_SPECIES + 1], a
+	ld [wOverworldMonRollFromSwarm], a
+	jr .publish
+
+.not_locked_unown
 	call .RollForm
 	xor a
 	ld [wOverworldMonRollFromSwarm], a ; used up, and never set for a population member
 	call .RollDVs
 	call .RollItem
 
+.publish
 	ld a, [wOverworldMonRollSlot]
 	ld e, a
 	call GetOverworldMonEncounter
@@ -769,6 +781,35 @@ endc
 	ld a, NO_ITEM
 .store_item
 	ld [wOverworldMonRollBuffer + OW_MON_ITEM], a
+	ret
+
+.RollUnownLetter:
+; Any wandering Unown takes a random unlocked letter, whatever its row's form says, so no row can
+; show a locked one -- the same pick a floor encounter gets in LoadEnemyMon.
+; out: carry if it is an Unown and no letter is unlocked yet. That is ChooseWildEncounter's gate on
+;      the floor encounters, and CheckUnownLetter's retry loop would never end without it.
+	ld hl, wOverworldMonRollBuffer + OW_MON_SPECIES
+	ld a, [hli]
+	xor LOW(UNOWN)
+	ret nz ; xor has cleared carry
+	if HIGH(UNOWN) == 0
+		or [hl]
+	else
+		ld a, [hl]
+		xor HIGH(UNOWN)
+	endc
+	ret nz
+	ld a, [wUnlockedUnowns]
+	and a
+	scf
+	ret z
+.letter_loop
+	predef GetUnownLetter ; wForm = 0-25
+	farcall CheckUnownLetter
+	jr c, .letter_loop
+	ld a, [wForm]
+	ld [wOverworldMonRollBuffer + OW_MON_FORM], a
+	and a ; a letter is 0-25, so this clears carry
 	ret
 
 .RidesOnSurface:
