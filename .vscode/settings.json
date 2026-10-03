@@ -6,6 +6,11 @@
     },
     "editor.tabSize": 8,
     "editor.insertSpaces": false,
+    "workbench.colorCustomizations": {
+        "titleBar.activeBackground": "#2d93ce",
+	"titleBar.inactiveBackground": "#1d5d83",
+	"titleBar.activeForeground": "#FFFFFF"
+    },
     "rgbds-z80.includePaths": [
         "${workspaceFolder}",
         "${workspaceFolder}/constants",
