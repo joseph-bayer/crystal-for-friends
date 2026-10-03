@@ -60,11 +60,62 @@ CheckBadge:
 	text_end
 
 CheckPartyMoveIndex:
-; Check if a monster in your party has move hl.
+; CheckPartyMove for move index hl.
 	call GetMoveIDFromIndex
 	ld d, a
 CheckPartyMove:
-; Check if a monster in your party has move d.
+; Can the party use field move d? First a mon that knows it; failing that, for an HM or Rock Smash,
+; the first mon that can learn it while the player owns it (CanUseFieldMoveByLearning) -- the
+; Polished Crystal rule. Any other move, Headbutt included, has to be known.
+; out: carry if nobody can; otherwise wCurPartyMon is the mon that will use it
+	call CheckPartyMoveKnown
+	ret nc
+	ld a, d
+	ld [wPutativeTMHMMove], a
+	farcall CanUseFieldMoveByLearning
+	ret c
+	ld a, [wCurPartySpecies]
+	push af ; the learnability check below borrows it
+	ld e, 0
+.learn_loop
+	ld c, e
+	ld b, 0
+	ld hl, wPartySpecies
+	add hl, bc
+	ld a, [hl]
+	and a
+	jr z, .learn_none
+	cp -1
+	jr z, .learn_none
+	cp EGG
+	jr z, .learn_next
+	ld [wCurPartySpecies], a
+	push de
+	farcall CanLearnTMHMMove ; c = nonzero if it can
+	ld a, c
+	pop de
+	and a
+	jr nz, .learn_yes
+.learn_next
+	inc e
+	jr .learn_loop
+
+.learn_yes
+	pop af
+	ld [wCurPartySpecies], a
+	ld a, e
+	ld [wCurPartyMon], a ; which mon will use it
+	xor a
+	ret
+
+.learn_none
+	pop af
+	ld [wCurPartySpecies], a
+	scf
+	ret
+
+CheckPartyMoveKnown:
+; Check if a monster in your party knows move d. Preserves d.
 
 	ld e, 0
 	xor a
@@ -536,6 +587,62 @@ AskSurfScript:
 AskSurfText:
 	text_far _AskSurfText
 	text_end
+
+TryFlashOW::
+; In the dark, pressing A with nothing else to interact with offers Flash, the way Polished
+; Crystal does: a mon that knows it, or can learn it while you have the HM (CheckPartyMove).
+; Return carry if the prompt was started.
+	ld a, [wTimeOfDayPalset]
+	cp DARKNESS_PALSET
+	jr nz, .quit
+	ld de, ENGINE_ZEPHYRBADGE
+	call CheckEngineFlag
+	jr c, .quit
+	ld hl, FLASH
+	call CheckPartyMoveIndex
+	jr c, .quit
+	call GetPartyNickname
+	ld a, BANK(AskFlashScript)
+	ld hl, AskFlashScript
+	call CallScript
+	scf
+	ret
+
+.quit
+	xor a
+	ret
+
+AskFlashScript:
+	opentext
+	writetext AskFlashText
+	yesorno
+	iftrue Script_UseFlash
+	closetext
+	end
+
+AskFlashText:
+	text "It's pitch black."
+	line "Want to use FLASH?"
+	done
+
+CanFlyFromMapScreen::
+; For the Pokegear map: could the party Fly from where the player is standing? The same terms as
+; FlyFunction -- the Storm Badge, an outdoor map that isn't a mystery island -- with Fly usable under
+; CheckPartyMove: a mon that knows it, or can learn it while the player has the HM.
+; out: carry if not; otherwise wCurPartyMon is the mon that would fly
+	ld de, ENGINE_STORMBADGE
+	call CheckEngineFlag
+	ret c
+	call GetMapEnvironment
+	call CheckOutdoorMap
+	scf
+	ret nz
+	ld a, [wMapGroup]
+	cp MAPGROUP_MYSTERY_ISLANDS
+	scf
+	ret z
+	ld hl, FLY
+	jmp CheckPartyMoveIndex
 
 FlyFunction:
 	call FieldMoveJumptableReset

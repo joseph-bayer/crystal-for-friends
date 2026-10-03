@@ -710,6 +710,7 @@ wPokegearMapPlayerIconLandmark:: db
 wPokegearRadioChannelBank:: db
 wPokegearRadioChannelAddr:: dw
 wPokegearRadioMusicPlaying:: db
+wPokegearMapCanFly:: db ; TRUE if the map can fly the player to a visited town
 
 NEXTU
 ; trade
@@ -1313,7 +1314,7 @@ NEXTU
 ; pokegear
 wPokegearCard:: db
 wPokegearMapRegion:: db
-wUnusedPokegearByte:: db
+wMapMonIconRegion:: db ; JOHTO_REGION or KANTO_REGION: whose swarm and beast icons PlaceMapMonIcons draws
 
 NEXTU
 ; pack
@@ -3423,3 +3424,16 @@ wWindowStack:: ds $1000 - 1
 wWindowStackBottom:: ds 1
 
 ENDSECTION
+
+
+SECTION "Map Icon Turns", WRAMX, BANK[1]
+
+; On the Pokegear map and the Fly map, icons sharing a landmark take turns (MapIcons_Rotate). Its
+; own section, since both screens use it and neither's state should share its bytes.
+; Icons sharing a landmark take turns (MapIcons_Rotate).
+wMapIconCount:: db ; how many icons wMapIcons holds
+wMapIconTimer:: db ; frames into the current turn
+wMapIconTurn:: db ; which turn icons sharing a landmark are on
+wMapIconGroupSize:: db ; scratch for MapIcons_Apply
+wMapIconRank:: db ; scratch for MapIcons_Apply
+wMapIcons:: ds NUM_MAP_ICONS * 3 ; each icon's sprite anim struct (dw) and landmark, in turn order

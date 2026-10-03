@@ -2683,7 +2683,7 @@ BillsPC_CanReleaseMon:
 ; 0: Can release
 ; 1: Can't release last healthy mon
 ; 2: Can't release Egg
-; 3: Can't release mon knowing HMs
+; 3: (unused: mons that knew HMs used to be refused)
 ; 4: Empty slot
 	; Is there even anything there?
 	call GetStorageBoxMon
@@ -2713,33 +2713,7 @@ BillsPC_CanReleaseMon:
 	cp EGG
 	ld a, 2
 	ret z
-
-	; Ensure that the mon doesn't know any HMs.
-	push de
-	push hl
-	push bc
-	ld hl, wBufferMonMoves
-	ld b, NUM_MOVES
-.loop
-	ld a, [hli]
-	and a
-	jr z, .hm_check_done
-	push hl
-	push bc
-	call IsHMMove
-	pop bc
-	pop hl
-	ld a, 3
-	jr c, .hm_check_done
-	dec b
-	jr nz, .loop
-	xor a
-.hm_check_done
-	pop bc
-	pop hl
-	; fallthrough
-.pop_de_done
-	pop de
+	xor a ; can release
 .done
 	and a
 	ret
@@ -2841,8 +2815,7 @@ BillsPC_ReleaseAll:
 
 .NothingReleased:
 	text "You can't release"
-	line "EGGs or #MON"
-	cont "with HM moves."
+	line "EGGs."
 	prompt
 
 .ReleasedXMon:
@@ -2853,8 +2826,7 @@ BillsPC_ReleaseAll:
 	prompt
 
 .TheRestWasnt:
-	text "The rest are EGGs"
-	line "or know HM moves."
+	text "The rest are EGGs."
 	prompt
 
 BillsPC_Release:
@@ -2864,9 +2836,6 @@ BillsPC_Release:
 	dec a
 	jr z, .print
 	ld hl, .CantReleaseEgg
-	dec a
-	jr z, .print
-	ld hl, .CantReleaseHMMons
 	dec a
 	jr z, .print
 
@@ -2924,11 +2893,6 @@ BillsPC_Release:
 .CantReleaseEgg:
 	text "You can't release"
 	line "an EGG!"
-	prompt
-
-.CantReleaseHMMons:
-	text "You can't release"
-	line "<PK><MN> with HM moves!"
 	prompt
 
 .ReallyReleaseMon:

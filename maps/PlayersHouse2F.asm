@@ -579,7 +579,8 @@ PlayersHouseDebugBeastsReleasedText:
 	done
 
 PlayersHouseDebugLabScript:
-; Debug tools for the starters in ELM's lab. The Super Nerd's FORCE SHINY covers them too.
+; Debug tools for the starters in ELM's lab (the Super Nerd's FORCE SHINY covers them too), and a
+; party for testing the HM field move rule.
 	faceplayer
 	opentext
 	writetext PlayersHouseDebugLabText
@@ -588,6 +589,35 @@ PlayersHouseDebugLabScript:
 	closewindow
 	ifequal 1, .ReplayLab
 	ifequal 2, .SkipTheft
+	ifequal 3, .LearnersParty
+	closetext
+	end
+
+.LearnersParty:
+; For the HM rule: Feraligatr, Pidgeot and Ampharos can learn every HM and Rock Smash between them
+; (with a Pikachu and an egg behind them)
+; and know none of them, so a field move can only come from "can learn it". Replaces the party
+; (the follower becomes Feraligatr), gives every HM, and marks TM08 received, which is what owning
+; it means for Rock Smash.
+	callasm DebugEmptyParty
+	givepoke FERALIGATR, 50
+	givepoke PIDGEOT, 50
+	givepoke AMPHAROS, 50
+	; Pikachu can learn Surf and Fly, for the Surfing and Flying forms; behind the others, so it
+	; doesn't change who uses what. The egg, last, checks that eggs are skipped.
+	givepoke PIKACHU, 50
+	giveegg TOGEPI, EGG_LEVEL
+	giveitem HM_CUT
+	giveitem HM_FLY
+	giveitem HM_SURF
+	giveitem HM_STRENGTH
+	giveitem HM_FLASH
+	giveitem HM_WHIRLPOOL
+	giveitem HM_WATERFALL
+	giveitem TM_ROCK_SMASH
+	setevent EVENT_GOT_TM08_ROCK_SMASH
+	writetext PlayersHouseDebugLabLearnersText
+	waitbutton
 	closetext
 	end
 
@@ -638,15 +668,16 @@ PlayersHouseDebugLabScript:
 
 .MenuHeader:
 	db MENU_BACKUP_TILES ; flags
-	menu_coords 0, 0, 16, 7 ; wide enough for SKIP THE THEFT
+	menu_coords 0, 0, 16, 9 ; wide enough for SKIP THE THEFT
 	dw .MenuData
 	db 1 ; default option
 
 .MenuData:
 	db STATICMENU_CURSOR ; flags
-	db 3 ; items
+	db 4 ; items
 	db "REPLAY LAB@"
 	db "SKIP THE THEFT@"
+	db "LEARNERS PARTY@"
 	db "CANCEL@"
 
 PlayersHouseDebugLabText:
@@ -656,6 +687,12 @@ PlayersHouseDebugLabText:
 PlayersHouseDebugLabStolenText:
 	text "DEBUG: <RIVAL>"
 	line "stole his #MON."
+	done
+
+PlayersHouseDebugLabLearnersText:
+	text "DEBUG: a party of"
+	line "HM learners, and"
+	cont "every HM."
 	done
 
 PlayersHouseDebugLabPickFirstText:

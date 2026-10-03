@@ -460,8 +460,17 @@ StartMenu_Pokedex:
 StartMenu_Pokegear:
 	call FadeToMenu
 	farcall PokeGear
+	ld a, [wDefaultSpawnpoint]
+	and a
+	jr nz, .fly
 	call CloseSubmenu
 	xor a
+	ret
+
+.fly
+; The Pokegear map queued a Fly (FlyFunction.FlyScript): leave every menu and run it.
+	call ExitAllMenus
+	ld a, 4 ; .ExitMenuRunScript
 	ret
 
 StartMenu_Pack:

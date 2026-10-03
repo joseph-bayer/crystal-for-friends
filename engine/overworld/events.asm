@@ -1223,6 +1223,8 @@ TryTileCollisionEvent::
 .surf
 	farcall TrySurfOW
 	jr c, .done
+	farcall TryFlashOW ; in the dark, with nothing else to do
+	jr c, .done
 ; fallthrough
 .noevent
 	xor a

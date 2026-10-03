@@ -37,6 +37,7 @@ PokeGear:
 	push af
 	xor a
 	ld [wStateFlags], a
+	ld [wDefaultSpawnpoint], a ; nonzero on the way out means the map queued a Fly
 	call .InitTilemap
 	call DelayFrame
 .loop
@@ -91,7 +92,7 @@ PokeGear:
 	ld [wJumptableIndex], a ; POKEGEARSTATE_CLOCKINIT
 	ld [wPokegearCard], a ; POKEGEARCARD_CLOCK
 	ld [wPokegearMapRegion], a ; JOHTO_REGION
-	ld [wUnusedPokegearByte], a
+	ld [wMapMonIconRegion], a
 	ld [wPokegearPhoneScrollPosition], a
 	ld [wPokegearPhoneCursorPosition], a
 	ld [wPokegearPhoneSelectedPerson], a
@@ -511,8 +512,11 @@ PokegearMap_CheckRegion:
 
 PokegearMap_Init:
 	call InitPokegearTilemap
+	call MapIcons_Reset
 	ld a, [wPokegearMapPlayerIconLandmark]
 	call PokegearMap_InitPlayerIcon
+	ld a, [wPokegearMapPlayerIconLandmark]
+	call MapIcons_Add ; first in turn order
 	ld a, [wPokegearMapCursorLandmark]
 	call PokegearMap_InitCursor
 	ld a, c
@@ -525,7 +529,39 @@ PokegearMap_Init:
 	ret
 
 PokegearMap_InitMonIcons:
-; Every active swarm on the region being shown gets its mon's icon over its landmark. Each
+; The Pokegear map's icons: the swarms and roaming beasts on the card being shown. Also notes
+; whether A on a visited town can fly there.
+	ld a, [wJumptableIndex] ; still the init state here
+	cp POKEGEARSTATE_KANTOMAPINIT
+	ld a, JOHTO_REGION
+	jr nz, .got_region
+	ld a, KANTO_REGION
+.got_region
+	ld [wMapMonIconRegion], a
+	call PlaceMapMonIcons
+	call PokegearMap_CheckCanFly
+	jr ApplyMapMonIconPals
+
+FlyMap_InitMonIcons:
+; The Fly map's icons: the same swarms and roaming beasts as the Pokegear map, on the region the
+; Fly map is showing. The arrow and the player icon are made first, so both draw over them.
+; Runs again whenever the Fly map swaps region, which clears every sprite.
+	assert JOHTO_REGION == 0 && KANTO_REGION == 1
+	ld a, [wStartFlypoint]
+	cp KANTO_FLYPOINT
+	sbc a ; -1 for Johto, 0 for Kanto
+	inc a ; JOHTO_REGION or KANTO_REGION
+	ld [wMapMonIconRegion], a
+	call PlaceMapMonIcons
+ApplyMapMonIconPals:
+	call MapIcons_Apply ; the first turn, before anything is drawn
+	farcall ApplyOBPals ; the screen's palettes were pushed before the icons existed
+	ld a, TRUE
+	ldh [hCGBPalUpdate], a
+	ret
+
+PlaceMapMonIcons:
+; Every active swarm on the region in wMapMonIconRegion gets its mon's icon over its landmark. Each
 ; wActiveSwarms slot draws into the icon slot of the same number, so an empty slot, or a swarm on
 ; the other region, just leaves its icon slot unused. Raikou and Entei follow in the two slots
 ; after those. The icons are made after the cursor, which puts them later in OAM, so the cursor
@@ -567,12 +603,7 @@ PokegearMap_InitMonIcons:
 	ld c, a
 	ld a, [wRoamMon2Species]
 	ld e, MAX_ACTIVE_SWARMS + 1
-	call .RoamerIcon
-
-	farcall ApplyOBPals ; the screen's palettes were pushed before the icons existed
-	ld a, TRUE
-	ldh [hCGBPalUpdate], a
-	ret
+	; fallthrough
 
 .RoamerIcon:
 ; in: a = a roamer's species ID, bc = its map, d = its form, e = the icon slot
@@ -601,16 +632,16 @@ PokegearMap_InitMonIcons:
 
 .IsOnShownMap:
 ; in: a = a landmark
-; out: carry if it is on the region this card is showing
+; out: carry if it is on the region whose icons are being drawn (wMapMonIconRegion).
+; Preserves bc, de and hl.
+	assert JOHTO_REGION == 0 && KANTO_REGION == 1
 	cp KANTO_LANDMARK
-	ld a, [wJumptableIndex] ; still the init state here
-	jr nc, .kanto
-	cp POKEGEARSTATE_JOHTOMAPINIT
-	jr .compare
-
-.kanto
-	cp POKEGEARSTATE_KANTOMAPINIT
-.compare
+	sbc a ; -1 for Johto, 0 for Kanto
+	inc a ; JOHTO_REGION or KANTO_REGION
+	push hl
+	ld hl, wMapMonIconRegion
+	cp [hl]
+	pop hl
 	scf
 	ret z
 	and a
@@ -653,6 +684,8 @@ PokegearMap_InitMonIcon:
 	ld [hl], a
 
 	pop de
+	ld a, e
+	call MapIcons_Add ; in the order they're made: swarm slots, then Raikou, then Entei
 	push bc
 	farcall GetLandmarkCoords
 	pop bc
@@ -672,6 +705,43 @@ PokegearMap_InitMonIcon:
 	add MAP_MON_ICON_FIRST_TILE
 	ret
 
+PokegearMap_CheckCanFly:
+; Whether A on a visited town flies there: the party could Fly from where the player stands.
+	xor a
+	ld [wPokegearMapCanFly], a
+	farcall CanFlyFromMapScreen
+	ret c
+	ld a, TRUE
+	ld [wPokegearMapCanFly], a
+	ret
+
+PokegearMap_GetFlySpawn:
+; in: a = a landmark
+; out: carry, and a = its spawn point, if it is a flypoint the player has visited
+	ld b, a
+	ld hl, Flypoints
+.loop
+	ld a, [hli]
+	cp -1
+	jr z, .no
+	cp b
+	ld a, [hli] ; its spawn point
+	jr nz, .loop
+	push af
+	ld c, a
+	call HasVisitedSpawn ; a = nonzero if visited
+	and a
+	jr z, .not_visited
+	pop af
+	scf
+	ret
+
+.not_visited
+	pop af
+.no
+	and a
+	ret
+
 PokegearMap_KantoMap:
 	call TownMap_GetKantoLandmarkLimits
 	jr PokegearMap_ContinueMap
@@ -679,7 +749,13 @@ PokegearMap_KantoMap:
 PokegearMap_JohtoMap:
 	lb de, JOHTO_LANDMARK_LAST, JOHTO_LANDMARK
 PokegearMap_ContinueMap:
+	push de
+	call MapIcons_Rotate
+	pop de
 	ld hl, hJoyLast
+	ld a, [hl]
+	and PAD_A
+	jr nz, .fly
 	ld a, [hl]
 	and PAD_B
 	jr nz, .cancel
@@ -709,6 +785,21 @@ PokegearMap_ContinueMap:
 	lb bc, POKEGEARCARD_CLOCK, POKEGEARSTATE_CLOCKINIT
 .done
 	jmp Pokegear_SwitchPage
+
+.fly
+; A on a visited town flies there at once, as Polished Crystal does: queue the party menu Fly's own
+; script and leave. StartMenu_Pokegear sees wDefaultSpawnpoint set and closes every menu to run it.
+	ld a, [wPokegearMapCanFly]
+	and a
+	ret z
+	ld a, [wPokegearMapCursorLandmark]
+	call PokegearMap_GetFlySpawn
+	ret nc
+	ld [wDefaultSpawnpoint], a
+	ld a, BANK(FlyFunction.FlyScript)
+	ld hl, FlyFunction.FlyScript
+	call FarQueueScript
+	; fallthrough
 
 .cancel
 	ld hl, wJumptableIndex
@@ -786,6 +877,16 @@ PokegearMap_InitPlayerIcon:
 
 PokegearMap_InitCursor:
 	push af
+	call InitMapArrowCursor
+	pop af
+	push bc
+	call PokegearMap_UpdateCursorPosition
+	pop bc
+	ret
+
+InitMapArrowCursor:
+; The Pokegear's arrow, for its map and for the Fly map. Placed by the caller.
+; out: bc = its sprite anim struct
 	depixel 0, 0
 	ld a, SPRITE_ANIM_OBJ_POKEGEAR_ARROW
 	call InitSpriteAnimStruct
@@ -795,10 +896,6 @@ PokegearMap_InitCursor:
 	ld hl, SPRITEANIMSTRUCT_ANIM_SEQ_ID
 	add hl, bc
 	ld [hl], SPRITE_ANIM_FUNC_NULL
-	pop af
-	push bc
-	call PokegearMap_UpdateCursorPosition
-	pop bc
 	ret
 
 PokegearMap_UpdateLandmarkName:
@@ -2116,11 +2213,16 @@ _FlyMap:
 	ldh [hBGMapMode], a
 	farcall ClearSpriteAnims
 	call LoadTownMapGFX
+	ld hl, PokegearSpritesGFX ; the arrow
+	ld de, vTiles0
+	lb bc, BANK(PokegearSpritesGFX), 9 ; the screen is on here, so queue it rather than write VRAM
+	call DecompressRequest2bpp
 	ld de, FlyMapLabelBorderGFX
 	ld hl, vTiles2 tile $30
 	lb bc, BANK(FlyMapLabelBorderGFX), 6
 	call Request1bpp
 	call FlyMap
+	call FlyMap_InitMonIcons
 	ld b, SCGB_POKEGEAR_PALS
 	call GetSGBLayout
 	call SetDefaultBGPAndOBP
@@ -2135,6 +2237,7 @@ _FlyMap:
 	jr nz, .pressedA
 	call .HandleDPad
 	call GetMapCursorCoordinates
+	call MapIcons_Rotate
 	farcall PlaySpriteAnimations
 	call DelayFrame
 	jr .loop
@@ -2202,15 +2305,15 @@ _FlyMap:
   call ClearSprites
   farcall ClearSpriteAnims
   ld a, JOHTO_LANDMARK
-  jp LoadMapForRegion
-  jr .Finally
+  call LoadMapForRegion
+  jmp FlyMap_InitMonIcons
 
 .SwapToKantoRegionMap
   call ClearSprites
   farcall ClearSpriteAnims
   ld a, KANTO_LANDMARK
-  jp LoadMapForRegion
-  jr .Finally
+  call LoadMapForRegion
+  jmp FlyMap_InitMonIcons
 
 .ScrollNext:
 	ld hl, wTownMapPlayerIconLandmark
@@ -2365,6 +2468,9 @@ FlyMap:
 ; a = location in region that player would like to display the map of
 LoadMapForRegion:
 ; The first 46 locations are part of Johto. The rest are in Kanto.
+	push af
+	call MapIcons_Reset ; this region's icons are recorded afresh
+	pop af
 	cp KANTO_LANDMARK
 	jr nc, .KantoFlyMap
 ; Johto fly map
@@ -2391,7 +2497,7 @@ LoadMapForRegion:
 	ld a, [wMapNumber]
 	ld c, a
 	call GetWorldMapLocationOrBackup
-	jmp TownMapPlayerIcon
+	jmp FlyMap_PlayerIcon
 
 .KantoFlyMap:
 ; The event that there are no flypoints enabled in a map is not
@@ -2439,7 +2545,7 @@ LoadMapForRegion:
 	ld c, a
 	call GetWorldMapLocation
 .DoneKanto
-	jmp TownMapPlayerIcon
+	jmp FlyMap_PlayerIcon
 
 .NoKanto:
 ; If Indigo Plateau hasn't been visited, we use Johto's map instead
@@ -2455,12 +2561,12 @@ LoadMapForRegion:
 	call TownMapPals
 	hlbgcoord 0, 0 ; BG Map 0
 	call TownMapBGUpdate
-	call TownMapMon
+	call InitMapArrowCursor ; the regular arrow, as on the Pokegear map
 	ld a, c
 	ld [wTownMapCursorCoordinates], a
 	ld a, b
 	ld [wTownMapCursorCoordinates + 1], a
-	ret
+	jmp GetMapCursorCoordinates ; onto the selected town at once
 
 Pokedex_GetArea:
 ; e: Current landmark
@@ -2826,30 +2932,147 @@ TownMapPals:
 .PalMap:
 INCLUDE "gfx/pokegear/town_map_palette_map.asm"
 
-TownMapMon:
-; Draw the FlyMon icon at town map location
+FlyMap_PlayerIcon:
+; The Fly map's player icon, first in turn order among the icons sharing its landmark.
+; in: a = the player's landmark
+	push af
+	call TownMapPlayerIcon ; bc = its sprite anim struct
+	pop af
+	jr MapIcons_Add
 
-; Get FlyMon species
-	ld a, [wCurPartyMon]
-	ld hl, wPartySpecies
+MapIcons_Reset:
+; Forget the map's icons, before a map makes its own.
+	xor a
+	ld [wMapIconCount], a
+	ld [wMapIconTimer], a
+	ld [wMapIconTurn], a
+	ret
+
+MapIcons_Add:
+; Record an icon for turn-taking, in turn order.
+; in: bc = its sprite anim struct, a = its landmark. Preserves bc and de.
+	push de
 	ld e, a
-	ld d, 0
-	add hl, de
+	ld a, [wMapIconCount]
+	cp NUM_MAP_ICONS
+	jr nc, .full
+	ld d, a
+	inc a
+	ld [wMapIconCount], a
+	ld a, d
+	call MapIcons_Entry
+	ld a, c
+	ld [hli], a
+	ld a, b
+	ld [hli], a
+	ld [hl], e
+.full
+	pop de
+	ret
+
+MapIcons_Rotate:
+; Called every frame by the Pokegear map and the Fly map. About once a second, icons that share a
+; landmark take the next turn, so they show one at a time instead of on top of each other.
+	ld hl, wMapIconTimer
+	inc [hl]
 	ld a, [hl]
-	ld [wTempIconSpecies], a
-; Get FlyMon icon
-	ld e, $08 ; starting tile in VRAM
-	farcall GetSpeciesIcon
-; Animation/palette
-	depixel 0, 0
-	ld a, SPRITE_ANIM_OBJ_PARTY_MON
-	call InitSpriteAnimStruct
-	ld hl, SPRITEANIMSTRUCT_TILE_ID
-	add hl, bc
-	ld [hl], $08
-	ld hl, SPRITEANIMSTRUCT_ANIM_SEQ_ID
-	add hl, bc
-	ld [hl], SPRITE_ANIM_FUNC_NULL
+	cp MAP_ICON_TURN_FRAMES
+	ret c
+	ld [hl], 0
+	ld hl, wMapIconTurn
+	inc [hl]
+	; fallthrough
+
+MapIcons_Apply:
+; For each icon: n = how many icons share its landmark, r = how many of those come before it in turn
+; order. Alone (n = 1), it's left as it is. Otherwise it stands on its landmark when the turn, counted
+; around n, comes to r, and is parked off-screen the rest of the time.
+	ld a, [wMapIconCount]
+	and a
+	ret z
+	ld b, a ; how many
+	ld c, 0 ; this icon
+.icon
+	push bc
+	ld a, c
+	call MapIcons_Entry
+	inc hl
+	inc hl
+	ld e, [hl] ; its landmark
+	xor a
+	ld [wMapIconGroupSize], a
+	ld [wMapIconRank], a
+	ld hl, wMapIcons + 2 ; the first icon's landmark
+	ld d, 0 ; the icon being compared
+.scan
+	ld a, [hl]
+	cp e
+	jr nz, .scan_next
+	push hl
+	ld hl, wMapIconGroupSize
+	inc [hl]
+	ld a, d
+	cp c
+	jr nc, .not_before ; not before this icon
+	ld hl, wMapIconRank
+	inc [hl]
+.not_before
+	pop hl
+.scan_next
+	inc hl
+	inc hl
+	inc hl
+	inc d
+	ld a, d
+	cp b
+	jr c, .scan
+
+	ld a, [wMapIconGroupSize]
+	cp 2
+	jr c, .next ; alone on its landmark
+	ld d, a
+	ld a, [wMapIconTurn]
+.mod
+	cp d
+	jr c, .got_mod
+	sub d
+	jr .mod
+
+.got_mod
+	ld hl, wMapIconRank
+	cp [hl]
+	ld d, 0 ; parked
+	jr nz, .place
+	farcall GetLandmarkCoords ; d = its landmark's y
+.place
+	ld a, c
+	call MapIcons_Entry
+	ld a, [hli]
+	ld h, [hl]
+	add SPRITEANIMSTRUCT_YCOORD
+	ld l, a
+	adc h
+	sub l
+	ld h, a
+	ld [hl], d
+.next
+	pop bc
+	inc c
+	ld a, c
+	cp b
+	jr c, .icon
+	ret
+
+MapIcons_Entry:
+; in: a = an icon's place in wMapIcons. out: hl = its entry. Preserves bc and de.
+	ld l, a
+	add a
+	add l ; 3 bytes each
+	add LOW(wMapIcons)
+	ld l, a
+	adc HIGH(wMapIcons)
+	sub l
+	ld h, a
 	ret
 
 TownMapPlayerIcon:

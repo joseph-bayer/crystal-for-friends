@@ -64,6 +64,14 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Headbutting a headbutt tree always results in a Pokemon appearing
   - Each area type has one encounter table instead of a common and uncommon table
 
+- **HM Upgrades**
+  - You can use an HM outside of battle if a Pokemon in your party can learn it, as long as you have the HM in your bag. It doesn't have to know the move
+  - Rock Smash works the same way once you've received its TM, even if you've since taught it
+  - Headbutt still has to be known
+  - HM moves can be forgotten like any other move, and Pokemon that know them can be released
+  - Fly from the Pokegear map: press A on a town you've visited. The Pokemon that would fly is shown on the town
+  - In a dark area, press A to prompt Flash
+
 - **Shininess**
   - Shiny Pokemon no longer tied to specific DV spreads
 	- Unown can be shiny in any form - not just "I" and "V"
@@ -72,6 +80,7 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Eggs are blue when shiny
   - Standard Odds **1/8192**
   - Gift Mon **1/512**
+  - Swarm Pokemon **1/512**
   - Starters
     - In Elm's lab the three starters stand on the table. All three are rolled at once when you walk in, at **1/512** each and are visibly shiny. Save before entering to hunt for a shiny starter!
   - Bug Catching Contest **1/512**
@@ -122,6 +131,16 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Some turn up in forms you cannot find any other way
   - A chime plays when you walk into an area that has a shiny in it
   - Who turns up is decided fresh each time you enter an area, so it is worth passing back through
+
+- **Swarm Overhaul**
+  - Daily swarms are announced via the radio on station 12.5, the Collection Guild's swarm report. Kanto swarms start after beating the Elite Four
+  - Up to three swarms can be going at once: Arnie's and Anthony's phone calls still start theirs (Yanma on Route 35, Dunsparce in Dark Cave), and a new radio station picks one more every day
+  - Swarms end at midnight
+  - A swarm takes over about 60% of a route's grass or surf encounters, at the route's own levels
+  - Find special forms in swarms
+  - Heightened shiny chance (see Shininess section)
+  - Swarm mon replace some overworld mon on the route. Battle one and the route's wandering Pokemon are rolled again, to increase chance of finding shinies.
+  - Active swarms are marked on the Pokegear map and the Fly map. When icons share a spot, they take turns showing
 
 - **Roaming Legendaries**
   - Roaming legendaries appear in the overworld now instead of in the grass
@@ -174,6 +193,7 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Untying shininess from DVs partially based on a similar implementation in [Polished Crystal](https://github.com/Rangi42/polishedcrystal)
   - New shiny check algorithm [Polished Crystal](https://github.com/Rangi42/polishedcrystal)
   - Follower Mon code [Vulcandth](https://github.com/vulcandth) and [AtmaBuster](https://github.com/AtmaBuster)
+  - Using HMs without knowing them, Fly from the Pokegear map, the Flash prompt and the Ilex Forest HM texts ported from [Polished Crystal](https://github.com/Rangi42/polishedcrystal)
   - The simplified clock reset follows the [Simplify the Clock Reset Procedure](https://github.com/pret/pokecrystal/wiki/Simplify-the-Clock-Reset-Procedure) tutorial by [SonicRay100](https://github.com/SonicRay100) from the pret/pokecrystal wiki
 - **Art Credits**
   - SCMidna for Surfing Pikachu front sprites

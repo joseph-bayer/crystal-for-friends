@@ -228,4 +228,15 @@ GiveDebugDolls::
 	db DECOFLAG_UNOWN_DOLL        ; 26 letters, so any leak is obvious
 	db -1
 
+DebugEmptyParty::
+; Empty the party so a debug script can givepoke a fresh one into slots 1 onward. The follower
+; points at slot 1, so whatever lands there walks behind the player.
+	xor a
+	ld [wPartyCount], a
+	dec a
+	ld [wPartySpecies], a ; the list's terminator
+	ld a, 1
+	ld [wFollowerPartySlot], a
+	ret
+
 endc

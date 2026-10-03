@@ -373,3 +373,8 @@ DEF NUM_MAP_MON_ICONS EQU 5 ; the three swarms, then Raikou and Entei
 DEF MAP_MON_ICON_FIRST_TILE EQU $18 ; after the player icon's $10-$17
 DEF MAP_MON_ICON_FIRST_PAL EQU 2 ; _CGB_PokegearPals only writes OBJ palettes 0 and 1
 assert MAP_MON_ICON_FIRST_PAL + NUM_MAP_MON_ICONS <= 8, "the map's mon icons run out of OBJ palettes"
+
+; Icons sharing a landmark on the Pokegear and Fly maps take turns (see MapIcons_Rotate): the player
+; icon and the mon icons, about a second each.
+DEF NUM_MAP_ICONS EQU NUM_MAP_MON_ICONS + 1
+DEF MAP_ICON_TURN_FRAMES EQU 60

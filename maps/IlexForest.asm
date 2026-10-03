@@ -426,6 +426,9 @@ IlexForestHiddenFullHeal:
 IlexForestSignpost:
 	jumptext IlexForestSignpostText
 
+IlexForestTrainerTips:
+	jumptext IlexForestTrainerTipsText
+
 IlexForestShrineScript:
 	checkevent EVENT_FOREST_IS_RESTLESS
 	iftrue .ForestIsRestless
@@ -804,16 +807,27 @@ Text_CharcoalMasterIntro:
 
 Text_CharcoalMasterOutro:
 	text "That's the CUT HM."
-	line "Teach that to a"
+	line "Any #MON you"
 
-	para "#MON to clear"
+	para "have that's compat-"
+	line "ible with it can"
+
+	para "use CUT to clear"
 	line "small trees."
+
+	para "You don't have to"
+	line "teach it to them"
+
+	para "unless you want"
+	line "them to use CUT"
+	cont "in a battle."
 
 	para "Of course, you"
 	line "have to have the"
 
 	para "GYM BADGE from"
-	line "AZALEA to use it."
+	line "AZALEA to use it"
+	cont "outside of battle."
 	done
 
 Text_CharcoalMasterTalkAfter:
@@ -848,6 +862,26 @@ Text_IlexForestLass:
 	text "Did something"
 	line "happen to the"
 	cont "forest's guardian?"
+	done
+
+IlexForestTrainerTipsText:
+	text "TRAINER TIPS"
+
+	para "As long as you"
+	line "have an HM in"
+	cont "your BAG,"
+
+	para "and a #MON in"
+	line "your party that's"
+
+	para "compatible with"
+	line "it, you can use"
+
+	para "the move outside"
+	line "of battle."
+
+	para "You don't even"
+	line "have to teach it!"
 	done
 
 IlexForestSignpostText:
@@ -954,6 +988,7 @@ IlexForest_MapEvents:
 
 	def_bg_events
 	bg_event  3, 17, BGEVENT_READ, IlexForestSignpost
+	bg_event 15, 31, BGEVENT_READ, IlexForestTrainerTips
 	bg_event 11,  7, BGEVENT_ITEM, IlexForestHiddenEther
 	bg_event 22, 14, BGEVENT_ITEM, IlexForestHiddenSuperPotion
 	bg_event  1, 17, BGEVENT_ITEM, IlexForestHiddenFullHeal
