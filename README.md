@@ -72,6 +72,8 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Eggs are blue when shiny
   - Standard Odds **1/8192**
   - Gift Mon **1/512**
+  - Starters
+    - In Elm's lab the three starters stand on the table. All three are rolled at once when you walk in, at **1/512** each and are visibly shiny. Save before entering to hunt for a shiny starter!
   - Bug Catching Contest **1/512**
   - Eggs
   	| Parent Shininess | Odds |

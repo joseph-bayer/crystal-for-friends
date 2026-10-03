@@ -1482,5 +1482,15 @@
 ; Debug builds only: the beast debug menu's follow toggle, read by UpdateRoamMons
 	const EVENT_DEBUG_BEASTS_FOLLOW_PLAYER
 
+; Elm's lab: whether each starter was rolled shiny as the player walked in (RollElmsLabStarters)
+	const EVENT_ELMS_LAB_CYNDAQUIL_SHINY
+	const EVENT_ELMS_LAB_TOTODILE_SHINY
+	const EVENT_ELMS_LAB_CHIKORITA_SHINY
+; Elm's lab: the leftover starter wandering in front of the table, set to hide it. Rebuilt on every
+; load by ElmsLabObjectsCallback.
+	const EVENT_CYNDAQUIL_WANDERING_IN_ELMS_LAB
+	const EVENT_TOTODILE_WANDERING_IN_ELMS_LAB
+	const EVENT_CHIKORITA_WANDERING_IN_ELMS_LAB
+
 	const_next 2048
 DEF NUM_EVENTS EQU const_value ; 800

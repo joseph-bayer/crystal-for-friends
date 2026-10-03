@@ -176,7 +176,11 @@ DEF MOVES_HIGH_MASK EQU %00111111
 DEF SHINY_MASK EQU %10000000
 DEF ALT_SHINY_MASK EQU %01000000 ; reserved for alternate shiny palettes; not read yet
 DEF FORM_MASK  EQU %00011111
-; bit 5 is the only one of MON_FORM still going spare
+; bit 5 is the only one of MON_FORM still going spare. ELMS_STARTER_FORM borrows it in arguments --
+; an ow_mon entry, a givepoke -- that are resolved before anything is stored, never in a stored form.
+DEF ELMS_STARTER_FORM_F EQU 5
+DEF ELMS_STARTER_FORM EQU 1 << ELMS_STARTER_FORM_F ; plain, and shiny exactly when Elm's lab rolled it so
+assert !(ELMS_STARTER_FORM & (FORM_MASK | ALT_SHINY_MASK | SHINY_MASK)), "ELMS_STARTER_FORM overlaps a real form bit"
 assert !(SHINY_MASK & ALT_SHINY_MASK) && !(FORM_MASK & ALT_SHINY_MASK), "MON_FORM bits overlap"
 DEF PLAIN_FORM EQU 0
 

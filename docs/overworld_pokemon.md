@@ -66,6 +66,14 @@ one entry between them. Route 45 sits at the four-slot ceiling with four grass s
 Gyarados is deliberately *not* a slot: it keeps vanilla's `SPRITE_GYARADOS` icon sprite in the NPC
 red and `SPRITEMOVEDATA_POKEMON` bobbing, so the lake's three Magikarp share the map with it.
 
+**Elm's starters are static entries whose shininess comes from the lab.** Their `ow_mon` rows carry
+`ELMS_STARTER_FORM` (form bit 5, never stored) instead of a fixed form. `GetOverworldMonSlot`
+resolves it through `IsStarterShiny`, which looks the species up in `StarterShinyFlags` and reads
+the flag that `RollElmsLabStarters` set when the player walked in. The same marker on the starters'
+`givepoke` makes GivePoke store that shininess and skip its gift roll, and `IsStarterShiny` also
+makes Silver's stolen line shiny in rival battles. The leftover starter's wandering object shares
+its table object's slot, so it carries the same shininess.
+
 **`SpriteMons` still exists** and still earns its keep — 20 of its 35 entries are load-bearing for
 room decorations, which map each doll to a `SPRITE_*`.
 

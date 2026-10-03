@@ -1250,6 +1250,21 @@ CalcMonStatC:
 .stat_value_okay
 	jmp PopBCDEHL
 
+GivePokeStoredForm:
+; For GivePoke. a = the form byte to store: wForm as given, except that ELMS_STARTER_FORM becomes plain, and shiny
+; exactly when the lab rolled that starter so -- what the player saw on the table. Preserves hl.
+	ld a, [wForm]
+	bit ELMS_STARTER_FORM_F, a
+	ret z
+	push hl
+	ld a, [wCurPartySpecies]
+	call GetPokemonIndexFromID
+	farcall IsStarterShiny
+	pop hl
+	sbc a ; -1 if the lab rolled it shiny, else 0
+	and SHINY_MASK
+	ret
+
 GivePoke::
 	push de
 	push bc
@@ -1288,7 +1303,7 @@ GivePoke::
 	; party mon's form at hl
 
 	; apply cosmetic form
-	ld a, [wForm]
+	call GivePokeStoredForm
 	ld [hl], a
 
 	; check if shininess should be applied
@@ -1324,7 +1339,7 @@ GivePoke::
 	farcall UpdateStorageBoxMonFromTemp
 .box_check_form
 	; apply cosmetic form
-	ld a, [wForm]
+	call GivePokeStoredForm
 	ld [wBufferMonForm], a
 	farcall UpdateStorageBoxMonFromTemp
 
@@ -1341,8 +1356,8 @@ GivePoke::
 ; 1/512 chance of being shiny (when not forced shiny)
 .check_shiny
 	ld a, [wForm]
-	and SHINY_MASK
-	jr nz, .skip_shiny ; already shiny
+	and SHINY_MASK | ELMS_STARTER_FORM
+	jr nz, .skip_shiny ; already shiny, or one of Elm's starters, which the lab already rolled
 
 	call Random
 	and a

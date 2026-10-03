@@ -503,6 +503,28 @@ RollBeastsAtBurnedTower::
 	ld [hl], PLAIN_FORM
 	jr RollLegendaryShiny
 
+RollElmsLabStarters::
+; Walking into Elm's lab before the pick: a fresh 1/512 for each starter on the table, all at once,
+; so soft-resetting outside the lab hunts all three. Each result goes in that starter's flag, which
+; its sprite (IsStarterShiny) and the pick read.
+	ld de, EVENT_ELMS_LAB_CYNDAQUIL_SHINY
+	call .Roll
+	ld de, EVENT_ELMS_LAB_TOTODILE_SHINY
+	call .Roll
+	ld de, EVENT_ELMS_LAB_CHIKORITA_SHINY
+.Roll:
+	push de
+	ld hl, wTempByteValue
+	ld [hl], PLAIN_FORM
+	call RollLegendaryShiny
+	pop de
+	ld a, [wTempByteValue]
+	assert SHINY_MASK == 1 << 7 && RESET_FLAG == 0 && SET_FLAG == 1
+	rlca ; the shiny bit into bit 0: RESET_FLAG or SET_FLAG
+	and 1
+	ld b, a
+	jmp EventFlagAction
+
 RollTinTowerSuicuneShiny::
 ; As Tin Tower 1F loads with Suicune there: another 1/512 chance if it isn't shiny yet, rolled
 ; before its sprite appears.

@@ -152,6 +152,7 @@ ReadTrainerPartyPieces:
 	inc hl
 
 .no_form
+	call .StolenStarterShiny
 	; Check if this mon has an item
 	ld a, [wOtherTrainerType]
 	and TRAINERTYPE_ITEM
@@ -250,6 +251,35 @@ ReadTrainerPartyPieces:
 .no_moves
 	; Move to the next mon in the party OR the -1 terminator
 	jmp .loop
+
+.StolenStarterShiny:
+; SILVER's stolen starter, in every rival battle: shiny if it was shiny on ELM's table. He only ever
+; has the line he stole, so any starter's line here is that one. Preserves bc, de and hl.
+	ld a, [wOtherTrainerClass]
+	cp RIVAL1
+	jr z, .rival
+	cp RIVAL2
+	ret nz
+.rival
+	push bc
+	push de
+	push hl
+	ld a, [wCurPartySpecies]
+	call GetPokemonIndexFromID
+	farcall IsStarterShiny
+	jr nc, .not_shiny
+	ld a, [wOTPartyCount]
+	dec a
+	ld hl, wOTPartyMon1Form
+	call GetPartyLocation
+	ld a, [hl]
+	or SHINY_MASK
+	ld [hl], a
+.not_shiny
+	pop hl
+	pop de
+	pop bc
+	ret
 
 ComputeTrainerReward:
 	ld hl, hProduct

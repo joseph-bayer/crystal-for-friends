@@ -59,6 +59,11 @@ OverworldMonObjects:
 	ow_mon_map ECRUTEAK_GYM
 	ow_mon GENGAR,     PLAIN_FORM
 
+	ow_mon_map ELMS_LAB ; the starters waiting on the table, shiny as the lab rolled them
+	ow_mon CYNDAQUIL,  ELMS_STARTER_FORM
+	ow_mon TOTODILE,   ELMS_STARTER_FORM
+	ow_mon CHIKORITA,  ELMS_STARTER_FORM
+
 	ow_mon_map FUCHSIA_GYM
 	ow_mon VENOMOTH,   PLAIN_FORM
 

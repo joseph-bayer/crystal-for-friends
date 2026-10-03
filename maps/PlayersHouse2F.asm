@@ -7,6 +7,7 @@ if DEF(_DEBUG)
 	const PLAYERSHOUSE2F_DEBUG_TRADER
 	const PLAYERSHOUSE2F_DEBUG_WARPER
 	const PLAYERSHOUSE2F_DEBUG_BEASTS
+	const PLAYERSHOUSE2F_DEBUG_LAB
 endc
 
 PlayersHouse2F_MapScripts:
@@ -547,14 +548,15 @@ PlayersHouseDebugUnownRelockedText:
 	done
 
 PlayersHouseDebugBeastsShinyOnText:
-	text "DEBUG: beasts will"
-	line "now always roll"
-	cont "shiny."
+	text "DEBUG: beasts and"
+	line "ELM's starters"
+	cont "always roll shiny."
 	done
 
 PlayersHouseDebugBeastsShinyOffText:
-	text "DEBUG: beasts roll"
-	line "shiny at the usual"
+	text "DEBUG: beasts and"
+	line "ELM's starters"
+	cont "roll at the usual"
 	cont "1/512 again."
 	done
 
@@ -574,6 +576,91 @@ PlayersHouseDebugBeastsReleasedText:
 	line "are roaming, and"
 	cont "you have the MAP"
 	cont "CARD."
+	done
+
+PlayersHouseDebugLabScript:
+; Debug tools for the starters in ELM's lab. The Super Nerd's FORCE SHINY covers them too.
+	faceplayer
+	opentext
+	writetext PlayersHouseDebugLabText
+	loadmenu .MenuHeader
+	verticalmenu
+	closewindow
+	ifequal 1, .ReplayLab
+	ifequal 2, .SkipTheft
+	closetext
+	end
+
+.ReplayLab:
+; Back to just before the pick: all three on the table and ELM waiting, without the intro, so
+; walking in rolls them again. Picking again gives another starter, which may go to the PC.
+; Lands just inside, past the coord events that stop you leaving before you pick.
+	clearevent EVENT_GOT_A_POKEMON_FROM_ELM
+	clearevent EVENT_GOT_CYNDAQUIL_FROM_ELM
+	clearevent EVENT_GOT_TOTODILE_FROM_ELM
+	clearevent EVENT_GOT_CHIKORITA_FROM_ELM
+	clearevent EVENT_CYNDAQUIL_POKEBALL_IN_ELMS_LAB
+	clearevent EVENT_TOTODILE_POKEBALL_IN_ELMS_LAB
+	clearevent EVENT_CHIKORITA_POKEBALL_IN_ELMS_LAB
+	setevent EVENT_COP_IN_ELMS_LAB
+	setmapscene ELMS_LAB, SCENE_ELMSLAB_CANT_LEAVE
+	closetext
+	warp ELMS_LAB, 4, 5
+	end
+
+.SkipTheft:
+; What the end of Mr. Pokemon's visit does to the lab: SILVER takes the starter strong against yours.
+	checkevent EVENT_GOT_A_POKEMON_FROM_ELM
+	iffalse .PickFirst
+	checkevent EVENT_GOT_TOTODILE_FROM_ELM
+	iftrue .TakesChikorita
+	checkevent EVENT_GOT_CHIKORITA_FROM_ELM
+	iftrue .TakesCyndaquil
+	setevent EVENT_TOTODILE_POKEBALL_IN_ELMS_LAB
+	sjump .Stolen
+
+.TakesChikorita:
+	setevent EVENT_CHIKORITA_POKEBALL_IN_ELMS_LAB
+	sjump .Stolen
+
+.TakesCyndaquil:
+	setevent EVENT_CYNDAQUIL_POKEBALL_IN_ELMS_LAB
+.Stolen:
+	writetext PlayersHouseDebugLabStolenText
+	sjump .Done
+
+.PickFirst:
+	writetext PlayersHouseDebugLabPickFirstText
+.Done:
+	waitbutton
+	closetext
+	end
+
+.MenuHeader:
+	db MENU_BACKUP_TILES ; flags
+	menu_coords 0, 0, 16, 7 ; wide enough for SKIP THE THEFT
+	dw .MenuData
+	db 1 ; default option
+
+.MenuData:
+	db STATICMENU_CURSOR ; flags
+	db 3 ; items
+	db "REPLAY LAB@"
+	db "SKIP THE THEFT@"
+	db "CANCEL@"
+
+PlayersHouseDebugLabText:
+	text "DEBUG: ELM's lab."
+	done
+
+PlayersHouseDebugLabStolenText:
+	text "DEBUG: <RIVAL>"
+	line "stole his #MON."
+	done
+
+PlayersHouseDebugLabPickFirstText:
+	text "DEBUG: pick a"
+	line "starter first."
 	done
 endc
 
@@ -600,4 +687,5 @@ if DEF(_DEBUG)
 	object_event  2,  4, SPRITE_GENTLEMAN, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, PlayersHouseDebugTraderScript, -1
 	object_event  3,  4, SPRITE_ROCKET, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, PlayersHouseDebugWarperScript, -1
 	object_event  1,  4, SPRITE_SUPER_NERD, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, PlayersHouseDebugBeastsScript, -1
+	object_event  0,  4, SPRITE_SCIENTIST, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_GREEN, OBJECTTYPE_SCRIPT, 0, PlayersHouseDebugLabScript, -1
 endc

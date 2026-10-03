@@ -76,6 +76,21 @@ GetOverworldMonSlot::
 	ld a, [hl] ; the form byte
 	ld h, b
 	ld l, c
+	bit ELMS_STARTER_FORM_F, a
+	jr z, .got_form
+; One of Elm's starters: shiny exactly when the lab rolled it so. The marker itself is no form.
+	xor ELMS_STARTER_FORM
+	push af
+	call IsStarterShiny ; preserves hl
+	jr nc, .starter_plain
+	pop af
+	or SHINY_MASK
+	scf
+	ret
+
+.starter_plain
+	pop af
+.got_form
 	scf
 	ret
 
@@ -91,6 +106,60 @@ GetOverworldMonSlot::
 	sub l
 	ld h, a
 	ret
+
+IsStarterShiny::
+; in:  hl = a species index
+; out: carry if it is one of Elm's starters or their evolutions, and the lab rolled that starter
+;      shiny. Preserves hl.
+	push hl
+	ld d, h
+	ld e, l
+	ld hl, StarterShinyFlags
+.loop
+	ld a, [hli]
+	ld c, a
+	ld a, [hli]
+	ld b, a
+	or c
+	jr z, .done ; the end; `or` has cleared carry
+	ld a, c
+	cp e
+	jr nz, .next
+	ld a, b
+	cp d
+	jr z, .found
+.next
+	inc hl
+	inc hl
+	jr .loop
+
+.found
+	ld a, [hli]
+	ld e, a
+	ld d, [hl]
+	ld b, CHECK_FLAG
+	call EventFlagAction
+	ld a, c
+	and a ; clears carry
+	jr z, .done
+	scf
+.done
+	pop hl
+	ret
+
+StarterShinyFlags:
+; Each of Elm's starters' lines, and the lab flag that says whether that starter was rolled shiny:
+; read for the starters on the lab's table, and for Silver's stolen line.
+	dw CHIKORITA,  EVENT_ELMS_LAB_CHIKORITA_SHINY
+	dw BAYLEEF,    EVENT_ELMS_LAB_CHIKORITA_SHINY
+	dw MEGANIUM,   EVENT_ELMS_LAB_CHIKORITA_SHINY
+	dw CYNDAQUIL,  EVENT_ELMS_LAB_CYNDAQUIL_SHINY
+	dw QUILAVA,    EVENT_ELMS_LAB_CYNDAQUIL_SHINY
+	dw TYPHLOSION, EVENT_ELMS_LAB_CYNDAQUIL_SHINY
+	dw TOTODILE,   EVENT_ELMS_LAB_TOTODILE_SHINY
+	dw CROCONAW,   EVENT_ELMS_LAB_TOTODILE_SHINY
+	dw FERALIGATR, EVENT_ELMS_LAB_TOTODILE_SHINY
+	dw 0 ; end
 
 GetOverworldMonStaticCount:
 ; How many of this map's SPRITE_OW_MON_* slots its static entries already own.

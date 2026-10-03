@@ -5,6 +5,9 @@
 	const ELMSLAB_POKE_BALL2
 	const ELMSLAB_POKE_BALL3
 	const ELMSLAB_OFFICER
+	const ELMSLAB_WANDERING_CYNDAQUIL
+	const ELMSLAB_WANDERING_TOTODILE
+	const ELMSLAB_WANDERING_CHIKORITA
 
 ElmsLab_MapScripts:
 	def_scene_scripts
@@ -17,7 +20,8 @@ ElmsLab_MapScripts:
 	scene_const SCENE_ELMSLAB_AIDE_GIVES_POKE_BALLS
 
 	def_callbacks
-	callback MAPCALLBACK_OBJECTS, ElmsLabMoveElmCallback
+	callback MAPCALLBACK_NEWMAP, ElmsLabRollStartersCallback
+	callback MAPCALLBACK_OBJECTS, ElmsLabObjectsCallback
 
 ElmsLabMeetElmScene:
 	sdefer ElmsLabWalkUpToElmScript
@@ -38,7 +42,50 @@ ElmsLabNoop4Scene:
 ElmsLabNoop5Scene:
 	end
 
-ElmsLabMoveElmCallback:
+ElmsLabRollStartersCallback:
+; Walking in before the pick rolls all three starters' shininess at once, before their sprites
+; load. A continue doesn't run this, so a save inside the lab keeps what was rolled.
+	checkevent EVENT_GOT_A_POKEMON_FROM_ELM
+	iftrue .Skip
+	callasm RollElmsLabStarters
+.Skip:
+	endcallback
+
+ElmsLabObjectsCallback:
+; The leftover starter: once SILVER has taken his, the one neither of you took steps off the table
+; and wanders in front of it. Worked out on every load, so a save from before this existed comes out
+; right too. SILVER takes the starter strong against yours, as at the end of MrPokemonsHouse.asm.
+	setevent EVENT_CYNDAQUIL_WANDERING_IN_ELMS_LAB
+	setevent EVENT_TOTODILE_WANDERING_IN_ELMS_LAB
+	setevent EVENT_CHIKORITA_WANDERING_IN_ELMS_LAB
+	checkevent EVENT_GOT_TOTODILE_FROM_ELM
+	iftrue .GotTotodile
+	checkevent EVENT_GOT_CHIKORITA_FROM_ELM
+	iftrue .GotChikorita
+	checkevent EVENT_GOT_CYNDAQUIL_FROM_ELM
+	iffalse .MoveElm
+; Yours is Cyndaquil: SILVER takes Totodile, and Chikorita is left.
+	checkevent EVENT_TOTODILE_POKEBALL_IN_ELMS_LAB
+	iffalse .MoveElm ; not stolen yet
+	setevent EVENT_CHIKORITA_POKEBALL_IN_ELMS_LAB
+	clearevent EVENT_CHIKORITA_WANDERING_IN_ELMS_LAB
+	sjump .MoveElm
+
+.GotTotodile:
+; SILVER takes Chikorita, and Cyndaquil is left.
+	checkevent EVENT_CHIKORITA_POKEBALL_IN_ELMS_LAB
+	iffalse .MoveElm
+	setevent EVENT_CYNDAQUIL_POKEBALL_IN_ELMS_LAB
+	clearevent EVENT_CYNDAQUIL_WANDERING_IN_ELMS_LAB
+	sjump .MoveElm
+
+.GotChikorita:
+; SILVER takes Cyndaquil, and Totodile is left.
+	checkevent EVENT_CYNDAQUIL_POKEBALL_IN_ELMS_LAB
+	iffalse .MoveElm
+	setevent EVENT_TOTODILE_POKEBALL_IN_ELMS_LAB
+	clearevent EVENT_TOTODILE_WANDERING_IN_ELMS_LAB
+.MoveElm:
 	checkscene
 	iftrue .Skip ; not SCENE_ELMSLAB_MEET_ELM
 	moveobject ELMSLAB_ELM, 3, 4
@@ -162,12 +209,8 @@ CyndaquilPokeBallScript:
 	checkevent EVENT_GOT_A_POKEMON_FROM_ELM
 	iftrue LookAtElmPokeBallScript
 	turnobject ELMSLAB_ELM, DOWN
-	reanchormap
-	pokepic CYNDAQUIL
-	cry CYNDAQUIL
-	waitbutton
-	closepokepic
 	opentext
+	cry CYNDAQUIL
 	writetext TakeCyndaquilText
 	yesorno
 	iffalse DidntChooseStarterScript
@@ -180,12 +223,12 @@ CyndaquilPokeBallScript:
 	playsound SFX_CAUGHT_MON
 	waitsfx
 	promptbutton
-	givepoke CYNDAQUIL, 5, BERRY
-	moveobject FOLLOWER, 6, 3
+	givepoke CYNDAQUIL, 5, BERRY, ELMS_STARTER_FORM
 	closetext
-	scall AddFollowing
-	cry CYNDAQUIL
+	cry CYNDAQUIL ; before the swap: cry waits for the sound to end, and the follower can't appear until it does
 	disappear ELMSLAB_POKE_BALL1
+	moveobject FOLLOWER, 6, 3
+	scall ElmsLabStarterHopsOff
 	readvar VAR_FACING
 	ifequal RIGHT, ElmDirectionsScript
 	applymovement PLAYER, AfterCyndaquilMovement
@@ -195,12 +238,8 @@ TotodilePokeBallScript:
 	checkevent EVENT_GOT_A_POKEMON_FROM_ELM
 	iftrue LookAtElmPokeBallScript
 	turnobject ELMSLAB_ELM, DOWN
-	reanchormap
-	pokepic TOTODILE
-	cry TOTODILE
-	waitbutton
-	closepokepic
 	opentext
+	cry TOTODILE
 	writetext TakeTotodileText
 	yesorno
 	iffalse DidntChooseStarterScript
@@ -213,12 +252,12 @@ TotodilePokeBallScript:
 	playsound SFX_CAUGHT_MON
 	waitsfx
 	promptbutton
-	givepoke TOTODILE, 5, BERRY
-	moveobject FOLLOWER, 7, 3
+	givepoke TOTODILE, 5, BERRY, ELMS_STARTER_FORM
 	closetext
-	scall AddFollowing
-	cry TOTODILE
+	cry TOTODILE ; before the swap: cry waits for the sound to end, and the follower can't appear until it does
 	disappear ELMSLAB_POKE_BALL2
+	moveobject FOLLOWER, 7, 3
+	scall ElmsLabStarterHopsOff
 	applymovement PLAYER, AfterTotodileMovement
 	sjump ElmDirectionsScript
 
@@ -226,12 +265,8 @@ ChikoritaPokeBallScript:
 	checkevent EVENT_GOT_A_POKEMON_FROM_ELM
 	iftrue LookAtElmPokeBallScript
 	turnobject ELMSLAB_ELM, DOWN
-	reanchormap
-	pokepic CHIKORITA
-	cry CHIKORITA
-	waitbutton
-	closepokepic
 	opentext
+	cry CHIKORITA
 	writetext TakeChikoritaText
 	yesorno
 	iffalse DidntChooseStarterScript
@@ -244,12 +279,12 @@ ChikoritaPokeBallScript:
 	playsound SFX_CAUGHT_MON
 	waitsfx
 	promptbutton
-	givepoke CHIKORITA, 5, BERRY
-	moveobject FOLLOWER, 8, 3
+	givepoke CHIKORITA, 5, BERRY, ELMS_STARTER_FORM
 	closetext
-	scall AddFollowing
-	cry CHIKORITA
+	cry CHIKORITA ; before the swap: cry waits for the sound to end, and the follower can't appear until it does
 	disappear ELMSLAB_POKE_BALL3
+	moveobject FOLLOWER, 8, 3
+	scall ElmsLabStarterHopsOff
 	applymovement PLAYER, AfterChikoritaMovement
 	sjump ElmDirectionsScript
 
@@ -291,15 +326,42 @@ endc
 	setmapscene NEW_BARK_TOWN, SCENE_NEWBARKTOWN_NOOP
 	end
 
-AddFollowing:
-	loademote EMOTE_POKE_BALL
-	appearfollower
+ElmsLabStarterHopsOff:
+; The starter becomes the follower on the tile it waited on, and steps off the table behind the
+; player. It was never in a ball, so none opens: appear rather than appearfollower.
+	appear FOLLOWER
 	callasm RefreshFollowingCoords
-	closetext
 	end
 
 ElmDescribesMrPokemonScript:
 	writetext ElmDescribesMrPokemonText
+	waitbutton
+	closetext
+	end
+
+ElmsLabWanderingCyndaquilScript:
+	faceplayer
+	opentext
+	cry CYNDAQUIL
+	getmonname STRING_BUFFER_3, CYNDAQUIL
+	sjump ElmsLabWanderingStarterScript
+
+ElmsLabWanderingTotodileScript:
+	faceplayer
+	opentext
+	cry TOTODILE
+	getmonname STRING_BUFFER_3, TOTODILE
+	sjump ElmsLabWanderingStarterScript
+
+ElmsLabWanderingChikoritaScript:
+	faceplayer
+	opentext
+	cry CHIKORITA
+	getmonname STRING_BUFFER_3, CHIKORITA
+	; fallthrough
+
+ElmsLabWanderingStarterScript:
+	writetext ElmsLabUpsideDownClipboardText
 	waitbutton
 	closetext
 	end
@@ -857,8 +919,8 @@ ElmText_ChooseAPokemon:
 	text "I want you to"
 	line "raise one of the"
 
-	para "#MON contained"
-	line "in these BALLS."
+	para "#MON waiting"
+	line "here."
 
 	para "You'll be that"
 	line "#MON's first"
@@ -968,10 +1030,17 @@ ElmDescribesMrPokemonText:
 	cont "not very useful…"
 	done
 
+ElmsLabUpsideDownClipboardText:
+	text_ram wStringBuffer3
+	text " is"
+	line "looking at an"
+	cont "upside down"
+	cont "clipboard."
+	done
+
 ElmPokeBallText:
-	text "It contains a"
-	line "#MON caught by"
-	cont "PROF.ELM."
+	text "It's a #MON that"
+	line "PROF.ELM caught."
 	done
 
 ElmsLabHealingMachineText1:
@@ -1442,7 +1511,12 @@ ElmsLab_MapEvents:
 	def_object_events
 	object_event  5,  2, SPRITE_ELM, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, ProfElmScript, -1
 	object_event  2,  9, SPRITE_SCIENTIST, SPRITEMOVEDATA_SPINRANDOM_SLOW, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, ElmsAideScript, EVENT_ELMS_AIDE_IN_LAB
-	object_event  6,  3, SPRITE_POKE_BALL, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, CyndaquilPokeBallScript, EVENT_CYNDAQUIL_POKEBALL_IN_ELMS_LAB
-	object_event  7,  3, SPRITE_POKE_BALL, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, TotodilePokeBallScript, EVENT_TOTODILE_POKEBALL_IN_ELMS_LAB
-	object_event  8,  3, SPRITE_POKE_BALL, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, ChikoritaPokeBallScript, EVENT_CHIKORITA_POKEBALL_IN_ELMS_LAB
+	object_event  6,  3, SPRITE_OW_MON_1, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, CyndaquilPokeBallScript, EVENT_CYNDAQUIL_POKEBALL_IN_ELMS_LAB
+	object_event  7,  3, SPRITE_OW_MON_2, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, TotodilePokeBallScript, EVENT_TOTODILE_POKEBALL_IN_ELMS_LAB
+	object_event  8,  3, SPRITE_OW_MON_3, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, ChikoritaPokeBallScript, EVENT_CHIKORITA_POKEBALL_IN_ELMS_LAB
 	object_event  5,  3, SPRITE_OFFICER, SPRITEMOVEDATA_STANDING_UP, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, CopScript, EVENT_COP_IN_ELMS_LAB
+	; The leftover starter, in front of the table (ElmsLabObjectsCallback shows the right one). Each
+	; shares its table object's SPRITE_OW_MON slot, so it keeps the species and shininess it had there.
+	object_event  7,  4, SPRITE_OW_MON_1, SPRITEMOVEDATA_WANDER, 1, 1, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, ElmsLabWanderingCyndaquilScript, EVENT_CYNDAQUIL_WANDERING_IN_ELMS_LAB
+	object_event  7,  4, SPRITE_OW_MON_2, SPRITEMOVEDATA_WANDER, 1, 1, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, ElmsLabWanderingTotodileScript, EVENT_TOTODILE_WANDERING_IN_ELMS_LAB
+	object_event  7,  4, SPRITE_OW_MON_3, SPRITEMOVEDATA_WANDER, 1, 1, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, ElmsLabWanderingChikoritaScript, EVENT_CHIKORITA_WANDERING_IN_ELMS_LAB
