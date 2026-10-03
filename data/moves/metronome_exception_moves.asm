@@ -13,4 +13,6 @@ MetronomeExcepts:
 	dw DESTINY_BOND
 	dw SLEEP_TALK
 	dw THIEF
+	dw EXPLOSION ; Crystal Legacy
+	dw SELFDESTRUCT ; Crystal Legacy
 	dw -1
