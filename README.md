@@ -60,6 +60,12 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Base Power is always 60 Credits: [Grate Oracle Lewot](https://github.com/Grate-Oracle-Lewot)
   - TODO: Display Hidden Power type on Stats Screen
 
+- **Kurt Upgrades**
+  - TODO: Kurt makes Apricorn balls instantly
+
+- **Pokegear Upgrades**
+  - TODO: Pokegear cards wrap around
+
 - **Headbutt Tree Encounters Simplified**
   - Headbutting a headbutt tree always results in a Pokemon appearing
   - Each area type has one encounter table instead of a common and uncommon table
@@ -208,6 +214,7 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Sage for Weezing sprite.
   - Sage for Crobat sprite used by Rockets. Colors modified from the original.
   - Sage for Electrode sprite used by Rockets. Colors modified from the original.
+  - Kester Henrick for blackbelt overworld sprite used for Karate Master
 
 
 ## Below, you will find the original readme for the CrystalShireEngine
