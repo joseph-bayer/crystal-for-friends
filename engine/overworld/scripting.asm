@@ -2469,7 +2469,7 @@ Script_domysterygift:
 	ld [wScriptVar], a
 	
 	; Call the enhanced mystery gift function
-	farcall DoNPCMysteryGift
+	farjp DoNPCMysteryGift ; a tail call: it used to fall through into Script_freezefollower
 
 Script_freezefollower:
 	farjp _FreezeFollower

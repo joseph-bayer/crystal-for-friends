@@ -103,6 +103,9 @@ GoldenrodDeptStore5FReceptionistScript:
 
 Carrie:
 	faceplayer
+	setval NPC_MYSTERY_GIFT_NPC_CARRIE
+	special CheckNPCMysteryGiftToday
+	iftrue .AlreadyGiftedToday
 	opentext
 	writetext GoldenrodDeptStore5FCarrieMysteryGiftExplanationText
 	waitbutton
@@ -112,6 +115,13 @@ Carrie:
   writetext GoldenrodDeptStore5FCarrieMysteryGiftExitText
   waitbutton
   closetext
+	end
+
+.AlreadyGiftedToday:
+	opentext
+	farwritetext _NPCMysteryGiftAlreadyTodayText
+	waitbutton
+	closetext
 	end
 
 GoldenrodDeptStore5FLassScript:

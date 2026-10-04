@@ -30,6 +30,9 @@ SilphCoOfficerScript:
 
 SilphCoCharlieScript:
   faceplayer
+	setval NPC_MYSTERY_GIFT_NPC_CHARLIE
+	special CheckNPCMysteryGiftToday
+	iftrue .AlreadyGiftedToday
   opentext
   writetext SilphCoCharlieText_OfferMysteryGiftText
   waitbutton
@@ -40,6 +43,13 @@ SilphCoCharlieScript:
   waitbutton
   closetext
   end
+
+.AlreadyGiftedToday:
+	opentext
+	farwritetext _NPCMysteryGiftAlreadyTodayText
+	waitbutton
+	closetext
+	end
 
 SilphCoReceptionistText:
 	text "Welcome. This is"

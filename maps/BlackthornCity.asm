@@ -78,6 +78,9 @@ BlackthornBlackBeltScript:
 
 BlackthornKimScript:
 	faceplayer
+	setval NPC_MYSTERY_GIFT_NPC_KIM
+	special CheckNPCMysteryGiftToday
+	iftrue .AlreadyGiftedToday
   opentext
   writetext BlackthornCityKim_OfferMysteryGiftText
   waitbutton
@@ -88,6 +91,13 @@ BlackthornKimScript:
   waitbutton
   closetext
   end
+
+.AlreadyGiftedToday:
+	opentext
+	farwritetext _NPCMysteryGiftAlreadyTodayText
+	waitbutton
+	closetext
+	end
 
 BlackthornYoungsterScript:
 	jumptextfaceplayer BlackthornYoungsterText

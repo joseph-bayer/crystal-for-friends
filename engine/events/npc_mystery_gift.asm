@@ -1,6 +1,26 @@
 ; NPC Mystery Gift Screen
 ; This file implements an NPC-triggered mystery gift screen that can be called from the overworld
 
+SetNPCMysteryGiftPartnerID:
+; An NPC partner's ID, for the link version's daily partner list: 0 then the NPC's number, which
+; is in wScriptVar. Shared with real link partners, so a trainer ID of 0-3 would read as an NPC.
+	xor a
+	ld [wMysteryGiftPartnerID], a
+	ld a, [wScriptVar]
+	ld [wMysteryGiftPartnerID + 1], a
+	ret
+
+CheckNPCMysteryGiftToday:
+; special: before an NPC's gift screen. in: wScriptVar = the NPC's number
+; out: wScriptVar = TRUE if the player already had a gift from that NPC today
+	farcall DoMysteryGiftIfDayHasPassed ; so a new day clears the list first, as domysterygift does
+	call SetNPCMysteryGiftPartnerID
+	call DoMysteryGift.CheckAlreadyGotAGiftFromThatPerson
+	sbc a ; -1 if already, else 0
+	and TRUE
+	ld [wScriptVar], a
+	ret
+
 DoNPCMysteryGift::
 	; Stop updating Sprite positions and set all bg palettes to black/empty
 	call DisableSpriteUpdates
@@ -67,8 +87,9 @@ DoNPCMysteryGift::
   jp .MysteryGiftCanceled
 
 .pressed_a
-	call .CheckAlreadyGotAGiftFromThatPerson
-	ld hl, .MysteryGiftOneADayText ; Only one gift a day per person
+	call SetNPCMysteryGiftPartnerID
+	call DoMysteryGift.CheckAlreadyGotAGiftFromThatPerson
+	ld hl, DoMysteryGift.MysteryGiftOneADayText ; Only one gift a day per person
 	jmp c, .PrintTextAndExit
   ; Check if you have a pending gift
   call GetMysteryGiftBank
@@ -78,7 +99,7 @@ DoNPCMysteryGift::
 	jp nz, .GiftWaiting ; If yes, tell player to get it first
 ; fall through
 .SendGift:
-  call .AddMysteryGiftPartnerID
+  call DoMysteryGift.AddMysteryGiftPartnerID
 
   ; update wMysteryGiftPartnerName
   ld hl, MysteryGiftNPCNames ; store pointer to Mystery Gift NPC name table
@@ -119,7 +140,7 @@ DoNPCMysteryGift::
   ld de, wMysteryGiftPlayerName
   rst CopyBytes
 
-	ld hl, .MysteryGiftSentHomeText ; sent decoration to home
+	ld hl, DoMysteryGift.MysteryGiftSentHomeText ; sent decoration to home
 	jp .PrintTextAndExit
 
 .SentItem
@@ -137,80 +158,16 @@ DoNPCMysteryGift::
 	call CloseSRAM
   call GetItemName
 
-  ld hl, .MysteryGiftSentText
+  ld hl, DoMysteryGift.MysteryGiftSentText
   jr .PrintTextAndExit
 
 .MysteryGiftCanceled:
-	ld hl, .MysteryGiftCanceledText 
+	ld hl, DoMysteryGift.MysteryGiftCanceledText
 	jr .PrintTextAndExit
-
-.MysteryGiftCanceledText:
-	text_far _MysteryGiftCanceledText
-	text_end
-
-.MysteryGiftSentText:
-	text_far _MysteryGiftSentText
-	text_end
-
-.MysteryGiftSentHomeText:
-	text_far _MysteryGiftSentHomeText
-	text_end
-
-.RetrieveMysteryGiftText:
-	text_far _RetrieveMysteryGiftText
-	text_end
-
-.MysteryGiftOneADayText:
-	text_far _MysteryGiftOneADayText
-	text_end
 
 .GiftWaiting:
-	ld hl, .RetrieveMysteryGiftText ; receive gift at counter
-	jr .PrintTextAndExit
-
-.CheckAlreadyGotAGiftFromThatPerson:
-	call GetMysteryGiftBank
-	ld a, 0
-	ld b, a
-	ld a, [wScriptVar] ; HACK: store Mystery Gift NPC ID/Index from wScriptVar in wMysteryGiftPartnerID. Could be an issue if you mystery gift with a real person with a id of 0, 1, 2, 3, etc. (low numbers)
-	ld c, a
-	ld a, [sNumDailyMysteryGiftPartnerIDs]
-	ld d, a
-	ld hl, sDailyMysteryGiftPartnerIDs
-.loop
-	ld a, d
-	and a
-	jr z, .No
-	ld a, [hli]
-	cp b
-	jr nz, .skip
-	ld a, [hl]
-	cp c
-	jr z, .Yes
-.skip
-	inc hl
-	dec d
-	jr .loop
-.Yes:
-	scf
-.No:
-	jmp CloseSRAM
-
-.AddMysteryGiftPartnerID:
-	call GetMysteryGiftBank
-  ld hl, sNumDailyMysteryGiftPartnerIDs
-	ld a, [hl]
-	inc [hl]
-	ld hl, sDailyMysteryGiftPartnerIDs ; could have done "inc hl" instead
-	ld e, a
-	ld d, 0
-	add hl, de
-	add hl, de
-	ld a, 0
-	ld [hli], a
-	ld a, [wScriptVar] ; HACK: store Mystery Gift NPC ID/Index from wScriptVar in sDailyMysteryGiftPartnerIDs. Could be an issue if you mystery gift with a real person with a id of 0, 1, 2, 3, etc. (low numbers)
-	ld [hl], a
-	jmp CloseSRAM
+	ld hl, DoMysteryGift.RetrieveMysteryGiftText ; receive gift at counter
+	; fallthrough
 
 .PrintTextAndExit:
   ; Clear screen so we can just show a textbox
@@ -275,7 +232,7 @@ DoNPCMysteryGift::
 .twentyfivepercent
   call Random
   cp 20 percent - 1
-  jr z, .fivepercent
+  jr c, .fivepercent ; as the link version's roll does
   ; rare index - 20% chance - index (24-31)
   call Random
   and 7 ; keep only lower 3 bits (0-7)

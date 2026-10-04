@@ -29,6 +29,7 @@ SpecialsPointers::
 	add_special CheckMysteryGift
 	add_special GetMysteryGiftItem
 	add_special UnlockMysteryGift
+	add_special CheckNPCMysteryGiftToday
 	add_special CheckOtherPlayerGender
 
 ; Map events

@@ -206,6 +206,15 @@ _MysteryGiftCommErrorText::
 	line "error."
 	prompt
 
+_NPCMysteryGiftAlreadyTodayText::
+	text "Sorry, we already"
+	line "did a MYSTERY GIFT"
+	cont "today."
+
+	para "Come back"
+	line "tomorrow!"
+	done
+
 _RetrieveMysteryGiftText::
 	text "Must retrieve GIFT"
 	line "at #MON CENTER."
