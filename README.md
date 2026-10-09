@@ -209,7 +209,7 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Follower Mon code [Vulcandth](https://github.com/vulcandth) and [AtmaBuster](https://github.com/AtmaBuster)
   - Using HMs without knowing them, Fly from the Pokegear map, the Flash prompt and the Ilex Forest HM texts ported from [Polished Crystal](https://github.com/Rangi42/polishedcrystal)
   - The simplified clock reset follows the [Simplify the Clock Reset Procedure](https://github.com/pret/pokecrystal/wiki/Simplify-the-Clock-Reset-Procedure) tutorial by [SonicRay100](https://github.com/SonicRay100) from the pret/pokecrystal wiki
-  - The Hidden Power move animation, colored by type, is ported from Sour Crystal
+  - The Hidden Power move animation, colored by type, is ported from [Sour Crystal](https://github.com/SoupPotato/sourcrystal)
   - The Hidden Power stats page follows the [Add a fourth stats page](https://github.com/pret/pokecrystal/wiki/Add-a-fourth-stats-page) tutorial by [Rangi42](https://github.com/Rangi42) from the pret/pokecrystal wiki
 - **Art Credits**
   - SCMidna for Surfing Pikachu front sprites
@@ -227,6 +227,7 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Kester Henrick for blackbelt overworld sprite used for Karate Master
   - [FrenchOrange](https://github.com/FrenchOrange) for help with the Shaman's overworld sprite
   - Campfire sprite and fire-pit tiles in the Shaman's house from [Polished Crystal](https://github.com/Rangi42/polishedcrystal)
+  - Most Pokemon party menu icons from [Sour Crystal](https://github.com/SoupPotato/sourcrystal)
 
 
 ## Below, you will find the original readme for the CrystalShireEngine

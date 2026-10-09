@@ -39,10 +39,10 @@ IconPaletteOrders:
 	db ICON_PAL_NORMAL                   ; BLASTOISE
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; CATERPIE
 	db ICON_PAL_NORMAL                   ; METAPOD
-	db ICON_PAL_SWAP                     ; BUTTERFREE
+	db ICON_PAL_NORMAL                   ; BUTTERFREE
 	db ICON_PAL_NORMAL                   ; WEEDLE
 	db ICON_PAL_NORMAL                   ; KAKUNA
-	db ICON_PAL_NORMAL                   ; BEEDRILL
+	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; BEEDRILL
 	db ICON_PAL_NORMAL                   ; PIDGEY
 	db ICON_PAL_OFFWHITE                 ; PIDGEOTTO
 	db ICON_PAL_OFFWHITE                 ; PIDGEOT
@@ -50,21 +50,21 @@ IconPaletteOrders:
 	db ICON_PAL_NORMAL                   ; RATICATE
 	db ICON_PAL_SWAP                     ; SPEAROW
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; FEAROW
-	db ICON_PAL_SWAP                     ; EKANS
-	db ICON_PAL_SWAP                     ; ARBOK
+	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; EKANS
+	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; ARBOK
 	db ICON_PAL_NORMAL                   ; PIKACHU
 	db ICON_PAL_NORMAL                   ; RAICHU
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; SANDSHREW
-	db ICON_PAL_NORMAL                   ; SANDSLASH
+	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; SANDSLASH
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; NIDORAN_F
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; NIDORINA
 	db ICON_PAL_NORMAL                   ; NIDOQUEEN
 	db ICON_PAL_OFFWHITE                 ; NIDORAN_M
-	db ICON_PAL_SWAP                     ; NIDORINO
+	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; NIDORINO
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; NIDOKING
 	db ICON_PAL_NORMAL                   ; CLEFAIRY
 	db ICON_PAL_NORMAL                   ; CLEFABLE
-	db ICON_PAL_SWAP                     ; VULPIX
+	db ICON_PAL_NORMAL                   ; VULPIX
 	db ICON_PAL_NORMAL                   ; NINETALES
 	db ICON_PAL_NORMAL                   ; JIGGLYPUFF
 	db ICON_PAL_NORMAL                   ; WIGGLYTUFF
@@ -90,12 +90,12 @@ IconPaletteOrders:
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; POLIWAG
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; POLIWHIRL
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; POLIWRATH
-	db ICON_PAL_NORMAL                   ; ABRA
-	db ICON_PAL_NORMAL                   ; KADABRA
-	db ICON_PAL_NORMAL                   ; ALAKAZAM
-	db ICON_PAL_NORMAL                   ; MACHOP
+	db ICON_PAL_SWAP                     ; ABRA
+	db ICON_PAL_SWAP                     ; KADABRA
+	db ICON_PAL_SWAP                     ; ALAKAZAM
+	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; MACHOP
 	db ICON_PAL_SWAP                     ; MACHOKE
-	db ICON_PAL_NORMAL                   ; MACHAMP
+	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; MACHAMP
 	db ICON_PAL_NORMAL                   ; BELLSPROUT
 	db ICON_PAL_NORMAL                   ; WEEPINBELL
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; VICTREEBEL
@@ -113,19 +113,19 @@ IconPaletteOrders:
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; FARFETCH_D
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; DODUO
 	db ICON_PAL_NORMAL                   ; DODRIO
-	db ICON_PAL_NORMAL                   ; SEEL
+	db ICON_PAL_SWAP                   ; SEEL
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; DEWGONG
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; GRIMER
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; MUK
-	db ICON_PAL_SWAP                     ; SHELLDER
+	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; SHELLDER
 	db ICON_PAL_NORMAL                   ; CLOYSTER
 	db ICON_PAL_OFFWHITE                 ; GASTLY
 	db ICON_PAL_SWAP                     ; HAUNTER
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; GENGAR -- swap the purple and white, and make the purple off-white
 	db ICON_PAL_NORMAL                   ; ONIX
-	db ICON_PAL_NORMAL                   ; DROWZEE
-	db ICON_PAL_NORMAL                   ; HYPNO
-	db ICON_PAL_NORMAL                   ; KRABBY
+	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; DROWZEE
+	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; HYPNO
+	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; KRABBY
 	db ICON_PAL_NORMAL                   ; KINGLER
 	db ICON_PAL_NORMAL                   ; VOLTORB
 	db ICON_PAL_NORMAL                   ; ELECTRODE
@@ -146,29 +146,29 @@ IconPaletteOrders:
 	db ICON_PAL_NORMAL                   ; HORSEA
 	db ICON_PAL_NORMAL                   ; SEADRA
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; GOLDEEN
-	db ICON_PAL_OFFWHITE                 ; SEAKING -- A species entry covers every one of its forms, because the form table below is only consulted
+	db ICON_PAL_OFFWHITE                 ; SEAKING
 	db ICON_PAL_NORMAL                   ; STARYU
 	db ICON_PAL_NORMAL                   ; STARMIE
 	db ICON_PAL_NORMAL                   ; MR__MIME
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; SCYTHER
-	db ICON_PAL_OFFWHITE                 ; JYNX -- A species entry covers every one of its forms, because the form table below is only consulted
-	db ICON_PAL_NORMAL                   ; ELECTABUZZ
+	db ICON_PAL_OFFWHITE                 ; JYNX
+	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; ELECTABUZZ
 	db ICON_PAL_NORMAL                   ; MAGMAR
 	db ICON_PAL_OFFWHITE                 ; PINSIR
-	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; TAUROS -- A species entry covers every one of its forms, because the form table below is only consulted
+	db ICON_PAL_NORMAL		     ; TAUROS
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; MAGIKARP
 	db ICON_PAL_NORMAL                   ; GYARADOS
 	db ICON_PAL_NORMAL                   ; LAPRAS
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; DITTO
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; EEVEE
 	db ICON_PAL_NORMAL                   ; VAPOREON
-	db ICON_PAL_NORMAL                   ; JOLTEON
+	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; JOLTEON
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; FLAREON
 	db ICON_PAL_NORMAL                   ; PORYGON
 	db ICON_PAL_OFFWHITE                 ; OMANYTE
 	db ICON_PAL_OFFWHITE                 ; OMASTAR
 	db ICON_PAL_NORMAL                   ; KABUTO
-	db ICON_PAL_NORMAL                   ; KABUTOPS
+	db ICON_PAL_SWAP                     ; KABUTOPS
 	db ICON_PAL_NORMAL                   ; AERODACTYL
 	db ICON_PAL_NORMAL                   ; SNORLAX
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; ARTICUNO
@@ -209,7 +209,7 @@ IconPaletteOrders:
 	db ICON_PAL_NORMAL                   ; MAREEP
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; FLAAFFY
 	db ICON_PAL_NORMAL                   ; AMPHAROS
-	db ICON_PAL_SWAP                     ; BELLOSSOM
+	db ICON_PAL_NORMAL                   ; BELLOSSOM
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; MARILL
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; AZUMARILL
 	db ICON_PAL_NORMAL                   ; SUDOWOODO
@@ -232,11 +232,11 @@ IconPaletteOrders:
 	db ICON_PAL_NORMAL                   ; WOBBUFFET
 	db ICON_PAL_NORMAL                   ; GIRAFARIG
 	db ICON_PAL_NORMAL                   ; PINECO
-	db ICON_PAL_NORMAL                   ; FORRETRESS
+	db ICON_PAL_SWAP                     ; FORRETRESS
 	db ICON_PAL_NORMAL                   ; DUNSPARCE
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; GLIGAR
 	db ICON_PAL_NORMAL                   ; STEELIX
-	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; SNUBBULL -- A species entry covers every one of its forms, because the form table below is only consulted
+	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; SNUBBULL
 	db ICON_PAL_NORMAL                   ; GRANBULL
 	db ICON_PAL_NORMAL                   ; QWILFISH
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; SCIZOR
@@ -246,27 +246,27 @@ IconPaletteOrders:
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; TEDDIURSA
 	db ICON_PAL_NORMAL                   ; URSARING
 	db ICON_PAL_NORMAL                   ; SLUGMA
-	db ICON_PAL_SWAP                     ; MAGCARGO
+	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; MAGCARGO
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; SWINUB
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; PILOSWINE
-	db ICON_PAL_SWAP                     ; CORSOLA
+	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; CORSOLA
 	db ICON_PAL_NORMAL                   ; REMORAID
 	db ICON_PAL_NORMAL                   ; OCTILLERY
-	db ICON_PAL_NORMAL                   ; DELIBIRD
+	db ICON_PAL_OFFWHITE                 ; DELIBIRD
 	db ICON_PAL_NORMAL                   ; MANTINE
-	db ICON_PAL_NORMAL                   ; SKARMORY
+	db ICON_PAL_SWAP                     ; SKARMORY
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; HOUNDOUR
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; HOUNDOOM
 	db ICON_PAL_NORMAL                   ; KINGDRA
 	db ICON_PAL_SWAP                     ; PHANPY
 	db ICON_PAL_NORMAL                   ; DONPHAN
-	db ICON_PAL_SWAP                     ; PORYGON2
+	db ICON_PAL_NORMAL                   ; PORYGON2
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; STANTLER
 	db ICON_PAL_NORMAL                   ; SMEARGLE
 	db ICON_PAL_NORMAL                   ; TYROGUE
-	db ICON_PAL_NORMAL                   ; HITMONTOP
+	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; HITMONTOP
 	db ICON_PAL_NORMAL                   ; SMOOCHUM
-	db ICON_PAL_NORMAL                   ; ELEKID
+	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; ELEKID
 	db ICON_PAL_NORMAL                   ; MAGBY
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; MILTANK
 	db ICON_PAL_SWAP | ICON_PAL_OFFWHITE ; BLISSEY
