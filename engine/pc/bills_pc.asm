@@ -764,16 +764,21 @@ OpenPokeDB:
 	ret
 
 MACRO pokedb_section
-	; TODO: ideally the game should check that each of the tables' cumulative
-	; section sizes match MONDB_ENTRIES
 	db (\1End - \1Mons) / SAVEMON_STRUCT_LENGTH
 	dba \1
 ENDM
 
+; Each pokedb's sections, in entry order. Their sizes must add up to MONDB_ENTRIES.
 .Bank1Pointers:
 	pokedb_section sNewBoxMons1
+	pokedb_section sNewBoxMons1Ext
+	assert (sNewBoxMons1End - sNewBoxMons1Mons + sNewBoxMons1ExtEnd - sNewBoxMons1ExtMons) \
+		== MONDB_ENTRIES * SAVEMON_STRUCT_LENGTH, "pokedb 1 sections don't add up to MONDB_ENTRIES"
 .Bank2Pointers:
 	pokedb_section sNewBoxMons2
+	pokedb_section sNewBoxMons2Ext
+	assert (sNewBoxMons2End - sNewBoxMons2Mons + sNewBoxMons2ExtEnd - sNewBoxMons2ExtMons) \
+		== MONDB_ENTRIES * SAVEMON_STRUCT_LENGTH, "pokedb 2 sections don't add up to MONDB_ENTRIES"
 
 EncodeBufferMon:
 ; Encodes party_struct wBufferMon in-place to savemon_struct wEncodedBufferMon.

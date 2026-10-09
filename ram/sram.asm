@@ -202,14 +202,25 @@ sBTMonPrevPrevTrainer{d:n}:: dw
 endr
 
 
+; Each pokedb continues here once its own bank is full (see OpenPokeDB).
+SECTION "PokeDB Bank 1 Ext", SRAM
+
+sNewBoxMons1Ext:: pokedb sNewBoxMons1Ext, MONDB_EXT_ENTRIES
+
+
+SECTION "PokeDB Bank 2 Ext", SRAM
+
+sNewBoxMons2Ext:: pokedb sNewBoxMons2Ext, MONDB_EXT_ENTRIES
+
+
 SECTION "PokeDB Bank 1", SRAM
 
-sNewBoxMons1:: pokedb sNewBoxMons1, MONDB_ENTRIES
+sNewBoxMons1:: pokedb sNewBoxMons1, MONDB_MAIN_ENTRIES
 
 
 SECTION "PokeDB Bank 2", SRAM
 
-sNewBoxMons2:: pokedb sNewBoxMons2, MONDB_ENTRIES
+sNewBoxMons2:: pokedb sNewBoxMons2, MONDB_MAIN_ENTRIES
 
 
 

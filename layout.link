@@ -391,6 +391,8 @@ SRAM $01
 	"SRAM Hall of Fame"
 	"SRAM Crystal Data"
 	"SRAM Battle Tower"
+	"PokeDB Bank 1 Ext"
+	"PokeDB Bank 2 Ext"
 SRAM $02
 	"PokeDB Bank 1"
 SRAM $03
