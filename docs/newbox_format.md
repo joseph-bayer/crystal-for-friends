@@ -2,18 +2,27 @@
 
 ## Save file address locations
 
-* 0x2D10-0x2F20: Gameplay newbox metadata (0x210 bytes)
-* 0x2F20-0x3130: Saved newbox metadata (0x210 bytes)
+These are offsets into a 32 KB .sav file. They move whenever the save layout
+changes, so check `pokecrystal.map` for the current ones.
 
-Total boxes: 16 gameplay boxes, 16 saved boxes.
-Extraction from a .sav should be done from 0x2F20 unless save was interrupted.
-If saving was interrupted, box data *might* be in 0x2D10-0x2F20 instead,
+* 0x2BE4-0x2E15: Gameplay newbox metadata (0x231 bytes)
+* 0x2E15-0x3046: Saved newbox metadata (0x231 bytes)
+
+Total boxes: 17 gameplay boxes, 17 saved boxes.
+Extraction from a .sav should be done from 0x2E15 unless save was interrupted.
+If saving was interrupted, box data *might* be in 0x2BE4-0x2E15 instead,
 depending on when in the process you interrupted the saving.
 
-* 0x4000-0x5FF2: Pokémon database 1 (0x1FF2 bytes)
-* 0x6000-0x7FF2: Pokémon database 2 (0x1FF2 bytes)
+Each database is split into two sections: a main section filling its own SRAM
+bank, and a small extension section in SRAM bank 1. Entries 1-160 are in the
+main section and entries 161-175 in the extension.
 
-Total database entries: 174 per database, 348 total.
+* 0x4000-0x5FE0: Pokémon database 1, entries 1-160 (0x1FE0 bytes)
+* 0x361D-0x391A: Pokémon database 1, entries 161-175 (0x2FD bytes)
+* 0x6000-0x7FE0: Pokémon database 2, entries 1-160 (0x1FE0 bytes)
+* 0x391A-0x3C17: Pokémon database 2, entries 161-175 (0x2FD bytes)
+
+Total database entries: 175 per database, 350 total. Each entry is 51 bytes.
 Pokémon data referenced by newbox metadata. Left unitialized on a new game,
 there is no gurantee that data in here that isn't referenced by boxes above
 isn't filled with garbage. Hence, always reference data here indirectly by
@@ -29,7 +38,7 @@ following data:
 * 0x17-0x1F: Box name (9 characters in GSC character format, no string terminator)
 * 0x20: Box theme
 
-The pointers contains either 0, for a blank slot, or 1-174, corresponding to
+The pointers contains either 0, for a blank slot, or 1-175, corresponding to
 a database entry. Each entry has a corresponding bitflag, which is unset if
 database bank 1 is referenced, set if database bank 2 is. The entry referenced
 can be somewhat arbitrary (each time a player adds a Pokémon to the storage,
