@@ -1,5 +1,7 @@
 # Crystal For Friends
 
+> **Disclaimer:** Generative AI was used as a code assistant for some systems programming. All art/maps/dialogue (and everything creative) was made by myself and the community or was commissioned from real artists.
+
 This is a version of Pokemon Crystal meant for me and my friends. It is built upon the CrystalShireEngine.
 
 ## Changes
