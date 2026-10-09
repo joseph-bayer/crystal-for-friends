@@ -219,7 +219,7 @@ if DEF(_DEBUG)
 
 	; One of every species and every color form, in order, filling the PC for palette review.
 	; The party is full by this point, so all of them land in the boxes.
-	; Comment this out for a normal debug run -- it takes a moment and fills nine boxes.
+	; Comment this out for a normal debug run -- it takes a moment and fills 15 boxes.
 	callasm FillPCWithEveryForm
 
 	; Unlock the Pokemon dolls, to check whether a map object's icon picks up the follower's

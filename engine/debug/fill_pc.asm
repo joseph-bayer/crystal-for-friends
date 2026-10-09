@@ -8,7 +8,7 @@ DEF FILL_PC_FORM_SPECIES_ONLY EQU 0
 ; Stop after this many mons, whichever mode is running, or 0 for no limit. Useful for keeping a
 ; sweep inside one box, or one past it, to separate "breaks on forms" from "breaks on a second
 ; box". The budget lives in a single register, so it cannot exceed a byte -- a full-dex sweep is
-; 268 mons and has to run uncapped rather than with a cap that would silently wrap.
+; 281 mons and has to run uncapped rather than with a cap that would silently wrap.
 DEF FILL_PC_MAX_MONS EQU 0
 assert FILL_PC_MAX_MONS < $100, "the mon budget is kept in one register; use 0 for no limit"
 
@@ -36,7 +36,7 @@ FillPCWithEveryForm::
 ; from a debug script. What it sweeps depends on the switches above.
 ;
 ; These go straight into the boxes regardless of how full the party is. The PC holds
-; NUM_BOXES * MONS_PER_BOX = 300 mons across MONDB_ENTRIES * 2 = 320 database entries, but the
+; NUM_BOXES * MONS_PER_BOX = 340 mons across MONDB_ENTRIES * 2 = 350 database entries, but the
 ; allocator rescans the database for every mon and falls back to FlushStorageSystem when it runs
 ; short, so a large sweep is slow rather than instant.
 ;
@@ -184,17 +184,30 @@ endc
 endc
 
 .FormCounts:
-; Ordered so a one-box budget still reaches every species here. Magikarp leads because it is the
-; one species LoadEnemyMon has a form branch for -- a DV reroll loop that jumps backwards -- so
-; if the sweep is going to die on a form, it dies first. Smeargle trails because it has the most
-; forms and is the one worth truncating.
-	dwb MAGIKARP, NUM_MAGIKARP_FORMS ; 3, running total 3
-	dwb PIKACHU,  NUM_PIKACHU_FORMS  ; 4, running total 7
-	dwb SCYTHER,  NUM_SCYTHER_FORMS  ; 3, running total 10
-	dwb SCIZOR,   NUM_SCIZOR_FORMS   ; 3, running total 13
-	dwb PINSIR,   NUM_PINSIR_FORMS   ; 3, running total 16
-	dwb SHUCKLE,  NUM_SHUCKLE_FORMS  ; 3, running total 19
-	dwb SMEARGLE, NUM_SMEARGLE_FORMS ; 6, and the budget stops it after the first
+; Ordered so a three-box budget still reaches every species here. Magikarp leads because it is
+; the one species LoadEnemyMon has a form branch for -- a DV reroll loop that jumps backwards --
+; so if the sweep is going to die on a form, it dies first. Smeargle trails because it has the
+; most forms and is the one worth truncating.
+	dwb MAGIKARP,   NUM_MAGIKARP_FORMS   ; 3, running total 3
+	dwb PIKACHU,    NUM_PIKACHU_FORMS    ; 4, running total 7
+	dwb SCYTHER,    NUM_SCYTHER_FORMS    ; 3, running total 10
+	dwb SCIZOR,     NUM_SCIZOR_FORMS     ; 3, running total 13
+	dwb PINSIR,     NUM_PINSIR_FORMS     ; 3, running total 16
+	dwb SHUCKLE,    NUM_SHUCKLE_FORMS    ; 3, running total 19
+	dwb CHARMELEON, NUM_CHARMELEON_FORMS ; 2, running total 21
+	dwb CHARIZARD,  NUM_CHARIZARD_FORMS  ; 2, running total 23
+	dwb ARBOK,      NUM_ARBOK_FORMS      ; 2, running total 25
+	dwb GOLBAT,     NUM_GOLBAT_FORMS     ; 2, running total 27
+	dwb MACHOP,     NUM_MACHOP_FORMS     ; 2, running total 29
+	dwb MACHOKE,    NUM_MACHOKE_FORMS    ; 2, running total 31
+	dwb MACHAMP,    NUM_MACHAMP_FORMS    ; 2, running total 33
+	dwb TENTACOOL,  NUM_TENTACOOL_FORMS  ; 2, running total 35
+	dwb TENTACRUEL, NUM_TENTACRUEL_FORMS ; 2, running total 37
+	dwb ELECTRODE,  NUM_ELECTRODE_FORMS  ; 2, running total 39
+	dwb WEEZING,    NUM_WEEZING_FORMS    ; 2, running total 41
+	dwb SNORLAX,    NUM_SNORLAX_FORMS    ; 2, running total 43
+	dwb CROBAT,     NUM_CROBAT_FORMS     ; 2, running total 45
+	dwb SMEARGLE,   NUM_SMEARGLE_FORMS   ; 6, running total 51
 if FILL_PC_ALL_UNOWN_LETTERS
 	dwb UNOWN,    NUM_UNOWN
 endc
