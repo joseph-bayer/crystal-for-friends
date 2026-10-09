@@ -7,7 +7,7 @@
 	db PSYCHIC_TYPE, PSYCHIC_TYPE ; type
 	db 225 ; catch rate
 	db 61 ; base exp
-	dw NO_ITEM, NO_ITEM ; items
+	dw NO_ITEM, GLYPH_SHARD ; items
 	db GENDER_UNKNOWN ; gender ratio
 	db 10 ; step cycles to hatch
 	INCBIN "gfx/pokemon/unown_a/front.dimensions"

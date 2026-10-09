@@ -168,6 +168,7 @@ ItemDescriptions1:
 	dw QuestionMarkDesc ; 009D
 	dw QuestionMarkDesc ; 009E
 	dw QuestionMarkDesc ; 009F
+	dw GlyphShardDesc   ; 00A0
 .IndirectEnd:
 
 ItemDescriptionsKeyItems:
@@ -842,6 +843,10 @@ RainbowWingDesc:
 
 QuestionMarkDesc:
 	db   "?@"
+
+GlyphShardDesc:
+	db   "Grows holder's"
+	next "HIDDEN POWER.@"
 
 BrickPieceDesc:
 	db   "A rare chunk of"

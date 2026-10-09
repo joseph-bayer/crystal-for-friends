@@ -265,7 +265,7 @@ MovesGen2:
 	move EFFECT_MORNING_SUN,         0, NORMAL,        100,  5,   0      ;MORNING_SUN
 	move EFFECT_SYNTHESIS,           0, GRASS,         100,  5,   0      ;SYNTHESIS
 	move EFFECT_MOONLIGHT,           0, NORMAL,        100,  5,   0      ;MOONLIGHT
-	move EFFECT_HIDDEN_POWER,       60, NORMAL,        100, 15,   0      ;HIDDEN_POWER
+	move EFFECT_HIDDEN_POWER,       70, NORMAL,        100, 15,   0      ;HIDDEN_POWER
 	move EFFECT_NORMAL_HIT,        100, FIGHTING,       85, 10,   0      ;CROSS_CHOP
 	move EFFECT_TWISTER,            70, DRAGON,        100, 20,  20      ;TWISTER
 	move EFFECT_RAIN_DANCE,          0, WATER,          90, 10,   0      ;RAIN_DANCE

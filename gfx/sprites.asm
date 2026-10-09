@@ -118,3 +118,5 @@ SECTION "Sprites 4", ROMX, ALIGN[4]
 ; "Sprites 2" is full. OverworldSprites stores each sheet's bank, so a new overworld sprite can live
 ; in any bank; the alignment keeps it eligible for Request2bpp's GDMA path.
 KiyoSpriteGFX::                INCBIN "gfx/sprites/kiyo.2bpp"
+ShamanSpriteGFX::              INCBIN "gfx/sprites/shaman.2bpp"
+CampfireSpriteGFX::            INCBIN "gfx/sprites/campfire.2bpp" ; Polished Crystal's

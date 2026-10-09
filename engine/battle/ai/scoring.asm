@@ -2315,7 +2315,7 @@ AI_Smart_HiddenPower:
 	ld a, 1
 	ldh [hBattleTurn], a
 
-; Calculate Hidden Power's type and base power based on enemy's DVs.
+; Calculate Hidden Power's type based on enemy's DVs.
 	farcall HiddenPowerDamage
 	farcall BattleCheckTypeMatchup
 	pop hl
@@ -2325,20 +2325,17 @@ AI_Smart_HiddenPower:
 	cp EFFECTIVE
 	jr c, .bad
 
-; Discourage Hidden Power if its base power is lower than 50.
-	ld a, d
-	cp 50
-	jr c, .bad
-
 ; Encourage Hidden Power if super-effective.
-	ld a, [wTypeMatchup]
 	cp EFFECTIVE + 1
 	jr nc, .good
 
-; Encourage Hidden Power if its base power is 70.
-	ld a, d
-	cp 70
-	ret c
+; Encourage Hidden Power if the enemy is Unown, whose Hidden Power is the strongest. Every other
+; trainer's Hidden Power has the same power (MAX_HP_LEVEL; see HiddenPowerDamage).
+	push hl
+	ld a, [wEnemyMonSpecies]
+	farcall IsUnownID
+	pop hl
+	ret nz
 
 .good
 	dec [hl]

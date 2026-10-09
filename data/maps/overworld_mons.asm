@@ -120,6 +120,9 @@ OverworldMonObjects:
 	ow_mon_map RADIO_TOWER_4F
 	ow_mon MEOWTH,     PLAIN_FORM
 
+	ow_mon_map RUINS_OF_ALPH_SHAMAN_HOUSE ; the Hidden Power Shaman's Xatu
+	ow_mon XATU,       PLAIN_FORM
+
 	ow_mon_map ROUTE_28_STEEL_WING_HOUSE
 	ow_mon FEAROW,     PLAIN_FORM
 

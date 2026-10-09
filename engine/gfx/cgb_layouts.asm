@@ -263,6 +263,11 @@ _CGB_StatsScreenHPPals:
 	ld bc, 3 palettes ; pink, green, and blue page palettes
 	ld a, BANK(wBGPals1)
 	call FarCopyWRAM
+	ld hl, StatsScreenPagePals + 3 palettes
+	ld de, wBGPals1 palette 7
+	ld bc, 1 palettes ; purple page palette (6 is the caught ball's)
+	ld a, BANK(wBGPals1)
+	call FarCopyWRAM
 	
 	call WipeAttrmap
 
@@ -276,20 +281,42 @@ _CGB_StatsScreenHPPals:
 	ld a, $2 ; exp palette
 	rst ByteFill
 
+	hlcoord 0, 15, wAttrmap
+	ld bc, 10
+	ld a, $2 ; the Hidden Power bar, in the exp palette (see LoadStatsScreenPals)
+	rst ByteFill
+
+	; The page squares, two columns apart and ending at column 17 (see
+	; StatsScreen_LoadPageIndicators): pink, green, blue, and purple once unlocked.
+	ld de, EVENT_HIDDEN_POWER_PAGE_UNLOCKED
+	ld b, CHECK_FLAG
+	call EventFlagAction
+	ld a, c
+	and a
+	push af
 	hlcoord 13, 5, wAttrmap
+	jr z, .got_first_square
+	hlcoord 11, 5, wAttrmap
+.got_first_square
+	ld a, $3 ; pink page palette, then green (4) and blue (5)
+.page_square
+	push af
+	push hl
 	lb bc, 2, 2
-	ld a, $3 ; pink page palette
 	call FillBoxCGB
-
-	hlcoord 15, 5, wAttrmap
+	pop hl
+	inc hl
+	inc hl
+	pop af
+	inc a
+	cp $6
+	jr c, .page_square
+	pop af
+	jr z, .page_squares_done
 	lb bc, 2, 2
-	ld a, $4 ; green page palette
+	ld a, $7 ; purple page palette
 	call FillBoxCGB
-
-	hlcoord 17, 5, wAttrmap
-	lb bc, 2, 2
-	ld a, $5 ; blue page palette
-	call FillBoxCGB
+.page_squares_done
 	
 	; Color the caught ball based on ball type
 	call .SetBallColor

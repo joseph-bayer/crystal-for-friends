@@ -500,6 +500,7 @@ INCLUDE "engine/link/time_capsule_2.asm"
 INCLUDE "engine/pokedex/unown_dex.asm"
 INCLUDE "engine/events/magikarp.asm"
 INCLUDE "engine/battle/hidden_power.asm"
+INCLUDE "engine/events/hidden_power_steps.asm"
 INCLUDE "engine/battle/misc.asm"
 
 
@@ -510,6 +511,7 @@ INCLUDE "engine/events/npc_trade.asm"
 INCLUDE "engine/events/mom_phone.asm"
 INCLUDE "engine/events/mystery_island.asm"
 INCLUDE "engine/debug/fill_pc.asm"
+INCLUDE "engine/debug/hidden_power.asm"
 
 
 ; Its own section because the rosters outgrew bank3F: the grass and water tables are 100 bytes per

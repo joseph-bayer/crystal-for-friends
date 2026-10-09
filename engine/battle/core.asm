@@ -5634,7 +5634,19 @@ MoveInfoBox:
 	ld a, [wPlayerMoveStruct + MOVE_ANIM]
 	ld b, a
 	hlcoord 2, 10
+	ld a, [wPlayerMoveStruct + MOVE_EFFECT]
+	cp EFFECT_HIDDEN_POWER
+	jr z, .hidden_power_type
 	predef_jump PrintMoveType
+
+.hidden_power_type
+; Hidden Power's type comes from the user's DVs, not the move data.
+	push hl
+	ld hl, wBattleMonDVs
+	farcall GetHiddenPowerType
+	pop hl
+	ld b, a
+	predef_jump PrintType
 
 .Disabled:
 	db "Disabled!@"

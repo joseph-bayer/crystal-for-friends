@@ -3,6 +3,7 @@
 	const RUINSOFALPHRESEARCHCENTER_SCIENTIST2
 	const RUINSOFALPHRESEARCHCENTER_SCIENTIST3
   const RUINSOFALPHRESEARCHCENTER_SCIENTIST4
+	const RUINSOFALPHRESEARCHCENTER_SHAMAN
 
 RuinsOfAlphResearchCenter_MapScripts:
 	def_scene_scripts
@@ -13,6 +14,14 @@ RuinsOfAlphResearchCenter_MapScripts:
 	callback MAPCALLBACK_OBJECTS, RuinsOfAlphResearchCenterScientistCallback
 
 RuinsOfAlphResearchCenterNoopScene:
+; The first visit meets the Hidden Power Shaman -- but not straight after the Unown Dex scene, which
+; leaves her for the next visit.
+	checkevent EVENT_MET_HIDDEN_POWER_SHAMAN
+	iftrue .Done
+	checkevent EVENT_TEMPORARY_UNTIL_MAP_RELOAD_2
+	iftrue .Done
+	sdefer RuinsOfAlphResearchCenterMeetShamanScript
+.Done:
 	end
 
 RuinsOfAlphResearchCenterGetUnownDexScene:
@@ -22,12 +31,45 @@ RuinsOfAlphResearchCenterGetUnownDexScene:
 RuinsOfAlphResearchCenterScientistCallback:
 	checkscene
 	ifequal SCENE_RUINSOFALPHRESEARCHCENTER_GET_UNOWN_DEX, .ShowScientist
+; The Hidden Power Shaman stands here until the player has met her.
+	checkevent EVENT_MET_HIDDEN_POWER_SHAMAN
+	iftrue .HideShaman
+	appear RUINSOFALPHRESEARCHCENTER_SHAMAN
 	endcallback
 
 .ShowScientist:
 	moveobject RUINSOFALPHRESEARCHCENTER_SCIENTIST3, 3, 7
 	appear RUINSOFALPHRESEARCHCENTER_SCIENTIST3
+	; The Unown Dex scene has this visit; the Shaman waits for the next.
+	setevent EVENT_TEMPORARY_UNTIL_MAP_RELOAD_2
+.HideShaman:
+	disappear RUINSOFALPHRESEARCHCENTER_SHAMAN
 	endcallback
+
+RuinsOfAlphResearchCenterMeetShamanScript:
+; The player walks in on the Shaman talking with a researcher. She comes over, introduces herself,
+; points the player to her house here at the Ruins, and leaves.
+	turnobject RUINSOFALPHRESEARCHCENTER_SCIENTIST1, LEFT
+	opentext
+	writetext RuinsOfAlphResearchCenterShamanToScientistText
+	waitbutton
+	closetext
+	; As BILL's Time Capsule scene in EcruteakPokecenter1F does: the player steps in off the mat, so
+	; she can talk beside the player and then leave by walking onto the mat.
+	applymovement PLAYER, RuinsOfAlphResearchCenterPlayerStepsInMovement
+	applymovement RUINSOFALPHRESEARCHCENTER_SHAMAN, RuinsOfAlphResearchCenterShamanApproachesMovement
+	turnobject PLAYER, RIGHT
+	opentext
+	writetext RuinsOfAlphResearchCenterShamanIntroText
+	waitbutton
+	closetext
+	applymovement RUINSOFALPHRESEARCHCENTER_SHAMAN, RuinsOfAlphResearchCenterShamanLeavesMovement
+	playsound SFX_EXIT_BUILDING
+	disappear RUINSOFALPHRESEARCHCENTER_SHAMAN
+	setevent EVENT_MET_HIDDEN_POWER_SHAMAN
+	turnobject RUINSOFALPHRESEARCHCENTER_SCIENTIST1, UP
+	waitsfx
+	end
 
 RuinsOfAlphResearchCenterGetUnownDexScript:
 	applymovement RUINSOFALPHRESEARCHCENTER_SCIENTIST3, RuinsOfAlphResearchCenterApproachesComputerMovement
@@ -184,6 +226,21 @@ RuinsOfAlphResearchCenterApproachesPlayerMovement:
 
 RuinsOfAlphResearchCenterLeavesPlayerMovement:
 	step UP
+	step_end
+
+RuinsOfAlphResearchCenterPlayerStepsInMovement:
+	step UP
+	step_end
+
+RuinsOfAlphResearchCenterShamanApproachesMovement:
+; from beside SCIENTIST1 down to beside the player, on the tiles the Unown Dex scene's SCIENTIST3 walks
+	step DOWN
+	turn_head LEFT
+	step_end
+
+RuinsOfAlphResearchCenterShamanLeavesMovement:
+; onto the door mat, where she leaves
+	step DOWN
 	step_end
 
 FossilScientist:
@@ -556,6 +613,27 @@ RuinsOfAlphResearchCenterUnownPrinterText:
 	line "printed out."
 	done
 
+RuinsOfAlphResearchCenterShamanToScientistText:
+	text "It's my pleasure"
+	line "to help how I can."
+	done
+
+RuinsOfAlphResearchCenterShamanIntroText:
+	text "Oh? A trainer."
+
+	para "I'm a shaman. The"
+	line "scientists ask"
+	cont "me questions for"
+	cont "their research."
+
+	para "I see something"
+	line "flickering within"
+	cont "you."
+
+	para "Visit my home here"
+	line "in the RUINS."
+	done
+
 RuinsOfAlphResearchCenterAcademicBooksText:
 	text "There are many"
 	line "academic books."
@@ -584,3 +662,5 @@ RuinsOfAlphResearchCenter_MapEvents:
 	object_event  5,  2, SPRITE_SCIENTIST, SPRITEMOVEDATA_WANDER, 2, 1, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, RuinsOfAlphResearchCenterScientist2Script, -1
 	object_event  2,  5, SPRITE_SCIENTIST, SPRITEMOVEDATA_STANDING_UP, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, RuinsOfAlphResearchCenterScientist3Script, EVENT_RUINS_OF_ALPH_RESEARCH_CENTER_SCIENTIST
 	object_event  7,  2, SPRITE_SCIENTIST, SPRITEMOVEDATA_STANDING_UP, 2, 1, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, FossilScientist, -1
+	; The Hidden Power Shaman, until met.
+	object_event  3,  5, SPRITE_SHAMAN, SPRITEMOVEDATA_STANDING_RIGHT, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_SCRIPT, 0, ObjectEvent, EVENT_RUINS_OF_ALPH_RESEARCH_CENTER_SHAMAN

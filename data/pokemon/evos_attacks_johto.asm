@@ -853,7 +853,6 @@ MisdreavusEvosAttacks:
 UnownEvosAttacks:
 	db 0 ; no more evolutions
 	dbw 1, HIDDEN_POWER
-	dbw 1, ANCIENTPOWER
 	db 0 ; no more level-up moves
 
 WobbuffetEvosAttacks:

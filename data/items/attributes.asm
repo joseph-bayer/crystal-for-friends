@@ -338,6 +338,8 @@ ItemAttributes1:
 	item_attribute $9999, HELD_NONE, 0, NO_LIMITS, ITEM, ITEMMENU_NOUSE, ITEMMENU_NOUSE
 ; ITEM_FA
 	item_attribute $9999, HELD_NONE, 0, NO_LIMITS, ITEM, ITEMMENU_NOUSE, ITEMMENU_NOUSE
+; GLYPH_SHARD (StepHiddenPower checks for it)
+	item_attribute 100, HELD_NONE, 0, CANT_SELECT, ITEM, ITEMMENU_NOUSE, ITEMMENU_NOUSE
 .IndirectEnd::
 
 ItemKeyAttributes:

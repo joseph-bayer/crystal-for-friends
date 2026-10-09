@@ -9,13 +9,13 @@ LakeOfRageHiddenPowerHouse_MapScripts:
 HiddenPowerGuy:
 	faceplayer
 	opentext
-	checkevent EVENT_GOT_TM10_HIDDEN_POWER
+	checkevent EVENT_GOT_GLYPH_SHARD_FROM_HIDDEN_POWER_MAN
 	iftrue .AlreadyGotItem
 	writetext HiddenPowerGuyText1
 	promptbutton
-	verbosegiveitem TM_HIDDEN_POWER
+	verbosegiveitem GLYPH_SHARD
 	iffalse .Done
-	setevent EVENT_GOT_TM10_HIDDEN_POWER
+	setevent EVENT_GOT_GLYPH_SHARD_FROM_HIDDEN_POWER_MAN
 	writetext HiddenPowerGuyText2
 	waitbutton
 	closetext
@@ -49,16 +49,17 @@ HiddenPowerGuyText1:
 
 HiddenPowerGuyText2:
 	text "Do you see it? It"
-	line "is HIDDEN POWER!"
+	line "is a GLYPH SHARD!"
 
 	para "It draws out the"
-	line "power of #MON"
-	cont "for attacking."
+	line "HIDDEN POWER of"
+	cont "the #MON that"
+	cont "holds it."
 
-	para "Remember this: its"
-	line "type and power de-"
-	cont "pend on the #-"
-	cont "MON using it."
+	para "Remember this: a"
+	line "SHAMAN in the"
+	cont "RUINS OF ALPH can"
+	cont "teach you more."
 	done
 
 HiddenPowerGuyText3:

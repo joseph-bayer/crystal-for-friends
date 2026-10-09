@@ -14,6 +14,7 @@ RuinsOfAlphOutside_MapScripts:
 	scene_script RuinsOfAlphOutsideNoop2Scene, SCENE_RUINSOFALPHOUTSIDE_GET_UNOWN_DEX
 
 	def_callbacks
+	callback MAPCALLBACK_NEWMAP, RuinsOfAlphOutsideFlypointCallback
 	callback MAPCALLBACK_OBJECTS, RuinsOfAlphOutsideScientistCallback
 
 RuinsOfAlphOutsideNoop1Scene:
@@ -21,6 +22,10 @@ RuinsOfAlphOutsideNoop1Scene:
 
 RuinsOfAlphOutsideNoop2Scene:
 	end
+
+RuinsOfAlphOutsideFlypointCallback:
+	setflag ENGINE_FLYPOINT_RUINS_OF_ALPH
+	endcallback
 
 RuinsOfAlphOutsideScientistCallback:
 	checkflag ENGINE_UNOWN_DEX
@@ -122,6 +127,9 @@ RuinsOfAlphSign:
 RuinsOfAlphResearchCenterSign:
 	jumptext RuinsOfAlphResearchCenterSignText
 
+RuinsOfAlphShamanHouseSign:
+	jumptext RuinsOfAlphShamanHouseSignText
+
 RuinsOfAlphOutsideScientistWalkToLabMovement:
 	step RIGHT
 	step RIGHT
@@ -192,6 +200,11 @@ RuinsOfAlphSignText:
 	line "VISITORS WELCOME"
 	done
 
+RuinsOfAlphShamanHouseSignText:
+	text "HIDDEN POWER"
+	line "SHAMAN'S HOUSE"
+	done
+
 RuinsOfAlphResearchCenterSignText:
 	text "RUINS OF ALPH"
 	line "RESEARCH CENTER"
@@ -254,6 +267,7 @@ RuinsOfAlphOutside_MapEvents:
 	warp_event  7,  5, ROUTE_36_RUINS_OF_ALPH_GATE, 3
 	warp_event 13, 20, ROUTE_32_RUINS_OF_ALPH_GATE, 1
 	warp_event 13, 21, ROUTE_32_RUINS_OF_ALPH_GATE, 2
+	warp_event  3,  7, RUINS_OF_ALPH_SHAMAN_HOUSE, 1 ; the Hidden Power Shaman's house
 
 	def_coord_events
 	coord_event 11, 14, SCENE_RUINSOFALPHOUTSIDE_GET_UNOWN_DEX, RuinsOfAlphOutsideScientistScene1
@@ -263,6 +277,7 @@ RuinsOfAlphOutside_MapEvents:
 	bg_event 16,  8, BGEVENT_READ, RuinsOfAlphOutsideMysteryChamberSign
 	bg_event 12, 16, BGEVENT_READ, RuinsOfAlphSign
 	bg_event 18, 12, BGEVENT_READ, RuinsOfAlphResearchCenterSign
+	bg_event  2,  8, BGEVENT_READ, RuinsOfAlphShamanHouseSign
 
 	def_object_events
 	object_event  4, 20, SPRITE_YOUNGSTER, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_TRAINER, 1, TrainerPsychicNathan, -1
@@ -278,4 +293,4 @@ RuinsOfAlphOutside_MapEvents:
 ; holds a rolled mon, not by a flag.
 	object_event  0, 21, SPRITE_OW_MON_1, SPRITEMOVEDATA_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1
 	object_event 14, 28, SPRITE_OW_MON_2, SPRITEMOVEDATA_SWIM_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1
-	object_event  3,  7, SPRITE_OW_MON_3, SPRITEMOVEDATA_SWIM_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1
+	object_event  3, 12, SPRITE_OW_MON_3, SPRITEMOVEDATA_SWIM_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1

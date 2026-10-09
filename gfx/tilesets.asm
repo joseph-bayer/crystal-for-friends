@@ -546,6 +546,26 @@ INCLUDE "data/tilesets/islands_collision.asm"
 TilesetIslandsAttr::
 INCBIN "data/tilesets/islands_attributes.bin.lz"
 
+; The Hidden Power Shaman's house. A copy of the traditional house to begin with, plus her hearth,
+; its fire frames and the glowing floor around it (plans/shaman_house_bonfire_spec.md).
+TilesetShamanHousevTiles2GFX::
+INCBIN "gfx/tilesets/shaman_house.2bpp.vtiles2.lz"
+
+TilesetShamanHousevTiles5GFX::
+INCBIN "gfx/tilesets/shaman_house.2bpp.vtiles5.lz"
+
+TilesetShamanHousevTiles4GFX::
+INCBIN "gfx/tilesets/shaman_house.2bpp.vtiles4.lz"
+
+TilesetShamanHouseMeta::
+INCBIN "data/tilesets/shaman_house_metatiles.bin.lz"
+
+TilesetShamanHouseColl::
+INCLUDE "data/tilesets/shaman_house_collision.asm"
+
+TilesetShamanHouseAttr::
+INCBIN "data/tilesets/shaman_house_attributes.bin.lz"
+
 SECTION "Tileset Data 9", ROMX
 
 Tileset0Attr::

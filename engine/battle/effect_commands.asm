@@ -2012,6 +2012,8 @@ BattleCommand_MoveAnimNoSub:
 	jr z, .alternate_anim
 	cp EFFECT_TRIPLE_KICK
 	jr z, .triplekick
+	cp EFFECT_HIDDEN_POWER
+	jr z, .hidden_power
 	xor a
 	ld [wBattleAnimParam], a
 
@@ -2027,6 +2029,22 @@ BattleCommand_MoveAnimNoSub:
 	call CheckMoveInList
 	ret nc
 	jmp AppearUserLowerSub
+
+.hidden_power
+; Sour Crystal's: the animation colors itself by Hidden Power's type (BattleAnim_HiddenPower). A link
+; opponent's animates in the default colors, as Sour Crystal has it.
+	ld a, BATTLE_VARS_MOVE_TYPE
+	call GetBattleVar
+	ld [wBattleAnimParam], a
+	ld a, [wLinkMode]
+	and a
+	jr z, .triplekick
+	ldh a, [hBattleTurn]
+	and a
+	jr z, .triplekick
+	xor a
+	ld [wBattleAnimParam], a
+	jr .triplekick
 
 .fly_dig_moves
 	dw FLY
@@ -2606,7 +2624,11 @@ PlayerAttackDamage:
 	ld d, a
 	ret z
 
+	ld a, [wPlayerMoveStructEffect]
+	ld c, a
 	ld a, [hl]
+	ld hl, wPlayerAttack
+	call HiddenPowerDamageSide
 	cp SPECIAL
 	jr nc, .special
 
@@ -2675,6 +2697,41 @@ PlayerAttackDamage:
 
 	ld a, 1
 	and a
+	ret
+
+HiddenPowerDamageSide:
+; Hidden Power hits on the side of whichever of the user's unmodified Attack and Special Attack is
+; higher, not its type's side. A tie leaves it to the type.
+; in: a = the move's type, c = its effect, hl = the user's unmodified Attack (wPlayerAttack or
+;     wEnemyAttack)
+; out: a = the type, or for Hidden Power a stand-in on the side to hit with (< SPECIAL is physical)
+; Preserves de; clobbers bc and hl.
+	assert wPlayerSpAtk - wPlayerAttack == wEnemySpAtk - wEnemyAttack
+	ld b, a
+	ld a, c
+	cp EFFECT_HIDDEN_POWER
+	ld a, b
+	ret nz
+	push de
+	push bc ; b = the type
+	ld a, [hli]
+	ld d, a
+	ld e, [hl] ; de = Attack
+	ld bc, wPlayerSpAtk - (wPlayerAttack + 1)
+	add hl, bc
+	ld a, [hli] ; compare Special Attack against Attack, high byte first
+	cp d
+	jr nz, .compared
+	ld a, [hl]
+	cp e
+.compared
+	pop bc
+	pop de
+	ld a, b
+	ret z ; a tie: the type decides
+	ld a, PHYSICAL
+	ret c ; Special Attack is lower
+	ld a, SPECIAL
 	ret
 
 TruncateHL_BC:
@@ -2872,7 +2929,11 @@ EnemyAttackDamage:
 	and a
 	ret z
 
+	ld a, [wEnemyMoveStructEffect]
+	ld c, a
 	ld a, [hl]
+	ld hl, wEnemyAttack
+	call HiddenPowerDamageSide
 	cp SPECIAL
 	jr nc, .special
 

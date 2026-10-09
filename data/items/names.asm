@@ -159,6 +159,7 @@ ItemNames::
 	li "TERU-SAMA"    ; 009C
 	li "TERU-SAMA"    ; 009D
 	li "TERU-SAMA"    ; 009E
+	li "GLYPH SHARD"  ; 00A0
 	assert_list_length NUM_ITEM_POCKET
 
 KeyItemNames::

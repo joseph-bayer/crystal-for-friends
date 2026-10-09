@@ -1249,14 +1249,13 @@ PlaceMoveData:
 	hlcoord 12, 12
 	ld de, String_MoveAtk
 	rst PlaceString
-	ld a, [wCurSpecies]
-	ld b, a
 	hlcoord 2, 12
-	predef PrintMoveType
+	farcall MoveScreen_PrintMoveType
 	ld a, [wCurSpecies]
 	ld l, a
 	ld a, MOVE_POWER
 	call GetMoveAttribute
+	farcall MoveScreen_HiddenPowerPower
 	hlcoord 16, 12
 	cp 2
 	jr c, .no_power

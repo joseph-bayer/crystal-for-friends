@@ -100,7 +100,7 @@
 	const EVENT_SHOWED_TOGEPI_TO_ELM
 	const EVENT_GOT_EVERSTONE_FROM_ELM
 	const EVENT_GOT_QUICK_CLAW
-	const EVENT_GOT_TM10_HIDDEN_POWER
+	const EVENT_HIDDEN_POWER_PAGE_UNLOCKED ; was EVENT_GOT_TM10_HIDDEN_POWER
 	const EVENT_GOT_TM36_SLUDGE_BOMB
 	const EVENT_GOT_ITEMFINDER
 	const EVENT_GOT_BICYCLE
@@ -1491,6 +1491,15 @@
 	const EVENT_CYNDAQUIL_WANDERING_IN_ELMS_LAB
 	const EVENT_TOTODILE_WANDERING_IN_ELMS_LAB
 	const EVENT_CHIKORITA_WANDERING_IN_ELMS_LAB
+
+; The Hidden Power Shaman (plans/hidden_power_spec.md): met at the Ruins of Alph Research Center, then
+; at home in the Lake of Rage house. The other two hide her object on each map, rebuilt on every
+; load by the maps' object callbacks.
+	const EVENT_MET_HIDDEN_POWER_SHAMAN
+	const EVENT_RUINS_OF_ALPH_RESEARCH_CENTER_SHAMAN
+	const EVENT_RUINS_OF_ALPH_SHAMAN_HOUSE_SHAMAN
+	const EVENT_GOT_GLYPH_SHARD_FROM_HIDDEN_POWER_MAN ; the Lake of Rage Hidden Power man's gift
+	const EVENT_GOT_GLYPH_SHARD_FROM_SHAMAN ; her first talk's shard, owed to a later talk if the bag was full
 
 	const_next 2048
 DEF NUM_EVENTS EQU const_value ; 800

@@ -40,8 +40,11 @@ MoveTutor:
 	cp MOVETUTOR_THUNDERBOLT
 	ld hl, THUNDERBOLT
 	jr z, .ok
-	; MOVETUTOR_ICE_BEAM
+	cp MOVETUTOR_ICE_BEAM
 	ld hl, ICE_BEAM
+	jr z, .ok
+	; MOVETUTOR_HIDDEN_POWER
+	ld hl, HIDDEN_POWER
 .ok
 	jmp GetMoveIDFromIndex
 

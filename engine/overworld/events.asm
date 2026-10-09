@@ -916,10 +916,11 @@ CountStep:
 	inc [hl]
 	ld hl, wStepCount
 	inc [hl]
-	; Every 256 steps, increase the happiness of all your Pokemon.
+	; Every 256 steps, increase the happiness of all your Pokemon, and maybe their Hidden Power level.
 	jr nz, .skip_happiness
 
 	farcall StepHappiness
+	farcall StepHiddenPower
 
 .skip_happiness
 	; Every 256 steps, offset from the happiness incrementor by 128 steps,

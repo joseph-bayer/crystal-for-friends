@@ -1,10 +1,3 @@
-	const_def 1
-	const PINK_PAGE  ; 1
-	const GREEN_PAGE ; 2
-	const BLUE_PAGE  ; 3
-DEF NUM_STAT_PAGES EQU const_value - 1
-
-DEF STAT_PAGE_MASK EQU %00000011
 	const_def 4
 	const STATS_SCREEN_PLACE_FRONTPIC ; 4
 	const STATS_SCREEN_ANIMATE_MON    ; 5
@@ -251,7 +244,7 @@ StatsScreen_GetJoypad:
 StatsScreen_JoypadAction:
 	push af
 	ld a, [wStatsScreenFlags]
-	maskbits NUM_STAT_PAGES
+	and STAT_PAGE_MASK
 	ld c, a
 	pop af
 	bit B_PAD_B, a
@@ -310,12 +303,12 @@ StatsScreen_JoypadAction:
 	jr .load_mon
 
 .a_button
-	ld a, c
-	cp BLUE_PAGE ; last page
+	call StatsScreen_LastPage
+	cp c
 	jr z, .b_button
 .d_right
+	call StatsScreen_LastPage
 	inc c
-	ld a, BLUE_PAGE ; last page
 	cp c
 	jr nc, .set_page
 	ld c, PINK_PAGE ; first page
@@ -324,7 +317,8 @@ StatsScreen_JoypadAction:
 .d_left
 	dec c
 	jr nz, .set_page
-	ld c, BLUE_PAGE ; last page
+	call StatsScreen_LastPage
+	ld c, a
 	jr .set_page
 
 .prev_storage
@@ -564,7 +558,7 @@ StatsScreen_LoadGFX:
 
 .ClearBox:
 	ld a, [wStatsScreenFlags]
-	maskbits NUM_STAT_PAGES
+	and STAT_PAGE_MASK
 	ld c, a
 	call StatsScreen_LoadPageIndicators
 	hlcoord 0, 8
@@ -573,7 +567,7 @@ StatsScreen_LoadGFX:
 
 .LoadPals:
 	ld a, [wStatsScreenFlags]
-	maskbits NUM_STAT_PAGES
+	and STAT_PAGE_MASK
 	ld c, a
 	farcall LoadStatsScreenPals
 	call DelayFrame
@@ -583,7 +577,7 @@ StatsScreen_LoadGFX:
 
 .PageTilemap:
 	ld a, [wStatsScreenFlags]
-	maskbits NUM_STAT_PAGES
+	and STAT_PAGE_MASK
 	dec a
 	ld hl, .Jumptable
 	jmp JumpTable
@@ -594,6 +588,7 @@ StatsScreen_LoadGFX:
 	dw LoadPinkPage
 	dw LoadGreenPage
 	dw LoadBluePage
+	dw LoadPurplePage
 	assert_table_length NUM_STAT_PAGES
 
 LoadPinkPage:
@@ -830,6 +825,87 @@ LoadBluePage:
 	dw wBufferMonOT ; unused
 	dw wBufferMonOT ; unused
 	dw wBufferMonOT
+
+StatsScreen_LastPage:
+; out: a = the last page: PURPLE_PAGE once the Hidden Power page is unlocked, else BLUE_PAGE
+	push bc
+	push de
+	push hl
+	ld de, EVENT_HIDDEN_POWER_PAGE_UNLOCKED
+	ld b, CHECK_FLAG
+	call EventFlagAction
+	ld a, c
+	and a
+	ld a, BLUE_PAGE
+	jr z, .done
+	ld a, PURPLE_PAGE
+.done
+	pop hl
+	pop de
+	pop bc
+	ret
+
+LoadPurplePage:
+; Hidden Power: its type, and a bar for its level.
+	ld de, .HiddenPowerString
+	hlcoord 0, 10
+	rst PlaceString
+	ld de, .TypeString
+	hlcoord 0, 12
+	rst PlaceString
+	ld hl, wTempMonDVs
+	farcall GetHiddenPowerType
+	ld b, a
+	hlcoord 1, 13
+	predef PrintType
+	hlcoord 0, 15
+	ld [hl], $40 ; left bar end cap
+	hlcoord 9, 15
+	ld [hl], $41 ; right bar end cap
+	ld a, [wTempMonHPLevel]
+	and HP_LEVEL_MASK
+	hlcoord 1, 15
+	; fallthrough
+
+DrawHiddenPowerBar:
+; Fill 8 tiles at hl left to right for a Hidden Power level, 0 empty to MAX_HP_LEVEL full, with the
+; HP bar's left-filled tiles (the EXP bar fills right to left).
+; in: a = the level
+	assert MAX_HP_LEVEL == 15, "the bar's pixel maths expects levels 0-15"
+	; pixels = (level * 17 + 3) / 4, 0 to 64: 4 or 5 per level
+	ld b, a
+	swap a ; * 16
+	add b
+	add 3
+	rra ; the carry is the sum's 9th bit
+	srl a
+	ld e, a
+	ld c, 8 ; tiles
+.tile
+	ld a, e
+	sub TILE_WIDTH
+	jr c, .last
+	ld e, a
+	ld a, $6a ; full bar
+	ld [hli], a
+	dec c
+	jr nz, .tile
+	ret
+
+.last
+	ld a, $62 ; empty bar
+	add e ; a partial tile, or empty for 0
+	ld [hli], a
+	ld e, 0 ; any tiles after it are empty
+	dec c
+	jr nz, .tile
+	ret
+
+LoadPurplePage.HiddenPowerString:
+	db "HIDDEN POWER@"
+
+LoadPurplePage.TypeString:
+	db "TYPE/@"
 
 IDNoString:
 	db "<ID>№.@"
@@ -1107,23 +1183,41 @@ StatsScreen_AnimateEgg:
 	ret
 
 StatsScreen_LoadPageIndicators:
-	hlcoord 13, 5
+; A small square for every page, two columns apart and ending at column 17 (so the first is at 13,
+; or 11 once the Hidden Power page is unlocked), and a large one for the current page.
+; in: c = the current page
+	call StatsScreen_LastPage
+	ld b, a
+	ld e, a
+.small_square
 	ld a, $36 ; first of 4 small square tiles
-	call .load_square
-	hlcoord 15, 5
-	ld a, $36 ; " " " "
-	call .load_square
-	hlcoord 17, 5
-	ld a, $36 ; " " " "
-	call .load_square
-	ld a, c
-	cp GREEN_PAGE
+	call .square_for_page
+	dec e
+	jr nz, .small_square
+	ld e, c
 	ld a, $3a ; first of 4 large square tiles
-	hlcoord 13, 5 ; PINK_PAGE (< GREEN_PAGE)
-	jr c, .load_square
-	hlcoord 15, 5 ; GREEN_PAGE (= GREEN_PAGE)
-	jr z, .load_square
-	hlcoord 17, 5 ; BLUE_PAGE (> GREEN_PAGE)
+	; fallthrough
+
+.square_for_page
+; in: a = the square's first tile, b = the last page, e = the page
+	push bc
+	push de
+	push af
+	ld a, b
+	sub e
+	add a
+	cpl
+	add 17 + 1 ; 17 - 2 * (last page - page)
+	ld e, a
+	ld d, 0
+	hlcoord 0, 5
+	add hl, de
+	pop af
+	call .load_square
+	pop de
+	pop bc
+	ret
+
 .load_square
 	push bc
 	ld [hli], a

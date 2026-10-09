@@ -112,6 +112,8 @@ DEF KRIS EQU __trainer_class__
 	const JED
 	const MARC
 	const RICH
+	const SCIENTIST_DEBUG_SCREENS      ; debug room: Hidden Power vs Reflect/Light Screen
+	const SCIENTIST_DEBUG_HIDDEN_POWER ; debug room: an opponent's Hidden Power
 
 	trainerclass ERIKA ; 15
 	const ERIKA1

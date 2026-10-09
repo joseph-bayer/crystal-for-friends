@@ -211,6 +211,16 @@ LoadStatsScreenPals:
 	ld a, [hl]
 	ld [wBGPals1 palette 0 + 1], a
 	ld [wBGPals1 palette 2 + 1], a
+	; palette 2's bar colours: the EXP bar's, or the Hidden Power bar's on its page
+	ld a, c
+	cp PURPLE_PAGE - 1
+	ld hl, ExpBarPalette
+	jr nz, .got_bar_colors
+	ld hl, HiddenPowerBarPalette
+.got_bar_colors
+	ld de, wBGPals1 palette 2 + 1 * COLOR_SIZE
+	ld bc, 2 * COLOR_SIZE
+	rst CopyBytes
 	pop af
 	ldh [rWBK], a
 	call ApplyPals
@@ -1206,6 +1216,9 @@ INCLUDE "gfx/battle/hp_bar.pal"
 
 ExpBarPalette:
 INCLUDE "gfx/battle/exp_bar.pal"
+
+HiddenPowerBarPalette:
+INCLUDE "gfx/stats/hidden_power_bar.pal"
 
 INCLUDE "data/pokemon/palettes.asm"
 

@@ -111,4 +111,6 @@ OverworldSprites:
 	overworld_sprite StandingYoungsterSpriteGFX, 12, STANDING_SPRITE, PAL_OW_BLUE
 	overworld_sprite BigSnorlaxApricornSpriteGFX, 12, STANDING_SPRITE, PAL_OW_BLUE
 	overworld_sprite KiyoSpriteGFX, 12, WALKING_SPRITE, PAL_OW_GRAY
+	overworld_sprite ShamanSpriteGFX, 12, WALKING_SPRITE, PAL_OW_BROWN
+	overworld_sprite CampfireSpriteGFX, 12, STANDING_SPRITE, PAL_OW_CAMPFIRE
 	assert_table_length NUM_OVERWORLD_SPRITES - 1

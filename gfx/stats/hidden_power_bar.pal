@@ -1,0 +1,3 @@
+; the EXP bar's empty colour, and a purple fill
+	RGB 30, 26, 15
+	RGB 16, 06, 24

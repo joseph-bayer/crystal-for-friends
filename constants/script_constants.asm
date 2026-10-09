@@ -342,6 +342,7 @@ DEF UNOWN_WALL_MENU_HEADER_SIZE EQU 5
 	const MOVETUTOR_FLAMETHROWER ; 1
 	const MOVETUTOR_THUNDERBOLT  ; 2
 	const MOVETUTOR_ICE_BEAM     ; 3
+	const MOVETUTOR_HIDDEN_POWER ; 4 (the Hidden Power Shaman)
 
 ; FossilScientist setval arguments
   const_def 1

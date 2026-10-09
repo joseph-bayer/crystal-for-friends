@@ -123,6 +123,7 @@ if DEF(_DEBUG)
 	setflag ENGINE_FLYPOINT_NEW_BARK
 	setflag ENGINE_FLYPOINT_CHERRYGROVE
 	setflag ENGINE_FLYPOINT_VIOLET
+	setflag ENGINE_FLYPOINT_RUINS_OF_ALPH
 	setflag ENGINE_FLYPOINT_AZALEA
 	setflag ENGINE_FLYPOINT_GOLDENROD
 	setflag ENGINE_FLYPOINT_ECRUTEAK
@@ -590,6 +591,8 @@ PlayersHouseDebugLabScript:
 	ifequal 1, .ReplayLab
 	ifequal 2, .SkipTheft
 	ifequal 3, .LearnersParty
+	ifequal 4, PlayersHouseDebugHPToolsScript
+	ifequal 5, PlayersHouseDebugHPBattlesScript
 	closetext
 	end
 
@@ -668,20 +671,284 @@ PlayersHouseDebugLabScript:
 
 .MenuHeader:
 	db MENU_BACKUP_TILES ; flags
-	menu_coords 0, 0, 16, 9 ; wide enough for SKIP THE THEFT
+	menu_coords 0, 0, 16, 13 ; wide enough for SKIP THE THEFT
 	dw .MenuData
 	db 1 ; default option
 
 .MenuData:
 	db STATICMENU_CURSOR ; flags
-	db 4 ; items
+	db 6 ; items
 	db "REPLAY LAB@"
 	db "SKIP THE THEFT@"
 	db "LEARNERS PARTY@"
+	db "HP TOOLS@"
+	db "HP BATTLES@"
+	db "CANCEL@"
+
+PlayersHouseDebugHPToolsScript:
+; Tools for testing Hidden Power (plans/hidden_power_spec.md): the lead's Hidden Power level, the
+; stats page, one 256-step cycle's rolls, a GLYPH SHARD, and a pair whose higher stat is the other
+; side from their Hidden Power type.
+	writetext PlayersHouseDebugHiddenPowerText
+	loadmenu .MenuHeader
+	verticalmenu
+	closewindow
+	ifequal 1, .HPLevel
+	ifequal 2, .HPPage
+	ifequal 3, .HPStep
+	ifequal 4, .GlyphShard
+	ifequal 5, .TestPair
+	ifequal 6, .GiveUnown
+	closetext
+	end
+
+.GiveUnown:
+; For the Unown-in-the-party roll, so it has to land in the party.
+	readvar VAR_PARTYCOUNT
+	ifequal PARTY_LENGTH, .GiveUnownNoRoom
+	givepoke UNOWN, 50
+	writetext PlayersHouseDebugGiveUnownText
+	waitbutton
+	closetext
+	end
+
+.GiveUnownNoRoom:
+	writetext PlayersHouseDebugGiveUnownNoRoomText
+	waitbutton
+	closetext
+	end
+
+.HPLevel:
+	callasm DebugGetLeadHPLevel
+.HPLevelLoop:
+	writetext PlayersHouseDebugHPLevelText
+	loadmenu .HPLevelMenuHeader
+	verticalmenu
+	closewindow
+	iffalse .HPLevelDone
+	ifequal 5, .HPLevelDone
+	callasm DebugSetLeadHPLevel
+	sjump .HPLevelLoop
+
+.HPLevelDone:
+	closetext
+	end
+
+.HPPage:
+	setevent EVENT_HIDDEN_POWER_PAGE_UNLOCKED
+	writetext PlayersHouseDebugHPPageText
+	waitbutton
+	closetext
+	end
+
+.HPStep:
+; One 256-step cycle's Hidden Power rolls, without the walking.
+	callasm StepHiddenPower
+	writetext PlayersHouseDebugHPStepText
+	waitbutton
+	closetext
+	end
+
+.GlyphShard:
+	giveitem GLYPH_SHARD
+	writetext PlayersHouseDebugGlyphShardText
+	waitbutton
+	closetext
+	end
+
+.TestPair:
+; DebugSetUpHiddenPowerPair sets up the last two party mons, so both have to land in the party.
+	readvar VAR_PARTYCOUNT
+	ifgreater PARTY_LENGTH - 2, .TestPairNoRoom
+	givepoke MACHAMP, 50
+	givepoke ALAKAZAM, 50
+	callasm DebugSetUpHiddenPowerPair
+	writetext PlayersHouseDebugTestPairText
+	waitbutton
+	closetext
+	end
+
+.TestPairNoRoom:
+	writetext PlayersHouseDebugTestPairNoRoomText
+	waitbutton
+	closetext
+	end
+
+.MenuHeader:
+	db MENU_BACKUP_TILES ; flags
+	menu_coords 0, 0, 13, 15
+	dw .MenuData
+	db 1 ; default option
+
+.MenuData:
+	db STATICMENU_CURSOR ; flags
+	db 7 ; items
+	db "HP LEVEL@"
+	db "HP PAGE@"
+	db "HP STEP@"
+	db "GLYPH SHARD@"
+	db "TEST PAIR@"
+	db "GIVE UNOWN@"
+	db "CANCEL@"
+
+.HPLevelMenuHeader:
+	db MENU_BACKUP_TILES ; flags
+	menu_coords 0, 0, 9, 11
+	dw .HPLevelMenuData
+	db 1 ; default option
+
+.HPLevelMenuData:
+	db STATICMENU_CURSOR ; flags
+	db 5 ; items
+	db "UP 1@"
+	db "DOWN 1@"
+	db "SET 0@"
+	db "SET 15@"
+	db "DONE@"
+
+PlayersHouseDebugHPBattlesScript:
+; Hidden Power test battles.
+	writetext PlayersHouseDebugHiddenPowerText
+	loadmenu .MenuHeader
+	verticalmenu
+	closewindow
+	ifequal 1, .WildMew
+	ifequal 2, .WildUnown
+	ifequal 3, .Screens
+	ifequal 4, .EnemyHiddenPower
+	closetext
+	end
+
+; Every test battle can be lost without whiting out: BATTLETYPE_CANLOSE, then `reloadmap` rather
+; than `reloadmapafterbattle` (which whites out on a loss), as CherrygroveCity's rival battle does.
+.WildMew:
+; Psychic, so every Hidden Power type connects.
+	closetext
+	loadwildmon MEW, 50
+	loadvar VAR_BATTLETYPE, BATTLETYPE_CANLOSE
+	startbattle
+	reloadmap
+	end
+
+.WildUnown:
+; Knows only Hidden Power: as a wild mon, level 0, so 20 power (Unown's table only differs above
+; 0). A wild Unown takes a random unlocked letter, and with none unlocked that pick never ends.
+	readmem wUnlockedUnowns
+	iffalse .NoUnownLetters
+	closetext
+	loadwildmon UNOWN, 50
+	loadvar VAR_BATTLETYPE, BATTLETYPE_CANLOSE
+	startbattle
+	reloadmap
+	end
+
+.NoUnownLetters:
+	writetext PlayersHouseDebugNoUnownLettersText
+	waitbutton
+	closetext
+	end
+
+.Screens:
+; Two MR.MIME, one knowing only REFLECT, then one knowing only LIGHT SCREEN.
+	closetext
+	winlosstext PlayersHouseDebugBattleWinText, 0
+	loadtrainer SCIENTIST, SCIENTIST_DEBUG_SCREENS
+	loadvar VAR_BATTLETYPE, BATTLETYPE_CANLOSE
+	startbattle
+	reloadmap
+	end
+
+.EnemyHiddenPower:
+; MACHAMP and ALAKAZAM, each knowing only HIDDEN POWER: 70, on the side of their higher stat.
+	closetext
+	winlosstext PlayersHouseDebugBattleWinText, 0
+	loadtrainer SCIENTIST, SCIENTIST_DEBUG_HIDDEN_POWER
+	loadvar VAR_BATTLETYPE, BATTLETYPE_CANLOSE
+	startbattle
+	reloadmap
+	end
+
+.MenuHeader:
+	db MENU_BACKUP_TILES ; flags
+	menu_coords 0, 0, 13, 11
+	dw .MenuData
+	db 1 ; default option
+
+.MenuData:
+	db STATICMENU_CURSOR ; flags
+	db 5 ; items
+	db "WILD MEW@"
+	db "WILD UNOWN@"
+	db "SCREENS@"
+	db "ENEMY HP@"
 	db "CANCEL@"
 
 PlayersHouseDebugLabText:
 	text "DEBUG: ELM's lab."
+	done
+
+PlayersHouseDebugHiddenPowerText:
+	text "DEBUG: HIDDEN"
+	line "POWER."
+	done
+
+PlayersHouseDebugHPLevelText:
+	text "DEBUG: the lead's"
+	line "HP level is @"
+	text_decimal wScriptVar, 1, 2
+	text "."
+	done
+
+PlayersHouseDebugTestPairText:
+	text "DEBUG: MACHAMP"
+	line "(FIRE) and"
+	cont "ALAKAZAM (FIGHT-"
+	cont "ING), with HIDDEN"
+	cont "POWER."
+	done
+
+PlayersHouseDebugTestPairNoRoomText:
+	text "DEBUG: make room"
+	line "for two in your"
+	cont "party first."
+	done
+
+PlayersHouseDebugNoUnownLettersText:
+	text "DEBUG: no UNOWN"
+	line "letters yet. Use"
+	cont "the SUPER NERD's"
+	cont "UNLOCK UNOWN."
+	done
+
+PlayersHouseDebugGiveUnownText:
+	text "DEBUG: an UNOWN"
+	line "joined the party."
+	done
+
+PlayersHouseDebugGiveUnownNoRoomText:
+	text "DEBUG: make room"
+	line "in your party"
+	cont "first."
+	done
+
+PlayersHouseDebugHPPageText:
+	text "DEBUG: the HIDDEN"
+	line "POWER stats page"
+	cont "is unlocked."
+	done
+
+PlayersHouseDebugHPStepText:
+	text "DEBUG: rolled one"
+	line "256-step cycle."
+	done
+
+PlayersHouseDebugGlyphShardText:
+	text "DEBUG: got a"
+	line "GLYPH SHARD."
+	done
+
+PlayersHouseDebugBattleWinText:
+	text "DEBUG: test over."
 	done
 
 PlayersHouseDebugLabStolenText:

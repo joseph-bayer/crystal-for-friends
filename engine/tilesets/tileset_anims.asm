@@ -191,6 +191,7 @@ TilesetMartAnim::
 TilesetMansionAnim::
 TilesetGameCornerAnim::
 TilesetTraditionalHouseAnim::
+TilesetShamanHouseAnim::
 TilesetTrainStationAnim::
 TilesetChampionsRoomAnim::
 TilesetLighthouseAnim::

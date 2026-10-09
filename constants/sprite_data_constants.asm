@@ -55,6 +55,7 @@ DEF NUM_OW_TIME_OF_DAY_PALS EQU const_value
 	ow_npc_pal_const EMOTE_RED         ; 15
 	ow_npc_pal_const EMOTE_ORANGE      ; 16
 	ow_npc_pal_const EMOTE_BLUE        ; 17
+	ow_npc_pal_const CAMPFIRE          ; 18 (Polished Crystal's, bright at any time)
 DEF NUM_OW_INDIVIDUAL_PALS EQU const_value - NUM_OW_TIME_OF_DAY_PALS
 DEF FIRST_COPY_BG_PAL EQU const_value
 	ow_npc_pal_const COPY_BG_GRAY      ; 18

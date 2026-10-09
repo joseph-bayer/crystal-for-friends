@@ -161,3 +161,14 @@ DEF NUM_NAMING_SCREEN_TYPES EQU const_value
 	const PAL_MON_GRAY   ; 5
 	const PAL_MON_TEAL   ; 6
 	const PAL_MON_PURPLE ; 7
+
+; stats screen pages (see engine/pokemon/stats_screen.asm)
+	const_def 1
+	const PINK_PAGE   ; 1
+	const GREEN_PAGE  ; 2
+	const BLUE_PAGE   ; 3
+	const PURPLE_PAGE ; 4: Hidden Power, once EVENT_HIDDEN_POWER_PAGE_UNLOCKED is set
+DEF NUM_STAT_PAGES EQU const_value - 1
+
+DEF STAT_PAGE_MASK EQU %00000111 ; in wStatsScreenFlags
+assert NUM_STAT_PAGES <= STAT_PAGE_MASK

@@ -86,7 +86,8 @@ DEF MON_DEF_EV             rb
 DEF MON_SPD_EV             rb
 DEF MON_SAT_EV             rb
 DEF MON_SDF_EV             rb
-                           rb_skip 2
+DEF MON_HP_LEVEL           rb    ; low nibble: Hidden Power level (HP_LEVEL_MASK)
+                           rb_skip
 DEF MON_FORM               rb    ; new byte for pokemon form
 DEF MON_CAUGHTBALL         rb    ; new byte for pokeball type
 DEF MON_DVS                rw
@@ -134,7 +135,8 @@ DEF SAVEMON_DEF_EV             rb
 DEF SAVEMON_SPD_EV             rb
 DEF SAVEMON_SAT_EV             rb
 DEF SAVEMON_SDF_EV             rb
-                               rb_skip 2
+DEF SAVEMON_HP_LEVEL           rb    ; low nibble: Hidden Power level (HP_LEVEL_MASK)
+                               rb_skip
 DEF SAVEMON_FORM               rb    ; new byte for pokemon form
 DEF SAVEMON_CAUGHTBALL         rb    ; new byte for pokeball type
 DEF SAVEMON_DVS                rw
@@ -183,6 +185,16 @@ DEF ELMS_STARTER_FORM EQU 1 << ELMS_STARTER_FORM_F ; plain, and shiny exactly wh
 assert !(ELMS_STARTER_FORM & (FORM_MASK | ALT_SHINY_MASK | SHINY_MASK)), "ELMS_STARTER_FORM overlaps a real form bit"
 assert !(SHINY_MASK & ALT_SHINY_MASK) && !(FORM_MASK & ALT_SHINY_MASK), "MON_FORM bits overlap"
 DEF PLAIN_FORM EQU 0
+
+; Hidden Power level byte (MON_HP_LEVEL): the level raises Hidden Power's power, in even steps
+; rounded down, from HIDDEN_POWER_MIN_POWER at 0 to the max at MAX_HP_LEVEL. A wild mon's Hidden
+; Power uses level 0 and a trainer's mon MAX_HP_LEVEL (see GetUserHiddenPowerPower).
+DEF HP_LEVEL_MASK EQU %00001111
+DEF MAX_HP_LEVEL EQU 15
+DEF HIDDEN_POWER_MIN_POWER EQU 20
+DEF HIDDEN_POWER_MAX_POWER EQU 70
+DEF HIDDEN_POWER_UNOWN_MAX_POWER EQU 120
+assert MAX_HP_LEVEL <= HP_LEVEL_MASK, "MAX_HP_LEVEL doesn't fit in HP_LEVEL_MASK"
 
 ; These numerators are used after a 1/256 check, resulting in a denominator of 65536.
 DEF SHINY_NUMERATOR EQU 8 ; 8/65536 = 1/8192

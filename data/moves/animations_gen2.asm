@@ -1301,10 +1301,75 @@ BattleAnim_Moonlight:
 	anim_ret
 
 BattleAnim_HiddenPower:
+; Sour Crystal's: the charge orbs take the color of the Hidden Power type in wBattleAnimParam
+; (see BattleCommand_MoveAnimNoSub).
 	anim_1gfx BATTLE_ANIM_GFX_CHARGE
-	anim_call BattleAnim_TargetObj_1Row
+	anim_if_param_equal FIGHTING,     .fighting
+	anim_if_param_equal FLYING,       .flying
+	anim_if_param_equal POISON,       .poison
+	anim_if_param_equal GROUND,       .ground
+	anim_if_param_equal ROCK,         .rock
+	anim_if_param_equal BUG,          .bug
+	anim_if_param_equal DRAGON,       .dragon
+	anim_if_param_equal DARK,         .dark
+	anim_if_param_equal STEEL,        .steel
+	anim_if_param_equal FIRE,         .fire
+	anim_if_param_equal WATER,        .water
+	anim_if_param_equal GRASS,        .grass
+	anim_if_param_equal ELECTRIC,     .electric
+	anim_if_param_equal PSYCHIC_TYPE, .psychic
+	anim_if_param_equal ICE,          .ice
+	anim_if_param_equal GHOST,        .ghost
+	anim_jump .done
+.fighting
+	anim_setobjpal PAL_BATTLE_OB_GRAY, PAL_BTLCUSTOM_HP_FIGHTING
+	anim_jump .done
+.flying
+	anim_setobjpal PAL_BATTLE_OB_GRAY, PAL_BTLCUSTOM_HP_FLYING
+	anim_jump .done
+.poison
+	anim_setobjpal PAL_BATTLE_OB_GRAY, PAL_BTLCUSTOM_PURPLE
+	anim_jump .done
+.ground
+	anim_setobjpal PAL_BATTLE_OB_GRAY, PAL_BTLCUSTOM_HP_GROUND
+	anim_jump .done
+.rock
+	anim_setobjpal PAL_BATTLE_OB_GRAY, PAL_BTLCUSTOM_HP_ROCK
+	anim_jump .done
+.bug
+	anim_setobjpal PAL_BATTLE_OB_GRAY, PAL_BTLCUSTOM_HP_BUG
+	anim_jump .done
+.dragon
+	anim_setobjpal PAL_BATTLE_OB_GRAY, PAL_BTLCUSTOM_HP_DRAGON
+	anim_jump .done
+.dark
+	anim_setobjpal PAL_BATTLE_OB_GRAY, PAL_BTLCUSTOM_HP_DARK
+	anim_jump .done
+.steel
+	anim_setobjpal PAL_BATTLE_OB_GRAY, PAL_BTLCUSTOM_HP_STEEL
+	anim_jump .done
+.fire
+	anim_setobjpal PAL_BATTLE_OB_GRAY, PAL_BTLCUSTOM_FIRE
+	anim_jump .done
+.water
+	anim_setobjpal PAL_BATTLE_OB_GRAY, PAL_BTLCUSTOM_WATER
+	anim_jump .done
+.grass
+	anim_setobjpal PAL_BATTLE_OB_GRAY, PAL_BTLCUSTOM_GREEN
+	anim_jump .done
+.electric
+	anim_setobjpal PAL_BATTLE_OB_GRAY, PAL_BTLCUSTOM_YELLOW
+	anim_jump .done
+.psychic
+	anim_setobjpal PAL_BATTLE_OB_GRAY, PAL_BTLCUSTOM_HP_PSYCHIC
+	anim_jump .done
+.ice
+	anim_setobjpal PAL_BATTLE_OB_GRAY, PAL_BTLCUSTOM_ICE
+	anim_jump .done
+.ghost
+	anim_setobjpal PAL_BATTLE_OB_GRAY, PAL_BTLCUSTOM_HP_GHOST
+.done
 	anim_bgeffect BATTLE_BG_EFFECT_CYCLE_MON_LIGHT_DARK_REPEATING, $0, BG_EFFECT_USER, $20
-	anim_bgeffect BATTLE_BG_EFFECT_CYCLE_MID_OBPALS_GRAY_AND_YELLOW, $0, $2, $0
 	anim_obj BATTLE_ANIM_OBJ_HIDDEN_POWER, 44, 88, $0
 	anim_obj BATTLE_ANIM_OBJ_HIDDEN_POWER, 44, 88, $8
 	anim_obj BATTLE_ANIM_OBJ_HIDDEN_POWER, 44, 88, $10
@@ -1317,9 +1382,10 @@ BattleAnim_HiddenPower:
 	anim_sound 0, 0, SFX_SWORDS_DANCE
 	anim_wait 8
 	anim_loop 12, .loop
+	anim_wait 17
 	anim_incbgeffect BATTLE_BG_EFFECT_CYCLE_MON_LIGHT_DARK_REPEATING
-	anim_call BattleAnim_ShowMon_0
 	anim_wait 1
+	anim_incobj 1
 	anim_incobj 2
 	anim_incobj 3
 	anim_incobj 4
@@ -1327,8 +1393,8 @@ BattleAnim_HiddenPower:
 	anim_incobj 6
 	anim_incobj 7
 	anim_incobj 8
-	anim_incobj 9
 	anim_wait 16
+	anim_bgeffect BATTLE_BG_EFFECT_CYCLE_MID_OBPALS_GRAY_AND_YELLOW, $0, $2, $0
 	anim_1gfx BATTLE_ANIM_GFX_HIT
 	anim_obj BATTLE_ANIM_OBJ_HIT_BIG_YFIX, 136, 56, $0
 	anim_wait 32

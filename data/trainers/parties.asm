@@ -917,6 +917,28 @@ ScientistGroup:
 	dw CONVERSION2, RECOVER, TRI_ATTACK, NO_MOVE
 	db -1 ; end
 
+; The debug room's Hidden Power test battles (maps/PlayersHouse2F.asm). They exist in every build,
+; but only the debug room fights them.
+	next_list_item ; SCIENTIST (6)
+	db "SCREENS@", TRAINERTYPE_MOVES
+	db 50
+	dw MR__MIME
+	dw REFLECT, NO_MOVE, NO_MOVE, NO_MOVE
+	db 50
+	dw MR__MIME
+	dw LIGHT_SCREEN, NO_MOVE, NO_MOVE, NO_MOVE
+	db -1 ; end
+
+	next_list_item ; SCIENTIST (7)
+	db "HIDDEN@", TRAINERTYPE_MOVES
+	db 50
+	dw MACHAMP
+	dw HIDDEN_POWER, NO_MOVE, NO_MOVE, NO_MOVE
+	db 50
+	dw ALAKAZAM
+	dw HIDDEN_POWER, NO_MOVE, NO_MOVE, NO_MOVE
+	db -1 ; end
+
 	end_list_items
 
 SECTION "Erika Trainer Party", ROMX
