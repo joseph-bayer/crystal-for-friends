@@ -32,8 +32,9 @@ def parse_trainer_flags(trainer_type):
     }
     return flags
 
-def parse_pokemon_line(line):
-    """Parse a Pokemon line like 'db  8,  PIDGEY,  NO_ITEM,  TACKLE, MUD_SLAP, QUICK_ATTACK, NO_MOVE'"""
+def parse_pokemon_line(line, has_item=True):
+    """Parse a Pokemon line like 'db  8,  PIDGEY,  NO_ITEM,  TACKLE, MUD_SLAP, QUICK_ATTACK, NO_MOVE'.
+    has_item is False for parties without TRAINERTYPE_ITEM, whose moves follow the species directly."""
     # Remove leading/trailing whitespace and 'db '
     line = line.strip()
     if line.startswith('db '):
@@ -60,9 +61,13 @@ def parse_pokemon_line(line):
                     'move4': ''
                 }
             
-            # For pokemon with items and moves
-            item = parts[2] if len(parts) > 2 else ''
-            moves = parts[3:7] if len(parts) > 3 else ['', '', '', '']
+            # For pokemon with items and/or moves
+            if has_item:
+                item = parts[2]
+                moves = parts[3:7]
+            else:
+                item = ''
+                moves = parts[2:6]
             
             # Pad moves to 4 slots
             while len(moves) < 4:
@@ -208,7 +213,7 @@ def convert_trainer_data_to_csv(input_file, output_file):
         
         # Parse Pokemon data
         if current_trainer is not None and (line.startswith('db ') and not line.startswith('db -1')):
-            pokemon_data = parse_pokemon_line(line)
+            pokemon_data = parse_pokemon_line(line, flags['item'])
             if pokemon_data:
                 pokemon_count += 1
                 pokemon_data['trainer_group'] = current_trainer['group']
