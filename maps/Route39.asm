@@ -29,7 +29,6 @@ TrainerPokefanmDerek:
 
 .Script:
 	loadvar VAR_CALLERID, PHONE_POKEFANM_DEREK
-	endifjustbattled
 	opentext
 	checkflag ENGINE_DEREK_HAS_NUGGET
 	iftrue .HasNugget
@@ -49,7 +48,6 @@ TrainerPokefanmDerek:
 	scall .AskNumber2
 .AskForNumber:
 	askforphonenumber PHONE_POKEFANM_DEREK
-	ifequal PHONE_CONTACTS_FULL, .PhoneFull
 	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
 	gettrainername STRING_BUFFER_3, POKEFANM, DEREK1
 	scall .RegisteredNumber
@@ -89,10 +87,6 @@ TrainerPokefanmDerek:
 
 .NumberDeclined:
 	jumpstd NumberDeclinedMScript
-	end
-
-.PhoneFull:
-	jumpstd PhoneFullMScript
 	end
 
 .Gift:

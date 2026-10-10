@@ -38,11 +38,6 @@ BeverlyNumberDeclinedText:
 	para "Goodbye, MARILL…"
 	done
 
-BeverlyPhoneFullText:
-	text "Oh? Your phone's"
-	line "memory is full."
-	done
-
 BeverlyGiftText:
 	text "Oh? <PLAYER>?"
 	line "I waited here for"

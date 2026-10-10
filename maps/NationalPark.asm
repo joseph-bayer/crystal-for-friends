@@ -77,7 +77,6 @@ TrainerSchoolboyJack1:
 
 .Script:
 	loadvar VAR_CALLERID, PHONE_SCHOOLBOY_JACK
-	endifjustbattled
 	opentext
 	checkflag ENGINE_JACK_READY_FOR_REMATCH
 	iftrue .Rematch
@@ -95,7 +94,6 @@ TrainerSchoolboyJack1:
 	scall .AskNumber2
 .RequestNumber:
 	askforphonenumber PHONE_SCHOOLBOY_JACK
-	ifequal PHONE_CONTACTS_FULL, .PhoneFull
 	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
 	gettrainername STRING_BUFFER_3, SCHOOLBOY, JACK1
 	scall .RegisteredNumber
@@ -181,10 +179,6 @@ TrainerSchoolboyJack1:
 	jumpstd NumberDeclinedMScript
 	end
 
-.PhoneFull:
-	jumpstd PhoneFullMScript
-	end
-
 .RematchStd:
 	jumpstd RematchMScript
 	end
@@ -205,7 +199,6 @@ TrainerPokefanfBeverly1:
 
 .Script:
 	loadvar VAR_CALLERID, PHONE_POKEFAN_BEVERLY
-	endifjustbattled
 	opentext
 	checkflag ENGINE_BEVERLY_HAS_NUGGET
 	iftrue .GiveNugget
@@ -225,7 +218,6 @@ TrainerPokefanfBeverly1:
 	scall .AskNumber2
 .RequestNumber:
 	askforphonenumber PHONE_POKEFAN_BEVERLY
-	ifequal PHONE_CONTACTS_FULL, .PhoneFull
 	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
 	gettrainername STRING_BUFFER_3, POKEFANF, BEVERLY1
 	scall .RegisteredNumber
@@ -265,10 +257,6 @@ TrainerPokefanfBeverly1:
 
 .NumberDeclined:
 	jumpstd NumberDeclinedFScript
-	end
-
-.PhoneFull:
-	jumpstd PhoneFullFScript
 	end
 
 .Gift:

@@ -34,11 +34,6 @@ JoeyNumberDeclinedText:
 	line "to you again!"
 	done
 
-JoeyPhoneFullText:
-	text "Huh, what? Your"
-	line "phone's full."
-	done
-
 JoeyRematchText:
 	text "I've been waiting!"
 	line "Let's battle now!"

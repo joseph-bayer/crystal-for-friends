@@ -38,11 +38,6 @@ GinaNumberDeclinedText:
 	cont "rooting for you!"
 	done
 
-GinaPhoneFullText:
-	text "But your phone is"
-	line "all filled up!"
-	done
-
 GinaRematchText:
 	text "I've been waiting!"
 

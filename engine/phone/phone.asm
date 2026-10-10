@@ -1,92 +1,42 @@
-AddPhoneNumber::
-	call CheckCellNum
-	jr c, .cant_add
-	call Phone_FindOpenSlot
-	jr nc, .cant_add
-	ld [hl], c
-	xor a
+; The contact list is a flag array with one bit per contact (from Polished Crystal).
+
+PhoneFlagAction:
+; Perform flag action b on contact c. Contacts start at 1; the flag array starts at bit 0.
+	push bc
+	dec c
+	ld d, 0
+	ld hl, wPhoneList
+	farcall SmallFarFlagAction
+	pop bc
 	ret
 
-.cant_add
-	scf
-	ret
+AddPhoneNumber::
+; Adds contact c to the contact list. Returns carry if it's already there.
+	call CheckCellNum
+	ret c
+	ld b, SET_FLAG
+	jr DoAddOrDelPhoneNumber
 
 DelCellNum::
+; Deletes contact c from the contact list. Returns carry if it isn't there.
 	call CheckCellNum
-	jr nc, .not_in_list
+	ccf
+	ret c
+	ld b, RESET_FLAG
+	; fallthrough
+DoAddOrDelPhoneNumber:
+	call PhoneFlagAction
 	xor a
-	ld [hl], a
-	ret
-
-.not_in_list
-	scf
 	ret
 
 CheckCellNum::
-	ld hl, wPhoneList
-	ld b, CONTACT_LIST_SIZE
-.loop
-	ld a, [hli]
-	cp c
-	jr z, .got_it
-	dec b
-	jr nz, .loop
-	xor a
-	ret
-
-.got_it
-	dec hl
+; Returns carry (and nz) if contact c is in the contact list.
+	ld b, CHECK_FLAG
+	call PhoneFlagAction
 	scf
-	ret
-
-Phone_FindOpenSlot:
-	call GetRemainingSpaceInPhoneList
-	ld b, a
-	ld hl, wPhoneList
-.loop
-	ld a, [hli]
-	and a
-	jr z, .FoundOpenSpace
-	dec b
-	jr nz, .loop
+	ret nz
 	xor a
 	ret
-
-.FoundOpenSpace:
-	dec hl
-	scf
-	ret
-
-GetRemainingSpaceInPhoneList:
-	xor a
-	ld [wRegisteredPhoneNumbers], a
-	ld hl, PermanentNumbers
-.loop
-	ld a, [hli]
-	cp -1
-	jr z, .done
-	cp c
-	jr z, .loop
-
-	push bc
-	push hl
-	ld c, a
-	call CheckCellNum
-	jr c, .permanent
-	ld hl, wRegisteredPhoneNumbers
-	inc [hl]
-.permanent
-	pop hl
-	pop bc
-	jr .loop
-
-.done
-	ld a, CONTACT_LIST_SIZE
-	ld hl, wRegisteredPhoneNumbers
-	sub [hl]
-	ret
-
-INCLUDE "data/phone/permanent_numbers.asm"
 
 CheckPhoneCall::
 ; Check if the phone is ringing in the overworld.
@@ -108,7 +58,6 @@ CheckPhoneCall::
 	and a
 	jr nz, .no_call
 
-	call GetAvailableCallers
 	call ChooseRandomCaller
 	jr nc, .no_call
 
@@ -144,80 +93,116 @@ CheckPhoneContactTimeOfDay:
 	ret
 
 ChooseRandomCaller:
-; If no one is available to call, don't return anything.
-	ld a, [wNumAvailableCallers]
-	and a
-	jr z, .NothingToSample
-
-; Store the number of available callers in c.
-	ld c, a
-; Sample a random number between 0 and 31.
-	call Random
-	ldh a, [hRandomAdd]
-	swap a
-	and $1f
-; Compute that number modulo the number of available callers.
-	call SimpleDivide
-; Return the caller ID you just sampled.
-	ld c, a
-	ld b, 0
-	ld hl, wAvailableCallers
-	add hl, bc
-	ld a, [hl]
-	scf
-	ret
-
-.NothingToSample:
-	xor a
-	ret
-
-GetAvailableCallers:
+; Returns a random available caller in a, with carry. Returns nc if nobody can call.
+; Every eligible contact is equally likely (reservoir sampling, from Polished Crystal).
 	farcall CheckTime
-	ld a, c
-	ld [wCheckedTime], a
-	ld hl, wNumAvailableCallers
-	ld bc, CONTACT_LIST_SIZE + 1
+	ld d, c
 	xor a
-	rst ByteFill
-	ld de, wPhoneList
-	ld a, CONTACT_LIST_SIZE
-
+	ld b, a ; eligible contacts seen so far
+	ld c, NUM_PHONE_CONTACTS ; also the last contact
+	push af
 .loop
-	ld [wPhoneListIndex], a
-	ld a, [de]
+	call .IsValidCaller
+	jr nc, .next
+	inc b
+	; Replace the current pick with this contact with chance 1/b.
+	ld a, b
+	call RandomRange
 	and a
-	jr z, .not_good_for_call
+	jr nz, .next
+	pop af
+	ld a, c
+	scf
+	push af
+.next
+	dec c
+	jr nz, .loop
+	pop af
+	ret
+
+.IsValidCaller:
+; Returns carry if contact c is registered, calls at time of day d, and isn't on this map.
+	push bc
+	push de
+	call CheckCellNum
+	pop de
+	jr nc, .invalid
+	ld a, c
 	ld hl, PhoneContacts + PHONE_CONTACT_SCRIPT2_TIME
 	ld bc, PHONE_CONTACT_SIZE
 	rst AddNTimes
-	ld a, [wCheckedTime]
+	ld a, d
 	and [hl]
-	jr z, .not_good_for_call
+	jr z, .invalid
 	ld bc, PHONE_CONTACT_MAP_GROUP - PHONE_CONTACT_SCRIPT2_TIME
 	add hl, bc
 	ld a, [wMapGroup]
 	cp [hl]
-	jr nz, .different_map
+	jr nz, .other_map
 	inc hl
 	ld a, [wMapNumber]
 	cp [hl]
-	jr z, .not_good_for_call
-.different_map
-	ld a, [wNumAvailableCallers]
-	ld c, a
-	ld b, 0
-	inc a
-	ld [wNumAvailableCallers], a
-	ld hl, wAvailableCallers
-	add hl, bc
-	ld a, [de]
-	ld [hl], a
-.not_good_for_call
-	inc de
-	ld a, [wPhoneListIndex]
-	dec a
-	jr nz, .loop
+	jr z, .invalid
+.other_map
+	; Contacts with a rematch or item waiting don't call.
+	pop bc
+	push bc
+	push de
+	call PhoneContactIsWaiting
+	pop de
+	jr c, .invalid
+	; Contacts who only ever chat are eligible half the time.
+	pop bc
+	push bc
+	ld a, c
+	cp PHONE_JUGGLER_IRWIN
+	jr z, .half_weight
+	cp PHONE_BLACKBELT_KENJI
+	jr z, .half_weight
+	cp PHONE_BUENA
+	jr nz, .valid
+.half_weight
+	call Random
+	rrca
+	jr nc, .invalid
+.valid
+	scf
+	jr .done
+
+.invalid
+	xor a
+.done
+	pop bc
 	ret
+
+PhoneContactIsWaiting:
+; Returns carry if contact c has a rematch or an item waiting.
+	ld a, c
+	ld hl, PhoneContactWaitingFlags
+	ld bc, 4
+	rst AddNTimes
+	call .CheckFlag
+	ret c
+	; fallthrough
+.CheckFlag:
+; Checks the engine flag at hl (-1 = none) and advances hl. Returns carry if it's set.
+	ld a, [hli]
+	ld e, a
+	ld a, [hli]
+	ld d, a
+	cp HIGH(-1)
+	ret z ; and nc
+	push hl
+	ld b, CHECK_FLAG
+	farcall EngineFlagAction
+	pop hl
+	ld a, c
+	and a
+	ret z
+	scf
+	ret
+
+INCLUDE "data/phone/waiting_flags.asm"
 
 CheckSpecialPhoneCall::
 	ld a, [wSpecialPhoneCallID]
@@ -395,12 +380,28 @@ WrongNumber:
 	text_far _PhoneWrongNumberText
 	text_end
 
-Script_ReceivePhoneCall:
+; Incoming calls can be answered or declined (from Sour Crystal).
+; wScriptVar after RingTwice_StartCall:
+	const_def
+	const CALL_DECLINED ; B, or no answer before the rings run out
+	const CALL_ANSWERED ; A, or a caller who can't be declined
+
+DEF NUM_DECLINABLE_CALL_RINGS EQU 10
+
+Script_ReceivePhoneCall::
 	reanchormap
+	setval CALL_DECLINED
 	callasm RingTwice_StartCall
+	ifequal CALL_DECLINED, .declined
 	memcall wCallerContact + PHONE_CONTACT_SCRIPT2_BANK
 	waitbutton
 	callasm HangUp
+	closetext
+	callasm InitCallReceiveDelay
+	end
+
+.declined
+	callasm HangUp_ShutDown
 	closetext
 	callasm InitCallReceiveDelay
 	end
@@ -414,9 +415,99 @@ Script_SpecialBillCall::
 	jr LoadCallerScript
 
 RingTwice_StartCall:
+	call .IsForcedCaller
+	jr nc, .declinable
+	ld a, CALL_ANSWERED
+	ld [wScriptVar], a
 	call .Ring
 	call .Ring
 	farjp StubbedTrainerRankings_PhoneCalls
+
+.declinable
+; Ring until the player answers or declines, or the rings run out.
+	call Phone_StartRinging
+	ld c, 30
+	call DelayFrames
+	ld c, NUM_DECLINABLE_CALL_RINGS
+.ring_loop
+	push bc
+	call .CallerTextboxWithName
+	call Phone_AnswerDeclinePrompt
+	call .WaitForAnswer
+	jr c, .answered_or_declined
+	call Phone_StartRinging
+	call .WaitForAnswer
+	jr c, .answered_or_declined
+	pop bc
+	dec c
+	jr nz, .ring_loop
+	jr .done
+
+.answered_or_declined
+	pop bc
+.done
+	call .CallerTextboxWithName
+	call WaitSFX
+	farjp StubbedTrainerRankings_PhoneCalls
+
+.WaitForAnswer:
+; Wait about half a second for A (answer) or B (decline). Returns carry once one is pressed.
+	farcall PhoneRing_CopyTilemapAtOnce
+	ld c, 30
+.wait_loop
+	call DelayFrame
+	push bc
+	call JoyTextDelay
+	ldh a, [hJoyPressed]
+	ld b, a
+	and PAD_B
+	jr nz, .declined
+	ld a, b
+	and PAD_A
+	jr nz, .answered
+	pop bc
+	dec c
+	ret z
+	jr .wait_loop
+
+.answered
+	pop bc
+	ld a, CALL_ANSWERED
+	ld [wScriptVar], a
+	scf
+	ret
+
+.declined
+	pop bc
+	ld a, CALL_DECLINED
+	ld [wScriptVar], a
+	scf
+	ret
+
+.IsForcedCaller:
+; Returns carry if the current caller can't be declined.
+	ld a, [wCurCaller]
+	ld hl, .ForcedCallers
+.forced_loop
+	cp [hl]
+	jr z, .forced
+	inc hl
+	inc [hl]
+	dec [hl]
+	jr nz, .forced_loop
+	and a
+	ret
+
+.forced
+	scf
+	ret
+
+.ForcedCallers:
+	db PHONE_MOM
+	db PHONE_OAK ; the Bike Shop
+	db PHONE_BILL
+	db PHONE_ELM
+	db 0 ; end
 
 .Ring:
 	call Phone_StartRinging
@@ -430,6 +521,38 @@ RingTwice_StartCall:
 	ld a, [wCurCaller]
 	ld b, a
 	jmp Phone_TextboxWithName
+
+Phone_AnswerDeclinePrompt:
+; A one-line box at the bottom of the screen, with any sprites under it hidden.
+	hlcoord 0, SCREEN_HEIGHT - 3
+	lb bc, 1, SCREEN_WIDTH - 2
+	call Textbox
+	hlcoord 1, SCREEN_HEIGHT - 2
+	ld de, .AnswerDeclineText
+	rst PlaceString
+	ld hl, wShadowOAM
+	ld de, OBJ_SIZE
+	ld c, OAM_COUNT
+.loop
+	ld a, [hl]
+	cp (SCREEN_HEIGHT - 3) * TILE_WIDTH
+	jr c, .next
+	ld [hl], OAM_YCOORD_HIDDEN
+.next
+	add hl, de
+	dec c
+	jr nz, .loop
+	ldh a, [hOAMUpdate]
+	push af
+	ld a, TRUE
+	ldh [hOAMUpdate], a
+	call DelayFrame
+	pop af
+	ldh [hOAMUpdate], a
+	ret
+
+.AnswerDeclineText:
+	db "A:ANSWER B:DECLINE@"
 
 PhoneCall::
 	ld a, b
@@ -484,6 +607,10 @@ Phone_CallEnd:
 	call HangUp_Wait20Frames
 	call HangUp_BoopOff
 	jr HangUp_Wait20Frames
+
+HangUp_ShutDown:
+	ld de, SFX_SHUT_DOWN_PC
+	jmp PlaySFX
 
 HangUp_Beep:
 	ld hl, PhoneClickText
@@ -659,3 +786,86 @@ PhoneScript_JustTalkToThem:
 PhoneJustTalkToThemText:
 	text_far _PhoneJustTalkToThemText
 	text_end
+
+if DEF(_DEBUG)
+
+; Phone debug tools for the bedroom's debug NPC (see PlayersHouseDebugPhoneScript).
+
+DebugPhoneRegisterAll::
+; Registers every contact, skipping the contact table's unused rows.
+	ld c, NUM_PHONE_CONTACTS
+.loop
+	push bc
+	ld a, c
+	ld hl, PhoneContacts + PHONE_CONTACT_TRAINER_CLASS
+	ld bc, PHONE_CONTACT_SIZE
+	rst AddNTimes
+	ld a, [hli]
+	or [hl]
+	pop bc
+	call nz, AddPhoneNumber
+	dec c
+	jr nz, .loop
+	ret
+
+DebugPhonePickCaller::
+; Picks a caller like CheckPhoneCall, without its timer or 50% roll.
+; wScriptVar: 0 = caller loaded, 1 = no phone service here, 2 = nobody can call.
+	call GetMapPhoneService
+	and a
+	ld a, 1
+	jr nz, .done
+	call ChooseRandomCaller
+	jr nc, .nobody
+	ld e, a
+	call LoadCallerScript
+	xor a
+	jr .done
+
+.nobody
+	ld a, 2
+.done
+	ld [wScriptVar], a
+	ret
+
+DebugPhoneSetAllRematches::
+	ld hl, PhoneContactWaitingFlags
+	jr DebugPhoneSetWaitingFlags
+
+DebugPhoneSetAllItems::
+	ld hl, PhoneContactWaitingFlags + 2
+	; fallthrough
+DebugPhoneSetWaitingFlags:
+; Sets one column of PhoneContactWaitingFlags, starting at hl.
+	ld c, NUM_PHONE_CONTACTS + 1
+.loop
+	ld a, [hli]
+	ld e, a
+	ld a, [hli]
+	ld d, a
+	inc hl
+	inc hl
+	cp HIGH(-1)
+	jr z, .next
+	push hl
+	push bc
+	ld b, SET_FLAG
+	farcall EngineFlagAction
+	pop bc
+	pop hl
+.next
+	dec c
+	jr nz, .loop
+	ret
+
+DebugPhoneClearWaitingFlags::
+; Clears every rematch, item and weekly-window flag.
+	assert wDailyPhoneItemFlags == wDailyRematchFlags + 4
+	assert wDailyPhoneTimeOfDayFlags == wDailyPhoneItemFlags + 4
+	xor a
+	ld hl, wDailyRematchFlags
+	ld bc, 4 * 3
+	rst ByteFill
+	ret
+
+endc

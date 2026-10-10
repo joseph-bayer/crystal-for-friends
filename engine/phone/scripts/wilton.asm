@@ -26,16 +26,18 @@ WiltonPhoneCalleeScript:
 WiltonPhoneCallerScript:
 	gettrainername STRING_BUFFER_3, FISHER, WILTON1
 	farscall PhoneScript_GreetPhone_Male
+	checkflag ENGINE_WILTON_HAS_ITEM
+	iftrue .NoItem
+	farscall PhoneScript_Random2
+	ifequal 0, WiltonHasItem
+
+.NoItem:
 	checkflag ENGINE_WILTON_READY_FOR_REMATCH
 	iftrue .GenericCall
 	checkflag ENGINE_WILTON_THURSDAY_MORNING
 	iftrue .GenericCall
-	checkflag ENGINE_WILTON_HAS_ITEM
-	iftrue .GenericCall
 	farscall PhoneScript_Random2
 	ifequal 0, WiltonWantsBattle
-	farscall PhoneScript_Random2
-	ifequal 0, WiltonHasItem
 
 .GenericCall:
 	farsjump Phone_GenericCall_Male

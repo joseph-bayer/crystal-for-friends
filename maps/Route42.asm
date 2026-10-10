@@ -42,7 +42,6 @@ TrainerFisherTully:
 
 .Script:
 	loadvar VAR_CALLERID, PHONE_FISHER_TULLY
-	endifjustbattled
 	opentext
 	checkflag ENGINE_TULLY_READY_FOR_REMATCH
 	iftrue .WantsBattle
@@ -62,7 +61,6 @@ TrainerFisherTully:
 	scall .AskNumber2
 .AskForNumber:
 	askforphonenumber PHONE_FISHER_TULLY
-	ifequal PHONE_CONTACTS_FULL, .PhoneFull
 	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
 	gettrainername STRING_BUFFER_3, FISHER, TULLY1
 	scall .RegisteredNumber
@@ -145,10 +143,6 @@ TrainerFisherTully:
 
 .NumberDeclined:
 	jumpstd NumberDeclinedMScript
-	end
-
-.PhoneFull:
-	jumpstd PhoneFullMScript
 	end
 
 .Rematch:

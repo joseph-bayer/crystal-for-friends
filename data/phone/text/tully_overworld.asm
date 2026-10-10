@@ -38,14 +38,6 @@ TullyNumberDeclinedText:
 	cont "use them myself."
 	done
 
-TullyPhoneFullText:
-	text "Your phone list is"
-	line "all filled up."
-
-	para "Come back if you"
-	line "make room for me."
-	done
-
 TullyRematchText:
 	text "I've been doing"
 	line "more than just"

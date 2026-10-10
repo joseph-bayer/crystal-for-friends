@@ -38,14 +38,6 @@ JackNumberDeclinedText:
 	cont "come see me, OK?"
 	done
 
-JackPhoneFullText:
-	text "Oh?"
-	line "Your phone's full."
-
-	para "It can't register"
-	line "my number."
-	done
-
 JackRematchText:
 	text "Hi, I was waiting"
 	line "for you to show!"

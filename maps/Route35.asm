@@ -34,7 +34,6 @@ TrainerJugglerIrwin:
 
 .Script:
 	loadvar VAR_CALLERID, PHONE_JUGGLER_IRWIN
-	endifjustbattled
 	opentext
 	checkcellnum PHONE_JUGGLER_IRWIN
 	iftrue Route35NumberAcceptedM
@@ -50,7 +49,6 @@ TrainerJugglerIrwin:
 	scall Route35AskNumber2M
 .AskForNumber:
 	askforphonenumber PHONE_JUGGLER_IRWIN
-	ifequal PHONE_CONTACTS_FULL, Route35PhoneFullM
 	ifequal PHONE_CONTACT_REFUSED, Route35NumberDeclinedM
 	gettrainername STRING_BUFFER_3, JUGGLER, IRWIN1
 	scall Route35RegisteredNumberM
@@ -74,10 +72,6 @@ Route35NumberAcceptedM:
 
 Route35NumberDeclinedM:
 	jumpstd NumberDeclinedMScript
-	end
-
-Route35PhoneFullM:
-	jumpstd PhoneFullMScript
 	end
 
 Route35RematchM:
@@ -133,7 +127,6 @@ TrainerBugCatcherArnie:
 
 .Script:
 	loadvar VAR_CALLERID, PHONE_BUG_CATCHER_ARNIE
-	endifjustbattled
 	opentext
 	checkflag ENGINE_ARNIE_READY_FOR_REMATCH
 	iftrue .WantsBattle
@@ -153,7 +146,6 @@ TrainerBugCatcherArnie:
 	scall Route35AskNumber2M
 .AskForNumber:
 	askforphonenumber PHONE_BUG_CATCHER_ARNIE
-	ifequal PHONE_CONTACTS_FULL, Route35PhoneFullM
 	ifequal PHONE_CONTACT_REFUSED, Route35NumberDeclinedM
 	gettrainername STRING_BUFFER_3, BUG_CATCHER, ARNIE1
 	scall Route35RegisteredNumberM

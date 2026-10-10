@@ -43,12 +43,6 @@ ToddNumberDeclinedText:
 	line "there's a sale."
 	done
 
-ToddPhoneFullText:
-	text "Your phone doesn't"
-	line "have enough memory"
-	cont "for more numbers."
-	done
-
 ToddRematchText:
 	text "I waited for you!"
 	line "I even cut back my"

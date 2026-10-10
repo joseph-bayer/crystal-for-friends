@@ -378,3 +378,56 @@ assert MAP_MON_ICON_FIRST_PAL + NUM_MAP_MON_ICONS <= 8, "the map's mon icons run
 ; icon and the mon icons, about a second each.
 DEF NUM_MAP_ICONS EQU NUM_MAP_MON_ICONS + 1
 DEF MAP_ICON_TURN_FRAMES EQU 60
+
+; The Pokegear map's and the Fly map's views, which SELECT cycles through (wMapIconView)
+	const_def
+	const MAP_VIEW_SWARMS  ; 0: swarms and roaming beasts
+	const MAP_VIEW_REMATCH ; 1: trainers ready for a rematch
+	const MAP_VIEW_GIFTS   ; 2: trainers with an item waiting
+DEF NUM_MAP_VIEWS EQU const_value
+
+; wMapRegionScroll: which way the next region slides in (see engine/pokegear/map_region_scroll.asm)
+	const_def
+	const MAP_SCROLL_NONE       ; 0
+	const MAP_SCROLL_FROM_LEFT  ; 1: to Johto
+	const MAP_SCROLL_FROM_RIGHT ; 2: to Kanto
+
+; The view labels and the SEL and START button glyphs (gfx/pokegear/map_view_labels.png): one row of
+; the sheet each, MAP_VIEW_LABEL_SHEET_WIDTH tiles wide, loaded to VRAM bank 1 from BG tile 0. The
+; tileset reload on the way back to the overworld puts that bank back.
+DEF MAP_VIEW_LABEL_SHEET_WIDTH EQU 6
+	const_def
+	const MAP_VIEW_SHEET_SWARMS  ; 0
+	const MAP_VIEW_SHEET_REMATCH ; 1
+	const MAP_VIEW_SHEET_GIFTS   ; 2
+	const MAP_VIEW_SHEET_SELECT  ; 3
+	const MAP_VIEW_SHEET_START   ; 4
+DEF MAP_VIEW_LABEL_SHEET_TILES EQU const_value * MAP_VIEW_LABEL_SHEET_WIDTH
+DEF MAP_VIEW_SELECT_WIDTH EQU 2
+DEF MAP_VIEW_START_WIDTH EQU 3
+
+; The REMATCH and GIFTS views' trainer icons (see engine/pokegear/map_trainer_icons.asm). They are
+; written straight into OAM, past the sprite anim structs, so they need no structs of their own.
+DEF MAX_MAP_TRAINER_ICONS EQU 24 ; every contact who can have a rematch
+DEF MAX_MAP_TRAINERS_SHOWN EQU 7 ; on one page: the same on both maps, though the Fly map has room for 8
+DEF MAP_TRAINER_ITEM_TILE EQU MAP_MON_ICON_FIRST_TILE + NUM_MAP_MON_ICONS * 8 ; after the mon icons
+DEF MAP_TRAINER_FIRST_TILE EQU MAP_TRAINER_ITEM_TILE + 4 ; each sprite's standing frame, 4 tiles
+DEF MAX_MAP_TRAINER_SPRITES EQU ($80 - MAP_TRAINER_FIRST_TILE) / 4
+DEF MAP_TRAINER_FIRST_PAL EQU 2 ; the NPC colors red, blue, green and brown, in PAL_OW_* order
+DEF NUM_MAP_TRAINER_PALS EQU 4
+DEF MAP_TRAINER_ITEM_PAL EQU MAP_TRAINER_FIRST_PAL + NUM_MAP_TRAINER_PALS
+assert MAP_TRAINER_ITEM_PAL == PARTY_MENU_ITEM_PAL, "the item marker borrows the party menu's red"
+
+; wMapTrainerIcons entries
+rsreset
+DEF MAP_TRAINER_ICON_Y        rb ; sorted on this, then the landmark
+DEF MAP_TRAINER_ICON_LANDMARK rb
+DEF MAP_TRAINER_ICON_X        rb
+DEF MAP_TRAINER_ICON_TILE     rb
+DEF MAP_TRAINER_ICON_ATTR     rb
+DEF MAP_TRAINER_ICON_PAGE     rb ; or MAP_TRAINER_PINNED
+DEF MAP_TRAINER_ICON_RANK     rb ; its turn among the icons on its landmark
+DEF MAP_TRAINER_ICON_SIZE     rb ; how many icons are on its landmark
+DEF MAP_TRAINER_ICON_LENGTH EQU _RS
+assert MAP_TRAINER_ICON_LENGTH == 8, "MapTrainers_AddContact finds an entry by shifting"
+DEF MAP_TRAINER_PINNED EQU -1 ; the player's landmark: on every page

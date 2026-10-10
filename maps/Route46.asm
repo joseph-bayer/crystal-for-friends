@@ -29,7 +29,6 @@ TrainerPicnickerErin1:
 
 .Script:
 	loadvar VAR_CALLERID, PHONE_PICNICKER_ERIN
-	endifjustbattled
 	opentext
 	checkflag ENGINE_ERIN_READY_FOR_REMATCH
 	iftrue .WantsBattle
@@ -47,7 +46,6 @@ TrainerPicnickerErin1:
 	scall Route46AskNumber2F
 .AskForNumber:
 	askforphonenumber PHONE_PICNICKER_ERIN
-	ifequal PHONE_CONTACTS_FULL, Route46PhoneFullF
 	ifequal PHONE_CONTACT_REFUSED, Route46NumberDeclinedF
 	gettrainername STRING_BUFFER_3, PICNICKER, ERIN1
 	scall Route46RegisteredNumberF
@@ -128,10 +126,6 @@ Route46NumberAcceptedF:
 
 Route46NumberDeclinedF:
 	jumpstd NumberDeclinedFScript
-	end
-
-Route46PhoneFullF:
-	jumpstd PhoneFullFScript
 	end
 
 Route46RematchF:

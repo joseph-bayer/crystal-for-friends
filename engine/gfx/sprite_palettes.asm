@@ -247,6 +247,17 @@ CopySpritePal::
 	ret
 
 
+LoadMapTrainerOBPals::
+; The Pokegear map's and the Fly map's trainer icons: the daytime red, blue, green and brown NPC
+; colors, then the party menu's held-item red for the GIFTS view's item markers.
+	assert PAL_OW_RED == 0 && PAL_OW_BLUE == 1 && PAL_OW_GREEN == 2 && PAL_OW_BROWN == 3
+	assert NUM_MAP_TRAINER_PALS == 4
+	ld hl, MapObjectPals + DAY_F * NUM_OW_TIME_OF_DAY_PALS palettes
+	ld de, wOBPals1 palette MAP_TRAINER_FIRST_PAL
+	ld bc, NUM_MAP_TRAINER_PALS palettes
+	call FarCopyColorWRAM
+	jmp LoadHeldItemOBPal
+
 ApplyOBPals:
 	ld hl, wOBPals1
 	ld de, wOBPals2

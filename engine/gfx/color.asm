@@ -639,11 +639,7 @@ InitPartyMenuMonOBPals:
 ; colors -- the same pair its battle sprite uses, form and shininess included. Icons then look
 ; like the mon rather than picking from eight shared colors.
 ; Run this after InitPartyMenuOBPals, which is what leaves palettes 6 and 7 sane.
-	ld hl, PartyMenuOBPals ; palette 0 is the red the held-item indicator wants
-	ld de, wOBPals1 palette PARTY_MENU_ITEM_PAL
-	ld bc, 1 palettes
-	ld a, BANK(wOBPals1)
-	call FarCopyWRAM
+	call LoadHeldItemOBPal
 
 	ld a, [wPartyCount]
 	and a
@@ -675,6 +671,15 @@ InitPartyMenuMonOBPals:
 	dec d
 	jr nz, .loop
 	ret
+
+LoadHeldItemOBPal::
+; The party menu's held-item red, in OBJ palette PARTY_MENU_ITEM_PAL. The Pokegear map's and the Fly
+; map's GIFTS view mark their trainers with it too.
+	ld hl, PartyMenuOBPals ; palette 0 is the red the held-item indicator wants
+	ld de, wOBPals1 palette PARTY_MENU_ITEM_PAL
+	ld bc, 1 palettes
+	ld a, BANK(wOBPals1)
+	jmp FarCopyWRAM
 
 SetFirstOBJPalette::
 ; input: e must contain the offset of the selected palette from PartyMenuOBPals

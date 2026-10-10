@@ -43,7 +43,6 @@ TrainerYoungsterJoey:
 
 .Script:
 	loadvar VAR_CALLERID, PHONE_YOUNGSTER_JOEY
-	endifjustbattled
 	opentext
 	checkflag ENGINE_JOEY_READY_FOR_REMATCH
 	iftrue .Rematch
@@ -61,7 +60,6 @@ TrainerYoungsterJoey:
 	scall .AskNumber2
 .RequestNumber:
 	askforphonenumber PHONE_YOUNGSTER_JOEY
-	ifequal PHONE_CONTACTS_FULL, .PhoneFull
 	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
 	gettrainername STRING_BUFFER_3, YOUNGSTER, JOEY1
 	scall .RegisteredNumber
@@ -166,10 +164,6 @@ TrainerYoungsterJoey:
 
 .NumberDeclined:
 	jumpstd NumberDeclinedMScript
-	end
-
-.PhoneFull:
-	jumpstd PhoneFullMScript
 	end
 
 .RematchStd:

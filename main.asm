@@ -268,6 +268,8 @@ INCLUDE "engine/overworld/player_movement.asm"
 INCLUDE "engine/events/engine_flags.asm"
 INCLUDE "engine/overworld/variables.asm"
 INCLUDE "data/text/battle.asm"
+INCLUDE "engine/pokegear/map_trainer_icons.asm"
+INCLUDE "engine/pokegear/map_region_scroll.asm"
 
 
 SECTION "bank21", ROMX
@@ -512,6 +514,7 @@ INCLUDE "engine/events/mom_phone.asm"
 INCLUDE "engine/events/mystery_island.asm"
 INCLUDE "engine/debug/fill_pc.asm"
 INCLUDE "engine/debug/hidden_power.asm"
+INCLUDE "engine/debug/phone.asm"
 
 
 ; Its own section because the rosters outgrew bank3F: the grass and water tables are 100 bytes per

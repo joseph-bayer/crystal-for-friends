@@ -44,11 +44,6 @@ JoseNumberDeclinedText:
 	cont "change your mind."
 	done
 
-JosePhoneFullText:
-	text "Huh? Your phone"
-	line "list is full."
-	done
-
 JoseRematchText:
 	text "Tweet! Tweeeet!"
 

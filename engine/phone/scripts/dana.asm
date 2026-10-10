@@ -9,7 +9,7 @@ DanaPhoneCalleeScript:
 	iftrue .HasThunderstone
 	readvar VAR_WEEKDAY
 	ifnotequal THURSDAY, .NotThursday
-	checktime NITE
+	checktime EVE | NITE
 	iftrue DanaThursdayNight
 
 .NotThursday:
@@ -26,24 +26,27 @@ DanaPhoneCalleeScript:
 DanaPhoneCallerScript:
 	gettrainername STRING_BUFFER_3, LASS, DANA1
 	farscall PhoneScript_GreetPhone_Female
-	checkflag ENGINE_DANA_READY_FOR_REMATCH
-	iftrue .Generic
-	checkflag ENGINE_DANA_THURSDAY_NIGHT
-	iftrue .Generic
 	checkflag ENGINE_DANA_HAS_THUNDERSTONE
-	iftrue .Generic
-	farscall PhoneScript_Random3
-	ifequal 0, DanaWantsBattle
+	iftrue .NoItem
 	checkevent EVENT_DANA_GAVE_THUNDERSTONE
-	iftrue .Thunderstone
+	iftrue .GaveItem
 	farscall PhoneScript_Random2
 	ifequal 0, DanaHasThunderstone
+	sjump .NoItem
 
-.Thunderstone:
-	farscall PhoneScript_Random11
+.GaveItem:
+	farscall PhoneScript_Random4
 	ifequal 0, DanaHasThunderstone
 
-.Generic:
+.NoItem:
+	checkflag ENGINE_DANA_READY_FOR_REMATCH
+	iftrue .Leftover
+	checkflag ENGINE_DANA_THURSDAY_NIGHT
+	iftrue .Leftover
+	farscall PhoneScript_Random2
+	ifequal 0, DanaWantsBattle
+
+.Leftover:
 	farscall PhoneScript_Random3
 	ifequal 0, DanaFoundRare
 	farsjump Phone_GenericCall_Female

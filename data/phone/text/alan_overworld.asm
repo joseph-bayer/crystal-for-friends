@@ -42,11 +42,6 @@ AlanNumberDeclinedText:
 	line "when I'm studying…"
 	done
 
-AlanPhoneFullText:
-	text "There's no room"
-	line "for my number."
-	done
-
 AlanRematchText:
 	text "I waited around"
 	line "for you!"

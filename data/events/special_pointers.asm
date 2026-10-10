@@ -154,3 +154,7 @@ SpecialsPointers::
 	add_special InitialClearDSTFlag
 
 	add_special FadeInPalettes_EnableDynNoApply
+
+if DEF(_DEBUG)
+	add_special RestartClock ; the phone debug NPC's clock tool
+endc

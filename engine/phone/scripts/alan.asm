@@ -26,24 +26,27 @@ AlanPhoneCalleeScript:
 AlanPhoneCallerScript:
 	gettrainername STRING_BUFFER_3, SCHOOLBOY, ALAN1
 	farscall PhoneScript_GreetPhone_Male
-	checkflag ENGINE_ALAN_READY_FOR_REMATCH
-	iftrue .Generic
-	checkflag ENGINE_ALAN_WEDNESDAY_AFTERNOON
-	iftrue .Generic
 	checkflag ENGINE_ALAN_HAS_FIRE_STONE
-	iftrue .Generic
-	farscall PhoneScript_Random3
-	ifequal 0, AlanWantsBattle
+	iftrue .NoItem
 	checkevent EVENT_ALAN_GAVE_FIRE_STONE
-	iftrue .FireStone
+	iftrue .GaveItem
 	farscall PhoneScript_Random2
 	ifequal 0, AlanHasFireStone
+	sjump .NoItem
 
-.FireStone:
-	farscall PhoneScript_Random11
+.GaveItem:
+	farscall PhoneScript_Random4
 	ifequal 0, AlanHasFireStone
 
-.Generic:
+.NoItem:
+	checkflag ENGINE_ALAN_READY_FOR_REMATCH
+	iftrue .Leftover
+	checkflag ENGINE_ALAN_WEDNESDAY_AFTERNOON
+	iftrue .Leftover
+	farscall PhoneScript_Random2
+	ifequal 0, AlanWantsBattle
+
+.Leftover:
 	farsjump Phone_GenericCall_Male
 
 AlanWednesdayDay:

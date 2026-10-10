@@ -46,14 +46,6 @@ BrentNumberDeclinedText:
 	para "And I won't care…"
 	done
 
-BrentPhoneFullText:
-	text "Huh? Your phone"
-	line "list's full."
-
-	para "A #MANIAC has"
-	line "to be more tidy!"
-	done
-
 BrentRematchText:
 	text "I've been waiting."
 

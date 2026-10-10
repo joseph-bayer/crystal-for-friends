@@ -39,12 +39,6 @@ VanceNumberDeclinedText:
 	line "reconsider?"
 	done
 
-VancePhoneFullText:
-	text "Your phone's out"
-	line "of memory. Delete"
-	cont "a number for me!"
-	done
-
 VanceRematchText:
 	text "Am I happy to see"
 	line "you! I won't lose!"

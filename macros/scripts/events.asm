@@ -982,7 +982,7 @@ ENDM
 	const specialphonecall_command ; $9c
 MACRO specialphonecall
 	db specialphonecall_command
-	dw \1 ; call_id
+	db \1 ; call_id
 ENDM
 
 	const checkphonecall_command ; $9d

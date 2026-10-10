@@ -34,8 +34,7 @@ DEF STRING_BUFFER_LENGTH EQU 19
 ; askforphonenumber return values
 	const_def
 	const PHONE_CONTACT_GOT     ; 0
-	const PHONE_CONTACTS_FULL   ; 1
-	const PHONE_CONTACT_REFUSED ; 2
+	const PHONE_CONTACT_REFUSED ; 1
 
 ; trainertext arguments
 	const_def

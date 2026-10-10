@@ -45,11 +45,6 @@ BethNumberDeclinedText:
 	line "change your mind."
 	done
 
-BethPhoneFullText:
-	text "Oh no. Your phone"
-	line "is out of memory."
-	done
-
 BethRematchText:
 	text "You sure kept me"
 	line "waiting! Let's go!"

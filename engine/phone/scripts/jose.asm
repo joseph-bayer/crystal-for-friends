@@ -9,7 +9,7 @@ JosePhoneCalleeScript:
 	iftrue .HasItem
 	readvar VAR_WEEKDAY
 	ifnotequal SATURDAY, .NotSaturday
-	checktime NITE
+	checktime EVE | NITE
 	iftrue JoseSaturdayNight
 
 .NotSaturday:
@@ -26,18 +26,20 @@ JosePhoneCalleeScript:
 JosePhoneCallerScript:
 	gettrainername STRING_BUFFER_3, BIRD_KEEPER, JOSE2
 	farscall PhoneScript_GreetPhone_Male
-	checkflag ENGINE_JOSE_READY_FOR_REMATCH
-	iftrue .Generic
-	checkflag ENGINE_JOSE_SATURDAY_NIGHT
-	iftrue .Generic
 	checkflag ENGINE_JOSE_HAS_STAR_PIECE
-	iftrue .Generic
-	farscall PhoneScript_Random3
-	ifequal 0, JoseWantsBattle
+	iftrue .NoItem
 	farscall PhoneScript_Random3
 	ifequal 0, JoseHasStarPiece
 
-.Generic:
+.NoItem:
+	checkflag ENGINE_JOSE_READY_FOR_REMATCH
+	iftrue .Leftover
+	checkflag ENGINE_JOSE_SATURDAY_NIGHT
+	iftrue .Leftover
+	farscall PhoneScript_Random2
+	ifequal 0, JoseWantsBattle
+
+.Leftover:
 	farscall PhoneScript_Random3
 	ifequal 0, JoseFoundRare
 	farsjump Phone_GenericCall_Male

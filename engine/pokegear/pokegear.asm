@@ -48,6 +48,11 @@ PokeGear:
 	jr nz, .done
 	call PokegearJumptable
 	farcall PlaySpriteAnimations
+	ld a, [wPokegearCard]
+	cp POKEGEARCARD_MAP
+	jr nz, .no_map_trainers
+	farcall MapTrainers_Draw ; the REMATCH and GIFTS views' icons, after the structs'
+.no_map_trainers
 	call DelayFrame
 	jr .loop
 
@@ -87,12 +92,14 @@ PokeGear:
 	call SkipMusic
 	ld a, LCDC_DEFAULT
 	ldh [rLCDC], a
+	farcall LoadMapViewLabelGFX
 	call TownMap_InitCursorAndPlayerIconPositions
 	xor a
 	ld [wJumptableIndex], a ; POKEGEARSTATE_CLOCKINIT
 	ld [wPokegearCard], a ; POKEGEARCARD_CLOCK
 	ld [wPokegearMapRegion], a ; JOHTO_REGION
 	ld [wMapMonIconRegion], a
+	ld [wMapRegionScroll], a ; MAP_SCROLL_NONE
 	ld [wPokegearPhoneScrollPosition], a
 	ld [wPokegearPhoneCursorPosition], a
 	ld [wPokegearPhoneSelectedPerson], a
@@ -238,6 +245,12 @@ InitPokegearTilemap:
 	call _hl_
 	call Pokegear_FinishTilemap
 	call TownMapPals
+	ld a, [wPokegearCard]
+	cp POKEGEARCARD_MAP
+	jr nz, .no_view_label
+	call PokegearMap_GetShownRegion
+	farcall PlaceMapViewLabel ; after TownMapPals, which would undo its attributes
+.no_view_label
 	ld a, [wPokegearMapRegion]
 	and a
 	jr nz, .kanto_0
@@ -257,6 +270,9 @@ InitPokegearTilemap:
 	call .UpdateBGMap
 	xor a
 .finish
+	push af
+	farcall MapRegionScroll_Slide ; if START asked for it, slide the new map in first
+	pop af
 	ldh [hWY], a
 	; swap region maps
 	ld a, [wPokegearMapRegion]
@@ -266,6 +282,16 @@ InitPokegearTilemap:
 	ret
 
 .UpdateBGMap:
+	ld a, [wMapRegionScroll]
+	and a
+	jr z, .no_scroll
+	ld b, 0 ; leave the palettes be
+	farcall _SafeCopyTilemapAtOnce ; all at once, so the slide starts sooner
+	ld a, 1 ; and keep the BG map up to date after, as WaitBGMap leaves it
+	ldh [hBGMapMode], a
+	ret
+
+.no_scroll
 	ldh a, [hCGB]
 	and a
 	jr z, .dmg
@@ -298,18 +324,8 @@ InitPokegearTilemap:
 	db " SWITCH▶@"
 
 .Map:
-	ld a, [wPokegearMapPlayerIconLandmark]
-	cp LANDMARK_FAST_SHIP
-	jr z, .johto
-	cp KANTO_LANDMARK
-	jr nc, .kanto
-.johto
-	ld e, 0
-	jr .ok
-
-.kanto
-	ld e, 1
-.ok
+	call PokegearMap_GetShownRegion
+	ld e, a
 	call PokegearMap
 	ld a, $07
 	ld bc, SCREEN_WIDTH - 2
@@ -494,29 +510,73 @@ Pokegear_UpdateClock:
 	text_end
 
 PokegearMap_CheckRegion:
+; Coming to the map card, it opens on the player's region, in the SWARMS view. If START left the
+; cursor on the other region, it comes back to the player.
+	xor a ; MAP_VIEW_SWARMS
+	ld [wMapIconView], a
+	ld [wMapTrainersShownCount], a
+	ld a, [wPokegearMapCursorLandmark]
+	call PokegearMap_GetLandmarkRegion
+	ld b, a
 	ld a, [wPokegearMapPlayerIconLandmark]
-	cp LANDMARK_FAST_SHIP
-	jr z, .johto
-	cp KANTO_LANDMARK
-	jr nc, .kanto
-.johto
+	call PokegearMap_GetLandmarkRegion
+	cp b
+	push af
+	call nz, TownMap_InitCursorAndPlayerIconPositions
+	pop af
+	assert JOHTO_REGION == 0
+	and a
 	ld a, POKEGEARSTATE_JOHTOMAPINIT
-	jr .done
-	ret
-
-.kanto
+	jr z, .done
 	ld a, POKEGEARSTATE_KANTOMAPINIT
 .done
 	ld [wJumptableIndex], a
 	jmp ExitPokegearRadio_HandleMusic
 
+PokegearMap_GetShownRegion:
+; out: a = JOHTO_REGION or KANTO_REGION, the region the map card is on, which its jumptable state
+; says. Preserves bc, de and hl.
+	assert POKEGEARSTATE_JOHTOMAPINIT < POKEGEARSTATE_KANTOMAPINIT && \
+		POKEGEARSTATE_JOHTOMAPJOYPAD < POKEGEARSTATE_KANTOMAPINIT && \
+		POKEGEARSTATE_KANTOMAPJOYPAD > POKEGEARSTATE_KANTOMAPINIT
+	ld a, [wJumptableIndex]
+	cp POKEGEARSTATE_KANTOMAPINIT
+	ld a, JOHTO_REGION
+	ret c
+	assert KANTO_REGION == JOHTO_REGION + 1
+	inc a
+	ret
+
+PokegearMap_GetLandmarkRegion:
+; in: a = a landmark
+; out: a = JOHTO_REGION or KANTO_REGION. The Fast Ship counts as Johto, as the Pokegear always has.
+; Preserves bc, de and hl.
+	cp LANDMARK_FAST_SHIP
+	jr z, .johto
+	cp KANTO_LANDMARK
+	jr c, .johto
+	ld a, KANTO_REGION
+	ret
+
+.johto
+	ld a, JOHTO_REGION
+	ret
+
 PokegearMap_Init:
 	call InitPokegearTilemap
 	call MapIcons_Reset
+	; the player icon, if the player is on the region shown
+	ld a, [wPokegearMapPlayerIconLandmark]
+	call PokegearMap_GetLandmarkRegion
+	ld b, a
+	call PokegearMap_GetShownRegion
+	cp b
+	jr nz, .no_player_icon
 	ld a, [wPokegearMapPlayerIconLandmark]
 	call PokegearMap_InitPlayerIcon
 	ld a, [wPokegearMapPlayerIconLandmark]
 	call MapIcons_Add ; first in turn order
+.no_player_icon
 	ld a, [wPokegearMapCursorLandmark]
 	call PokegearMap_InitCursor
 	ld a, c
@@ -529,30 +589,32 @@ PokegearMap_Init:
 	ret
 
 PokegearMap_InitMonIcons:
-; The Pokegear map's icons: the swarms and roaming beasts on the card being shown. Also notes
+; The Pokegear map's icons: those of the view SELECT is on, for the card being shown. Also notes
 ; whether A on a visited town can fly there.
-	ld a, [wJumptableIndex] ; still the init state here
-	cp POKEGEARSTATE_KANTOMAPINIT
-	ld a, JOHTO_REGION
-	jr nz, .got_region
-	ld a, KANTO_REGION
-.got_region
+	call PokegearMap_GetShownRegion
 	ld [wMapMonIconRegion], a
-	call PlaceMapMonIcons
 	call PokegearMap_CheckCanFly
-	jr ApplyMapMonIconPals
+	jr PlaceMapViewIcons
 
 FlyMap_InitMonIcons:
-; The Fly map's icons: the same swarms and roaming beasts as the Pokegear map, on the region the
-; Fly map is showing. The arrow and the player icon are made first, so both draw over them.
-; Runs again whenever the Fly map swaps region, which clears every sprite.
-	assert JOHTO_REGION == 0 && KANTO_REGION == 1
-	ld a, [wStartFlypoint]
-	cp KANTO_FLYPOINT
-	sbc a ; -1 for Johto, 0 for Kanto
-	inc a ; JOHTO_REGION or KANTO_REGION
+; The Fly map's icons: the same views as the Pokegear map's, on the region the Fly map is showing.
+; The arrow and the player icon are made first, so both draw over them. Runs again whenever the
+; Fly map swaps region or view, which clears every sprite.
+	call FlyMap_GetShownRegion
 	ld [wMapMonIconRegion], a
+PlaceMapViewIcons:
+; The icons of the view SELECT is on, for the region in wMapMonIconRegion: swarms and roaming beasts,
+; or trainers.
+	xor a
+	ld [wMapTrainersShownCount], a
+	ld a, [wMapIconView]
+	and a ; MAP_VIEW_SWARMS
+	jr nz, .trainers
 	call PlaceMapMonIcons
+	jr ApplyMapMonIconPals
+
+.trainers
+	farcall MapTrainers_Place
 ApplyMapMonIconPals:
 	call MapIcons_Apply ; the first turn, before anything is drawn
 	farcall ApplyOBPals ; the screen's palettes were pushed before the icons existed
@@ -751,7 +813,14 @@ PokegearMap_JohtoMap:
 PokegearMap_ContinueMap:
 	push de
 	call MapIcons_Rotate
+	farcall MapTrainers_Update
 	pop de
+	ldh a, [hJoyPressed]
+	and PAD_SELECT
+	jmp nz, PokegearMap_NextView
+	ldh a, [hJoyPressed]
+	and PAD_START
+	jmp nz, PokegearMap_SwapRegion
 	ld hl, hJoyLast
 	ld a, [hl]
 	and PAD_A
@@ -926,6 +995,79 @@ PokegearMap_UpdateCursorPosition:
 	ld [hl], d
 	ret
 
+PokegearMap_NextView:
+; SELECT shows the next view: SWARMS, REMATCH, GIFTS, then SWARMS again.
+	ld a, [wMapIconView]
+	inc a
+	cp NUM_MAP_VIEWS
+	jr c, .got_view
+	xor a ; MAP_VIEW_SWARMS
+.got_view
+	ld [wMapIconView], a
+	call PokegearMap_GetShownRegion
+	jr PokegearMap_Redraw
+
+PokegearMap_SwapRegion:
+; START swaps regions, once Indigo Plateau has been visited, as on the Fly map. The cursor goes to the
+; player on the player's region, else to the region's first landmark.
+	ld c, SPAWN_INDIGO
+	call HasVisitedSpawn
+	and a
+	ret z
+	call PokegearMap_GetShownRegion
+	assert JOHTO_REGION == 0 && KANTO_REGION == 1
+	xor 1 ; the other region
+	ld b, a
+	ld a, [wPokegearMapPlayerIconLandmark]
+	cp LANDMARK_FAST_SHIP
+	jr z, .first_landmark ; the cursor never rests on the ship
+	call PokegearMap_GetLandmarkRegion
+	cp b
+	ld a, [wPokegearMapPlayerIconLandmark]
+	jr z, .got_cursor
+.first_landmark
+	ld a, b
+	and a ; JOHTO_REGION
+	ld a, JOHTO_LANDMARK
+	jr z, .got_cursor
+	push bc
+	call TownMap_GetKantoLandmarkLimits ; e = the first landmark the cursor reaches
+	pop bc
+	ld a, e
+.got_cursor
+	ld [wPokegearMapCursorLandmark], a
+	; the new region slides in: Kanto from the right, Johto from the left, below the card tabs and
+	; landmark name (the map's top edge, row 2, slides with it)
+	assert JOHTO_REGION == 0 && KANTO_REGION == 1
+	assert MAP_SCROLL_FROM_LEFT == 1 && MAP_SCROLL_FROM_RIGHT == 2
+	ld a, b
+	inc a ; MAP_SCROLL_FROM_LEFT to Johto, MAP_SCROLL_FROM_RIGHT to Kanto
+	ld [wMapRegionScroll], a
+	ld a, 2
+	ld [wMapScrollHeaderRows], a
+	push bc
+	farcall MapRegionScroll_Prepare
+	pop bc
+	; it may have moved the old map to the other BG map: draw next into the one not on screen
+	ldh a, [hWY]
+	and a
+	jr z, .got_bg_map ; 0, BG Map 0, when the window (BG Map 1) is on screen
+	ld a, 1
+.got_bg_map
+	ld [wPokegearMapRegion], a
+	ld a, b
+PokegearMap_Redraw:
+; a = the region to show; Pokegear_SwitchPage plays the card-switch sound
+	and a ; JOHTO_REGION
+	ld c, POKEGEARSTATE_JOHTOMAPINIT
+	jr z, .got_state
+	ld c, POKEGEARSTATE_KANTOMAPINIT
+.got_state
+	xor a
+	ld [wMapTrainersShownCount], a
+	ld b, POKEGEARCARD_MAP
+	jmp Pokegear_SwitchPage
+
 TownMap_GetKantoLandmarkLimits:
 	ld a, [wStatusFlags]
 	bit STATUSFLAGS_HALL_OF_FAME_F, a
@@ -998,6 +1140,9 @@ PokegearPhone_Init:
 	ld [wPokegearPhoneScrollPosition], a
 	ld [wPokegearPhoneCursorPosition], a
 	ld [wPokegearPhoneSelectedPerson], a
+	call PokegearPhone_CountSetBits
+	dec a
+	ld [wPokegearPhoneMaxContact], a
 	call InitPokegearTilemap
 	call ExitPokegearRadio_HandleMusic
 	ld hl, PokegearAskWhoCallText
@@ -1045,16 +1190,8 @@ PokegearPhone_Joypad:
 	ret
 
 .a
-	ld hl, wPhoneList
-	ld a, [wPokegearPhoneScrollPosition]
-	ld e, a
-	ld d, 0
-	add hl, de
-	ld a, [wPokegearPhoneCursorPosition]
-	ld e, a
-	ld d, 0
-	add hl, de
-	ld a, [hl]
+	call PokegearPhone_GetCellNumber
+	ld a, c
 	and a
 	ret z
 	ld [wPokegearPhoneSelectedPerson], a
@@ -1160,7 +1297,14 @@ PokegearPhone_GetDPad:
 	jr .done_joypad_update_page
 
 .down
+	; Stop at the last contact.
 	ld hl, wPokegearPhoneCursorPosition
+	ld a, [wPokegearPhoneMaxContact]
+	ld b, a
+	ld a, [wPokegearPhoneScrollPosition]
+	add [hl]
+	cp b
+	ret nc
 	ld a, [hl]
 	cp PHONE_DISPLAY_HEIGHT - 1
 	jr nc, .scroll_page_down
@@ -1168,10 +1312,13 @@ PokegearPhone_GetDPad:
 	jr .done_joypad_same_page
 
 .scroll_page_down
+	; The furthest scroll is (number of contacts) - PHONE_DISPLAY_HEIGHT.
 	ld hl, wPokegearPhoneScrollPosition
-	ld a, [hl]
-	cp CONTACT_LIST_SIZE - PHONE_DISPLAY_HEIGHT
-	ret nc
+	ld a, [wPokegearPhoneMaxContact]
+	sub PHONE_DISPLAY_HEIGHT - 1
+	ret c
+	cp [hl]
+	ret z
 	inc [hl]
 	jr .done_joypad_update_page
 
@@ -1216,25 +1363,22 @@ PokegearPhone_UpdateDisplayList:
 	jr nz, .row
 	ld a, [wPokegearPhoneScrollPosition]
 	ld e, a
-	ld d, 0
-	ld hl, wPhoneList
-	add hl, de
 	xor a
 	ld [wPokegearPhoneDisplayPosition], a
 .loop
-	ld a, [hli]
-	push hl
-	push af
+	push de
+	call PokegearPhone_GetCellNumberFromE
+	ld d, c
 	hlcoord 2, 4
 	ld a, [wPokegearPhoneDisplayPosition]
 	ld bc, 2 * SCREEN_WIDTH
 	rst AddNTimes
+	ld b, d
 	ld d, h
 	ld e, l
-	pop af
-	ld b, a
 	call GetCallerClassAndName
-	pop hl
+	pop de
+	inc e
 	ld a, [wPokegearPhoneDisplayPosition] ; no-optimize Inefficient WRAM increment/decrement
 	inc a
 	ld [wPokegearPhoneDisplayPosition], a
@@ -1243,41 +1387,58 @@ PokegearPhone_UpdateDisplayList:
 	jr PokegearPhone_UpdateCursor
 
 PokegearPhone_DeletePhoneNumber:
-	ld hl, wPhoneList
+	call PokegearPhone_GetCellNumber
+	call DelCellNum
+	ld hl, wPokegearPhoneMaxContact
+	dec [hl]
+	; If the list was scrolled and its last page is now short, scroll up one.
+	ld a, [hl]
+	inc a
+	ld b, a ; number of contacts
+	ld a, [wPokegearPhoneScrollPosition]
+	and a
+	ret z
+	add PHONE_DISPLAY_HEIGHT - 1
+	cp b
+	ret c
+	sub PHONE_DISPLAY_HEIGHT
+	ld [wPokegearPhoneScrollPosition], a
+	ret
+
+PokegearPhone_GetCellNumber:
+; Returns in c the contact under the cursor, or 0 for a blank row.
 	ld a, [wPokegearPhoneScrollPosition]
 	ld e, a
-	ld d, 0
-	add hl, de
 	ld a, [wPokegearPhoneCursorPosition]
+	add e
 	ld e, a
-	ld d, 0
-	add hl, de
-	ld [hl], 0
-	ld hl, wPhoneList
-	ld c, CONTACT_LIST_SIZE
+	; fallthrough
+PokegearPhone_GetCellNumberFromE:
+; Returns in c the e-th registered contact (counting from 0), or 0 if there are fewer.
+	inc e
+	call PokegearPhone_CountSetBits
+	cp e
+	ld c, 0
+	ret c
 .loop
-	ld a, [hli]
-	and a
-	jr nz, .skip
-	ld a, [hld]
-	ld [hli], a
-	ld [hl], 0
-.skip
-	dec c
+	inc c
+	call CheckCellNum
+	jr z, .loop
+	dec e
 	jr nz, .loop
 	ret
 
-PokegearPhoneContactSubmenu:
+PokegearPhone_CountSetBits:
+; Returns the number of registered contacts in a. Preserves de.
+	push de
 	ld hl, wPhoneList
-	ld a, [wPokegearPhoneScrollPosition]
-	ld e, a
-	ld d, 0
-	add hl, de
-	ld a, [wPokegearPhoneCursorPosition]
-	ld e, a
-	ld d, 0
-	add hl, de
-	ld c, [hl]
+	ld b, wPhoneListEnd - wPhoneList
+	call CountSetBits
+	pop de
+	ret
+
+PokegearPhoneContactSubmenu:
+	call PokegearPhone_GetCellNumber
 	call CheckCanDeletePhoneNumber
 	ld a, c
 	and a
@@ -2211,6 +2372,10 @@ _FlyMap:
 	ld [hl], $1
 	xor a
 	ldh [hBGMapMode], a
+	ld a, SCREEN_HEIGHT_PX ; the window starts hidden: the map is first drawn as it, BG Map 1
+	ldh [hWY], a
+	ld a, 7 ; the window's left edge on the screen's
+	ldh [hWX], a
 	farcall ClearSpriteAnims
 	call LoadTownMapGFX
 	ld hl, PokegearSpritesGFX ; the arrow
@@ -2221,6 +2386,13 @@ _FlyMap:
 	ld hl, vTiles2 tile $30
 	lb bc, BANK(FlyMapLabelBorderGFX), 6
 	call Request1bpp
+	farcall LoadMapViewLabelGFX
+	xor a ; MAP_VIEW_SWARMS
+	ld [wMapIconView], a
+	ld [wMapTrainersShownCount], a
+	ld [wMapRegionScroll], a ; MAP_SCROLL_NONE
+	ld a, -1 ; no town selected yet, so LoadMapForRegion picks the region's default
+	ld [wTownMapPlayerIconLandmark], a
 	call FlyMap
 	call FlyMap_InitMonIcons
 	ld b, SCGB_POKEGEAR_PALS
@@ -2235,10 +2407,18 @@ _FlyMap:
 	ld a, [hl]
 	and PAD_A
 	jr nz, .pressedA
+	ld a, [hl]
+	and PAD_SELECT
+	call nz, .NextView
+	ldh a, [hJoyPressed]
+	and PAD_START
+	call nz, .SwapRegion
 	call .HandleDPad
 	call GetMapCursorCoordinates
 	call MapIcons_Rotate
+	farcall MapTrainers_Update
 	farcall PlaySpriteAnimations
+	farcall MapTrainers_Draw ; the REMATCH and GIFTS views' icons, after the structs'
 	call DelayFrame
 	jr .loop
 
@@ -2277,43 +2457,102 @@ _FlyMap:
 	ld hl, hJoyLast
 	ld a, [hl]
 	and PAD_UP
-	jr nz, .ScrollNext
+	jmp nz, .ScrollNext
 	ld a, [hl]
 	and PAD_DOWN
-	jr nz, .ScrollPrev
+	jmp nz, .ScrollPrev
 
-  ; Check if you've visited KANTO to determine if LEFT/RIGHT swap maps
-  push hl
-  ld c, SPAWN_INDIGO
-  call HasVisitedSpawn
-  pop hl
-  and a
-  jr z, .done
-  
-
-  ld a, [hl]
-  and PAD_LEFT
-  jr nz, .SwapToJohtoRegionMap
-  ld a, [hl]
-  and PAD_RIGHT
-  jr nz, .SwapToKantoRegionMap
-.done
-	ret
-
-; TODO: transition between maps should be smoother
-.SwapToJohtoRegionMap
-  call ClearSprites
-  farcall ClearSpriteAnims
-  ld a, JOHTO_LANDMARK
-  call LoadMapForRegion
-  jmp FlyMap_InitMonIcons
+	; Left and Right swap regions once Indigo Plateau has been visited
+	push hl
+	ld c, SPAWN_INDIGO
+	call HasVisitedSpawn
+	pop hl
+	and a
+	ret z
+	ld a, [hl]
+	and PAD_LEFT
+	jr nz, .SwapToJohtoRegionMap
+	ld a, [hl]
+	and PAD_RIGHT
+	ret z
+	; fallthrough
 
 .SwapToKantoRegionMap
-  call ClearSprites
-  farcall ClearSpriteAnims
-  ld a, KANTO_LANDMARK
-  call LoadMapForRegion
-  jmp FlyMap_InitMonIcons
+	ld a, KANTO_LANDMARK
+	jr .SwapRegionMap
+
+.SwapToJohtoRegionMap
+	ld a, JOHTO_LANDMARK
+.SwapRegionMap:
+; a = a landmark on the region to show, which opens on its default town as ever. If that's the other
+; region, it slides in: Kanto from the right, Johto from the left.
+	ld hl, wTownMapPlayerIconLandmark
+	ld [hl], -1
+	ld b, a
+	call FlyMap_GetShownRegion
+	ld c, a
+	ld a, b
+	assert JOHTO_REGION == 0 && KANTO_REGION == 1
+	cp KANTO_LANDMARK
+	sbc a ; -1 for Johto, 0 for Kanto
+	inc a ; the region to show
+	cp c
+	ld a, b
+	jr z, .ShowRegionMap ; the region already shown: just drawn afresh
+	assert MAP_SCROLL_FROM_LEFT == 1 && MAP_SCROLL_FROM_RIGHT == 2
+	cp KANTO_LANDMARK
+	ccf
+	sbc a
+	and 1
+	inc a ; MAP_SCROLL_FROM_LEFT to Johto, MAP_SCROLL_FROM_RIGHT to Kanto
+	ld [wMapRegionScroll], a
+	ld a, 3 ; the Where? bubble holds still
+	ld [wMapScrollHeaderRows], a
+	push bc
+	call ClearSprites ; hidden through the slide
+	farcall MapRegionScroll_Prepare
+	pop bc
+	ld a, b
+.ShowRegionMap:
+; a = a landmark on the region to show. A town selected on that region stays selected.
+	push af
+	call ClearSprites
+	farcall ClearSpriteAnims
+	pop af
+	call LoadMapForRegion
+	jmp FlyMap_InitMonIcons
+
+.NextView:
+; SELECT shows the next view: SWARMS, REMATCH, GIFTS, then SWARMS again. The map is drawn afresh,
+; keeping the town selected.
+	ld de, SFX_READ_TEXT_2
+	call PlaySFX
+	ld a, [wMapIconView]
+	inc a
+	cp NUM_MAP_VIEWS
+	jr c, .got_view
+	xor a ; MAP_VIEW_SWARMS
+.got_view
+	ld [wMapIconView], a
+	call FlyMap_GetShownRegion
+	and a ; JOHTO_REGION
+	ld a, JOHTO_LANDMARK
+	jr z, .ShowRegionMap
+	ld a, KANTO_LANDMARK
+	jr .ShowRegionMap
+
+.SwapRegion:
+; START swaps regions too, like Left and Right, once Indigo Plateau has been visited.
+	ld c, SPAWN_INDIGO
+	call HasVisitedSpawn
+	and a
+	ret z
+	ld de, SFX_READ_TEXT_2
+	call PlaySFX
+	call FlyMap_GetShownRegion
+	and a ; JOHTO_REGION
+	jr z, .SwapToKantoRegionMap
+	jr .SwapToJohtoRegionMap
 
 .ScrollNext:
 	ld hl, wTownMapPlayerIconLandmark
@@ -2477,10 +2716,11 @@ LoadMapForRegion:
 ; Note that .NoKanto should be modified in tandem with this branch
 	push af
 	ld a, JOHTO_FLYPOINT ; first Johto flypoint
-	ld [wTownMapPlayerIconLandmark], a ; first one is default (New Bark Town)
 	ld [wStartFlypoint], a
 	ld a, KANTO_FLYPOINT - 1 ; last Johto flypoint
 	ld [wEndFlypoint], a
+	ld a, JOHTO_FLYPOINT ; first one is default (New Bark Town)
+	call .SelectFlypoint
 ; Fill out the map
 	call FillJohtoMap
 	call .MapHud
@@ -2518,7 +2758,7 @@ LoadMapForRegion:
 	ld [wStartFlypoint], a
 	ld a, NUM_FLYPOINTS - 1 ; last Kanto flypoint
 	ld [wEndFlypoint], a
-	ld [wTownMapPlayerIconLandmark], a ; last one is default (Indigo Plateau)
+	call .SelectFlypoint ; last one is default (Indigo Plateau)
 ; Fill out the map
 	call FillKantoMap
 	call .MapHud
@@ -2550,23 +2790,71 @@ LoadMapForRegion:
 .NoKanto:
 ; If Indigo Plateau hasn't been visited, we use Johto's map instead
 	ld a, JOHTO_FLYPOINT ; first Johto flypoint
-	ld [wTownMapPlayerIconLandmark], a ; first one is default (New Bark Town)
 	ld [wStartFlypoint], a
 	ld a, KANTO_FLYPOINT - 1 ; last Johto flypoint
 	ld [wEndFlypoint], a
+	ld a, JOHTO_FLYPOINT ; first one is default (New Bark Town)
+	call .SelectFlypoint
 	call FillJohtoMap
 	pop af
 .MapHud:
 	call TownMapBubble
 	call TownMapPals
-	hlbgcoord 0, 0 ; BG Map 0
+	call FlyMap_GetShownRegion
+	farcall PlaceMapViewLabel ; after TownMapPals, which would undo its attributes
+; Draw into the BG map not on screen, then show it, as the Pokegear does: pushed onto the shown one,
+; its attributes land a few frames before its tiles, and every changed tile flashes the wrong colors.
+; BG Map 1 is shown as the window, over all of BG Map 0.
+	ldh a, [hWY]
+	and a
+	hlbgcoord 0, 0 ; BG Map 0, while the window shows BG Map 1
+	jr z, .got_bg_map
+	hlbgcoord 0, 0, vBGMap1
+.got_bg_map
 	call TownMapBGUpdate
+	ldh a, [hWY]
+	and a
+	ld a, SCREEN_HEIGHT_PX ; hide the window, showing BG Map 0
+	jr z, .got_window
+	xor a ; show the window, BG Map 1
+.got_window
+	push af
+	farcall MapRegionScroll_Slide ; if a region swap asked for it, slide the new map in first
+	pop af
+	ldh [hWY], a
 	call InitMapArrowCursor ; the regular arrow, as on the Pokegear map
 	ld a, c
 	ld [wTownMapCursorCoordinates], a
 	ld a, b
 	ld [wTownMapCursorCoordinates + 1], a
 	jmp GetMapCursorCoordinates ; onto the selected town at once
+
+.SelectFlypoint:
+; a = the region's default flypoint, selected unless a town on this region already is, as when SELECT
+; draws the map afresh for another view. Call once wStartFlypoint and wEndFlypoint are set.
+	ld b, a
+	ld a, [wStartFlypoint]
+	ld c, a
+	ld a, [wTownMapPlayerIconLandmark]
+	cp c
+	jr c, .default_flypoint
+	ld c, a
+	ld a, [wEndFlypoint]
+	cp c
+	ret nc
+.default_flypoint
+	ld a, b
+	ld [wTownMapPlayerIconLandmark], a
+	ret
+
+FlyMap_GetShownRegion:
+; out: a = JOHTO_REGION or KANTO_REGION, the region the Fly map is showing
+	assert JOHTO_REGION == 0 && KANTO_REGION == 1
+	ld a, [wStartFlypoint]
+	cp KANTO_FLYPOINT
+	sbc a ; -1 for Johto, 0 for Kanto
+	inc a ; JOHTO_REGION or KANTO_REGION
+	ret
 
 Pokedex_GetArea:
 ; e: Current landmark

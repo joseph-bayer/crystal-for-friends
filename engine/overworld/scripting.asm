@@ -612,11 +612,7 @@ Script_askforphonenumber:
 	rst GetScriptByte
 	ld c, a
 	farcall AddPhoneNumber
-	jr c, .phonefull
 	xor a ; PHONE_CONTACT_GOT
-	jr .done
-.phonefull
-	ld a, PHONE_CONTACTS_FULL
 	jr .done
 .refused
 	rst GetScriptByte
@@ -1879,8 +1875,6 @@ Script_checkcellnum:
 Script_specialphonecall:
 	rst GetScriptByte
 	ld [wSpecialPhoneCallID], a
-	rst GetScriptByte
-	ld [wSpecialPhoneCallID + 1], a
 	ret
 
 Script_checkphonecall:

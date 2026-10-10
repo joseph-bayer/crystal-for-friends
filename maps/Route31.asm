@@ -29,7 +29,6 @@ TrainerBugCatcherWade1:
 
 .Script:
 	loadvar VAR_CALLERID, PHONE_BUG_CATCHER_WADE
-	endifjustbattled
 	opentext
 	checkflag ENGINE_WADE_READY_FOR_REMATCH
 	iftrue .WadeRematch
@@ -49,7 +48,6 @@ TrainerBugCatcherWade1:
 	scall .AskAgainSTD
 .Continue:
 	askforphonenumber PHONE_BUG_CATCHER_WADE
-	ifequal PHONE_CONTACTS_FULL, .PhoneFullSTD
 	ifequal PHONE_CONTACT_REFUSED, .DeclinedNumberSTD
 	gettrainername STRING_BUFFER_3, BUG_CATCHER, WADE1
 	scall .RegisterNumberSTD
@@ -164,10 +162,6 @@ TrainerBugCatcherWade1:
 
 .DeclinedNumberSTD:
 	jumpstd NumberDeclinedMScript
-	end
-
-.PhoneFullSTD:
-	jumpstd PhoneFullMScript
 	end
 
 .RematchSTD:

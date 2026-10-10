@@ -29,16 +29,16 @@ ToddPhoneCallerScript:
 	iftrue .TryForSale
 	checkflag ENGINE_TODD_SATURDAY_MORNING
 	iftrue .TryForSale
-	checkflag ENGINE_FLYPOINT_GOLDENROD
-	iffalse .NoGoldenrod
 	farscall PhoneScript_Random2
 	ifequal 0, ToddWantsBattle
 
 .TryForSale:
+	checkflag ENGINE_FLYPOINT_GOLDENROD
+	iffalse .Leftover
 	farscall PhoneScript_Random2
 	ifequal 0, ToddDeptStoreSale
 
-.NoGoldenrod:
+.Leftover:
 	farscall PhoneScript_Random3
 	ifequal 0, ToddFoundRare
 	farsjump Phone_GenericCall_Male

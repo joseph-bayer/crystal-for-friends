@@ -169,7 +169,6 @@ TrainerFisherRalph1:
 
 .Script:
 	loadvar VAR_CALLERID, PHONE_FISHER_RALPH
-	endifjustbattled
 	opentext
 	checkflag ENGINE_RALPH_READY_FOR_REMATCH
 	iftrue .Rematch
@@ -189,7 +188,6 @@ TrainerFisherRalph1:
 	scall .AskNumber2
 .AskForNumber:
 	askforphonenumber PHONE_FISHER_RALPH
-	ifequal PHONE_CONTACTS_FULL, .PhoneFull
 	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
 	gettrainername STRING_BUFFER_3, FISHER, RALPH1
 	scall .RegisteredNumber
@@ -281,10 +279,6 @@ TrainerFisherRalph1:
 	jumpstd NumberDeclinedMScript
 	end
 
-.PhoneFull:
-	jumpstd PhoneFullMScript
-	end
-
 .RematchStd:
 	jumpstd RematchMScript
 	end
@@ -305,7 +299,6 @@ TrainerPicnickerLiz1:
 
 .Script:
 	loadvar VAR_CALLERID, PHONE_PICNICKER_LIZ
-	endifjustbattled
 	opentext
 	checkflag ENGINE_LIZ_READY_FOR_REMATCH
 	iftrue .Rematch
@@ -323,7 +316,6 @@ TrainerPicnickerLiz1:
 	scall .AskNumber2
 .AskForNumber:
 	askforphonenumber PHONE_PICNICKER_LIZ
-	ifequal PHONE_CONTACTS_FULL, .PhoneFull
 	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
 	gettrainername STRING_BUFFER_3, PICNICKER, LIZ1
 	scall .RegisteredNumber
@@ -407,10 +399,6 @@ TrainerPicnickerLiz1:
 
 .NumberDeclined:
 	jumpstd NumberDeclinedFScript
-	end
-
-.PhoneFull:
-	jumpstd PhoneFullFScript
 	end
 
 .RematchStd:

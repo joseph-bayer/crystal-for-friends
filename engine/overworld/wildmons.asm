@@ -1044,6 +1044,10 @@ RandomPhoneMon:
 	inc a
 	inc a
 .no_item
+	bit TRAINERTYPE_FORM_F, c
+	jr z, .no_form
+	inc a
+.no_form
 	bit TRAINERTYPE_MOVES_F, c
 	jr z, .no_moves
 	add NUM_MOVES * 2

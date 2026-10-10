@@ -23,7 +23,6 @@ TrainerSailorHuey:
 
 .Script:
 	loadvar VAR_CALLERID, PHONE_SAILOR_HUEY
-	endifjustbattled
 	opentext
 	checkflag ENGINE_HUEY_READY_FOR_REMATCH
 	iftrue .WantsBattle
@@ -39,7 +38,6 @@ TrainerSailorHuey:
 	scall .AskNumber2
 .AskForNumber:
 	askforphonenumber PHONE_SAILOR_HUEY
-	ifequal PHONE_CONTACTS_FULL, .PhoneFull
 	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
 	gettrainername STRING_BUFFER_3, SAILOR, HUEY1
 	scall .RegisteredNumber
@@ -132,10 +130,6 @@ TrainerSailorHuey:
 
 .NumberDeclined:
 	jumpstd NumberDeclinedMScript
-	end
-
-.PhoneFull:
-	jumpstd PhoneFullMScript
 	end
 
 .Rematch:

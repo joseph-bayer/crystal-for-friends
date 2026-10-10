@@ -25,28 +25,39 @@ TiffanyPhoneCalleeScript:
 
 TiffanyPhoneCallerScript:
 	gettrainername STRING_BUFFER_3, PICNICKER, TIFFANY3
+	checkflag ENGINE_TIFFANY_HAS_PINK_BOW
+	iftrue .NoItem
+	checkevent EVENT_TIFFANY_GAVE_PINK_BOW
+	iftrue .GaveItem
+	farscall PhoneScript_Random2
+	ifequal 0, .HasPinkBow
+	sjump .NoItem
+
+.GaveItem:
+	farscall PhoneScript_Random4
+	ifequal 0, .HasPinkBow
+
+.NoItem:
+	checkflag ENGINE_TIFFANY_READY_FOR_REMATCH
+	iftrue .Leftover
+	checkflag ENGINE_TIFFANY_TUESDAY_AFTERNOON
+	iftrue .Leftover
+	farscall PhoneScript_Random2
+	ifequal 0, .WantsBattle
+
+.Leftover:
 	farscall PhoneScript_Random4
 	ifequal 0, TiffanysFamilyMembers
 	farscall PhoneScript_GreetPhone_Female
-	checkflag ENGINE_TIFFANY_READY_FOR_REMATCH
-	iftrue .Generic
-	checkflag ENGINE_TIFFANY_TUESDAY_AFTERNOON
-	iftrue .Generic
-	checkflag ENGINE_TIFFANY_HAS_PINK_BOW
-	iftrue .Generic
-	farscall PhoneScript_Random3
-	ifequal 0, TiffanyWantsBattle
-	checkevent EVENT_TIFFANY_GAVE_PINK_BOW
-	iftrue .PinkBow
-	farscall PhoneScript_Random2
-	ifequal 0, TiffanyHasPinkBow
-
-.PinkBow:
-	farscall PhoneScript_Random11
-	ifequal 0, TiffanyHasPinkBow
-
-.Generic:
 	farsjump Phone_GenericCall_Female
+
+.HasPinkBow:
+	farscall PhoneScript_GreetPhone_Female
+	sjump TiffanyHasPinkBow
+
+.WantsBattle:
+	farscall PhoneScript_GreetPhone_Female
+	sjump TiffanyWantsBattle
 
 TiffanyTuesdayAfternoon:
 	setflag ENGINE_TIFFANY_TUESDAY_AFTERNOON

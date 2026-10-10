@@ -27,7 +27,6 @@ TrainerBlackbeltKenji:
 
 .Script:
 	loadvar VAR_CALLERID, PHONE_BLACKBELT_KENJI
-	endifjustbattled
 	opentext
 	checkcellnum PHONE_BLACKBELT_KENJI
 	iftrue .Registered
@@ -44,7 +43,6 @@ TrainerBlackbeltKenji:
 	scall Route45AskNumber2M
 .AskForNumber:
 	askforphonenumber PHONE_BLACKBELT_KENJI
-	ifequal PHONE_CONTACTS_FULL, Route45PhoneFullM
 	ifequal PHONE_CONTACT_REFUSED, Route45NumberDeclinedM
 	gettrainername STRING_BUFFER_3, BLACKBELT_T, KENJI3
 	scall Route45RegisteredNumberM
@@ -101,10 +99,6 @@ Route45NumberDeclinedM:
 	jumpstd NumberDeclinedMScript
 	end
 
-Route45PhoneFullM:
-	jumpstd PhoneFullMScript
-	end
-
 Route45RematchM:
 	jumpstd RematchMScript
 	end
@@ -153,7 +147,6 @@ TrainerHikerParry:
 
 .Script:
 	loadvar VAR_CALLERID, PHONE_HIKER_PARRY
-	endifjustbattled
 	opentext
 	checkflag ENGINE_PARRY_READY_FOR_REMATCH
 	iftrue .WantsBattle
@@ -171,7 +164,6 @@ TrainerHikerParry:
 	scall Route45AskNumber2M
 .AskForNumber:
 	askforphonenumber PHONE_HIKER_PARRY
-	ifequal PHONE_CONTACTS_FULL, Route45PhoneFullM
 	ifequal PHONE_CONTACT_REFUSED, Route45NumberDeclinedM
 	gettrainername STRING_BUFFER_3, HIKER, PARRY1
 	scall Route45RegisteredNumberM

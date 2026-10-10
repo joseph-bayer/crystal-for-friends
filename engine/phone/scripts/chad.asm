@@ -20,16 +20,16 @@ ChadPhoneCalleeScript:
 ChadPhoneCallerScript:
 	gettrainername STRING_BUFFER_3, SCHOOLBOY, CHAD1
 	farscall PhoneScript_GreetPhone_Male
-	farscall PhoneScript_Random2
-	ifequal 0, ChadOakGossip
 	checkflag ENGINE_CHAD_READY_FOR_REMATCH
-	iftrue .Generic
+	iftrue .Leftover
 	checkflag ENGINE_CHAD_FRIDAY_MORNING
-	iftrue .Generic
+	iftrue .Leftover
 	farscall PhoneScript_Random2
 	ifequal 0, ChadWantsBattle
 
-.Generic:
+.Leftover:
+	farscall PhoneScript_Random2
+	ifequal 0, ChadOakGossip
 	farscall PhoneScript_Random3
 	ifequal 0, ChadFoundRare
 	farsjump Phone_GenericCall_Male

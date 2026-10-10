@@ -7,7 +7,7 @@ HueyPhoneCalleeScript:
 	iftrue .NotWednesday
 	readvar VAR_WEEKDAY
 	ifnotequal WEDNESDAY, .NotWednesday
-	checktime NITE
+	checktime EVE | NITE
 	iftrue HueyWednesdayNight
 
 .NotWednesday:

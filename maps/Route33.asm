@@ -17,7 +17,6 @@ TrainerHikerAnthony:
 
 .Script:
 	loadvar VAR_CALLERID, PHONE_HIKER_ANTHONY
-	endifjustbattled
 	opentext
 	checkflag ENGINE_ANTHONY_READY_FOR_REMATCH
 	iftrue .Rematch
@@ -37,7 +36,6 @@ TrainerHikerAnthony:
 	scall .AskNumber2
 .AskForPhoneNumber:
 	askforphonenumber PHONE_HIKER_ANTHONY
-	ifequal PHONE_CONTACTS_FULL, .PhoneFull
 	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
 	gettrainername STRING_BUFFER_3, HIKER, ANTHONY2
 	scall .RegisteredNumber
@@ -127,10 +125,6 @@ TrainerHikerAnthony:
 
 .NumberDeclined:
 	jumpstd NumberDeclinedMScript
-	end
-
-.PhoneFull:
-	jumpstd PhoneFullMScript
 	end
 
 .RematchStd:

@@ -45,11 +45,6 @@ ChadNumberDeclinedText:
 	cont "PROF.OAK…"
 	done
 
-ChadPhoneFullText:
-	text "Your phone list is"
-	line "completely full!"
-	done
-
 ChadRematchText:
 	text "I've been waiting!"
 	line "Let's battle now!"

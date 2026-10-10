@@ -36,11 +36,6 @@ TiffanyNumberDeclinedText:
 	line "CLEFAIRY."
 	done
 
-TiffanyPhoneFullText:
-	text "Oh? Your phone"
-	line "registry is full."
-	done
-
 TiffanyRematchText:
 	text "There you are!"
 

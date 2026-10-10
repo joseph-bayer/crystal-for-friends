@@ -74,7 +74,23 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - TODO: Kurt makes Apricorn balls instantly
 
 - **Pokegear Upgrades**
+  - Press **Select** on the Pokegear map or the Fly map to switch what the map shows:
+
+	| View | Shows |
+	|---------|-------------------|
+	| SWARMS | Active swarms and roaming legendaries |
+	| REMATCH | Trainers who are ready for a rematch |
+	| GIFTS | Trainers who have an item waiting for you |
+  - When there are more trainers than fit on screen, they take turns showing
+  - Press **Start** to slide over to the other region's map, once you've visited Indigo Plateau. On the Fly map, Left and Right still work too
   - TODO: Pokegear cards wrap around
+
+- **Phone Overhaul**
+  - No more full phone: you can register every trainer who offers you their number
+  - Trainers offer their number right after you beat them
+  - Answer or decline calls: press **A** to answer, **B** to decline. Mom, Prof. Oak, Bill and Prof. Elm can't be declined
+  - Fewer filler calls: trainers are more likely to call about a rematch or a gift
+  - A trainer with a rematch or gift waiting won't call again until you go see them
 
 - **Headbutt Tree Encounters Simplified**
   - Headbutting a headbutt tree always results in a Pokemon appearing
@@ -213,6 +229,9 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - The simplified clock reset follows the [Simplify the Clock Reset Procedure](https://github.com/pret/pokecrystal/wiki/Simplify-the-Clock-Reset-Procedure) tutorial by [SonicRay100](https://github.com/SonicRay100) from the pret/pokecrystal wiki
   - The Hidden Power move animation, colored by type, is ported from [Sour Crystal](https://github.com/SoupPotato/sourcrystal)
   - The Hidden Power stats page follows the [Add a fourth stats page](https://github.com/pret/pokecrystal/wiki/Add-a-fourth-stats-page) tutorial by [Rangi42](https://github.com/Rangi42) from the pret/pokecrystal wiki
+  - The unlimited phone contact list, evening rematch times and the one-byte special phone call fix are ported from [Polished Crystal](https://github.com/Rangi42/polishedcrystal)
+  - Answering or declining phone calls is ported from [Sour Crystal](https://github.com/SoupPotato/sourcrystal)
+  - Trainers offering their number right after battle follows the [Improve the trainer rematch system](https://github.com/pret/pokecrystal/wiki/Improve-the-trainer-rematch-system) tutorial by Grate Oracle Lewot from the pret/pokecrystal wiki
 - **Art Credits**
   - SCMidna for Surfing Pikachu front sprites
   - bloodless for Flying Pikachu back sprite

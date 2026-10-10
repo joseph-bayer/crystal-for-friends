@@ -72,7 +72,6 @@ BillsYoungerSisterScript:
 	iftrue .GotBillsNumber
 	writetext BillsYoungerSisterUsefulNumberText
 	askforphonenumber PHONE_BILL
-	ifequal PHONE_CONTACTS_FULL, .NoRoom
 	ifequal PHONE_CONTACT_REFUSED, .Refused
 	waitsfx
 	addcellnum PHONE_BILL
@@ -91,11 +90,6 @@ BillsYoungerSisterScript:
 	waitbutton
 	closetext
 	end
-
-.NoRoom:
-	writetext BillsYoungerSisterPhoneFullText
-	promptbutton
-	sjump .Refused
 
 BillsHouseBookshelf1:
 	jumpstd PictureBookshelfScript
@@ -225,11 +219,6 @@ BillsYoungerSisterRefusedNumberText:
 	para "I was going to"
 	line "give you BILL's"
 	cont "number…"
-	done
-
-BillsYoungerSisterPhoneFullText:
-	text "You can't record"
-	line "any more numbers."
 	done
 
 BillsYoungerSisterStorageSystemText:

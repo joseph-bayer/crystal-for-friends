@@ -33,7 +33,6 @@ TrainerCooltrainermGaven3:
 
 .Script:
 	loadvar VAR_CALLERID, PHONE_COOLTRAINERM_GAVEN
-	endifjustbattled
 	opentext
 	checkflag ENGINE_GAVEN_READY_FOR_REMATCH
 	iftrue .WantsBattle
@@ -51,7 +50,6 @@ TrainerCooltrainermGaven3:
 	scall .AskNumber2
 .AskForNumber:
 	askforphonenumber PHONE_COOLTRAINERM_GAVEN
-	ifequal PHONE_CONTACTS_FULL, .PhoneFull
 	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
 	gettrainername STRING_BUFFER_3, COOLTRAINERM, GAVEN3
 	scall .RegisteredNumber
@@ -113,10 +111,6 @@ TrainerCooltrainermGaven3:
 	jumpstd NumberDeclinedMScript
 	end
 
-.PhoneFull:
-	jumpstd PhoneFullMScript
-	end
-
 .Rematch:
 	jumpstd RematchMScript
 	end
@@ -137,7 +131,6 @@ TrainerCooltrainerfBeth1:
 
 .Script:
 	loadvar VAR_CALLERID, PHONE_COOLTRAINERF_BETH
-	endifjustbattled
 	opentext
 	checkflag ENGINE_BETH_READY_FOR_REMATCH
 	iftrue .WantsBattle
@@ -155,7 +148,6 @@ TrainerCooltrainerfBeth1:
 	scall .AskNumber2
 .AskForNumber:
 	askforphonenumber PHONE_COOLTRAINERF_BETH
-	ifequal PHONE_CONTACTS_FULL, .PhoneFull
 	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
 	gettrainername STRING_BUFFER_3, COOLTRAINERF, BETH1
 	scall .RegisteredNumber
@@ -215,10 +207,6 @@ TrainerCooltrainerfBeth1:
 
 .NumberDeclined:
 	jumpstd NumberDeclinedFScript
-	end
-
-.PhoneFull:
-	jumpstd PhoneFullFScript
 	end
 
 .Rematch:

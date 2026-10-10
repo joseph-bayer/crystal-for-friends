@@ -24,7 +24,6 @@ TrainerBirdKeeperVance1:
 
 .Script:
 	loadvar VAR_CALLERID, PHONE_BIRDKEEPER_VANCE
-	endifjustbattled
 	opentext
 	checkflag ENGINE_VANCE_READY_FOR_REMATCH
 	iftrue .WantsBattle
@@ -42,7 +41,6 @@ TrainerBirdKeeperVance1:
 	scall Route44AskNumber2M
 .AskForNumber:
 	askforphonenumber PHONE_BIRDKEEPER_VANCE
-	ifequal PHONE_CONTACTS_FULL, Route44PhoneFullM
 	ifequal PHONE_CONTACT_REFUSED, Route44NumberDeclinedM
 	gettrainername STRING_BUFFER_3, BIRD_KEEPER, VANCE1
 	scall Route44RegisteredNumberM
@@ -125,10 +123,6 @@ Route44NumberDeclinedM:
 	jumpstd NumberDeclinedMScript
 	end
 
-Route44PhoneFullM:
-	jumpstd PhoneFullMScript
-	end
-
 Route44RematchM:
 	jumpstd RematchMScript
 	end
@@ -166,7 +160,6 @@ TrainerFisherWilton1:
 
 .Script:
 	loadvar VAR_CALLERID, PHONE_FISHER_WILTON
-	endifjustbattled
 	opentext
 	checkflag ENGINE_WILTON_READY_FOR_REMATCH
 	iftrue .WantsBattle
@@ -186,7 +179,6 @@ TrainerFisherWilton1:
 	scall Route44AskNumber2M
 .AskForNumber:
 	askforphonenumber PHONE_FISHER_WILTON
-	ifequal PHONE_CONTACTS_FULL, Route44PhoneFullM
 	ifequal PHONE_CONTACT_REFUSED, Route44NumberDeclinedM
 	gettrainername STRING_BUFFER_3, FISHER, WILTON1
 	scall Route44RegisteredNumberM

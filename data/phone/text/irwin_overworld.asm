@@ -44,10 +44,3 @@ IrwinNumberDeclinedText:
 	line "and nothing!"
 	done
 
-IrwinPhoneFullText:
-	text "Your phone list is"
-	line "already full…"
-
-	para "You must be really"
-	line "popular…"
-	done

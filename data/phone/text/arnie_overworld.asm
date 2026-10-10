@@ -42,14 +42,6 @@ ArnieNumberDeclinedText:
 	cont "my discoveries!"
 	done
 
-ArniePhoneFullText:
-	text "There's no space"
-	line "for my number."
-
-	para "If you make room,"
-	line "register me!"
-	done
-
 ArnieRematchText:
 	text "It's my turn to"
 	line "win now!"

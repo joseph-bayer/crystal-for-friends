@@ -33,26 +33,27 @@ GinaPhoneCallerScript:
 	farscall PhoneScript_GreetPhone_Female
 	checkflag ENGINE_ROCKETS_IN_RADIO_TOWER
 	iftrue GinaRockets
-	checkflag ENGINE_GINA_READY_FOR_REMATCH
-	iftrue .Generic
-	checkflag ENGINE_GINA_SUNDAY_AFTERNOON
-	iftrue .Generic
 	checkflag ENGINE_GINA_HAS_LEAF_STONE
-	iftrue .Generic
+	iftrue .NoItem
 	checkevent EVENT_GINA_GAVE_LEAF_STONE
-	iftrue .GaveLeafStone
+	iftrue .GaveItem
 	farscall PhoneScript_Random2
 	ifequal 0, GinaHasLeafStone
+	sjump .NoItem
 
-.GaveLeafStone:
-	farscall PhoneScript_Random11
+.GaveItem:
+	farscall PhoneScript_Random4
 	ifequal 0, GinaHasLeafStone
-	checkflag ENGINE_FLYPOINT_GOLDENROD
-	iffalse .Generic
-	farscall PhoneScript_Random3
+
+.NoItem:
+	checkflag ENGINE_GINA_READY_FOR_REMATCH
+	iftrue .Leftover
+	checkflag ENGINE_GINA_SUNDAY_AFTERNOON
+	iftrue .Leftover
+	farscall PhoneScript_Random2
 	ifequal 0, GinaWantsBattle
 
-.Generic:
+.Leftover:
 	farsjump Phone_GenericCall_Female
 
 GinaSundayDay:

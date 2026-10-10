@@ -9,7 +9,7 @@ WadePhoneCalleeScript:
 	iftrue .HasItem
 	readvar VAR_WEEKDAY
 	ifnotequal TUESDAY, .NotTuesday
-	checktime NITE
+	checktime EVE | NITE
 	iftrue WadeTuesdayNight
 
 .NotTuesday:
@@ -51,16 +51,16 @@ WadePhoneCallerScript:
 	ifequal SUNDAY, .ContestToday
 
 .NoContest:
+	checkflag ENGINE_WADE_HAS_ITEM
+	iftrue .NoItem
+	farscall PhoneScript_Random2
+	ifequal 0, WadeHasItem2
+
+.NoItem:
 	checkflag ENGINE_WADE_READY_FOR_REMATCH
 	iftrue .next
 	checkflag ENGINE_WADE_TUESDAY_NIGHT
 	iftrue .next
-	checkflag ENGINE_WADE_HAS_ITEM
-	iftrue .next
-	farscall PhoneScript_Random2
-	ifequal 0, WadeHasItem2
-	checkflag ENGINE_FLYPOINT_GOLDENROD
-	iffalse .next
 	farscall PhoneScript_Random2
 	ifequal 0, WadeWantsBattle2
 

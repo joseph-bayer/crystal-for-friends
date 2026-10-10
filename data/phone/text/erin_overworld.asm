@@ -34,11 +34,6 @@ ErinNumberDeclinedText:
 	line "ERIN--that's me!"
 	done
 
-ErinPhoneFullText:
-	text "Oh no. Your phone"
-	line "is all filled up."
-	done
-
 ErinRematchText:
 	text "Yay! I waited!"
 	line "Let's start now!"

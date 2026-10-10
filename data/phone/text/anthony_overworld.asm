@@ -37,13 +37,6 @@ AnthonyNumberDeclinedText:
 	cont "the mountains…"
 	done
 
-AnthonyPhoneFullText:
-	text "Your phone's full."
-
-	para "It can't register"
-	line "my phone number."
-	done
-
 AnthonyRematchText:
 	text "All righty, then!"
 

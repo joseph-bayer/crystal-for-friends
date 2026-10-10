@@ -46,14 +46,6 @@ GavenNumberDeclinedText:
 	line "a shout anytime."
 	done
 
-GavenPhoneFullText:
-	text "Your phone's"
-	line "memory is full."
-
-	para "You can't register"
-	line "my number."
-	done
-
 GavenRematchText:
 	text "Hi! I've been"
 	line "waiting for you!"

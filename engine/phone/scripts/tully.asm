@@ -9,7 +9,7 @@ TullyPhoneCalleeScript:
 	iftrue .WaterStone
 	readvar VAR_WEEKDAY
 	ifnotequal SUNDAY, .NotSunday
-	checktime NITE
+	checktime EVE | NITE
 	iftrue TullySundayNight
 
 .NotSunday:
@@ -26,24 +26,27 @@ TullyPhoneCalleeScript:
 TullyPhoneCallerScript:
 	gettrainername STRING_BUFFER_3, FISHER, TULLY1
 	farscall PhoneScript_GreetPhone_Male
-	checkflag ENGINE_TULLY_READY_FOR_REMATCH
-	iftrue .Generic
-	checkflag ENGINE_TULLY_SUNDAY_NIGHT
-	iftrue .Generic
 	checkflag ENGINE_TULLY_HAS_WATER_STONE
-	iftrue .Generic
-	farscall PhoneScript_Random3
-	ifequal 0, TullyWantsBattle
+	iftrue .NoItem
 	checkevent EVENT_TULLY_GAVE_WATER_STONE
-	iftrue .WaterStone
+	iftrue .GaveItem
 	farscall PhoneScript_Random2
 	ifequal 0, TullyFoundWaterStone
+	sjump .NoItem
 
-.WaterStone:
-	farscall PhoneScript_Random11
+.GaveItem:
+	farscall PhoneScript_Random4
 	ifequal 0, TullyFoundWaterStone
 
-.Generic:
+.NoItem:
+	checkflag ENGINE_TULLY_READY_FOR_REMATCH
+	iftrue .Leftover
+	checkflag ENGINE_TULLY_SUNDAY_NIGHT
+	iftrue .Leftover
+	farscall PhoneScript_Random2
+	ifequal 0, TullyWantsBattle
+
+.Leftover:
 	farsjump Phone_GenericCall_Male
 
 TullySundayNight:

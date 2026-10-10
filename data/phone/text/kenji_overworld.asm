@@ -34,13 +34,6 @@ KenjiNumberDeclinedText:
 	cont "come see me."
 	done
 
-KenjiPhoneFullText:
-	text "Your phone appears"
-	line "to be full."
-
-	para "Come back later!"
-	done
-
 KenjiGiftText:
 	text "I wish to thank"
 	line "you, <PLAYER>!"

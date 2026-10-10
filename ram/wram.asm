@@ -704,6 +704,7 @@ wPokegearPhoneCursorPosition:: db
 wPokegearPhoneScrollPosition:: db
 wPokegearPhoneSelectedPerson:: db
 wPokegearPhoneSubmenuCursor:: db
+wPokegearPhoneMaxContact:: db ; number of contacts - 1
 wPokegearMapCursorObjectPointer:: dw
 wPokegearMapCursorLandmark:: db
 wPokegearMapPlayerIconLandmark:: db
@@ -711,6 +712,25 @@ wPokegearRadioChannelBank:: db
 wPokegearRadioChannelAddr:: dw
 wPokegearRadioMusicPlaying:: db
 wPokegearMapCanFly:: db ; TRUE if the map can fly the player to a visited town
+
+; The Pokegear map's and the Fly map's views. The Fly map uses these too: nothing else in this
+; union is in use while it's open.
+wMapIconView:: db ; MAP_VIEW_* constant: what SELECT has the map showing
+wMapRegionScroll:: db ; MAP_SCROLL_* constant: whether, and which way, the next map drawn slides in
+wMapScrollHeaderRows:: db ; how many rows at the top hold still through the slide
+wMapScrollHeaderLastLine:: db ; scratch for MapRegionScroll_Slide
+wMapTrainerIconCount:: db
+wMapTrainerIcons:: ds MAX_MAP_TRAINER_ICONS * MAP_TRAINER_ICON_LENGTH ; sorted north to south
+wMapTrainerSpriteCount:: db
+wMapTrainerSprites:: ds MAX_MAP_TRAINER_SPRITES ; the overworld sprites loaded, in tile order
+wMapTrainerPages:: db
+wMapTrainerPinnedLandmark:: db ; the player's landmark, whose trainers are on every page; -1 if none
+wMapTrainerShownTurn:: db ; the wMapIconTurn that wMapTrainersShown was made for
+wMapTrainerTurnPage:: db ; scratch for MapTrainers_ShowTurn: this turn's page
+wMapTrainerTurnRound:: db ; scratch for MapTrainers_ShowTurn: how often that page came round before
+wMapTrainerPlayerAside:: db ; scratch for MapTrainers_ShowTurn: a trainer has the player's landmark
+wMapTrainersShownCount:: db
+wMapTrainersShown:: ds MAX_MAP_TRAINERS_SHOWN * 4 ; each icon's OAM y, x, tile and attributes
 
 NEXTU
 ; trade
@@ -1973,13 +1993,6 @@ NEXTU
 wJumpStdScriptBuffer:: ds 3
 
 NEXTU
-; phone script data
-wCheckedTime:: db
-wPhoneListIndex:: db
-wNumAvailableCallers:: db
-wAvailableCallers:: ds CONTACT_LIST_SIZE
-
-NEXTU
 ; phone caller contact
 	ds 1
 wCallerContact:: ds PHONE_CONTACT_SIZE
@@ -2352,7 +2365,6 @@ wd1f2:: ds 1
 NEXTU
 ; miscellaneous bytes
 wSkipMovesBeforeLevelUp::
-wRegisteredPhoneNumbers::
 wListMovesLineSpacing:: db
 wSwitchMonTo:: db
 wSwitchMonFrom:: db
@@ -2987,7 +2999,9 @@ wParkBallsRemaining::
 wSafariBallsRemaining:: db
 wSafariTimeRemaining:: dw
 
-wPhoneList:: ds CONTACT_LIST_SIZE + 1
+wPhoneList:: flag_array NUM_PHONE_CONTACTS
+wPhoneListEnd::
+	ds 11 - (wPhoneListEnd - wPhoneList) ; the old 10-slot list's size, so later save data doesn't move
 
 wLuckyNumberShowFlag:: db
 wLuckyIDNumber:: dw

@@ -33,11 +33,6 @@ LizNumberDeclinedText:
 	line "my friend?"
 	done
 
-LizPhoneFullText:
-	text "Wait! Your phone"
-	line "list is filled up!"
-	done
-
 LizRematchText:
 	text "You're late! Let's"
 	line "get started now!"

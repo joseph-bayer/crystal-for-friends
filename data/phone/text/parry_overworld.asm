@@ -34,12 +34,6 @@ ParryNumberDeclinedText:
 	cont "for a rematch."
 	done
 
-ParryPhoneFullText:
-	text "Oh? There's no"
-	line "room to register"
-	cont "my phone number."
-	done
-
 ParryRematchText:
 	text "Hey, here comes"
 	line "the kid! Let's go!"

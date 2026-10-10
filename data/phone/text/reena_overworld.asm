@@ -34,11 +34,6 @@ ReenaNumberDeclinedText:
 	cont "to regret this!"
 	done
 
-ReenaPhoneFullText:
-	text "What? Your phone"
-	line "list has no room!"
-	done
-
 ReenaRematchText:
 	text "What took you?"
 	line "Start right away!"

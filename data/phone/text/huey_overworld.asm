@@ -34,11 +34,6 @@ HueyNumberDeclinedText:
 	line "a wimp…"
 	done
 
-HueyPhoneFullText:
-	text "Hey! Your phone's"
-	line "already full!"
-	done
-
 HueyRematchText:
 	text "Hey! I'm tired of"
 	line "waiting for you!"

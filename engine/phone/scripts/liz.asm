@@ -20,24 +20,24 @@ LizPhoneCalleeScript:
 
 LizPhoneCallerScript:
 	gettrainername STRING_BUFFER_3, PICNICKER, LIZ1
+	checkflag ENGINE_LIZ_READY_FOR_REMATCH
+	iftrue .Leftover
+	checkflag ENGINE_LIZ_THURSDAY_AFTERNOON
+	iftrue .Leftover
+	farscall PhoneScript_Random2
+	ifequal 0, .WantsBattle
+
+.Leftover:
 	farscall PhoneScript_Random4
 	ifequal 0, LizWrongNumber
 	farscall PhoneScript_GreetPhone_Female
-	checkflag ENGINE_LIZ_READY_FOR_REMATCH
-	iftrue .next
-	checkflag ENGINE_LIZ_THURSDAY_AFTERNOON
-	iftrue .next
-
-.next:
 	farscall PhoneScript_Random2
 	ifequal 0, LizGossip
-	checkflag ENGINE_FLYPOINT_GOLDENROD
-	iffalse .Generic
-	farscall PhoneScript_Random2
-	ifequal 0, LizWantsBattle
-
-.Generic:
 	farsjump Phone_GenericCall_Female
+
+.WantsBattle:
+	farscall PhoneScript_GreetPhone_Female
+	sjump LizWantsBattle
 
 LizThursdayAfternoon:
 	setflag ENGINE_LIZ_THURSDAY_AFTERNOON

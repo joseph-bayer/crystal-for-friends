@@ -20,16 +20,16 @@ JackPhoneCalleeScript:
 JackPhoneCallerScript:
 	gettrainername STRING_BUFFER_3, SCHOOLBOY, JACK1
 	farscall PhoneScript_GreetPhone_Male
-	farscall PhoneScript_Random2
-	ifequal 0, JackBattleTrivia
 	checkflag ENGINE_JACK_READY_FOR_REMATCH
-	iftrue .WaitingForBattle
+	iftrue .Leftover
 	checkflag ENGINE_JACK_MONDAY_MORNING
-	iftrue .WaitingForBattle
+	iftrue .Leftover
 	farscall PhoneScript_Random2
 	ifequal 0, JackWantsToBattle
 
-.WaitingForBattle:
+.Leftover:
+	farscall PhoneScript_Random2
+	ifequal 0, JackBattleTrivia
 	farscall PhoneScript_Random3
 	ifequal 0, JackFindsRare
 	farsjump Phone_GenericCall_Male

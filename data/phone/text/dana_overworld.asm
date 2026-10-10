@@ -42,11 +42,6 @@ DanaNumberDeclinedText:
 	line "free…"
 	done
 
-DanaPhoneFullText:
-	text "But your phone's"
-	line "out of memory!"
-	done
-
 DanaRematchText:
 	text "You're really"
 	line "late!"

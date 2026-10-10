@@ -41,7 +41,6 @@ TrainerLassDana1:
 
 .Script
 	loadvar VAR_CALLERID, PHONE_LASS_DANA
-	endifjustbattled
 	opentext
 	checkflag ENGINE_DANA_READY_FOR_REMATCH
 	iftrue .DanaRematch
@@ -61,7 +60,6 @@ TrainerLassDana1:
 	scall .AskNumber2F
 .AskForPhoneNumber:
 	askforphonenumber PHONE_LASS_DANA
-	ifequal PHONE_CONTACTS_FULL, .PhoneFull
 	ifequal PHONE_CONTACT_REFUSED, .DeclinedPhoneNumber
 	gettrainername STRING_BUFFER_3, LASS, DANA1
 	scall .RegisteredPhoneNumber
@@ -158,10 +156,6 @@ TrainerLassDana1:
 	jumpstd NumberDeclinedFScript
 	end
 
-.PhoneFull:
-	jumpstd PhoneFullFScript
-	end
-
 .Rematch:
 	jumpstd RematchFScript
 	end
@@ -179,7 +173,6 @@ TrainerSchoolboyChad1:
 
 .Script
 	loadvar VAR_CALLERID, PHONE_SCHOOLBOY_CHAD
-	endifjustbattled
 	opentext
 	checkflag ENGINE_CHAD_READY_FOR_REMATCH
 	iftrue .ChadRematch
@@ -197,7 +190,6 @@ TrainerSchoolboyChad1:
 	scall .AskPhoneNumber2
 .AskToRegisterNumber:
 	askforphonenumber PHONE_SCHOOLBOY_CHAD
-	ifequal PHONE_CONTACTS_FULL, .PhoneFull
 	ifequal PHONE_CONTACT_REFUSED, .SaidNo
 	gettrainername STRING_BUFFER_3, SCHOOLBOY, CHAD1
 	scall .RegisteredChad
@@ -281,10 +273,6 @@ TrainerSchoolboyChad1:
 
 .SaidNo:
 	jumpstd NumberDeclinedMScript
-	end
-
-.PhoneFull:
-	jumpstd PhoneFullMScript
 	end
 
 .Rematch:

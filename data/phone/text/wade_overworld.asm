@@ -42,12 +42,6 @@ WadeNumberDeclinedText:
 	cont "get my number."
 	done
 
-WadePhoneFullText:
-	text "Your phone list"
-	line "has no room for my"
-	cont "number."
-	done
-
 WadeRematchText:
 	text "I was waiting for"
 	line "you. Let's battle!"

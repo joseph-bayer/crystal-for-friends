@@ -8,6 +8,7 @@ if DEF(_DEBUG)
 	const PLAYERSHOUSE2F_DEBUG_WARPER
 	const PLAYERSHOUSE2F_DEBUG_BEASTS
 	const PLAYERSHOUSE2F_DEBUG_LAB
+	const PLAYERSHOUSE2F_DEBUG_PHONE
 endc
 
 PlayersHouse2F_MapScripts:
@@ -579,6 +580,10 @@ PlayersHouseDebugBeastsReleasedText:
 	cont "CARD."
 	done
 
+PlayersHouseDebugPhoneScript:
+; The phone debug tools live in engine/debug/phone.asm, for room in this bank.
+	farsjump DebugPhoneScript
+
 PlayersHouseDebugLabScript:
 ; Debug tools for the starters in ELM's lab (the Super Nerd's FORCE SHINY covers them too), and a
 ; party for testing the HM field move rule.
@@ -992,4 +997,5 @@ if DEF(_DEBUG)
 	object_event  3,  4, SPRITE_ROCKET, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, PlayersHouseDebugWarperScript, -1
 	object_event  1,  4, SPRITE_SUPER_NERD, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, PlayersHouseDebugBeastsScript, -1
 	object_event  0,  4, SPRITE_SCIENTIST, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_GREEN, OBJECTTYPE_SCRIPT, 0, PlayersHouseDebugLabScript, -1
+	object_event  7,  4, SPRITE_YOUNGSTER, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, PlayersHouseDebugPhoneScript, -1
 endc

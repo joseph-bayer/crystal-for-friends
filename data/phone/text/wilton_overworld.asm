@@ -32,11 +32,6 @@ WiltonNumberDeclinedText:
 	cont "change of heart."
 	done
 
-WiltonPhoneFullText:
-	text "You can't register"
-	line "another number."
-	done
-
 WiltonRematchText:
 	text "Argh! You startled"
 	line "POLIWAG into"

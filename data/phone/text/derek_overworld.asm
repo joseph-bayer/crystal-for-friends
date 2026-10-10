@@ -37,11 +37,6 @@ DerekNumberDeclinedText:
 	line "even like PIKACHU…"
 	done
 
-DerekPhoneFullText:
-	text "Wait a sec! Your"
-	line "phone list's full!"
-	done
-
 DerekGiftText:
 	text "I've been looking"
 	line "for you! Here, see"

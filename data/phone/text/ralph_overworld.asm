@@ -41,15 +41,6 @@ RalphNumberDeclinedText:
 	line "people are today?"
 	done
 
-RalphPhoneFullText:
-	text "Your phone's"
-	line "memory is full."
-
-	para "It seems that"
-	line "young people all"
-	cont "have #GEAR."
-	done
-
 RalphRematchText:
 	text "Hey, kid!"
 

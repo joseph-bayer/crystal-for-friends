@@ -53,7 +53,6 @@ TrainerPokemaniacBrent:
 
 .Script:
 	loadvar VAR_CALLERID, PHONE_POKEMANIAC_BRENT
-	endifjustbattled
 	opentext
 	checkflag ENGINE_BRENT_READY_FOR_REMATCH
 	iftrue .WantsBattle
@@ -71,7 +70,6 @@ TrainerPokemaniacBrent:
 	scall .AskNumber2
 .AskForNumber:
 	askforphonenumber PHONE_POKEMANIAC_BRENT
-	ifequal PHONE_CONTACTS_FULL, .PhoneFull
 	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
 	gettrainername STRING_BUFFER_3, POKEMANIAC, BRENT1
 	scall .RegisteredNumber
@@ -145,10 +143,6 @@ TrainerPokemaniacBrent:
 	jumpstd NumberDeclinedMScript
 	end
 
-.PhoneFull:
-	jumpstd PhoneFullMScript
-	end
-
 .Rematch:
 	jumpstd RematchMScript
 	end
@@ -180,7 +174,6 @@ TrainerPicnickerTiffany:
 
 .Script:
 	loadvar VAR_CALLERID, PHONE_PICNICKER_TIFFANY
-	endifjustbattled
 	opentext
 	checkflag ENGINE_TIFFANY_READY_FOR_REMATCH
 	iftrue .WantsBattle
@@ -202,7 +195,6 @@ TrainerPicnickerTiffany:
 	scall .AskNumber2
 .AskForNumber:
 	askforphonenumber PHONE_PICNICKER_TIFFANY
-	ifequal PHONE_CONTACTS_FULL, .PhoneFull
 	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
 	gettrainername STRING_BUFFER_3, PICNICKER, TIFFANY3
 	scall .RegisteredNumber
@@ -291,10 +283,6 @@ TrainerPicnickerTiffany:
 
 .NumberDeclined:
 	jumpstd NumberDeclinedFScript
-	end
-
-.PhoneFull:
-	jumpstd PhoneFullFScript
 	end
 
 .Rematch:

@@ -278,7 +278,6 @@ Buena:
 	writetext RadioTower2FBuenaOfferNumberAgainText
 .AskForNumber:
 	askforphonenumber PHONE_BUENA
-	ifequal PHONE_CONTACTS_FULL, .PhoneFull
 	ifequal PHONE_CONTACT_REFUSED, .NumberDeclined
 	writetext RadioTower2FRegisteredBuenasNumberText
 	playsound SFX_REGISTER_PHONE_NUMBER
@@ -298,11 +297,6 @@ Buena:
 	turnobject RADIOTOWER2F_BUENA, RIGHT
 	end
 
-.PhoneFull:
-	writetext RadioTower2FBuenaYourPhoneIsFullText
-	waitbutton
-	closetext
-	turnobject RADIOTOWER2F_BUENA, RIGHT
 .HasNumber:
 	end
 
@@ -663,14 +657,6 @@ RadioTower2FBuenaCallMeText:
 RadioTower2FBuenaSadRejectedText:
 	text "BUENA: Aww… It's a"
 	line "special prize…"
-	done
-
-RadioTower2FBuenaYourPhoneIsFullText:
-	text "BUENA: <PLAY_G>,"
-	line "your phone list"
-
-	para "has no room left"
-	line "for me…"
 	done
 
 RadioTower2FBuenaReceptionistPointsForPrizesText:
