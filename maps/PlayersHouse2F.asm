@@ -598,8 +598,14 @@ PlayersHouseDebugLabScript:
 	ifequal 3, .LearnersParty
 	ifequal 4, PlayersHouseDebugHPToolsScript
 	ifequal 5, PlayersHouseDebugHPBattlesScript
+	ifequal 6, .AnimViewer
 	closetext
 	end
+
+.AnimViewer:
+; Every move and special animation, from either side (plans/move_animations_port_spec.md). In
+; engine/debug/anim_viewer.asm, for room in this bank.
+	farsjump DebugAnimViewerScript
 
 .LearnersParty:
 ; For the HM rule: Feraligatr, Pidgeot and Ampharos can learn every HM and Rock Smash between them
@@ -676,18 +682,19 @@ PlayersHouseDebugLabScript:
 
 .MenuHeader:
 	db MENU_BACKUP_TILES ; flags
-	menu_coords 0, 0, 16, 13 ; wide enough for SKIP THE THEFT
+	menu_coords 0, 0, 16, 15 ; wide enough for SKIP THE THEFT
 	dw .MenuData
 	db 1 ; default option
 
 .MenuData:
 	db STATICMENU_CURSOR ; flags
-	db 6 ; items
+	db 7 ; items
 	db "REPLAY LAB@"
 	db "SKIP THE THEFT@"
 	db "LEARNERS PARTY@"
 	db "HP TOOLS@"
 	db "HP BATTLES@"
+	db "ANIM VIEWER@"
 	db "CANCEL@"
 
 PlayersHouseDebugHPToolsScript:

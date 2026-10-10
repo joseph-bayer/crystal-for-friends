@@ -142,6 +142,17 @@ WildFled_EnemyFled_LinkBattleCanceled:
 	ret
 
 BattleTurn:
+if DEF(_DEBUG)
+	ld a, [wBattleType]
+	cp BATTLETYPE_DEBUG_ANIMATIONS
+	jr nz, .loop
+	farcall DebugAnimViewer ; instead of any turn
+	ld a, [wBattleResult]
+	and BATTLERESULT_BITMASK
+	add DRAW ; as if the player ran
+	ld [wBattleResult], a
+	ret
+endc
 .loop
 	call CheckContestBattleOver
 	ret c
@@ -1680,10 +1691,11 @@ HandleWeather:
 
 	ld hl, wWeatherCount
 	dec [hl]
-	jr z, .ended
+	jmp z, .ended
 
 	ld hl, .WeatherMessages
 	call .PrintWeatherMessage
+	call .WeatherAnimation
 
 	ld a, [wBattleWeather]
 	cp WEATHER_SANDSTORM
@@ -1703,6 +1715,7 @@ HandleWeather:
 	call SetEnemyTurn
 	call .SandstormDamage
 	call SetPlayerTurn
+	; fallthrough
 
 .SandstormDamage:
 	ld a, BATTLE_VARS_SUBSTATUS3
@@ -1732,17 +1745,41 @@ HandleWeather:
 	cp STEEL
 	ret z
 
-	call SwitchTurnCore
-	xor a
-	ld [wBattleAfterAnim], a
-	ld de, ANIM_IN_SANDSTORM
-	call Call_PlayBattleAnim
-	call SwitchTurnCore
 	call GetEighthMaxHP
 	call SubtractHPFromUser
 
 	ld hl, SandstormHitsText
 	jmp StdBattleTextbox
+
+.WeatherAnimation:
+; Sour Crystal: each weather animates once a turn, after its message
+	ld a, [wBattleWeather]
+	dec a
+	add a
+	ld e, a
+	ld d, 0
+	ld hl, .WeatherAnimations
+	add hl, de
+	ld a, [hli]
+	ld d, [hl]
+	ld e, a
+	ldh a, [hBattleTurn]
+	push af
+	call SetPlayerTurn
+	xor a
+	ld [wBattleAfterAnim], a
+	call Call_PlayBattleAnim
+	pop af
+	ldh [hBattleTurn], a
+	ret
+
+.WeatherAnimations:
+; entries correspond to WEATHER_* constants
+	table_width 2
+	dw ANIM_IN_RAIN
+	dw ANIM_IN_SUN
+	dw ANIM_IN_SANDSTORM
+	assert_table_length WEATHER_SANDSTORM
 
 .ended
 	ld hl, .WeatherEndedMessages
@@ -4276,11 +4313,9 @@ ItemRecoveryAnim:
 	call SwitchTurnCore
 	xor a
 	ld [wBattleAfterAnim], a
-	if HIGH(RECOVER)
-		ld a, HIGH(RECOVER)
-	endc
+	ld a, HIGH(ANIM_HELD_ITEM_TRIGGER) ; Sour Crystal's, rather than Recover's
 	ld [wFXAnimID + 1], a
-	ld a, LOW(RECOVER)
+	ld a, LOW(ANIM_HELD_ITEM_TRIGGER)
 	ld [wFXAnimID], a
 	predef PlayBattleAnim
 	call SwitchTurnCore

@@ -87,6 +87,7 @@ BattleBGEffects:
 	dw BattleBGEffect_BlackHues
 	dw BattleBGEffect_AlternateHues
 	dw BattleBGEffect_CycleOBPalsGrayAndYellow
+	dw BattleBGEffect_CycleOBPalsGrayAndYellowFullShift
 	dw BattleBGEffect_CycleMidOBPalsGrayAndYellow
 	dw BattleBGEffect_CycleBGPals_Inverted
 	dw BattleBGEffect_HideMon
@@ -295,6 +296,20 @@ BattleBGEffect_CycleOBPalsGrayAndYellow:
 .PalsSGB:
 	dc 3, 3, 0, 0
 	dc 3, 0, 0, 0
+	db -2
+
+BattleBGEffect_CycleOBPalsGrayAndYellowFullShift:
+; Sour Crystal: rotates all four OBJ palette 0 shades, for Aurora Beam
+	ld de, .PalsCGB
+	call BattleBGEffect_GetNthDMGPal
+	ld [wOBP0], a
+	ret
+
+.PalsCGB:
+	dc 3, 2, 1, 0
+	dc 2, 1, 0, 3
+	dc 1, 0, 3, 2
+	dc 0, 3, 2, 1
 	db -2
 
 BattleBGEffect_CycleMidOBPalsGrayAndYellow:

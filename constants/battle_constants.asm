@@ -97,6 +97,7 @@ DEF MAX_STAT_VALUE EQU 999
 	const BATTLETYPE_FORCEITEM
 	const BATTLETYPE_CELEBI
 	const BATTLETYPE_SUICUNE
+	const BATTLETYPE_DEBUG_ANIMATIONS ; debug ROM: the animation viewer (engine/debug/anim_viewer.asm)
 
 ; BattleVarPairs indexes (see home/battle_vars.asm)
 	const_def

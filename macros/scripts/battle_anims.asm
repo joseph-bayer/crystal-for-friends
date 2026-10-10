@@ -161,6 +161,7 @@ MACRO anim_if_param_item_equal
 	db anim_if_param_item_equal_command
 	dw \1 ; value
 	dw \2 ; address
+	assert BANK(\2) == BANK(@), "a battle anim script can only reach labels in its own bank (use anim_call)"
 ENDM
 
 	const anim_updateactorpic_command ; $e8
@@ -196,12 +197,14 @@ MACRO anim_if_param_and
 	db anim_if_param_and_command
 	db \1 ; value
 	dw \2 ; address
+	assert BANK(\2) == BANK(@), "a battle anim script can only reach labels in its own bank (use anim_call)"
 ENDM
 
 	const anim_jumpuntil_command ; $ef
 MACRO anim_jumpuntil
 	db anim_jumpuntil_command
 	dw \1 ; address
+	assert BANK(\1) == BANK(@), "a battle anim script can only reach labels in its own bank (use anim_call)"
 ENDM
 
 	const anim_bgeffect_command ; $f0
@@ -250,6 +253,7 @@ MACRO anim_if_param_equal
 	db anim_if_param_equal_command
 	db \1 ; value
 	dw \2 ; address
+	assert BANK(\2) == BANK(@), "a battle anim script can only reach labels in its own bank (use anim_call)"
 ENDM
 
 	const anim_setvar_command ; $f9
@@ -268,12 +272,14 @@ MACRO anim_if_var_equal
 	db anim_if_var_equal_command
 	db \1 ; value
 	dw \2 ; address
+	assert BANK(\2) == BANK(@), "a battle anim script can only reach labels in its own bank (use anim_call)"
 ENDM
 
 	const anim_jump_command ; $fc
 MACRO anim_jump
 	db anim_jump_command
 	dw \1 ; address
+	assert BANK(\1) == BANK(@), "a battle anim script can only reach labels in its own bank (use anim_call)"
 ENDM
 
 	const anim_loop_command ; $fd
@@ -281,6 +287,7 @@ MACRO anim_loop
 	db anim_loop_command
 	db \1 ; count
 	dw \2 ; address
+	assert BANK(\2) == BANK(@), "a battle anim script can only reach labels in its own bank (use anim_call)"
 ENDM
 
 	const anim_call_command ; $fe

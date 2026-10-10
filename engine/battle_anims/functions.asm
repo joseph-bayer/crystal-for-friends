@@ -91,13 +91,16 @@ DoBattleAnimFrame:
 	dba BattleAnimFunc_Curse
 	dba BattleAnimFunc_PerishSong
 	dba BattleAnimFunc_RapidSpin
-	dba BattleAnimFunc_BetaPursuit
 	dba BattleAnimFunc_RainSandstorm
-	dba BattleAnimFunc_AnimObjB0
 	dba BattleAnimFunc_PsychUp
 	dba BattleAnimFunc_AncientPower
 	dba BattleAnimFunc_RockSmash
 	dba BattleAnimFunc_Cotton
+	dba BattleAnimFunc_BubbleSplash
+	dba BattleAnimFunc_RadialMoveOut
+	dba BattleAnimFunc_RadialMoveOut_Slow
+	dba BattleAnimFunc_FallAndStop
+	dba BattleAnimFunc_Flamethrower
 	assert_table_length NUM_BATTLE_ANIM_FUNCS
 
 PUSHS ; push the current section onto the stack.
@@ -1048,6 +1051,7 @@ BattleAnimFunc_RockSmash:
 	ld hl, BATTLEANIMSTRUCT_FRAMESET_ID
 	add hl, bc
 	ld [hl], a
+.after_frameset
 	call BattleAnim_IncAnonJumptableIndex
 	ld hl, BATTLEANIMSTRUCT_VAR1
 	add hl, bc
@@ -1089,6 +1093,13 @@ BattleAnimFunc_RockSmash:
 	add hl, bc
 	ld [hl], e
 	ret
+
+BattleAnimFunc_BubbleSplash:
+; Sour Crystal: Rock Smash's arc, keeping the object's own frameset. In Rock Smash's section, as its
+; jumptable points into it.
+	call BattleAnim_AnonJumptable
+	dw BattleAnimFunc_RockSmash.after_frameset
+	dw BattleAnimFunc_RockSmash.one
 
 SECTION "BattleAnimFunc_Bubble", ROMX
 
@@ -1537,7 +1548,6 @@ BattleAnimFunc_Clamp_Encore:
 	ld hl, BATTLEANIMSTRUCT_VAR2
 	add hl, bc
 	ld a, [hl]
-	assert BATTLE_ANIM_FRAMESET_CLAMP + 1 ==  BATTLE_ANIM_FRAMESET_CLAMP_FLIPPED
 	assert BATTLE_ANIM_FRAMESET_ENCORE_HAND + 1 == BATTLE_ANIM_FRAMESET_ENCORE_HAND_FLIPPED
 	inc a
 	jr .reinit
@@ -1545,7 +1555,7 @@ BattleAnimFunc_Clamp_Encore:
 .load_no_inc
 	ld hl, BATTLEANIMSTRUCT_VAR2
 	add hl, bc
-	ld a, [hl] ; BATTLE_ANIM_FRAMESET_CLAMP or BATTLE_ANIM_FRAMESET_ENCORE_HAND
+	ld a, [hl] ; BATTLE_ANIM_FRAMESET_ENCORE_HAND
 .reinit
 	call ReinitBattleAnimFrameset
 	ld hl, BATTLEANIMSTRUCT_VAR1
@@ -2507,7 +2517,7 @@ BattleAnimFunc_Amnesia:
 	add hl, bc
 	ld a, [hl]
 	assert BATTLE_ANIM_FRAMESET_AMNESIA_1 + 1 == BATTLE_ANIM_FRAMESET_AMNESIA_2 \
-		&& BATTLE_ANIM_FRAMESET_AMNESIA_2 + 1 == BATTLE_ANIM_FRAMESET_AMNESIA_3
+		&& BATTLE_ANIM_FRAMESET_AMNESIA_2 + 1 == BATTLE_ANIM_FRAMESET_AMNESIA_3_RECOVER
 	add BATTLE_ANIM_FRAMESET_AMNESIA_1
 	call ReinitBattleAnimFrameset
 	ld hl, BATTLEANIMSTRUCT_PARAM
@@ -3923,59 +3933,6 @@ BattleAnimFunc_RapidSpin:
 .done
 	jmp DeinitBattleAnimation
 
-SECTION "BattleAnimFunc_BetaPursuit", ROMX
-
-BattleAnimFunc_BetaPursuit:
-; Working but unused animation
-; Object moves either down or up 4 pixels per frame, depending on Obj Param. Object disappears after 23 frames when going down, or at y coord $d8 when going up
-; Obj Param: 0 moves downwards, 1 moves upwards
-	call BattleAnim_AnonJumptable
-.anon_dw
-	dw .zero
-	dw .one
-	dw .two
-	dw .three
-
-.zero
-	ld hl, BATTLEANIMSTRUCT_PARAM
-	add hl, bc
-	ld a, [hl]
-	and a
-	jr nz, .move_up
-	call BattleAnim_IncAnonJumptableIndex
-	ld hl, BATTLEANIMSTRUCT_YOFFSET
-	add hl, bc
-	ld [hl], $ec
-.one
-	ld hl, BATTLEANIMSTRUCT_YOFFSET
-	add hl, bc
-	ld a, [hl]
-	cp $4
-	jr z, .three
-	inc [hl]
-	inc [hl]
-	inc [hl]
-	inc [hl]
-	ret
-
-.three
-	jmp DeinitBattleAnimation
-
-.move_up
-	call BattleAnim_IncAnonJumptableIndex
-	call BattleAnim_IncAnonJumptableIndex
-.two
-	ld hl, BATTLEANIMSTRUCT_YOFFSET
-	add hl, bc
-	ld a, [hl]
-	cp $d8
-	ret z
-	dec [hl]
-	dec [hl]
-	dec [hl]
-	dec [hl]
-	ret
-
 SECTION "BattleAnimFunc_RainSandstorm", ROMX
 
 BattleAnimFunc_RainSandstorm:
@@ -4050,41 +4007,6 @@ BattleAnimFunc_RainSandstorm:
 	ld [hl], a
 	ret
 
-SECTION "BattleAnimFunc_AnimObjB0: ; unuse", ROMX
-
-BattleAnimFunc_AnimObjB0: ; unused
-; Used by object BATTLE_ANIM_OBJ_B0, with itself is not used in any animation
-; Obj Param: Lower nybble is added to VAR1 while upper nybble is added to XCOORD
-	ld hl, BATTLEANIMSTRUCT_XCOORD
-	add hl, bc
-	ld d, [hl]
-	ld hl, BATTLEANIMSTRUCT_VAR1
-	add hl, bc
-	ld e, [hl]
-	ld hl, BATTLEANIMSTRUCT_PARAM
-	add hl, bc
-	ld a, [hl]
-	ld l, a
-	and $f0
-	ld h, a
-	swap a
-	or h
-	ld h, a
-	ld a, l
-	and $f
-	swap a
-	ld l, a
-	add hl, de
-	ld e, l
-	ld d, h
-	ld hl, BATTLEANIMSTRUCT_XCOORD
-	add hl, bc
-	ld [hl], d
-	ld hl, BATTLEANIMSTRUCT_VAR1
-	add hl, bc
-	ld [hl], e
-	ret
-
 SECTION "BattleAnimFunc_PsychUp", ROMX
 
 BattleAnimFunc_PsychUp:
@@ -4137,5 +4059,176 @@ BattleAnimFunc_AncientPower:
 
 .done
 	jmp DeinitBattleAnimation
+
+SECTION "BattleAnimFunc_RadialMoveOut", ROMX
+
+; Sour Crystal: objects that move straight out from their start, along the angle in their param
+; (in sine-table steps), at a fixed speed until a final distance. The distance is 8.8 fixed point in
+; VAR1 (whole pixels) and VAR2 (fraction).
+
+BattleAnimFunc_RadialMoveOut:
+	call BattleAnim_AnonJumptable
+	dw BattleAnimRadial_Init
+	dw BattleAnimRadial_Step
+	dw BattleAnimRadial_StepVerySlow ; for Cross Chop
+	dw BattleAnimRadial_StepShort ; for Cross Chop
+
+BattleAnimFunc_RadialMoveOut_Slow:
+	call BattleAnim_AnonJumptable
+	dw BattleAnimRadial_Init
+	dw BattleAnimRadial_StepSlow
+	dw DoNothing
+
+BattleAnimRadial_Init:
+	ld hl, BATTLEANIMSTRUCT_VAR2
+	add hl, bc
+	xor a
+	ld [hld], a
+	ld [hl], a ; distance 0
+	jmp BattleAnim_IncAnonJumptableIndex
+
+BattleAnimRadial_Step:
+	call BattleAnimRadial_GetDistance
+	ld hl, 6.0 ; speed
+	call BattleAnimRadial_SetDistance
+	cp 80 ; final distance
+	jr BattleAnimRadial_Move
+
+BattleAnimRadial_StepVerySlow:
+	call BattleAnimRadial_GetDistance
+	ld hl, 0.5 ; speed
+	call BattleAnimRadial_SetDistance
+	cp 40 ; final distance
+	jr BattleAnimRadial_Move
+
+BattleAnimRadial_StepShort:
+	call BattleAnimRadial_GetDistance
+	ld hl, 6.0 ; speed
+	call BattleAnimRadial_SetDistance
+	cp 60 ; final distance
+	jr BattleAnimRadial_Move
+
+BattleAnimRadial_StepSlow:
+	call BattleAnimRadial_GetDistance
+	ld hl, 1.5 ; speed
+	call BattleAnimRadial_SetDistance
+	cp 40 ; final distance
+	; fallthrough
+
+BattleAnimRadial_Move:
+; carry: not yet at the final distance (a = whole pixels, in d too)
+	jmp nc, DeinitBattleAnimation
+	ld hl, BATTLEANIMSTRUCT_PARAM
+	add hl, bc
+	ld e, [hl]
+	push de
+	ld a, e
+	xcall Sine
+	ld hl, BATTLEANIMSTRUCT_YOFFSET
+	add hl, bc
+	ld [hl], a
+	pop de
+	ld a, e
+	xcall Cosine
+	ld hl, BATTLEANIMSTRUCT_XOFFSET
+	add hl, bc
+	ld [hl], a
+	ret
+
+BattleAnimRadial_GetDistance:
+; de = the distance
+	ld hl, BATTLEANIMSTRUCT_VAR1
+	add hl, bc
+	ld a, [hli]
+	ld e, [hl]
+	ld d, a
+	ret
+
+BattleAnimRadial_SetDistance:
+; distance += hl; a = its whole pixels
+	add hl, de
+	ld a, h
+	ld e, l
+	ld hl, BATTLEANIMSTRUCT_VAR1
+	add hl, bc
+	ld [hli], a
+	ld [hl], e
+	ret
+
+SECTION "BattleAnimFunc_FallAndStop", ROMX
+
+BattleAnimFunc_FallAndStop:
+; Sour Crystal: the object drops along a sine curve, then stays put.
+	call BattleAnim_AnonJumptable
+	dw .zero
+	dw .one
+	dw DoNothing ; .two
+
+.zero
+	call BattleAnim_IncAnonJumptableIndex
+	ld hl, BATTLEANIMSTRUCT_VAR1
+	add hl, bc
+	ld a, $30
+	ld [hli], a
+	ld [hl], $48
+.one
+	ld hl, BATTLEANIMSTRUCT_VAR1
+	add hl, bc
+	ld a, [hli]
+	ld d, [hl]
+	xcall Sine
+	ld hl, BATTLEANIMSTRUCT_YOFFSET
+	add hl, bc
+	ld [hl], a
+	ld hl, BATTLEANIMSTRUCT_VAR1
+	add hl, bc
+	inc [hl]
+	ld a, [hl]
+	and $3f
+	ret nz
+	jmp BattleAnim_IncAnonJumptableIndex
+
+SECTION "BattleAnimFunc_Flamethrower", ROMX
+
+BattleAnimFunc_Flamethrower:
+; Sour Crystal: a modified BattleAnimFunc_MoveWaveToTarget for Flamethrower's particles.
+	call BattleAnim_AnonJumptable
+	dw .init
+	dw .run
+
+.init
+; the particle's starting Y phase, from wBattleAnimVar
+	ld a, [wBattleAnimVar]
+	ld hl, BATTLEANIMSTRUCT_VAR1
+	add hl, bc
+	ld [hl], a
+	call BattleAnim_IncAnonJumptableIndex
+.run
+	ld hl, BATTLEANIMSTRUCT_XCOORD
+	add hl, bc
+	ld a, [hl]
+	cp $84
+	jmp nc, DeinitBattleAnimation
+	add 4
+	ld [hl], a
+
+	ld hl, BATTLEANIMSTRUCT_YCOORD
+	add hl, bc
+	ld a, [hl]
+	sbc 2
+	ld [hl], a
+
+	ld hl, BATTLEANIMSTRUCT_VAR1
+	add hl, bc
+	inc [hl]
+	inc [hl]
+	ld a, [hl]
+	ld d, $a
+	xcall Sine
+	ld hl, BATTLEANIMSTRUCT_YOFFSET
+	add hl, bc
+	adc 8
+	ld [hl], a
+	ret
 
 POPS ; restore the original section from the stack

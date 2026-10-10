@@ -515,6 +515,7 @@ INCLUDE "engine/events/mystery_island.asm"
 INCLUDE "engine/debug/fill_pc.asm"
 INCLUDE "engine/debug/hidden_power.asm"
 INCLUDE "engine/debug/phone.asm"
+INCLUDE "engine/debug/anim_viewer.asm"
 
 
 ; Its own section because the rosters outgrew bank3F: the grass and water tables are 100 bytes per

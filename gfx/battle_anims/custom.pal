@@ -2,31 +2,70 @@
 INCLUDE "gfx/battle_anims/battle_anims.pal"
 
 if !DEF(MONOCHROME)
-; metallic
-	RGB 31, 31, 31
-	RGB 20, 20, 20
-	RGB 10, 10, 10
-	RGB 00, 00, 00
 ; purple
 	RGB 31, 31, 31
-	RGB 22, 05, 24
-	RGB 10, 02, 11
+	RGB 25, 09, 27
+	RGB 13, 02, 15
 	RGB 00, 00, 00
 ; ice
 	RGB 31, 31, 31
-	RGB 00, 22, 29
-	RGB 06, 18, 30
+	RGB 13, 27, 31
+	RGB 10, 21, 29
 	RGB 00, 00, 00
 ; fire
 	RGB 31, 31, 31
 	RGB 31, 24, 02
 	RGB 29, 03, 04
 	RGB 00, 00, 00
-; Sour Crystal's water and Hidden Power colors (BattleAnim_HiddenPower)
+; globe
+	RGB 31, 31, 31
+	RGB 03, 27, 14
+	RGB 04, 11, 18
+	RGB 04, 19, 31
 ; water
 	RGB 31, 31, 31
 	RGB 00, 19, 28
 	RGB 08, 09, 28
+	RGB 00, 00, 00
+; bubble
+	RGB 31, 31, 31
+	RGB 19, 28, 28
+	RGB 00, 23, 28
+	RGB 03, 10, 30
+; dragonbreath
+	RGB 31, 31, 31
+	RGB 31, 26, 09
+	RGB 27, 08, 22
+	RGB 00, 00, 00
+; dragonrage
+	RGB 31, 31, 31
+	RGB 31, 29, 09
+	RGB 03, 09, 26
+	RGB 00, 00, 00
+; aurora
+	RGB 31, 28, 16
+	RGB 15, 31, 20
+	RGB 15, 24, 31
+	RGB 31, 15, 26
+; spore
+	RGB 31, 12 ,10
+	RGB 05, 27, 06
+	RGB 31, 31, 08
+	RGB 00, 28, 22
+; peach
+	RGB 31, 31, 31
+	RGB 31, 25, 14
+	RGB 31, 13, 04
+	RGB 00, 00, 00
+; lightscreen
+	RGB 31, 31, 31
+	RGB 19, 31, 31
+	RGB 06, 21, 19
+	RGB 00, 00, 00
+; reflect
+	RGB 31, 31, 31
+	RGB 31, 23, 30
+	RGB 06, 16, 31
 	RGB 00, 00, 00
 ; hp_fighting
 	RGB 31, 31, 31
@@ -78,6 +117,41 @@ if !DEF(MONOCHROME)
 	RGB 19, 16, 22
 	RGB 10, 08, 13
 	RGB 00, 00, 00
+; acid
+	RGB 31, 31, 31
+	RGB 31, 31, 07
+	RGB 31, 23, 04
+	RGB 31, 16, 01
+; lime
+	RGB 31, 31, 31
+	RGB 31, 31, 07
+	RGB 12, 25, 01
+	RGB 05, 14, 00
+; pink
+	RGB 31, 31, 31
+	RGB 31, 19, 24
+	RGB 30, 09, 13
+	RGB 00, 00, 00
+; outrage
+	RGB 31, 31, 31
+	RGB 31, 26, 09
+	RGB 27, 08, 22
+	RGB 25, 01, 05
+; shadow_ball
+	RGB 31, 31, 31
+	RGB 08, 01, 08
+	RGB 08, 00, 14
+	RGB 10, 00, 24
+; zap_cannon
+	RGB 31, 31, 31
+	RGB 31, 31, 07
+	RGB 31, 16, 01
+	RGB 07, 27, 27
+; snow
+	RGB 31, 31, 31
+	RGB 27, 31, 31
+	RGB 20, 27, 31
+	RGB 18, 16, 24
 else
 rept NUM_CUSTOM_BATTLE_PALETTES - 6
 	MONOCHROME_RGB_FOUR

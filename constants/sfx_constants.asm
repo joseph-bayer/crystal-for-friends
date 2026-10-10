@@ -208,4 +208,6 @@
 	const SFX_TWO_PC_BEEPS                ; cc
 	const SFX_4_NOTE_DITTY                ; cd
 	const SFX_TWINKLE                     ; ce
+	const SFX_THUNDER_OW                  ; cf (Sour Crystal)
+	const SFX_THUNDERBOLT                 ; d0 (Sour Crystal)
 DEF NUM_SFX EQU const_value

@@ -4443,6 +4443,28 @@ Sfx_Thunder_Ch8:
 	noise_note 15, 15, 2, 84
 	sound_ret
 
+Sfx_Thunder_OW:
+; Sour Crystal
+	channel_count 1
+	channel 8, .Ch8
+
+.Ch8:
+	noise_note 10, 8, -7, 80
+	noise_note 15, 8, -7, 81
+	noise_note 8, 8, 2, 81
+	noise_note 6, 8, -7, 82
+	noise_note 6, 8, -7, 83
+	noise_note 8, 8, -7, 84
+	noise_note 15, 8, 2, 84
+	sound_ret
+
+Sfx_Thunderbolt:
+; Sour Crystal: Thundershock, pitched up
+	channel_count 3
+	channel 5, Sfx_Thunderbolt_Ch5
+	channel 6, Sfx_Thunderbolt_Ch6
+	channel 8, Sfx_Thunderbolt_Ch8
+
 Sfx_Supersonic_Ch5:
 	duty_cycle 2
 	square_note 15, 3, -7, 1984
@@ -4627,6 +4649,8 @@ Sfx_Charge_Ch8:
 	sound_loop 9, Sfx_Charge_Ch8
 	sound_ret
 
+Sfx_Thunderbolt_Ch5:
+	pitch_offset 32
 Sfx_Thundershock_Ch5:
 	duty_cycle_pattern 0, 2, 2, 3
 	square_note 3, 15, 1, 2032
@@ -4634,6 +4658,8 @@ Sfx_Thundershock_Ch5:
 	sound_loop 8, Sfx_Thundershock_Ch5
 	sound_ret
 
+Sfx_Thunderbolt_Ch6:
+	pitch_offset 32
 Sfx_Thundershock_Ch6:
 	duty_cycle_pattern 2, 3, 0, 3
 	square_note 4, 14, 2, 514
@@ -4641,6 +4667,8 @@ Sfx_Thundershock_Ch6:
 	sound_loop 9, Sfx_Thundershock_Ch6
 	sound_ret
 
+Sfx_Thunderbolt_Ch8:
+	pitch_offset 32
 Sfx_Thundershock_Ch8:
 	noise_note 4, 15, -7, 67
 	noise_note 4, 15, 2, 68

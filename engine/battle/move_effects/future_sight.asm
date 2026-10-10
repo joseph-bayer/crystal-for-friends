@@ -47,7 +47,13 @@ BattleCommand_FutureSight:
 	jr nz, .failed
 	ld [hl], 4
 	call BattleCommand_LowerSub
-	call BattleCommand_MoveDelay
+	; Sour Crystal: the attack being foreseen has an animation of its own
+	farcall BattleAnimClearHud
+	xor a
+	ld [wBattleAnimParam], a ; one-shot
+	ld de, ANIM_FUTURE_SIGHT_FORESAW
+	call PlayFXAnimID
+	call RefreshBattleHuds
 	ld hl, ForesawAttackText
 	call StdBattleTextbox
 	call BattleCommand_RaiseSub

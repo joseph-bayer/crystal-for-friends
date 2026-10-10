@@ -203,6 +203,8 @@ BattleCommand_CheckTurn:
 	call CheckMoveInList
 	jr c, .not_frozen
 
+	ld de, ANIM_FRZ ; Sour Crystal: shown each turn it can't move
+	call FarPlayBattleAnimation
 	ld hl, FrozenSolidText
 	call StdBattleTextbox
 
@@ -332,6 +334,8 @@ BattleCommand_CheckTurn:
 	cp 25 percent
 	ret nc
 
+	ld de, ANIM_PAR ; Sour Crystal: shown each turn it can't move
+	call FarPlayBattleAnimation
 	ld hl, FullyParalyzedText
 	call StdBattleTextbox
 	call CantMove
@@ -442,6 +446,8 @@ CheckEnemyTurn:
 	call CheckMoveInList
 	jr c, .not_frozen
 
+	ld de, ANIM_FRZ ; Sour Crystal: shown each turn it can't move
+	call FarPlayBattleAnimation
 	ld hl, FrozenSolidText
 	call StdBattleTextbox
 	call CantMove
@@ -593,6 +599,8 @@ CheckEnemyTurn:
 	cp 25 percent
 	ret nc
 
+	ld de, ANIM_PAR ; Sour Crystal: shown each turn it can't move
+	call FarPlayBattleAnimation
 	ld hl, FullyParalyzedText
 	call StdBattleTextbox
 	call CantMove

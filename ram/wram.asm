@@ -641,6 +641,12 @@ wOddEggName:: ds MON_NAME_LENGTH
 wOddEggOT:: ds NAME_LENGTH
 
 NEXTU
+; debug animation viewer (engine/debug/anim_viewer.asm)
+wDebugAnimEntry:: dw ; which animation in the viewer's list
+wDebugAnimParam:: db ; wBattleAnimParam to play it with
+wDebugAnimSides:: db ; DEBUG_ANIM_SIDES_* constant
+
+NEXTU
 ; debug tileset color picker
 wDebugLightTileColor:: ds 2
 wDebugDarkTileColor::  ds 2
