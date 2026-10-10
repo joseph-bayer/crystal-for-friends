@@ -1212,14 +1212,14 @@ SchoolboyGroup:
 
 	next_list_item ; SCHOOLBOY (16)
 	db "ALAN@", TRAINERTYPE_NORMAL
-	db 30
+	db 27
 	dw NATU
-	db 35
+	db 27
 	dw TANGELA
-	db 33
+	db 30
 	dw QUAGSIRE
-	db 32
-	dw ARCANINE
+	db 30
+	dw YANMA
 	db -1 ; end
 
 	next_list_item ; SCHOOLBOY (17)
@@ -1250,27 +1250,27 @@ SchoolboyGroup:
 
 	next_list_item ; SCHOOLBOY (20)
 	db "JACK@", TRAINERTYPE_MOVES
-	db 35
+	db 48
 	dw ELECTRODE
 	dw SCREECH, SONICBOOM, ROLLOUT, LIGHT_SCREEN
-	db 35
+	db 48
 	dw GROWLITHE
 	dw SUNNY_DAY, LEER, TAKE_DOWN, FLAME_WHEEL
-	db 37
+	db 50
 	dw VILEPLUME
 	dw SOLARBEAM, SLEEP_POWDER, ACID, MOONLIGHT
 	db -1 ; end
 
 	next_list_item ; SCHOOLBOY (21)
 	db "ALAN@", TRAINERTYPE_NORMAL
-	db 27
+	db 30
 	dw NATU
-	db 27
+	db 35
 	dw TANGELA
-	db 30
+	db 33
 	dw QUAGSIRE
-	db 30
-	dw YANMA
+	db 32
+	dw ARCANINE
 	db -1 ; end
 
 	next_list_item ; SCHOOLBOY (22)
@@ -5043,9 +5043,12 @@ PicnickerGroup:
 
 	next_list_item ; PICNICKER (17)
 	db "TIFFANY@", TRAINERTYPE_MOVES
-	db 37
-	dw CLEFAIRY
-	dw ENCORE, DOUBLESLAP, MINIMIZE, METRONOME
+	db 45
+	dw CLEFABLE
+	dw ENCORE, SING, DOUBLESLAP, MOONLIGHT
+	db 46
+	dw WIGGLYTUFF
+	dw SING, DOUBLESLAP, DEFENSE_CURL, HEADBUTT
 	db -1 ; end
 
 	next_list_item ; PICNICKER (18)
@@ -5079,16 +5082,16 @@ PicnickerGroup:
 
 	next_list_item ; PICNICKER (21)
 	db "ERIN@", TRAINERTYPE_MOVES
-	db 44
+	db 50
 	dw RAPIDASH
 	dw DOUBLE_TEAM, STOMP, FLAMETHROWER, SUNNY_DAY
-	db 42
+	db 48
 	dw NIDOQUEEN
 	dw BODY_SLAM, SURF, EARTHQUAKE, SLUDGE_BOMB
-	db 40
+	db 48
 	dw RAICHU
 	dw SWIFT, MUD_SLAP, QUICK_ATTACK, THUNDERBOLT
-	db 44
+	db 50
 	dw RAPIDASH
 	dw DOUBLE_TEAM, STOMP, FLAMETHROWER, SUNNY_DAY
 	db -1 ; end
