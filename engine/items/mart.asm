@@ -23,11 +23,17 @@ MartTypeDialogs:
 	dw BargainShop
 	dw Pharmacist
 	dw RooftopSale
+	dw ScalingMart
 	assert_table_length NUM_MART_TYPES
 
 MartDialog:
 	ld a, MARTTYPE_STANDARD
 	ld [wMartType], a
+	xor a ; STANDARDMART_HOWMAYIHELPYOU
+	ld [wMartJumptableIndex], a
+	jmp StandardMart
+
+ScalingMart:
 	xor a ; STANDARDMART_HOWMAYIHELPYOU
 	ld [wMartJumptableIndex], a
 	jmp StandardMart
@@ -101,7 +107,7 @@ LoadMartPointer:
 	ld hl, wCurMartCount
 	assert wCurMartCount + 1 == wCurMartItems
 	xor a
-	ld bc, 16
+	ld bc, 1 + MAX_MART_ITEMS + 1 ; count, items, terminator
 	rst ByteFill
 	xor a ; STANDARDMART_HOWMAYIHELPYOU
 	ld [wMartJumptableIndex], a
@@ -186,7 +192,7 @@ StandardMart:
 
 .Buy:
 	call ExitMenu
-	call FarReadMart
+	call ReadStandardMartItems
 	call BuyMenu
 	and a
 	ld a, STANDARDMART_ANYTHINGELSE
@@ -281,6 +287,69 @@ FarReadMart: ; read mart items (index -> ID conversion)
 	call GetMartItemPrice
 	pop de
 	jr .ReadMartItem
+
+ReadStandardMartItems:
+	ld a, [wMartType]
+	cp MARTTYPE_SCALING
+	jr nz, FarReadMart
+	; fallthrough
+
+ReadScalingMart:
+; Build the item list from the tier for the player's badge count,
+; followed by the extras list at wMartPointer.
+	assert BANK(ScalingMartTiers) == BANK(@)
+	ld hl, wBadges
+	ld b, 2 ; Johto + Kanto
+	call CountSetBits
+	ld hl, ScalingMartTiers
+.find_tier
+	ld a, [hli]
+	cp c
+	jr z, .found_tier
+	jr c, .found_tier
+	inc hl
+	inc hl
+	jr .find_tier
+
+.found_tier
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	ld de, wCurMartItems
+	ld b, 0
+	call .AppendList
+	ld hl, wMartPointer
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	call .AppendList
+	ld a, b
+	ld [wCurMartCount], a
+	ld a, -1
+	ld [de], a
+	jr FarReadMart.ReadPrices
+
+.AppendList:
+; Append the item IDs of mart list hl to de, adding its count to b.
+	ld a, [hli]
+	and a
+	ret z
+	ld c, a
+	add b
+	ld b, a
+.loop
+	ld a, [hli]
+	push hl
+	ld h, [hl]
+	ld l, a
+	call GetItemIDFromIndex
+	pop hl
+	inc hl
+	ld [de], a
+	inc de
+	dec c
+	jr nz, .loop
+	ret
 
 GetMartItemPrice:
 ; Return the price of item a in BCD at hl and in tiles at wStringBuffer1.
@@ -437,11 +506,15 @@ GetMartDialogGroup:
 	ret
 
 .MartTextFunctionPointers:
+; entries correspond to MARTTYPE_* constants
+	table_width 3
 	dwb .StandardMartPointers, 0
 	dwb .HerbShopPointers, 0
 	dwb .BargainShopPointers, 1
 	dwb .PharmacyPointers, 0
 	dwb .StandardMartPointers, 2
+	dwb .StandardMartPointers, 0
+	assert_table_length NUM_MART_TYPES
 
 .StandardMartPointers:
 	dw MartHowManyText

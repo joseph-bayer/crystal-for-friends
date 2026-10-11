@@ -2,8 +2,6 @@ Marts:
 ; entries correspond to MART_* constants (see constants/mart_constants.asm)
 	table_width 2
 	dw MartCherrygrove
-	dw MartCherrygroveDex
-	dw MartViolet
 	dw MartAzalea
 	dw MartCianwood
 	dw MartGoldenrod2F1
@@ -15,14 +13,10 @@ Marts:
 	dw MartGoldenrod5F3
 	dw MartGoldenrod5F4
 	dw MartOlivine
-	dw MartEcruteak
 	dw MartMahogany1
 	dw MartMahogany2
 	dw MartBlackthorn
-	dw MartViridian
-	dw MartPewter
 	dw MartCerulean
-	dw MartLavender
 	dw MartVermilion
 	dw MartCeladon2F1
 	dw MartCeladon2F2
@@ -33,11 +27,9 @@ Marts:
 	dw MartCeladon5F1_2
 	dw MartCeladon5F2
 	dw MartCeladon5F2_2
-	dw MartFuchsia
-	dw MartSaffron
 	dw MartMtMoon
-	dw MartIndigoPlateau
 	dw MartUnderground
+	dw MartScalingNoExtras
 	assert_table_length NUM_MARTS
 
 MartCherrygrove:
@@ -47,38 +39,11 @@ MartCherrygrove:
 	dw PARLYZ_HEAL
 	dw AWAKENING
 
-MartCherrygroveDex:
-	db 5 ; # items
-	dw POKE_BALL
-	dw POTION
-	dw ANTIDOTE
-	dw PARLYZ_HEAL
-	dw AWAKENING
-
-MartViolet:
-	db 10 ; # items
-	dw POKE_BALL
-	dw POTION
-	dw ESCAPE_ROPE
-	dw ANTIDOTE
-	dw PARLYZ_HEAL
-	dw AWAKENING
-	dw X_DEFEND
-	dw X_ATTACK
-	dw X_SPEED
-	dw FLOWER_MAIL
-
+; MARTTYPE_SCALING extras
 MartAzalea:
-	db 9 ; # items
+	db 1 ; # items
 	dw CHARCOAL
-	dw POKE_BALL
-	dw POTION
-	dw SUPER_POTION
-	dw ESCAPE_ROPE
-	dw REPEL
-	dw ANTIDOTE
-	dw PARLYZ_HEAL
-	dw FLOWER_MAIL
+	assert (@ - MartAzalea - 1) / 2 <= SCALING_MART_MAX_EXTRAS
 
 MartCianwood:
 	db 5 ; # items
@@ -155,30 +120,11 @@ MartGoldenrod5F4:
 	dw TM_HEADBUTT
 	dw TM_ROCK_SMASH
 
+; MARTTYPE_SCALING extras
 MartOlivine:
-	db 9 ; # items
-	dw GREAT_BALL
-	dw SUPER_POTION
-	dw HYPER_POTION
-	dw ANTIDOTE
-	dw PARLYZ_HEAL
-	dw AWAKENING
-	dw ICE_HEAL
-	dw SUPER_REPEL
+	db 1 ; # items
 	dw SURF_MAIL
-
-MartEcruteak:
-	db 10 ; # items
-	dw POKE_BALL
-	dw GREAT_BALL
-	dw POTION
-	dw SUPER_POTION
-	dw ANTIDOTE
-	dw PARLYZ_HEAL
-	dw AWAKENING
-	dw BURN_HEAL
-	dw ICE_HEAL
-	dw REVIVE
+	assert (@ - MartOlivine - 1) / 2 <= SCALING_MART_MAX_EXTRAS
 
 MartMahogany1:
 	db 6 ; # items
@@ -217,61 +163,17 @@ MartBlackthorn:
 	dw TM_RAIN_DANCE
 	dw TM_SUNNY_DAY
 
-MartViridian:
-	db 9 ; # items
-	dw ULTRA_BALL
-	dw HYPER_POTION
-	dw FULL_HEAL
-	dw REVIVE
-	dw ANTIDOTE
-	dw PARLYZ_HEAL
-	dw AWAKENING
-	dw BURN_HEAL
-	dw FLOWER_MAIL
-
-MartPewter:
-	db 7 ; # items
-	dw GREAT_BALL
-	dw SUPER_POTION
-	dw SUPER_REPEL
-	dw ANTIDOTE
-	dw PARLYZ_HEAL
-	dw AWAKENING
-	dw BURN_HEAL
-
+; MARTTYPE_SCALING extras
 MartCerulean:
-	db 9 ; # items
-	dw GREAT_BALL
-	dw ULTRA_BALL
-	dw SUPER_POTION
-	dw SUPER_REPEL
-	dw FULL_HEAL
-	dw X_DEFEND
-	dw X_ATTACK
-	dw DIRE_HIT
+	db 1 ; # items
 	dw SURF_MAIL
+	assert (@ - MartCerulean - 1) / 2 <= SCALING_MART_MAX_EXTRAS
 
-MartLavender:
-	db 8 ; # items
-	dw GREAT_BALL
-	dw POTION
-	dw SUPER_POTION
-	dw MAX_REPEL
-	dw ANTIDOTE
-	dw PARLYZ_HEAL
-	dw AWAKENING
-	dw BURN_HEAL
-
+; MARTTYPE_SCALING extras
 MartVermilion:
-	db 8 ; # items
-	dw ULTRA_BALL
-	dw SUPER_POTION
-	dw HYPER_POTION
-	dw REVIVE
-	dw PARLYZ_HEAL
-	dw AWAKENING
-	dw BURN_HEAL
+	db 1 ; # items
 	dw LITEBLUEMAIL
+	assert (@ - MartVermilion - 1) / 2 <= SCALING_MART_MAX_EXTRAS
 
 MartCeladon2F1:
 	db 7 ; # items
@@ -368,27 +270,6 @@ MartCeladon5F2_2:
 	dw TM_CURSE
 	dw TM_REST
 
-MartFuchsia:
-	db 7 ; # items
-	dw GREAT_BALL
-	dw ULTRA_BALL
-	dw SUPER_POTION
-	dw HYPER_POTION
-	dw FULL_HEAL
-	dw MAX_REPEL
-	dw FLOWER_MAIL
-
-MartSaffron:
-	db 8 ; # items
-	dw GREAT_BALL
-	dw ULTRA_BALL
-	dw HYPER_POTION
-	dw MAX_POTION
-	dw FULL_HEAL
-	dw X_ATTACK
-	dw X_DEFEND
-	dw FLOWER_MAIL
-
 MartMtMoon:
 	db 6 ; # items
 	dw POKE_DOLL
@@ -398,22 +279,110 @@ MartMtMoon:
 	dw REPEL
 	dw PORTRAITMAIL
 
-MartIndigoPlateau:
-	db 7 ; # items
-	dw ULTRA_BALL
-	dw MAX_REPEL
-	dw HYPER_POTION
-	dw MAX_POTION
-	dw FULL_RESTORE
-	dw REVIVE
-	dw FULL_HEAL
-
 MartUnderground:
 	db 4 ; # items
 	dw ENERGYPOWDER
 	dw ENERGY_ROOT
 	dw HEAL_POWDER
 	dw REVIVAL_HERB
+
+MartScalingNoExtras:
+	db 0 ; # items
+
+; MARTTYPE_SCALING tier lists. A scaling mart sells the list for the player's
+; badge count (Johto + Kanto), followed by the extras list it was opened with.
+
+ScalingMartTiers:
+; min badges, list (highest first; the last row must be 0)
+	dbw 8, MartScaling8Badges
+	dbw 6, MartScaling6Badges
+	dbw 4, MartScaling4Badges
+	dbw 2, MartScaling2Badges
+	dbw 0, MartScaling0Badges
+
+MartScaling0Badges:
+	db 9 ; # items
+	dw POKE_BALL
+	dw POTION
+	dw SUPER_POTION
+	dw ANTIDOTE
+	dw PARLYZ_HEAL
+	dw AWAKENING
+	dw POKE_DOLL
+	dw ESCAPE_ROPE
+	dw REPEL
+	assert (@ - MartScaling0Badges - 1) / 2 + SCALING_MART_MAX_EXTRAS <= MAX_MART_ITEMS
+
+MartScaling2Badges:
+	db 13 ; # items
+	dw POKE_BALL
+	dw GREAT_BALL
+	dw POTION
+	dw SUPER_POTION
+	dw REVIVE
+	dw ANTIDOTE
+	dw PARLYZ_HEAL
+	dw AWAKENING
+	dw BURN_HEAL
+	dw ICE_HEAL
+	dw POKE_DOLL
+	dw ESCAPE_ROPE
+	dw REPEL
+	assert (@ - MartScaling2Badges - 1) / 2 + SCALING_MART_MAX_EXTRAS <= MAX_MART_ITEMS
+
+MartScaling4Badges:
+	db 14 ; # items
+	dw POKE_BALL
+	dw GREAT_BALL
+	dw SUPER_POTION
+	dw HYPER_POTION
+	dw REVIVE
+	dw ANTIDOTE
+	dw PARLYZ_HEAL
+	dw AWAKENING
+	dw BURN_HEAL
+	dw ICE_HEAL
+	dw FULL_HEAL
+	dw POKE_DOLL
+	dw ESCAPE_ROPE
+	dw SUPER_REPEL
+	assert (@ - MartScaling4Badges - 1) / 2 + SCALING_MART_MAX_EXTRAS <= MAX_MART_ITEMS
+
+MartScaling6Badges:
+	db 15 ; # items
+	dw POKE_BALL
+	dw GREAT_BALL
+	dw ULTRA_BALL
+	dw SUPER_POTION
+	dw HYPER_POTION
+	dw REVIVE
+	dw ANTIDOTE
+	dw PARLYZ_HEAL
+	dw AWAKENING
+	dw BURN_HEAL
+	dw ICE_HEAL
+	dw FULL_HEAL
+	dw POKE_DOLL
+	dw ESCAPE_ROPE
+	dw SUPER_REPEL
+	assert (@ - MartScaling6Badges - 1) / 2 + SCALING_MART_MAX_EXTRAS <= MAX_MART_ITEMS
+
+MartScaling8Badges:
+	db 13 ; # items
+	dw POKE_BALL
+	dw GREAT_BALL
+	dw ULTRA_BALL
+	dw POTION
+	dw SUPER_POTION
+	dw HYPER_POTION
+	dw FULL_RESTORE
+	dw REVIVE
+	dw FULL_HEAL
+	dw POKE_DOLL
+	dw ESCAPE_ROPE
+	dw SUPER_REPEL
+	dw MAX_REPEL
+	assert (@ - MartScaling8Badges - 1) / 2 + SCALING_MART_MAX_EXTRAS <= MAX_MART_ITEMS
 
 DefaultMart:
 	db 2 ; # items

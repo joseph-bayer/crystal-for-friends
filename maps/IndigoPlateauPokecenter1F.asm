@@ -138,7 +138,7 @@ IndigoPlateauPokecenter1FNurseScript:
 
 IndigoPlateauPokecenter1FClerkScript:
 	opentext
-	pokemart MARTTYPE_STANDARD, MART_INDIGO_PLATEAU
+	pokemart MARTTYPE_SCALING, MART_SCALING_NO_EXTRAS
 	closetext
 	end
 

@@ -17,7 +17,7 @@ CherrygroveMartClerkScript:
 	end
 
 .PokeBallsInStock:
-	pokemart MARTTYPE_STANDARD, MART_CHERRYGROVE_DEX
+	pokemart MARTTYPE_SCALING, MART_SCALING_NO_EXTRAS
 	closetext
 	end
 

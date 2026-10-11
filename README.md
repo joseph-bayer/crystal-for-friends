@@ -244,6 +244,11 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
 	| Starmie       | Red/Blue              | Evolve an RB Staryu |
   - *NOTE:* Some forms will have a symbol that goes along with them to indicate that they're different. Not all forms will have this.
 
+- **Scaling Marts**
+  - Town Poke Marts sell better stock as you earn badges (new stock at 2, 4, 6, and 8 badges), so going back to an early town doesn't mean worse shopping
+  - A few towns keep a specialty item: Charcoal in Azalea, Surf Mail in Olivine and Cerulean, LiteBlueMail in Vermilion
+  - Blackthorn's mart, the department stores, and specialty shops keep fixed stock; Blackthorn and the department stores sell TMs (see TM shops above)
+
 - **Misc.**
   - Turn around after healing in the Pokecenter so you don't accidentally heal again
   - Minor update to Goldenrod layout so it's easier to get to the underground and the bike shop
