@@ -1381,7 +1381,7 @@ OverworldWildMonsGrass:
 	end_ow_wildmons
 
 	def_ow_wildmons VICTORY_ROAD
-	db 4 ; how many can be out at once
+	db 3 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
 	ow_wildmon 34, GOLEM,      44, PLAIN_FORM, 0,                  NO_MOVE
@@ -2022,7 +2022,7 @@ OverworldWildMonsWater:
 	end_ow_wildmons
 
 	def_ow_wildmons ROUTE_20
-	db 4 ; how many can be out at once
+	db 3 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
 	ow_wildmon 59, TENTACOOL,  35, PLAIN_FORM, 0,                  HAZE

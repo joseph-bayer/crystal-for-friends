@@ -138,6 +138,7 @@ SpecialsPointers::
 	add_special HoOhChamber
 	add_special CelebiShrineEvent
 	add_special CheckCaughtCelebi
+	add_special CheckBattleCaughtResult
 	add_special PokeSeer
 	add_special BuenasPassword
 	add_special BuenaPrize

@@ -1,3 +1,14 @@
+CheckBattleCaughtResult:
+; Return TRUE in wScriptVar if the last battle ended in a catch.
+	ld a, [wBattleResult]
+	bit BATTLERESULT_CAUGHT_POKEMON_F, a
+	ld a, TRUE
+	jr nz, .done
+	xor a ; FALSE
+.done
+	ld [wScriptVar], a
+	ret
+
 BeastsCheck:
 ; Check if the player owns all three legendary beasts.
 ; They must exist in either party or PC, and have the player's OT and ID.

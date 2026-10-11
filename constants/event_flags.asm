@@ -475,6 +475,22 @@
 	const EVENT_CONTEST_OFFICER_HAS_BERRY
 	const EVENT_FOUGHT_HO_OH
 	const EVENT_FOUGHT_LUGIA
+	const EVENT_FOUGHT_ARTICUNO
+	const EVENT_FOUGHT_ZAPDOS
+	const EVENT_FOUGHT_MOLTRES
+; Hide the bird objects; set by their 16-badge callbacks and battles
+	const EVENT_ROUTE_10_NORTH_ZAPDOS
+	const EVENT_ROUTE_20_ARTICUNO
+	const EVENT_VICTORY_ROAD_MOLTRES
+; Set when the legendary is caught (not knocked out or fled), for a future respawn after the E4
+	const EVENT_CAUGHT_ARTICUNO
+	const EVENT_CAUGHT_ZAPDOS
+	const EVENT_CAUGHT_MOLTRES
+	const EVENT_CAUGHT_LUGIA
+	const EVENT_CAUGHT_HO_OH
+	const EVENT_CAUGHT_SUICUNE
+	const EVENT_CAUGHT_RAIKOU
+	const EVENT_CAUGHT_ENTEI
 	const EVENT_BEAT_RIVAL_IN_MT_MOON
 	const EVENT_MET_BILLS_GRANDPA
 	const EVENT_SHOWED_LICKITUNG_TO_BILLS_GRANDPA

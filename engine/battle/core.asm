@@ -8812,6 +8812,9 @@ BattleEnd_HandleRoamMons:
 	farjp UpdateRoamMonsAfterBattle
 
 .caught_or_defeated_roam_mon
+	ld a, [wBattleResult]
+	bit BATTLERESULT_CAUGHT_POKEMON_F, a
+	call nz, .SetCaughtFlag ; before the species is cleared below
 	call GetRoamMonHP
 	ld [hl], 0
 	call GetRoamMonMapGroup
@@ -8821,6 +8824,21 @@ BattleEnd_HandleRoamMons:
 	call GetRoamMonSpecies
 	ld [hl], 0
 	ret
+
+.SetCaughtFlag:
+; wRoamMon1 is Raikou and wRoamMon2 is Entei (InitRoamMons); wRoamMon3 is unused.
+	ld a, [wTempEnemyMonSpecies]
+	ld hl, wRoamMon1Species
+	ld de, EVENT_CAUGHT_RAIKOU
+	cp [hl]
+	jr z, .set_caught_flag
+	ld hl, wRoamMon2Species
+	ld de, EVENT_CAUGHT_ENTEI
+	cp [hl]
+	ret nz
+.set_caught_flag
+	ld b, SET_FLAG
+	jmp EventFlagAction
 
 .not_roaming
 	call BattleRandom

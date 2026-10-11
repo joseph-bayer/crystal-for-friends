@@ -264,7 +264,7 @@ CelebiEvent_SetBattleType:
 
 CheckCaughtCelebi:
 	ld a, [wBattleResult]
-	bit BATTLERESULT_CAUGHT_CELEBI, a
+	bit BATTLERESULT_CAUGHT_POKEMON_F, a
 	jr z, .false
 	ld a, TRUE
 	ld [wScriptVar], a

@@ -27,9 +27,8 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
 
 - **All 251 Pokemon Available**
   - TODO: All Pokemon available
-    - TODO: Articuno
-    - TODO: Zapdos
-    - TODO: Moltres
+    - Articuno, Zapdos and Moltres appear once you have all 16 badges: Zapdos outside the Power Plant on Route 10, Articuno on Route 20 near the Seafoam Islands, and Moltres in Victory Road.
+      - The locations of Zapdos and Articuno may be temporary and may be updated in the future.
     - TODO: Mewtwo
     - TODO: Mew
 

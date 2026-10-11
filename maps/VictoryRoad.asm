@@ -5,10 +5,10 @@
 	const VICTORYROAD_POKE_BALL3
 	const VICTORYROAD_POKE_BALL4
 	const VICTORYROAD_POKE_BALL5
+	const VICTORYROAD_MOLTRES
 	const VICTORYROAD_WILD_MON_1
 	const VICTORYROAD_WILD_MON_2
 	const VICTORYROAD_WILD_MON_3
-	const VICTORYROAD_WILD_MON_4
 
 VictoryRoad_MapScripts:
 	def_scene_scripts
@@ -16,6 +16,39 @@ VictoryRoad_MapScripts:
 	scene_script VictoryRoadNoop2Scene, SCENE_VICTORYROAD_NOOP
 
 	def_callbacks
+	callback MAPCALLBACK_OBJECTS, VictoryRoadMoltresCallback
+
+VictoryRoadMoltresCallback:
+	checkevent EVENT_FOUGHT_MOLTRES
+	iftrue .NoAppear
+	readvar VAR_BADGES
+	ifequal NUM_BADGES, .Appear
+.NoAppear:
+	disappear VICTORYROAD_MOLTRES
+	endcallback
+
+.Appear:
+	appear VICTORYROAD_MOLTRES
+	endcallback
+
+VictoryRoadMoltresScript:
+	faceplayer
+	opentext
+	writetext VictoryRoadMoltresText
+	cry MOLTRES
+	pause 15
+	closetext
+	setevent EVENT_FOUGHT_MOLTRES
+	loadvar VAR_BATTLETYPE, BATTLETYPE_FORCEITEM
+	loadwildmon MOLTRES, 60
+	startbattle
+	disappear VICTORYROAD_MOLTRES
+	reloadmapafterbattle
+	special CheckBattleCaughtResult
+	iffalse .NotCaught
+	setevent EVENT_CAUGHT_MOLTRES
+.NotCaught:
+	end
 
 VictoryRoadNoop1Scene:
 	end
@@ -253,6 +286,10 @@ VictoryRoadRivalVictoryText:
 	line "thing else."
 	done
 
+VictoryRoadMoltresText:
+	text "Gyaoo!"
+	done
+
 VictoryRoad_MapEvents:
 	db 0, 0 ; filler
 
@@ -289,7 +326,7 @@ VictoryRoad_MapEvents:
 ; order RollOverworldMons fills them in -- so these have to stay numbered that way.
 ; The event flag is -1: whether one is standing here is decided by whether its slot holds a
 ; rolled mon, not by a flag.
-	object_event  2, 52, SPRITE_OW_MON_1, SPRITEMOVEDATA_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1
+	object_event 18, 32, SPRITE_OW_MON_1, SPRITEMOVEDATA_POKEMON, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, VictoryRoadMoltresScript, EVENT_VICTORY_ROAD_MOLTRES
 	object_event 10, 13, SPRITE_OW_MON_2, SPRITEMOVEDATA_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1
 	object_event  9, 35, SPRITE_OW_MON_3, SPRITEMOVEDATA_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1
 	object_event 11, 61, SPRITE_OW_MON_4, SPRITEMOVEDATA_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1

@@ -36,6 +36,10 @@ TinTowerHoOh:
 	disappear TINTOWERROOF_HO_OH
 	reloadmapafterbattle
 	setevent EVENT_SET_WHEN_FOUGHT_HO_OH
+	special CheckBattleCaughtResult
+	iffalse .NotCaught
+	setevent EVENT_CAUGHT_HO_OH
+.NotCaught:
 	end
 
 HoOhText:

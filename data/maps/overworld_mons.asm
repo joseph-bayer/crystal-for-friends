@@ -123,6 +123,12 @@ OverworldMonObjects:
 	ow_mon_map RUINS_OF_ALPH_SHAMAN_HOUSE ; the Hidden Power Shaman's Xatu
 	ow_mon XATU,       PLAIN_FORM
 
+	ow_mon_map ROUTE_10_NORTH
+	ow_mon ZAPDOS,     PLAIN_FORM
+
+	ow_mon_map ROUTE_20
+	ow_mon ARTICUNO,   PLAIN_FORM
+
 	ow_mon_map ROUTE_28_STEEL_WING_HOUSE
 	ow_mon FEAROW,     PLAIN_FORM
 
@@ -150,6 +156,9 @@ OverworldMonObjects:
 
 	ow_mon_map VERMILION_GYM
 	ow_mon RAICHU,     PLAIN_FORM
+
+	ow_mon_map VICTORY_ROAD
+	ow_mon MOLTRES,    PLAIN_FORM
 
 	ow_mon_map VIOLET_GYM
 	ow_mon NOCTOWL,    PLAIN_FORM
