@@ -27,9 +27,12 @@ Marts:
 	dw MartCeladon2F1
 	dw MartCeladon2F2
 	dw MartCeladon3F
+	dw MartCeladon3F_2
 	dw MartCeladon4F
 	dw MartCeladon5F1
+	dw MartCeladon5F1_2
 	dw MartCeladon5F2
+	dw MartCeladon5F2_2
 	dw MartFuchsia
 	dw MartSaffron
 	dw MartMtMoon
@@ -178,35 +181,41 @@ MartEcruteak:
 	dw REVIVE
 
 MartMahogany1:
-	db 4 ; # items
+	db 6 ; # items
+	dw TM_FRUSTRATION
+	dw TM_ROAR
 	dw TINYMUSHROOM
 	dw SLOWPOKETAIL
 	dw POKE_BALL
 	dw POTION
 
 MartMahogany2:
-	db 9 ; # items
+	db 12 ; # items
 	dw RAGECANDYBAR
-	dw GREAT_BALL
-	dw SUPER_POTION
-	dw HYPER_POTION
-	dw ANTIDOTE
-	dw PARLYZ_HEAL
-	dw SUPER_REPEL
-	dw REVIVE
-	dw FLOWER_MAIL
+	dw METAL_COAT
+	dw UP_GRADE
+	dw BRICK_PIECE
+	dw TM_DIG
+	dw TM_ROLLOUT
+	dw TM_SWIFT
+	dw TM_NIGHTMARE
+	dw TM_DEFENSE_CURL
+	dw TM_DETECT
+	dw TM_FRUSTRATION
+	dw TM_ROAR
 
 MartBlackthorn:
-	db 9 ; # items
-	dw GREAT_BALL
+	db 10 ; # items
 	dw ULTRA_BALL
 	dw HYPER_POTION
-	dw MAX_POTION
-	dw FULL_HEAL
-	dw REVIVE
 	dw MAX_REPEL
-	dw X_DEFEND
-	dw X_ATTACK
+	dw FULL_HEAL
+	dw TM_SLUDGE_BOMB
+	dw TM_STEEL_WING
+	dw TM_THIEF
+	dw TM_PSYCH_UP
+	dw TM_RAIN_DANCE
+	dw TM_SUNNY_DAY
 
 MartViridian:
 	db 9 ; # items
@@ -289,19 +298,25 @@ MartCeladon2F2:
 
 MartCeladon3F:
 	db 5 ; # items
-	dw TM_HIDDEN_POWER
 	dw TM_SUNNY_DAY
-	dw TM_PROTECT
 	dw TM_RAIN_DANCE
 	dw TM_SANDSTORM
+	dw TM_PROTECT
+	dw TM_ENDURE
+
+MartCeladon3F_2:
+	db 9 ; # items
+	dw TM_SUNNY_DAY
+	dw TM_RAIN_DANCE
+	dw TM_SANDSTORM
+	dw TM_PROTECT
+	dw TM_ENDURE
+	dw TM_EARTHQUAKE
+	dw TM_SOLARBEAM
+	dw TM_PSYCHIC_M
+	dw TM_ZAP_CANNON
 
 MartCeladon4F:
-	db 3 ; # items
-	dw POKE_DOLL
-	dw LOVELY_MAIL
-	dw SURF_MAIL
-
-MartCeladon5F1:
 	db 5 ; # items
 	dw HP_UP
 	dw PROTEIN
@@ -309,15 +324,49 @@ MartCeladon5F1:
 	dw CARBOS
 	dw CALCIUM
 
+MartCeladon5F1:
+	db 8 ; # items
+	dw TM_MUD_SLAP
+	dw TM_FURY_CUTTER
+	dw TM_ATTRACT
+	dw TM_SHADOW_BALL
+	dw TM_DYNAMICPUNCH
+	dw TM_ICY_WIND
+	dw TM_IRON_TAIL
+	dw TM_DRAGONBREATH
+
+MartCeladon5F1_2:
+	db 10 ; # items
+	dw TM_MUD_SLAP
+	dw TM_FURY_CUTTER
+	dw TM_ATTRACT
+	dw TM_SHADOW_BALL
+	dw TM_DYNAMICPUNCH
+	dw TM_ICY_WIND
+	dw TM_IRON_TAIL
+	dw TM_DRAGONBREATH
+	dw TM_TOXIC
+	dw TM_GIGA_DRAIN
+
 MartCeladon5F2:
-	db 7 ; # items
-	dw X_ACCURACY
-	dw GUARD_SPEC
-	dw DIRE_HIT
-	dw X_ATTACK
-	dw X_DEFEND
-	dw X_SPEED
-	dw X_SPECIAL
+	db 5 ; # items
+	dw TM_HIDDEN_POWER
+	dw TM_SWAGGER
+	dw TM_SNORE
+	dw TM_SLEEP_TALK
+	dw TM_SWEET_SCENT
+
+MartCeladon5F2_2:
+	db 9 ; # items
+	dw TM_HIDDEN_POWER
+	dw TM_SWAGGER
+	dw TM_SNORE
+	dw TM_SLEEP_TALK
+	dw TM_SWEET_SCENT
+	dw TM_RETURN
+	dw TM_DREAM_EATER
+	dw TM_CURSE
+	dw TM_REST
 
 MartFuchsia:
 	db 7 ; # items

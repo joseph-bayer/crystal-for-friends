@@ -13,7 +13,14 @@ CeladonDeptStore3F_MapScripts:
 CeladonDeptStore3FClerkScript:
 	faceplayer
 	opentext
+	readvar VAR_BADGES
+	ifequal NUM_BADGES, .AllBadges
 	pokemart MARTTYPE_STANDARD, MART_CELADON_3F
+	closetext
+	end
+
+.AllBadges:
+	pokemart MARTTYPE_STANDARD, MART_CELADON_3F_2
 	closetext
 	end
 

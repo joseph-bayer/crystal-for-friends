@@ -13,14 +13,28 @@ CeladonDeptStore5F_MapScripts:
 CeladonDeptStore5FClerk1Script:
 	faceplayer
 	opentext
+	readvar VAR_BADGES
+	ifequal NUM_BADGES, .AllBadges
 	pokemart MARTTYPE_STANDARD, MART_CELADON_5F_1
+	closetext
+	end
+
+.AllBadges:
+	pokemart MARTTYPE_STANDARD, MART_CELADON_5F_1_2
 	closetext
 	end
 
 CeladonDeptStore5FClerk2Script:
 	faceplayer
 	opentext
+	readvar VAR_BADGES
+	ifequal NUM_BADGES, .AllBadges
 	pokemart MARTTYPE_STANDARD, MART_CELADON_5F_2
+	closetext
+	end
+
+.AllBadges:
+	pokemart MARTTYPE_STANDARD, MART_CELADON_5F_2_2
 	closetext
 	end
 

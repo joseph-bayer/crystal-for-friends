@@ -17,6 +17,7 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Celebi Event
     - Solve the Ho-Oh puzzle in the Ruins of Alph
   - Game Corner Prizes
+  - TM shops
   - Updated Evolution methods
   - Level-up learnsets
   - TM/HM learnsets
