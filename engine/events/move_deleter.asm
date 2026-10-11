@@ -124,7 +124,7 @@ MoveDeletion:
 	ld a, [hl]
 	and FORM_MASK ; only care about form bits, not shiny bit
 	cp PIKACHU_FLY_FORM  ; Flying form
-	ret nz ; Not Plain form, not Surf form, not fly form... What are you??
+	ret nz ; any other form, such as RB, never turns into Surf or Fly
 
 	ld hl, FLY
 	farcall CheckPokemonKnowsMove

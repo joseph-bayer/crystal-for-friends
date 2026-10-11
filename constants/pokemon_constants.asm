@@ -332,14 +332,16 @@ DEF NUM_CHARIZARD_FORMS EQU const_value ; 2
   const_def 0 ; Note that forms are now 0-indexed
   const WEEZING_PLAIN_FORM  ; 0
   const WEEZING_ROCKET_FORM ; 1 -- Team Rocket's; every Rocket Weezing is one
-DEF NUM_WEEZING_FORMS EQU const_value ; 2
+  const WEEZING_RB_FORM     ; 2 -- its Red/Blue sprite
+DEF NUM_WEEZING_FORMS EQU const_value ; 3
 
 ; Crobat forms
 ; Numbered in parallel with Golbat's, so a Rocket Golbat stays Rocket when it evolves
   const_def 0 ; Note that forms are now 0-indexed
   const CROBAT_PLAIN_FORM  ; 0
   const CROBAT_ROCKET_FORM ; 1 -- Team Rocket's; every Rocket Crobat is one
-DEF NUM_CROBAT_FORMS EQU const_value ; 2
+  const CROBAT_BETA_FORM   ; 2 -- its Spaceworld beta sprite, numbered with the line's RB form
+DEF NUM_CROBAT_FORMS EQU const_value ; 3
 
 ; Electrode forms
   const_def 0 ; Note that forms are now 0-indexed
@@ -355,6 +357,24 @@ DEF NUM_ELECTRODE_FORMS EQU const_value ; 2
   const PIKACHU_RB_FORM     ; 3
   ; TODO: const PIKACHU_PARTY_HAT_FORM ; 4
 DEF NUM_PIKACHU_FORMS EQU const_value ; 4
+
+; Pichu forms
+; Numbered in parallel with Pikachu's, so the RB form survives evolution
+  const_def 0 ; Note that forms are now 0-indexed
+  const PICHU_PLAIN_FORM    ; 0
+  const PICHU_UNUSED_1_FORM ; 1 -- looks plain; holds Pikachu's Surf number
+  const PICHU_UNUSED_2_FORM ; 2 -- looks plain; holds Pikachu's Fly number
+  const PICHU_BETA_FORM     ; 3 -- its Spaceworld beta sprite, numbered with the line's RB form
+DEF NUM_PICHU_FORMS EQU const_value ; 4
+
+; Raichu forms
+; Numbered in parallel with Pikachu's, so the RB form survives evolution
+  const_def 0 ; Note that forms are now 0-indexed
+  const RAICHU_PLAIN_FORM ; 0
+  const RAICHU_SURF_FORM  ; 1 -- looks plain; what a Surfing Pikachu evolves into
+  const RAICHU_FLY_FORM   ; 2 -- looks plain; what a Flying Pikachu evolves into
+  const RAICHU_RB_FORM    ; 3 -- its Red/Blue sprite
+DEF NUM_RAICHU_FORMS EQU const_value ; 4
 
 ; Machop forms
   const_def 0 ; Note that forms are now 0-indexed
@@ -386,6 +406,175 @@ DEF NUM_TENTACOOL_FORMS EQU const_value ; 2
   const TENTACRUEL_RB_FORM    ; 1 -- its Red/Blue sprite
 DEF NUM_TENTACRUEL_FORMS EQU const_value ; 2
 
+; Igglybuff forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const IGGLYBUFF_PLAIN_FORM ; 0
+  const IGGLYBUFF_BETA_FORM  ; 1 -- its Spaceworld beta sprite, numbered with the line's RB form
+DEF NUM_IGGLYBUFF_FORMS EQU const_value ; 2
+
+; Jigglypuff forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const JIGGLYPUFF_PLAIN_FORM ; 0
+  const JIGGLYPUFF_RB_FORM    ; 1 -- its Red/Blue sprite
+DEF NUM_JIGGLYPUFF_FORMS EQU const_value ; 2
+
+; Wigglytuff forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const WIGGLYTUFF_PLAIN_FORM ; 0
+  const WIGGLYTUFF_RB_FORM    ; 1 -- its Red/Blue sprite
+DEF NUM_WIGGLYTUFF_FORMS EQU const_value ; 2
+
+; Nidoran♂ forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const NIDORAN_M_PLAIN_FORM ; 0
+  const NIDORAN_M_RB_FORM    ; 1 -- its Red/Blue sprite
+DEF NUM_NIDORAN_M_FORMS EQU const_value ; 2
+
+; Nidorino forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const NIDORINO_PLAIN_FORM ; 0
+  const NIDORINO_RB_FORM    ; 1 -- its Red/Blue sprite
+DEF NUM_NIDORINO_FORMS EQU const_value ; 2
+
+; Nidoking forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const NIDOKING_PLAIN_FORM ; 0
+  const NIDOKING_RB_FORM    ; 1 -- its Red/Blue sprite
+DEF NUM_NIDOKING_FORMS EQU const_value ; 2
+
+; Nidoran♀ forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const NIDORAN_F_PLAIN_FORM ; 0
+  const NIDORAN_F_RB_FORM    ; 1 -- its Red/Blue sprite
+DEF NUM_NIDORAN_F_FORMS EQU const_value ; 2
+
+; Nidorina forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const NIDORINA_PLAIN_FORM ; 0
+  const NIDORINA_RB_FORM    ; 1 -- its Red/Blue sprite
+DEF NUM_NIDORINA_FORMS EQU const_value ; 2
+
+; Nidoqueen forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const NIDOQUEEN_PLAIN_FORM ; 0
+  const NIDOQUEEN_RB_FORM    ; 1 -- its Red/Blue sprite
+DEF NUM_NIDOQUEEN_FORMS EQU const_value ; 2
+
+; Zubat forms
+; Numbered in parallel with Golbat's and Crobat's, so an RB Zubat stays RB when it evolves
+  const_def 0 ; Note that forms are now 0-indexed
+  const ZUBAT_PLAIN_FORM  ; 0
+  const ZUBAT_UNUSED_FORM ; 1 -- looks plain; holds the Rocket number
+  const ZUBAT_RB_FORM     ; 2 -- its Red/Blue sprite
+DEF NUM_ZUBAT_FORMS EQU const_value ; 3
+
+; Geodude forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const GEODUDE_PLAIN_FORM ; 0
+  const GEODUDE_RB_FORM    ; 1 -- its Red/Blue sprite
+DEF NUM_GEODUDE_FORMS EQU const_value ; 2
+
+; Graveler forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const GRAVELER_PLAIN_FORM ; 0
+  const GRAVELER_RB_FORM    ; 1 -- its Red/Blue sprite
+DEF NUM_GRAVELER_FORMS EQU const_value ; 2
+
+; Golem forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const GOLEM_PLAIN_FORM ; 0
+  const GOLEM_RB_FORM    ; 1 -- its Red/Blue sprite
+DEF NUM_GOLEM_FORMS EQU const_value ; 2
+
+; Shellder forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const SHELLDER_PLAIN_FORM ; 0
+  const SHELLDER_RB_FORM    ; 1 -- its Red/Blue sprite
+DEF NUM_SHELLDER_FORMS EQU const_value ; 2
+
+; Cloyster forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const CLOYSTER_PLAIN_FORM ; 0
+  const CLOYSTER_RB_FORM    ; 1 -- its Red/Blue sprite
+DEF NUM_CLOYSTER_FORMS EQU const_value ; 2
+
+; Gastly forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const GASTLY_PLAIN_FORM ; 0
+  const GASTLY_RB_FORM    ; 1 -- its Red/Blue sprite
+DEF NUM_GASTLY_FORMS EQU const_value ; 2
+
+; Haunter forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const HAUNTER_PLAIN_FORM ; 0
+  const HAUNTER_RB_FORM    ; 1 -- its Red/Blue sprite
+DEF NUM_HAUNTER_FORMS EQU const_value ; 2
+
+; Gengar forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const GENGAR_PLAIN_FORM ; 0
+  const GENGAR_RB_FORM    ; 1 -- its Red/Blue sprite
+DEF NUM_GENGAR_FORMS EQU const_value ; 2
+
+; Koffing forms
+; Numbered in parallel with Weezing's, so an RB Koffing stays RB when it evolves
+  const_def 0 ; Note that forms are now 0-indexed
+  const KOFFING_PLAIN_FORM  ; 0
+  const KOFFING_UNUSED_FORM ; 1 -- looks plain; holds the Rocket number
+  const KOFFING_RB_FORM     ; 2 -- its Red/Blue sprite
+DEF NUM_KOFFING_FORMS EQU const_value ; 3
+
+; Horsea forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const HORSEA_PLAIN_FORM ; 0
+  const HORSEA_RB_FORM    ; 1 -- its Red/Blue sprite
+DEF NUM_HORSEA_FORMS EQU const_value ; 2
+
+; Seadra forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const SEADRA_PLAIN_FORM ; 0
+  const SEADRA_RB_FORM    ; 1 -- its Red/Blue sprite
+DEF NUM_SEADRA_FORMS EQU const_value ; 2
+
+; Kingdra forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const KINGDRA_PLAIN_FORM ; 0
+  const KINGDRA_BETA_FORM  ; 1 -- its Spaceworld beta sprite, numbered with the line's RB form
+DEF NUM_KINGDRA_FORMS EQU const_value ; 2
+
+; Psyduck forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const PSYDUCK_PLAIN_FORM ; 0
+  const PSYDUCK_RB_FORM    ; 1 -- its Red/Blue sprite
+DEF NUM_PSYDUCK_FORMS EQU const_value ; 2
+
+; Golduck forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const GOLDUCK_PLAIN_FORM ; 0
+  const GOLDUCK_RB_FORM    ; 1 -- its Red/Blue sprite
+DEF NUM_GOLDUCK_FORMS EQU const_value ; 2
+
+; Gyarados forms
+; Numbered in parallel with Magikarp's, so an RB Magikarp stays RB when it evolves
+  const_def 0 ; Note that forms are now 0-indexed
+  const GYARADOS_PLAIN_FORM ; 0
+  const GYARADOS_XS_FORM    ; 1 -- looks plain; what an Extra Small Magikarp evolves into
+  const GYARADOS_XL_FORM    ; 2 -- looks plain; what an Extra Large Magikarp evolves into
+  const GYARADOS_RB_FORM    ; 3 -- its Red/Blue sprite
+DEF NUM_GYARADOS_FORMS EQU const_value ; 4
+
+; Staryu forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const STARYU_PLAIN_FORM ; 0
+  const STARYU_RB_FORM    ; 1 -- its Red/Blue sprite
+DEF NUM_STARYU_FORMS EQU const_value ; 2
+
+; Starmie forms
+  const_def 0 ; Note that forms are now 0-indexed
+  const STARMIE_PLAIN_FORM ; 0
+  const STARMIE_RB_FORM    ; 1 -- its Red/Blue sprite
+DEF NUM_STARMIE_FORMS EQU const_value ; 2
+
 ; Arbok forms
   const_def 0 ; Note that forms are now 0-indexed
   const ARBOK_PLAIN_FORM  ; 0
@@ -396,7 +585,8 @@ DEF NUM_ARBOK_FORMS EQU const_value ; 2
   const_def 0 ; Note that forms are now 0-indexed
   const GOLBAT_PLAIN_FORM   ; 0
   const GOLBAT_ROCKET_FORM  ; 1 -- Team Rocket's; every Rocket Golbat is one
-DEF NUM_GOLBAT_FORMS EQU const_value ; 2
+  const GOLBAT_RB_FORM      ; 2 -- its Red/Blue sprite
+DEF NUM_GOLBAT_FORMS EQU const_value ; 3
 
 ; Snorlax forms
   const_def 0 ; Note that forms are now 0-indexed
@@ -416,7 +606,8 @@ DEF NUM_SHUCKLE_FORMS EQU const_value ; 3
   const MAGIKARP_PLAIN_FORM	; 0
   const MAGIKARP_XS_FORM	; 1
   const MAGIKARP_XL_FORM   	; 2
-DEF NUM_MAGIKARP_FORMS EQU const_value ; 3
+  const MAGIKARP_RB_FORM	; 3 -- its Red/Blue sprite
+DEF NUM_MAGIKARP_FORMS EQU const_value ; 4
 
 ; Smeargle forms
   const_def 0 ; Note that forms are now 0-indexed

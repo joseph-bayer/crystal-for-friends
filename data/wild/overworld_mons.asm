@@ -713,7 +713,7 @@ OverworldWildMonsGrass:
 	end_ow_wildmons
 
 	def_ow_wildmons SPROUT_TOWER_2F
-	db 2 ; how many can be out at once
+	db 4 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
 	ow_wildmon 40, RATTATA,     3, PLAIN_FORM, 0,                  NO_MOVE
@@ -730,6 +730,26 @@ OverworldWildMonsGrass:
 	ow_wildmon 35, GASTLY,      4, PLAIN_FORM, 0,                  NO_MOVE
 	ow_wildmon 20, RATTATA,     5, PLAIN_FORM, 0,                  NO_MOVE
 	ow_wildmon 5,  GASTLY,      6, PLAIN_FORM, 0,                  PSYWAVE
+	end_ow_wildmons
+
+	def_ow_wildmons BURNED_TOWER_1F
+	db 3 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+	; morn
+	ow_wildmon 35, RATICATE,   15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, SLUGMA,     14, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, KOFFING,    14, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 15, HOUNDOUR,   15, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 35, RATICATE,   15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, SLUGMA,     14, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, KOFFING,    14, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 15, HOUNDOUR,   15, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 35, RATICATE,   15, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, SLUGMA,     14, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 20, KOFFING,    14, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 15, ZUBAT,      14, PLAIN_FORM, 0,                  NO_MOVE
 	end_ow_wildmons
 
 	def_ow_wildmons UNION_CAVE_1F
@@ -817,7 +837,7 @@ OverworldWildMonsGrass:
 	end_ow_wildmons
 
 	def_ow_wildmons ROUTE_2
-	db 3 ; how many can be out at once
+	db 4 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
 	ow_wildmon 34, CATERPIE,    3, PLAIN_FORM, 0,                  NO_MOVE
@@ -837,7 +857,7 @@ OverworldWildMonsGrass:
 	end_ow_wildmons
 
 	def_ow_wildmons ROUTE_3
-	db 2 ; how many can be out at once
+	db 4 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
 	ow_wildmon 34, SPEAROW,     5, PLAIN_FORM, 0,                  NO_MOVE
@@ -1491,7 +1511,7 @@ OverworldWildMonsWater:
 	end_ow_wildmons
 
 	def_ow_wildmons ROUTE_40
-	db 2 ; how many can be out at once
+	db 4 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
 	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, 0,                  RAPID_SPIN
@@ -1591,7 +1611,7 @@ OverworldWildMonsWater:
 	end_ow_wildmons
 
 	def_ow_wildmons CIANWOOD_CITY
-	db 1 ; how many can be out at once
+	db 4 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 	; morn
 	ow_wildmon 59, TENTACOOL,  20, PLAIN_FORM, 0,                  RAPID_SPIN
@@ -1691,7 +1711,7 @@ OverworldWildMonsWater:
 	end_ow_wildmons
 
 	def_ow_wildmons LAKE_OF_RAGE
-	db 3 ; how many can be out at once
+	db 4 ; how many can be out at once
 	db 100 percent ; the chance each one shows up
 ; Magikarp only, by design since the story on the lake is focused on Red Gyarados.
 	; morn

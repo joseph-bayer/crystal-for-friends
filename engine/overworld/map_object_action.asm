@@ -207,6 +207,10 @@ SetFacingBigDollSym:
 	ret
 
 SetFacingBounce:
+; A Pokemon's sprite is built from its party icon (ExpandMonIconToSprite): every standing facing is
+; icon frame 1 and every walking facing frame 2, with the down-facing ones mirrored. So a Pokemon
+; bounces between standing up and walking up, its icon's two frames, as in the party menu. Any other
+; sprite (the campfire) flips between its down and up frames.
 	ld hl, OBJECT_STEP_FRAME
 	add hl, bc
 	ld a, [hl]
@@ -215,15 +219,34 @@ SetFacingBounce:
 	ld [hl], a
 	and %00010000
 	jr z, SetFacingFreezeBounce
-	ld hl, OBJECT_FACING
-	add hl, bc
-	ld [hl], FACING_STEP_UP_0
-	ret
+	call IsMonIconSprite
+	assert FACING_STEP_UP_1 == FACING_STEP_UP_0 + 1
+	sbc a
+	and 1
+	add FACING_STEP_UP_0 ; a Pokemon: walking up, icon frame 2; else standing up
+	jr SetBounceFacing
 
 SetFacingFreezeBounce:
+	call IsMonIconSprite
+	assert FACING_STEP_DOWN_0 == 0
+	sbc a
+	and FACING_STEP_UP_0 ; a Pokemon: standing up, icon frame 1 unmirrored; else standing down
+	; fallthrough
+
+SetBounceFacing:
 	ld hl, OBJECT_FACING
 	add hl, bc
-	ld [hl], FACING_STEP_DOWN_0
+	ld [hl], a
+	ret
+
+IsMonIconSprite:
+; carry if the object's sprite is a Pokemon drawn from its party icon (SPRITE_POKEMON up to the
+; variable sprites: SpriteMons, the SPRITE_OW_MON_* slots and the day-care mons)
+	ld hl, OBJECT_SPRITE
+	add hl, bc
+	ld a, [hl]
+	sub SPRITE_POKEMON
+	cp SPRITE_VARS - SPRITE_POKEMON
 	ret
 
 SetFacingWeirdTree:

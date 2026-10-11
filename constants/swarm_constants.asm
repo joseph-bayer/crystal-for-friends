@@ -19,8 +19,20 @@
 DEF FIRST_STUDIED_SWARM EQU const_value
 ; Everything below counts towards the Guild. Append only -- the Guild's record is a bitfield
 ; indexed by these ids, so inserting a row would shift every later player's progress.
-	const SWARM_MACHOP_RB    ; 3
-	const SWARM_TENTACOOL_RB ; 4
+	const SWARM_MACHOP_RB     ; 3
+	const SWARM_ZUBAT_RB      ; 4
+	const SWARM_GASTLY_RB     ; 5
+	const SWARM_KOFFING_RB    ; 6
+	const SWARM_SHELLDER_RB   ; 7
+	const SWARM_MAGIKARP_RB   ; 8
+	const SWARM_STARYU_RB     ; 9
+	const SWARM_JIGGLYPUFF_RB ; 10
+	const SWARM_NIDORAN_M_RB  ; 11
+	const SWARM_NIDORAN_F_RB  ; 12
+	const SWARM_GEODUDE_RB    ; 13
+	const SWARM_PSYDUCK_RB    ; 14
+	const SWARM_TENTACOOL_RB  ; 15
+	const SWARM_HORSEA_RB     ; 16
 DEF NUM_SWARMS EQU const_value - 1
 
 DEF MAX_ACTIVE_SWARMS EQU 3 ; Arnie's call, Anthony's call, and the radio's daily roll

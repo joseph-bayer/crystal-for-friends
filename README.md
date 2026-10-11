@@ -186,6 +186,7 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
 	|---------------|-----------------------|---------------|
 	| Pikachu	| Surfing Pikachu	| Teach it Surf |
 	| Pikachu	| Flying Pikachu	| Teach it Fly |
+	| Pikachu	| Red/Blue		| Mystery Island - Potential Hidden Grove Spawn |
 	| Shuckle	| Happy Shuckie		| Reach 150 happiness with Mania's Shuckle, "Shuckie" |
 	| Magikarp	| Extra Small		| Wild Magikarp that's less than 2 feet |
 	| Magikarp	| Extra Large		| Wild Magikarp that's larger than 4 feet 5 inches |
@@ -203,10 +204,43 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
 	| Scizor	| Slate Gray		| Bug Catching Contest |
 	| Snorlax	| Full Belly		| The Snorlax asleep in the Apricorn Forest clearing |
 	| Tentacool     | Red/Blue              | Tune into channel 12.5 |
-	| Tentacruel    | Red/Blue              | Tune into channel 12.5 |
+	| Tentacruel    | Red/Blue              | Evolve an RB Tentacool |
 	| Machop        | Red/Blue              | Tune into channel 12.5 |
-	| Machoke       | Red/Blue              | Tune into channel 12.5 |
-	| Machamp       | Red/Blue              | Tune into channel 12.5 |
+	| Machoke       | Red/Blue              | Evolve an RB Machop |
+	| Machamp       | Red/Blue              | Evolve an RB Machoke |
+	| Pichu         | Beta                  | Breed an RB Pikachu or Raichu |
+	| Raichu        | Red/Blue              | Evolve an RB Pikachu |
+	| Igglybuff     | Beta                  | Breed an RB Jigglypuff or Wigglytuff |
+	| Jigglypuff    | Red/Blue              | Tune into channel 12.5 |
+	| Wigglytuff    | Red/Blue              | Evolve an RB Jigglypuff |
+	| Nidoran♂      | Red/Blue              | Tune into channel 12.5 |
+	| Nidorino      | Red/Blue              | Evolve an RB Nidoran♂ |
+	| Nidoking      | Red/Blue              | Evolve an RB Nidorino |
+	| Nidoran♀      | Red/Blue              | Tune into channel 12.5 |
+	| Nidorina      | Red/Blue              | Evolve an RB Nidoran♀ |
+	| Nidoqueen     | Red/Blue              | Evolve an RB Nidorina |
+	| Zubat         | Red/Blue              | Tune into channel 12.5 |
+	| Golbat        | Red/Blue              | Evolve an RB Zubat |
+	| Crobat        | Beta                  | Evolve an RB Golbat |
+	| Geodude       | Red/Blue              | Tune into channel 12.5 |
+	| Graveler      | Red/Blue              | Evolve an RB Geodude |
+	| Golem         | Red/Blue              | Evolve an RB Graveler |
+	| Shellder      | Red/Blue              | Tune into channel 12.5 |
+	| Cloyster      | Red/Blue              | Evolve an RB Shellder |
+	| Gastly        | Red/Blue              | Tune into channel 12.5 |
+	| Haunter       | Red/Blue              | Evolve an RB Gastly |
+	| Gengar        | Red/Blue              | Evolve an RB Haunter |
+	| Koffing       | Red/Blue              | Tune into channel 12.5 |
+	| Weezing       | Red/Blue              | Evolve an RB Koffing |
+	| Horsea        | Red/Blue              | Tune into channel 12.5 |
+	| Seadra        | Red/Blue              | Evolve an RB Horsea |
+	| Kingdra       | Beta                  | Evolve an RB Seadra |
+	| Psyduck       | Red/Blue              | Tune into channel 12.5 |
+	| Golduck       | Red/Blue              | Evolve an RB Psyduck |
+	| Magikarp      | Red/Blue              | Tune into channel 12.5 |
+	| Gyarados      | Red/Blue              | Evolve an RB Magikarp |
+	| Staryu        | Red/Blue              | Tune into channel 12.5 |
+	| Starmie       | Red/Blue              | Evolve an RB Staryu |
   - *NOTE:* Some forms will have a symbol that goes along with them to indicate that they're different. Not all forms will have this.
 
 - **Misc.**

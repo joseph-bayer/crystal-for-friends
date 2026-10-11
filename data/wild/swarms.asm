@@ -12,9 +12,31 @@
 
 SwarmTable::
 	table_width SWARM_ENTRY_LENGTH, SwarmTable
-	swarm_def DUNSPARCE, PLAIN_FORM,        DARK_CAVE_VIOLET_ENTRANCE, SWARM_GRASS
-	swarm_def YANMA,     PLAIN_FORM,        ROUTE_35,                  SWARM_GRASS
+	swarm_def DUNSPARCE,  PLAIN_FORM,          DARK_CAVE_VIOLET_ENTRANCE,     SWARM_GRASS
+	swarm_def YANMA,      PLAIN_FORM,          ROUTE_35,                      SWARM_GRASS
+
 ; From here on, the Collection Guild's radio station picks one row a day (DailySwarmBroadcast).
-	swarm_def MACHOP,    MACHOP_RB_FORM,    ROUTE_45,                  SWARM_GRASS
-	swarm_def TENTACOOL, TENTACOOL_RB_FORM, VERMILION_CITY,            SWARM_WATER ; after the Elite Four
+	; Johto
+	; - Grass
+	swarm_def MACHOP,     MACHOP_RB_FORM,      ROUTE_45,                      SWARM_GRASS
+	swarm_def ZUBAT,      ZUBAT_RB_FORM,       UNION_CAVE_1F,                 SWARM_GRASS
+	swarm_def GASTLY,     GASTLY_RB_FORM,      SPROUT_TOWER_2F,               SWARM_GRASS
+	swarm_def KOFFING,    KOFFING_RB_FORM,     BURNED_TOWER_1F,               SWARM_GRASS
+	; - Water
+	swarm_def SHELLDER,   SHELLDER_RB_FORM,    ROUTE_40,                      SWARM_WATER
+	swarm_def MAGIKARP,   MAGIKARP_RB_FORM,    LAKE_OF_RAGE,              	  SWARM_WATER
+	swarm_def STARYU,     STARYU_RB_FORM,      CIANWOOD_CITY,	          SWARM_WATER
+
+	; Kanto, post Elite Four
+	; - Grass
+	swarm_def JIGGLYPUFF, JIGGLYPUFF_RB_FORM,  ROUTE_3,                  	  SWARM_GRASS 
+	swarm_def NIDORAN_M,  NIDORAN_M_RB_FORM,   ROUTE_2,                 	  SWARM_GRASS
+	swarm_def NIDORAN_F,  NIDORAN_F_RB_FORM,   ROUTE_2,                  	  SWARM_GRASS
+	swarm_def GEODUDE,    GEODUDE_RB_FORM,     ROCK_TUNNEL_1F,                SWARM_GRASS
+	; - Water
+	swarm_def PSYDUCK,    PSYDUCK_RB_FORM,     ROUTE_6,                       SWARM_WATER
+	swarm_def TENTACOOL,  TENTACOOL_RB_FORM,   VERMILION_CITY,            	  SWARM_WATER
+	swarm_def HORSEA,     HORSEA_RB_FORM,      ROUTE_12,                      SWARM_WATER
+	
+
 	assert_table_length NUM_SWARMS

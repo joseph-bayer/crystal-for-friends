@@ -125,6 +125,11 @@ software — a horizontal flip of 2bpp data is a bit reversal — once per sprit
 
 It is shared with the follower, and `GetMonSprite.Mon` routes every overworld Pokémon through it.
 
+A standing Pokémon (`SPRITEMOVEDATA_POKEMON`, the bounce) therefore alternates *standing up* and
+*walking up*: the icon's two frames, unmirrored, as in the party menu. `SetFacingBounce` checks the
+object's sprite for that; any other sprite on the bounce, such as the shaman house's campfire, keeps
+flipping between its own down and up frames.
+
 
 ## Wandering wild Pokémon
 

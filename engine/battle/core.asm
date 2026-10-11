@@ -6271,7 +6271,7 @@ LoadEnemyMon:
 			cp HIGH(MAGIKARP)
 		endc
 	endc
-	jr nz, .Happiness ; Skip Smeargle section since it's now handled above
+	jmp nz, .Happiness ; Skip Smeargle section since it's now handled above
 
 ; Get Magikarp's length
 	ld de, wEnemyMonDVs
@@ -6322,6 +6322,14 @@ LoadEnemyMon:
 ; Finally done with DVs
 
 .AssignMagikarpForm
+; A form settled before the battle (a swarm's RB Magikarp, a wandering one, loadwildmon's) is taken
+; whole at .generate_shininess, so it keeps that form at any length.
+	ld a, [wOverworldMonBattleSlot]
+	and a
+	jr nz, .Happiness
+	ld a, [wTempWildMonForm]
+	and a
+	jr nz, .Happiness
 	; If Magikarp is less than 2', it should have the XS form
 	ld a, [wMagikarpLength]
 	cp 2

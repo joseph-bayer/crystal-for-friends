@@ -1026,15 +1026,17 @@ CheckMultiFormEggInheritance:
 	ret
 
 .next_entry:
+	inc de ; past the row's form
 	jr .loop
 
 .not_found:
 	and a ; Clear carry to indicate not found
 	ret
 
-; Handle simple form inheritance for Scyther/Pinsir
+; Handle simple form inheritance for the species in MultiFormEggTable
 ; If both parents are the species: 50% chance to inherit from each parent
 ; If only one parent is the species: inherit its form
+; The inherited form is kept only if the species' row lets it pass (see MultiFormEggTable)
 HandleSimpleFormInheritance:
 	; First check if both parents are the same species as the egg
 	ld a, [wEggMonSpecies]
@@ -1102,13 +1104,62 @@ HandleSimpleFormInheritance:
 	; fallthrough
 .done
 	and FORM_MASK
+; Only the form the species' row names passes (ALL_FORMS: any). Anything else -- a Rocket form, a
+; Surfing or Flying Pikachu, an XS or XL Magikarp -- hatches plain.
+	ld e, a
+	call GetEggFormFilter
+	cp ALL_FORMS
+	jr z, .got_form
+	cp e
+	jr z, .got_form
+	ld e, PLAIN_FORM
+.got_form
+	ld a, e
 	ld [wTempMonForm], a
 	ld [wEggMonForm], a
 	ret
 
-; Table for Pokémon with form inheritance
-; Format: species_id (word)
+GetEggFormFilter:
+; in: bc = egg species index, which has a row in MultiFormEggTable
+; out: a = the form that row lets pass
+	ld hl, MultiFormEggTable
+.loop
+	ld a, [hli]
+	cp c
+	jr nz, .skip_high
+	ld a, [hli]
+	cp b
+	jr nz, .skip_form
+	ld a, [hl]
+	ret
+
+.skip_high
+	inc hl
+.skip_form
+	inc hl
+	jr .loop
+
+; Pokémon whose egg can take a parent's form, and which form passes. A parent's form passes when
+; it is that species' line (its lowest evolution is the egg's species), and its form is the one
+; named here, or any with ALL_FORMS. Each RB line's forms are numbered in parallel for evolution,
+; so one number covers the whole line: beta Kingdra, RB Seadra and RB Horsea are all 1.
+; Format: species_id (word), form (byte)
 MultiFormEggTable:
-	dw SCYTHER
-	dw PINSIR
+	dwb SCYTHER,    ALL_FORMS
+	dwb PINSIR,     ALL_FORMS
+	dwb PICHU,      PICHU_BETA_FORM      ; from RB Pikachu or Raichu; not Surfing or Flying
+	dwb IGGLYBUFF,  IGGLYBUFF_BETA_FORM  ; from RB Jigglypuff or Wigglytuff
+	dwb MACHOP,     MACHOP_RB_FORM
+	dwb TENTACOOL,  TENTACOOL_RB_FORM
+	dwb NIDORAN_M,  NIDORAN_M_RB_FORM
+	dwb NIDORAN_F,  NIDORAN_F_RB_FORM    ; Nidorina and Nidoqueen can't breed
+	dwb ZUBAT,      ZUBAT_RB_FORM        ; from RB Zubat or Golbat, or beta Crobat; not Rocket
+	dwb GEODUDE,    GEODUDE_RB_FORM
+	dwb SHELLDER,   SHELLDER_RB_FORM
+	dwb GASTLY,     GASTLY_RB_FORM
+	dwb KOFFING,    KOFFING_RB_FORM      ; from RB Koffing or Weezing; not Rocket
+	dwb HORSEA,     HORSEA_RB_FORM       ; from RB Horsea or Seadra, or beta Kingdra
+	dwb PSYDUCK,    PSYDUCK_RB_FORM
+	dwb MAGIKARP,   MAGIKARP_RB_FORM     ; not XS or XL: those come from size at hatch
+	dwb STARYU,     STARYU_RB_FORM
 	dw $0000 ; end marker

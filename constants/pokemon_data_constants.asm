@@ -178,6 +178,7 @@ DEF MOVES_HIGH_MASK EQU %00111111
 DEF SHINY_MASK EQU %10000000
 DEF ALT_SHINY_MASK EQU %01000000 ; reserved for alternate shiny palettes; not read yet
 DEF FORM_MASK  EQU %00011111
+DEF ALL_FORMS  EQU $ff ; MultiFormEggTable: every form passes to the egg
 ; bit 5 is the only one of MON_FORM still going spare. ELMS_STARTER_FORM borrows it in arguments --
 ; an ow_mon entry, a givepoke -- that are resolved before anything is stored, never in a stored form.
 DEF ELMS_STARTER_FORM_F EQU 5

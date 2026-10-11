@@ -227,6 +227,7 @@ HatchEggs:
 	ld b, SET_FLAG
 	call EventFlagAction
 .nottogepi
+	call HatchMagikarpSize
 
 	pop de
 
@@ -619,6 +620,51 @@ GetBreedmonMovePointer:
 	ld hl, wBreedMon2Moves
 	ret
 
+HatchMagikarpSize:
+; A plain Magikarp hatches Extra Small or Extra Large by its length, as a wild one is
+; (LoadEnemyMon's .AssignMagikarpForm): under 2 ft XS, over 4'5" XL. Any other form (RB) stays.
+	ld a, [wCurPartySpecies]
+	call GetPokemonIndexFromID
+	ld a, l
+	cp LOW(MAGIKARP)
+	ret nz
+	ld a, h
+	cp HIGH(MAGIKARP)
+	ret nz
+	ld a, MON_FORM
+	call GetPartyParamLocation
+	ld a, [hl]
+	and FORM_MASK
+	ret nz
+	push hl
+	ld a, MON_DVS
+	call GetPartyParamLocation
+	ld d, h
+	ld e, l
+	ld a, MON_OT_ID
+	call GetPartyParamLocation
+	ld b, h
+	ld c, l
+	farcall CalcMagikarpLength
+	pop hl
+	ld a, [wMagikarpLength] ; feet
+	ld b, MAGIKARP_XS_FORM
+	cp 2
+	jr c, .set
+	ld b, MAGIKARP_XL_FORM
+	cp 5
+	jr nc, .set
+	cp 4
+	ret c
+	ld a, [wMagikarpLength + 1] ; inches
+	cp 6
+	ret c
+.set
+	ld a, [hl]
+	or b ; keeps the shiny bit
+	ld [hl], a
+	ret
+
 GetEggFrontpic:
 	push de
 	ld [wCurPartySpecies], a
@@ -637,10 +683,10 @@ GetHatchlingFrontpic:
 	ld [wCurPartySpecies], a
 	ld [wCurSpecies], a
 	call GetBaseData
-	ld a, MON_DVS
+; The hatchling's own form (a beta Igglybuff, say), as Hatch_LoadFrontpicPal's palette already is.
+	ld a, MON_FORM
 	call GetPartyParamLocation
-	; predef GetUnownLetter ; TODO: handle form passing when breeding
-	xor a
+	ld a, [hl]
 	ld [wForm], a
 	pop de
 	predef_jump GetAnimatedFrontpic

@@ -26,6 +26,11 @@ SECTION "bank2_2", ROMX
 INCLUDE "engine/gfx/color.asm"
 
 
+SECTION "Cosmetic Form Palette Pointers", ROMX
+
+INCLUDE "data/pokemon/cosmetic_form_palette_pointers.asm"
+
+
 SECTION "bank3", ROMX
 
 INCLUDE "engine/events/checktime.asm"

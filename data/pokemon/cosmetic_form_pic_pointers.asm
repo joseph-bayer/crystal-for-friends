@@ -33,22 +33,22 @@ CosmeticFormPicPointersTable::
 	dw 0					; EKANS (17) - no cosmetic forms
 	dw ArbokPicPointers		; ARBOK (18) - has cosmetic forms
 	dw PikachuPicPointers			; PIKACHU (19) - has cosmetic forms
-	dw 0					; RAICHU (1a) - no cosmetic forms
+	dw RaichuPicPointers		; RAICHU (1a) - has cosmetic forms
 	dw 0					; SANDSHREW (1b) - no cosmetic forms
 	dw 0					; SANDSLASH (1c) - no cosmetic forms
-	dw 0					; NIDORAN_F (1d) - no cosmetic forms
-	dw 0					; NIDORINA (1e) - no cosmetic forms
-	dw 0					; NIDOQUEEN (1f) - no cosmetic forms
-	dw 0					; NIDORAN_M (20) - no cosmetic forms
-	dw 0					; NIDORINO (21) - no cosmetic forms
-	dw 0					; NIDOKING (22) - no cosmetic forms
+	dw NidoranFPicPointers		; NIDORAN_F (1d) - has cosmetic forms
+	dw NidorinaPicPointers		; NIDORINA (1e) - has cosmetic forms
+	dw NidoqueenPicPointers		; NIDOQUEEN (1f) - has cosmetic forms
+	dw NidoranMPicPointers		; NIDORAN_M (20) - has cosmetic forms
+	dw NidorinoPicPointers		; NIDORINO (21) - has cosmetic forms
+	dw NidokingPicPointers		; NIDOKING (22) - has cosmetic forms
 	dw 0					; CLEFAIRY (23) - no cosmetic forms
 	dw 0					; CLEFABLE (24) - no cosmetic forms
 	dw 0					; VULPIX (25) - no cosmetic forms
 	dw 0					; NINETALES (26) - no cosmetic forms
-	dw 0					; JIGGLYPUFF (27) - no cosmetic forms
-	dw 0					; WIGGLYTUFF (28) - no cosmetic forms
-	dw 0					; ZUBAT (29) - no cosmetic forms
+	dw JigglypuffPicPointers		; JIGGLYPUFF (27) - has cosmetic forms
+	dw WigglytuffPicPointers		; WIGGLYTUFF (28) - has cosmetic forms
+	dw ZubatPicPointers		; ZUBAT (29) - has cosmetic forms
 	dw GolbatPicPointers			; GOLBAT (2a) - has cosmetic forms
 	dw 0					; ODDISH (2b) - no cosmetic forms
 	dw 0					; GLOOM (2c) - no cosmetic forms
@@ -61,8 +61,8 @@ CosmeticFormPicPointersTable::
 	dw 0					; DUGTRIO (33) - no cosmetic forms
 	dw 0					; MEOWTH (34) - no cosmetic forms
 	dw 0					; PERSIAN (35) - no cosmetic forms
-	dw 0					; PSYDUCK (36) - no cosmetic forms
-	dw 0					; GOLDUCK (37) - no cosmetic forms
+	dw PsyduckPicPointers		; PSYDUCK (36) - has cosmetic forms
+	dw GolduckPicPointers		; GOLDUCK (37) - has cosmetic forms
 	dw 0					; MANKEY (38) - no cosmetic forms
 	dw 0					; PRIMEAPE (39) - no cosmetic forms
 	dw 0					; GROWLITHE (3a) - no cosmetic forms
@@ -81,9 +81,9 @@ CosmeticFormPicPointersTable::
 	dw 0					; VICTREEBEL (47) - no cosmetic forms
 	dw TentacoolPicPointers			; TENTACOOL (48) - has cosmetic forms
 	dw TentacruelPicPointers			; TENTACRUEL (49) - has cosmetic forms
-	dw 0					; GEODUDE (4a) - no cosmetic forms
-	dw 0					; GRAVELER (4b) - no cosmetic forms
-	dw 0					; GOLEM (4c) - no cosmetic forms
+	dw GeodudePicPointers		; GEODUDE (4a) - has cosmetic forms
+	dw GravelerPicPointers		; GRAVELER (4b) - has cosmetic forms
+	dw GolemPicPointers		; GOLEM (4c) - has cosmetic forms
 	dw 0					; PONYTA (4d) - no cosmetic forms
 	dw 0					; RAPIDASH (4e) - no cosmetic forms
 	dw 0					; SLOWPOKE (4f) - no cosmetic forms
@@ -97,11 +97,11 @@ CosmeticFormPicPointersTable::
 	dw 0					; DEWGONG (57) - no cosmetic forms
 	dw 0					; GRIMER (58) - no cosmetic forms
 	dw 0					; MUK (59) - no cosmetic forms
-	dw 0					; SHELLDER (5a) - no cosmetic forms
-	dw 0					; CLOYSTER (5b) - no cosmetic forms
-	dw 0					; GASTLY (5c) - no cosmetic forms
-	dw 0					; HAUNTER (5d) - no cosmetic forms
-	dw 0					; GENGAR (5e) - no cosmetic forms
+	dw ShellderPicPointers		; SHELLDER (5a) - has cosmetic forms
+	dw CloysterPicPointers		; CLOYSTER (5b) - has cosmetic forms
+	dw GastlyPicPointers		; GASTLY (5c) - has cosmetic forms
+	dw HaunterPicPointers		; HAUNTER (5d) - has cosmetic forms
+	dw GengarPicPointers		; GENGAR (5e) - has cosmetic forms
 	dw 0					; ONIX (5f) - no cosmetic forms
 	dw 0					; DROWZEE (60) - no cosmetic forms
 	dw 0					; HYPNO (61) - no cosmetic forms
@@ -116,19 +116,19 @@ CosmeticFormPicPointersTable::
 	dw 0					; HITMONLEE (6a) - no cosmetic forms
 	dw 0					; HITMONCHAN (6b) - no cosmetic forms
 	dw 0					; LICKITUNG (6c) - no cosmetic forms
-	dw 0					; KOFFING (6d) - no cosmetic forms
+	dw KoffingPicPointers		; KOFFING (6d) - has cosmetic forms
 	dw WeezingPicPointers			; WEEZING (6e) - has cosmetic forms
 	dw 0					; RHYHORN (6f) - no cosmetic forms
 	dw 0					; RHYDON (70) - no cosmetic forms
 	dw 0					; CHANSEY (71) - no cosmetic forms
 	dw 0					; TANGELA (72) - no cosmetic forms
 	dw 0					; KANGASKHAN (73) - no cosmetic forms
-	dw 0					; HORSEA (74) - no cosmetic forms
-	dw 0					; SEADRA (75) - no cosmetic forms
+	dw HorseaPicPointers		; HORSEA (74) - has cosmetic forms
+	dw SeadraPicPointers		; SEADRA (75) - has cosmetic forms
 	dw 0					; GOLDEEN (76) - no cosmetic forms
 	dw 0					; SEAKING (77) - no cosmetic forms
-	dw 0					; STARYU (78) - no cosmetic forms
-	dw 0					; STARMIE (79) - no cosmetic forms
+	dw StaryuPicPointers		; STARYU (78) - has cosmetic forms
+	dw StarmiePicPointers		; STARMIE (79) - has cosmetic forms
 	dw 0					; MR__MIME (7a) - no cosmetic forms
 	dw 0					; SCYTHER (7b) - no cosmetic forms
 	dw 0					; JYNX (7c) - no cosmetic forms
@@ -137,7 +137,7 @@ CosmeticFormPicPointersTable::
 	dw 0					; PINSIR (7f) - no cosmetic forms
 	dw 0					; TAUROS (80) - no cosmetic forms
 	dw MagikarpPicPointers			; MAGIKARP (81) - no cosmetic forms
-	dw 0					; GYARADOS (82) - no cosmetic forms
+	dw GyaradosPicPointers		; GYARADOS (82) - has cosmetic forms
 	dw 0					; LAPRAS (83) - no cosmetic forms
 	dw 0					; DITTO (84) - no cosmetic forms
 	dw 0					; EEVEE (85) - no cosmetic forms
@@ -179,9 +179,9 @@ CosmeticFormPicPointersTable::
 	dw CrobatPicPointers			; CROBAT (a9) - has cosmetic forms
 	dw 0					; CHINCHOU (aa) - no cosmetic forms
 	dw 0					; LANTURN (ab) - no cosmetic forms
-	dw 0					; PICHU (ac) - no cosmetic forms
+	dw PichuPicPointers		; PICHU (ac) - has cosmetic forms
 	dw 0					; CLEFFA (ad) - no cosmetic forms
-	dw 0					; IGGLYBUFF (ae) - no cosmetic forms
+	dw IgglybuffPicPointers		; IGGLYBUFF (ae) - has cosmetic forms
 	dw 0					; TOGEPI (af) - no cosmetic forms
 	dw 0					; TOGETIC (b0) - no cosmetic forms
 	dw 0					; NATU (b1) - no cosmetic forms
@@ -237,7 +237,7 @@ CosmeticFormPicPointersTable::
 	dw 0					; SKARMORY (e3) - no cosmetic forms
 	dw 0					; HOUNDOUR (e4) - no cosmetic forms
 	dw 0					; HOUNDOOM (e5) - no cosmetic forms
-	dw 0					; KINGDRA (e6) - no cosmetic forms
+	dw KingdraPicPointers		; KINGDRA (e6) - has cosmetic forms
 	dw 0					; PHANPY (e7) - no cosmetic forms
 	dw 0					; DONPHAN (e8) - no cosmetic forms
 	dw 0					; PORYGON2 (e9) - no cosmetic forms
@@ -299,6 +299,8 @@ WeezingPicPointers::
 	dba WeezingBackpic
 	dba WeezingRocketFrontpic
 	dba WeezingBackpic ; shares Weezing's back; the form keeps Weezing's colours
+	dba WeezingRBFrontpic
+	dba WeezingRBBackpic
 	assert_table_length NUM_WEEZING_FORMS
 
 CrobatPicPointers::
@@ -308,6 +310,8 @@ CrobatPicPointers::
 	dba CrobatBackpic
 	dba CrobatRocketFrontpic
 	dba CrobatBackpic ; shares Crobat's back, drawn in the form's colours
+	dba CrobatBetaFrontpic
+	dba CrobatBetaBackpic
 	assert_table_length NUM_CROBAT_FORMS
 
 ElectrodePicPointers::
@@ -335,6 +339,8 @@ GolbatPicPointers::
 	dba GolbatBackpic
 	dba GolbatRocketFrontpic
 	dba GolbatBackpic ; shares Golbat's back; the form keeps Golbat's colours
+	dba GolbatRBFrontpic
+	dba GolbatRBBackpic
 	assert_table_length NUM_GOLBAT_FORMS
 
 SnorlaxPicPointers::
@@ -423,6 +429,8 @@ MagikarpPicPointers::
 	dba MagikarpXSBackpic
 	dba MagikarpXLFrontpic
 	dba MagikarpXLBackpic
+	dba MagikarpRBFrontpic
+	dba MagikarpRBBackpic
 	assert_table_length NUM_MAGIKARP_FORMS
 
 MachopPicPointers::
@@ -469,3 +477,280 @@ TentacruelPicPointers::
 	dba TentacruelRBFrontpic
 	dba TentacruelRBBackpic
 	assert_table_length NUM_TENTACRUEL_FORMS
+
+IgglybuffPicPointers::
+; entries correspond to Igglybuff's forms, two apiece
+	table_width 3 * 2
+	dba IgglybuffFrontpic
+	dba IgglybuffBackpic
+	dba IgglybuffBetaFrontpic
+	dba IgglybuffBetaBackpic
+	assert_table_length NUM_IGGLYBUFF_FORMS
+
+JigglypuffPicPointers::
+; entries correspond to Jigglypuff's forms, two apiece
+	table_width 3 * 2
+	dba JigglypuffFrontpic
+	dba JigglypuffBackpic
+	dba JigglypuffRBFrontpic
+	dba JigglypuffRBBackpic
+	assert_table_length NUM_JIGGLYPUFF_FORMS
+
+WigglytuffPicPointers::
+; entries correspond to Wigglytuff's forms, two apiece
+	table_width 3 * 2
+	dba WigglytuffFrontpic
+	dba WigglytuffBackpic
+	dba WigglytuffRBFrontpic
+	dba WigglytuffRBBackpic
+	assert_table_length NUM_WIGGLYTUFF_FORMS
+
+NidoranMPicPointers::
+; entries correspond to NidoranM's forms, two apiece
+	table_width 3 * 2
+	dba NidoranMFrontpic
+	dba NidoranMBackpic
+	dba NidoranMRBFrontpic
+	dba NidoranMRBBackpic
+	assert_table_length NUM_NIDORAN_M_FORMS
+
+NidorinoPicPointers::
+; entries correspond to Nidorino's forms, two apiece
+	table_width 3 * 2
+	dba NidorinoFrontpic
+	dba NidorinoBackpic
+	dba NidorinoRBFrontpic
+	dba NidorinoRBBackpic
+	assert_table_length NUM_NIDORINO_FORMS
+
+NidokingPicPointers::
+; entries correspond to Nidoking's forms, two apiece
+	table_width 3 * 2
+	dba NidokingFrontpic
+	dba NidokingBackpic
+	dba NidokingRBFrontpic
+	dba NidokingRBBackpic
+	assert_table_length NUM_NIDOKING_FORMS
+
+NidoranFPicPointers::
+; entries correspond to NidoranF's forms, two apiece
+	table_width 3 * 2
+	dba NidoranFFrontpic
+	dba NidoranFBackpic
+	dba NidoranFRBFrontpic
+	dba NidoranFRBBackpic
+	assert_table_length NUM_NIDORAN_F_FORMS
+
+NidorinaPicPointers::
+; entries correspond to Nidorina's forms, two apiece
+	table_width 3 * 2
+	dba NidorinaFrontpic
+	dba NidorinaBackpic
+	dba NidorinaRBFrontpic
+	dba NidorinaRBBackpic
+	assert_table_length NUM_NIDORINA_FORMS
+
+NidoqueenPicPointers::
+; entries correspond to Nidoqueen's forms, two apiece
+	table_width 3 * 2
+	dba NidoqueenFrontpic
+	dba NidoqueenBackpic
+	dba NidoqueenRBFrontpic
+	dba NidoqueenRBBackpic
+	assert_table_length NUM_NIDOQUEEN_FORMS
+
+ZubatPicPointers::
+; entries correspond to Zubat's forms, two apiece
+	table_width 3 * 2
+	dba ZubatFrontpic
+	dba ZubatBackpic
+	dba ZubatFrontpic
+	dba ZubatBackpic ; looks plain
+	dba ZubatRBFrontpic
+	dba ZubatRBBackpic
+	assert_table_length NUM_ZUBAT_FORMS
+
+GeodudePicPointers::
+; entries correspond to Geodude's forms, two apiece
+	table_width 3 * 2
+	dba GeodudeFrontpic
+	dba GeodudeBackpic
+	dba GeodudeRBFrontpic
+	dba GeodudeRBBackpic
+	assert_table_length NUM_GEODUDE_FORMS
+
+GravelerPicPointers::
+; entries correspond to Graveler's forms, two apiece
+	table_width 3 * 2
+	dba GravelerFrontpic
+	dba GravelerBackpic
+	dba GravelerRBFrontpic
+	dba GravelerRBBackpic
+	assert_table_length NUM_GRAVELER_FORMS
+
+GolemPicPointers::
+; entries correspond to Golem's forms, two apiece
+	table_width 3 * 2
+	dba GolemFrontpic
+	dba GolemBackpic
+	dba GolemRBFrontpic
+	dba GolemRBBackpic
+	assert_table_length NUM_GOLEM_FORMS
+
+ShellderPicPointers::
+; entries correspond to Shellder's forms, two apiece
+	table_width 3 * 2
+	dba ShellderFrontpic
+	dba ShellderBackpic
+	dba ShellderRBFrontpic
+	dba ShellderRBBackpic
+	assert_table_length NUM_SHELLDER_FORMS
+
+CloysterPicPointers::
+; entries correspond to Cloyster's forms, two apiece
+	table_width 3 * 2
+	dba CloysterFrontpic
+	dba CloysterBackpic
+	dba CloysterRBFrontpic
+	dba CloysterRBBackpic
+	assert_table_length NUM_CLOYSTER_FORMS
+
+GastlyPicPointers::
+; entries correspond to Gastly's forms, two apiece
+	table_width 3 * 2
+	dba GastlyFrontpic
+	dba GastlyBackpic
+	dba GastlyRBFrontpic
+	dba GastlyRBBackpic
+	assert_table_length NUM_GASTLY_FORMS
+
+HaunterPicPointers::
+; entries correspond to Haunter's forms, two apiece
+	table_width 3 * 2
+	dba HaunterFrontpic
+	dba HaunterBackpic
+	dba HaunterRBFrontpic
+	dba HaunterRBBackpic
+	assert_table_length NUM_HAUNTER_FORMS
+
+GengarPicPointers::
+; entries correspond to Gengar's forms, two apiece
+	table_width 3 * 2
+	dba GengarFrontpic
+	dba GengarBackpic
+	dba GengarRBFrontpic
+	dba GengarRBBackpic
+	assert_table_length NUM_GENGAR_FORMS
+
+KoffingPicPointers::
+; entries correspond to Koffing's forms, two apiece
+	table_width 3 * 2
+	dba KoffingFrontpic
+	dba KoffingBackpic
+	dba KoffingFrontpic
+	dba KoffingBackpic ; looks plain
+	dba KoffingRBFrontpic
+	dba KoffingRBBackpic
+	assert_table_length NUM_KOFFING_FORMS
+
+HorseaPicPointers::
+; entries correspond to Horsea's forms, two apiece
+	table_width 3 * 2
+	dba HorseaFrontpic
+	dba HorseaBackpic
+	dba HorseaRBFrontpic
+	dba HorseaRBBackpic
+	assert_table_length NUM_HORSEA_FORMS
+
+SeadraPicPointers::
+; entries correspond to Seadra's forms, two apiece
+	table_width 3 * 2
+	dba SeadraFrontpic
+	dba SeadraBackpic
+	dba SeadraRBFrontpic
+	dba SeadraRBBackpic
+	assert_table_length NUM_SEADRA_FORMS
+
+KingdraPicPointers::
+; entries correspond to Kingdra's forms, two apiece
+	table_width 3 * 2
+	dba KingdraFrontpic
+	dba KingdraBackpic
+	dba KingdraBetaFrontpic
+	dba KingdraBetaBackpic
+	assert_table_length NUM_KINGDRA_FORMS
+
+PsyduckPicPointers::
+; entries correspond to Psyduck's forms, two apiece
+	table_width 3 * 2
+	dba PsyduckFrontpic
+	dba PsyduckBackpic
+	dba PsyduckRBFrontpic
+	dba PsyduckRBBackpic
+	assert_table_length NUM_PSYDUCK_FORMS
+
+GolduckPicPointers::
+; entries correspond to Golduck's forms, two apiece
+	table_width 3 * 2
+	dba GolduckFrontpic
+	dba GolduckBackpic
+	dba GolduckRBFrontpic
+	dba GolduckRBBackpic
+	assert_table_length NUM_GOLDUCK_FORMS
+
+GyaradosPicPointers::
+; entries correspond to Gyarados's forms, two apiece
+	table_width 3 * 2
+	dba GyaradosFrontpic
+	dba GyaradosBackpic
+	dba GyaradosFrontpic
+	dba GyaradosBackpic ; looks plain
+	dba GyaradosFrontpic
+	dba GyaradosBackpic ; looks plain
+	dba GyaradosRBFrontpic
+	dba GyaradosRBBackpic
+	assert_table_length NUM_GYARADOS_FORMS
+
+StaryuPicPointers::
+; entries correspond to Staryu's forms, two apiece
+	table_width 3 * 2
+	dba StaryuFrontpic
+	dba StaryuBackpic
+	dba StaryuRBFrontpic
+	dba StaryuRBBackpic
+	assert_table_length NUM_STARYU_FORMS
+
+StarmiePicPointers::
+; entries correspond to Starmie's forms, two apiece
+	table_width 3 * 2
+	dba StarmieFrontpic
+	dba StarmieBackpic
+	dba StarmieRBFrontpic
+	dba StarmieRBBackpic
+	assert_table_length NUM_STARMIE_FORMS
+
+PichuPicPointers::
+; entries correspond to Pichu's forms, two apiece
+	table_width 3 * 2
+	dba PichuFrontpic
+	dba PichuBackpic
+	dba PichuFrontpic
+	dba PichuBackpic ; looks plain
+	dba PichuFrontpic
+	dba PichuBackpic ; looks plain
+	dba PichuBetaFrontpic
+	dba PichuBetaBackpic
+	assert_table_length NUM_PICHU_FORMS
+
+RaichuPicPointers::
+; entries correspond to Raichu's forms, two apiece
+	table_width 3 * 2
+	dba RaichuFrontpic
+	dba RaichuBackpic
+	dba RaichuFrontpic
+	dba RaichuBackpic ; looks plain
+	dba RaichuFrontpic
+	dba RaichuBackpic ; looks plain
+	dba RaichuRBFrontpic
+	dba RaichuRBBackpic
+	assert_table_length NUM_RAICHU_FORMS

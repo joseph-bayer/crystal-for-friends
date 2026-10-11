@@ -1230,8 +1230,8 @@ INCLUDE "data/pokemon/palettes.asm"
 INCLUDE "data/trainers/palettes.asm"
 
 INCLUDE "data/pokemon/cosmetic_palettes.asm"
-
-INCLUDE "data/pokemon/cosmetic_form_palette_pointers.asm"
+; The master table, CosmeticFormPalettePointersTable, is read with GetFarWord and has a section of
+; its own (main.asm); the per-form tables it points to stay here, beside PokemonPalettes.
 
 LoadMapPals:
 	farcall LoadSpecialMapPalette

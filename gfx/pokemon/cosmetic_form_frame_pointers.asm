@@ -33,22 +33,22 @@ CosmeticFormFramePointersTable:
 	dw 0					; EKANS (17) - no cosmetic forms
 	dw ArbokFramesPointers		; ARBOK (18) - has cosmetic forms
 	dw PikachuFramesPointers		; PIKACHU (19) - has cosmetic forms
-	dw 0					; RAICHU (1a) - no cosmetic forms
+	dw RaichuFramesPointers		; RAICHU (1a) - has cosmetic forms
 	dw 0					; SANDSHREW (1b) - no cosmetic forms
 	dw 0					; SANDSLASH (1c) - no cosmetic forms
-	dw 0					; NIDORAN_F (1d) - no cosmetic forms
-	dw 0					; NIDORINA (1e) - no cosmetic forms
-	dw 0					; NIDOQUEEN (1f) - no cosmetic forms
-	dw 0					; NIDORAN_M (20) - no cosmetic forms
-	dw 0					; NIDORINO (21) - no cosmetic forms
-	dw 0					; NIDOKING (22) - no cosmetic forms
+	dw NidoranFFramesPointers		; NIDORAN_F (1d) - has cosmetic forms
+	dw NidorinaFramesPointers		; NIDORINA (1e) - has cosmetic forms
+	dw NidoqueenFramesPointers		; NIDOQUEEN (1f) - has cosmetic forms
+	dw NidoranMFramesPointers		; NIDORAN_M (20) - has cosmetic forms
+	dw NidorinoFramesPointers		; NIDORINO (21) - has cosmetic forms
+	dw NidokingFramesPointers		; NIDOKING (22) - has cosmetic forms
 	dw 0					; CLEFAIRY (23) - no cosmetic forms
 	dw 0					; CLEFABLE (24) - no cosmetic forms
 	dw 0					; VULPIX (25) - no cosmetic forms
 	dw 0					; NINETALES (26) - no cosmetic forms
-	dw 0					; JIGGLYPUFF (27) - no cosmetic forms
-	dw 0					; WIGGLYTUFF (28) - no cosmetic forms
-	dw 0					; ZUBAT (29) - no cosmetic forms
+	dw JigglypuffFramesPointers		; JIGGLYPUFF (27) - has cosmetic forms
+	dw WigglytuffFramesPointers		; WIGGLYTUFF (28) - has cosmetic forms
+	dw ZubatFramesPointers		; ZUBAT (29) - has cosmetic forms
 	dw GolbatFramesPointers		; GOLBAT (2a) - has cosmetic forms
 	dw 0					; ODDISH (2b) - no cosmetic forms
 	dw 0					; GLOOM (2c) - no cosmetic forms
@@ -61,8 +61,8 @@ CosmeticFormFramePointersTable:
 	dw 0					; DUGTRIO (33) - no cosmetic forms
 	dw 0					; MEOWTH (34) - no cosmetic forms
 	dw 0					; PERSIAN (35) - no cosmetic forms
-	dw 0					; PSYDUCK (36) - no cosmetic forms
-	dw 0					; GOLDUCK (37) - no cosmetic forms
+	dw PsyduckFramesPointers		; PSYDUCK (36) - has cosmetic forms
+	dw GolduckFramesPointers		; GOLDUCK (37) - has cosmetic forms
 	dw 0					; MANKEY (38) - no cosmetic forms
 	dw 0					; PRIMEAPE (39) - no cosmetic forms
 	dw 0					; GROWLITHE (3a) - no cosmetic forms
@@ -81,9 +81,9 @@ CosmeticFormFramePointersTable:
 	dw 0					; VICTREEBEL (47) - no cosmetic forms
 	dw TentacoolFramesPointers		; TENTACOOL (48) - has cosmetic forms
 	dw TentacruelFramesPointers		; TENTACRUEL (49) - has cosmetic forms
-	dw 0					; GEODUDE (4a) - no cosmetic forms
-	dw 0					; GRAVELER (4b) - no cosmetic forms
-	dw 0					; GOLEM (4c) - no cosmetic forms
+	dw GeodudeFramesPointers		; GEODUDE (4a) - has cosmetic forms
+	dw GravelerFramesPointers		; GRAVELER (4b) - has cosmetic forms
+	dw GolemFramesPointers		; GOLEM (4c) - has cosmetic forms
 	dw 0					; PONYTA (4d) - no cosmetic forms
 	dw 0					; RAPIDASH (4e) - no cosmetic forms
 	dw 0					; SLOWPOKE (4f) - no cosmetic forms
@@ -97,11 +97,11 @@ CosmeticFormFramePointersTable:
 	dw 0					; DEWGONG (57) - no cosmetic forms
 	dw 0					; GRIMER (58) - no cosmetic forms
 	dw 0					; MUK (59) - no cosmetic forms
-	dw 0					; SHELLDER (5a) - no cosmetic forms
-	dw 0					; CLOYSTER (5b) - no cosmetic forms
-	dw 0					; GASTLY (5c) - no cosmetic forms
-	dw 0					; HAUNTER (5d) - no cosmetic forms
-	dw 0					; GENGAR (5e) - no cosmetic forms
+	dw ShellderFramesPointers		; SHELLDER (5a) - has cosmetic forms
+	dw CloysterFramesPointers		; CLOYSTER (5b) - has cosmetic forms
+	dw GastlyFramesPointers		; GASTLY (5c) - has cosmetic forms
+	dw HaunterFramesPointers		; HAUNTER (5d) - has cosmetic forms
+	dw GengarFramesPointers		; GENGAR (5e) - has cosmetic forms
 	dw 0					; ONIX (5f) - no cosmetic forms
 	dw 0					; DROWZEE (60) - no cosmetic forms
 	dw 0					; HYPNO (61) - no cosmetic forms
@@ -116,19 +116,19 @@ CosmeticFormFramePointersTable:
 	dw 0					; HITMONLEE (6a) - no cosmetic forms
 	dw 0					; HITMONCHAN (6b) - no cosmetic forms
 	dw 0					; LICKITUNG (6c) - no cosmetic forms
-	dw 0					; KOFFING (6d) - no cosmetic forms
+	dw KoffingFramesPointers		; KOFFING (6d) - has cosmetic forms
 	dw WeezingFramesPointers		; WEEZING (6e) - has cosmetic forms
 	dw 0					; RHYHORN (6f) - no cosmetic forms
 	dw 0					; RHYDON (70) - no cosmetic forms
 	dw 0					; CHANSEY (71) - no cosmetic forms
 	dw 0					; TANGELA (72) - no cosmetic forms
 	dw 0					; KANGASKHAN (73) - no cosmetic forms
-	dw 0					; HORSEA (74) - no cosmetic forms
-	dw 0					; SEADRA (75) - no cosmetic forms
+	dw HorseaFramesPointers		; HORSEA (74) - has cosmetic forms
+	dw SeadraFramesPointers		; SEADRA (75) - has cosmetic forms
 	dw 0					; GOLDEEN (76) - no cosmetic forms
 	dw 0					; SEAKING (77) - no cosmetic forms
-	dw 0					; STARYU (78) - no cosmetic forms
-	dw 0					; STARMIE (79) - no cosmetic forms
+	dw StaryuFramesPointers		; STARYU (78) - has cosmetic forms
+	dw StarmieFramesPointers		; STARMIE (79) - has cosmetic forms
 	dw 0					; MR__MIME (7a) - no cosmetic forms
 	dw 0					; SCYTHER (7b) - no cosmetic forms
 	dw 0					; JYNX (7c) - no cosmetic forms
@@ -137,7 +137,7 @@ CosmeticFormFramePointersTable:
 	dw 0					; PINSIR (7f) - no cosmetic forms
 	dw 0					; TAUROS (80) - no cosmetic forms
 	dw MagikarpFramesPointers		; MAGIKARP (81) - no cosmetic forms
-	dw 0					; GYARADOS (82) - no cosmetic forms
+	dw GyaradosFramesPointers		; GYARADOS (82) - has cosmetic forms
 	dw 0					; LAPRAS (83) - no cosmetic forms
 	dw 0					; DITTO (84) - no cosmetic forms
 	dw 0					; EEVEE (85) - no cosmetic forms
@@ -179,9 +179,9 @@ CosmeticFormFramePointersTable:
 	dw CrobatFramesPointers			; CROBAT (a9) - has cosmetic forms
 	dw 0					; CHINCHOU (aa) - no cosmetic forms
 	dw 0					; LANTURN (ab) - no cosmetic forms
-	dw 0					; PICHU (ac) - no cosmetic forms
+	dw PichuFramesPointers		; PICHU (ac) - has cosmetic forms
 	dw 0					; CLEFFA (ad) - no cosmetic forms
-	dw 0					; IGGLYBUFF (ae) - no cosmetic forms
+	dw IgglybuffFramesPointers		; IGGLYBUFF (ae) - has cosmetic forms
 	dw 0					; TOGEPI (af) - no cosmetic forms
 	dw 0					; TOGETIC (b0) - no cosmetic forms
 	dw 0					; NATU (b1) - no cosmetic forms
@@ -237,7 +237,7 @@ CosmeticFormFramePointersTable:
 	dw 0					; SKARMORY (e3) - no cosmetic forms
 	dw 0					; HOUNDOUR (e4) - no cosmetic forms
 	dw 0					; HOUNDOOM (e5) - no cosmetic forms
-	dw 0					; KINGDRA (e6) - no cosmetic forms
+	dw KingdraFramesPointers		; KINGDRA (e6) - has cosmetic forms
 	dw 0					; PHANPY (e7) - no cosmetic forms
 	dw 0					; DONPHAN (e8) - no cosmetic forms
 	dw 0					; PORYGON2 (e9) - no cosmetic forms
@@ -285,12 +285,14 @@ WeezingFramesPointers:
 	table_width 2
 	dw WeezingPlainFrames
 	dw WeezingRocketFrames
+	dw WeezingRBFrames
 	assert_table_length NUM_WEEZING_FORMS
 
 CrobatFramesPointers:
 	table_width 2
 	dw CrobatPlainFrames
 	dw CrobatRocketFrames
+	dw CrobatBetaFrames
 	assert_table_length NUM_CROBAT_FORMS
 
 ElectrodeFramesPointers:
@@ -309,6 +311,7 @@ GolbatFramesPointers:
 	table_width 2
 	dw GolbatPlainFrames
 	dw GolbatRocketFrames
+	dw GolbatRBFrames
 	assert_table_length NUM_GOLBAT_FORMS
 
 SnorlaxFramesPointers:
@@ -359,6 +362,7 @@ MagikarpFramesPointers:
 	dw MagikarpPlainFrames
 	dw MagikarpXSFrames
 	dw MagikarpXLFrames
+	dw MagikarpRBFrames
 	assert_table_length NUM_MAGIKARP_FORMS
 
 MachopFramesPointers:
@@ -390,3 +394,185 @@ TentacruelFramesPointers:
 	dw TentacruelPlainFrames
 	dw TentacruelRBFrames
 	assert_table_length NUM_TENTACRUEL_FORMS
+
+IgglybuffFramesPointers:
+	table_width 2
+	dw IgglybuffPlainFrames
+	dw IgglybuffBetaFrames
+	assert_table_length NUM_IGGLYBUFF_FORMS
+
+JigglypuffFramesPointers:
+	table_width 2
+	dw JigglypuffPlainFrames
+	dw JigglypuffRBFrames
+	assert_table_length NUM_JIGGLYPUFF_FORMS
+
+WigglytuffFramesPointers:
+	table_width 2
+	dw WigglytuffPlainFrames
+	dw WigglytuffRBFrames
+	assert_table_length NUM_WIGGLYTUFF_FORMS
+
+NidoranMFramesPointers:
+	table_width 2
+	dw NidoranMPlainFrames
+	dw NidoranMRBFrames
+	assert_table_length NUM_NIDORAN_M_FORMS
+
+NidorinoFramesPointers:
+	table_width 2
+	dw NidorinoPlainFrames
+	dw NidorinoRBFrames
+	assert_table_length NUM_NIDORINO_FORMS
+
+NidokingFramesPointers:
+	table_width 2
+	dw NidokingPlainFrames
+	dw NidokingRBFrames
+	assert_table_length NUM_NIDOKING_FORMS
+
+NidoranFFramesPointers:
+	table_width 2
+	dw NidoranFPlainFrames
+	dw NidoranFRBFrames
+	assert_table_length NUM_NIDORAN_F_FORMS
+
+NidorinaFramesPointers:
+	table_width 2
+	dw NidorinaPlainFrames
+	dw NidorinaRBFrames
+	assert_table_length NUM_NIDORINA_FORMS
+
+NidoqueenFramesPointers:
+	table_width 2
+	dw NidoqueenPlainFrames
+	dw NidoqueenRBFrames
+	assert_table_length NUM_NIDOQUEEN_FORMS
+
+ZubatFramesPointers:
+	table_width 2
+	dw ZubatPlainFrames
+	dw ZubatPlainFrames ; looks plain
+	dw ZubatRBFrames
+	assert_table_length NUM_ZUBAT_FORMS
+
+GeodudeFramesPointers:
+	table_width 2
+	dw GeodudePlainFrames
+	dw GeodudeRBFrames
+	assert_table_length NUM_GEODUDE_FORMS
+
+GravelerFramesPointers:
+	table_width 2
+	dw GravelerPlainFrames
+	dw GravelerRBFrames
+	assert_table_length NUM_GRAVELER_FORMS
+
+GolemFramesPointers:
+	table_width 2
+	dw GolemPlainFrames
+	dw GolemRBFrames
+	assert_table_length NUM_GOLEM_FORMS
+
+ShellderFramesPointers:
+	table_width 2
+	dw ShellderPlainFrames
+	dw ShellderRBFrames
+	assert_table_length NUM_SHELLDER_FORMS
+
+CloysterFramesPointers:
+	table_width 2
+	dw CloysterPlainFrames
+	dw CloysterRBFrames
+	assert_table_length NUM_CLOYSTER_FORMS
+
+GastlyFramesPointers:
+	table_width 2
+	dw GastlyPlainFrames
+	dw GastlyRBFrames
+	assert_table_length NUM_GASTLY_FORMS
+
+HaunterFramesPointers:
+	table_width 2
+	dw HaunterPlainFrames
+	dw HaunterRBFrames
+	assert_table_length NUM_HAUNTER_FORMS
+
+GengarFramesPointers:
+	table_width 2
+	dw GengarPlainFrames
+	dw GengarRBFrames
+	assert_table_length NUM_GENGAR_FORMS
+
+KoffingFramesPointers:
+	table_width 2
+	dw KoffingPlainFrames
+	dw KoffingPlainFrames ; looks plain
+	dw KoffingRBFrames
+	assert_table_length NUM_KOFFING_FORMS
+
+HorseaFramesPointers:
+	table_width 2
+	dw HorseaPlainFrames
+	dw HorseaRBFrames
+	assert_table_length NUM_HORSEA_FORMS
+
+SeadraFramesPointers:
+	table_width 2
+	dw SeadraPlainFrames
+	dw SeadraRBFrames
+	assert_table_length NUM_SEADRA_FORMS
+
+KingdraFramesPointers:
+	table_width 2
+	dw KingdraPlainFrames
+	dw KingdraBetaFrames
+	assert_table_length NUM_KINGDRA_FORMS
+
+PsyduckFramesPointers:
+	table_width 2
+	dw PsyduckPlainFrames
+	dw PsyduckRBFrames
+	assert_table_length NUM_PSYDUCK_FORMS
+
+GolduckFramesPointers:
+	table_width 2
+	dw GolduckPlainFrames
+	dw GolduckRBFrames
+	assert_table_length NUM_GOLDUCK_FORMS
+
+GyaradosFramesPointers:
+	table_width 2
+	dw GyaradosPlainFrames
+	dw GyaradosPlainFrames ; looks plain
+	dw GyaradosPlainFrames ; looks plain
+	dw GyaradosRBFrames
+	assert_table_length NUM_GYARADOS_FORMS
+
+StaryuFramesPointers:
+	table_width 2
+	dw StaryuPlainFrames
+	dw StaryuRBFrames
+	assert_table_length NUM_STARYU_FORMS
+
+StarmieFramesPointers:
+	table_width 2
+	dw StarmiePlainFrames
+	dw StarmieRBFrames
+	assert_table_length NUM_STARMIE_FORMS
+
+PichuFramesPointers:
+	table_width 2
+	dw PichuPlainFrames
+	dw PichuPlainFrames ; looks plain
+	dw PichuPlainFrames ; looks plain
+	dw PichuBetaFrames
+	assert_table_length NUM_PICHU_FORMS
+
+RaichuFramesPointers:
+	table_width 2
+	dw RaichuPlainFrames
+	dw RaichuPlainFrames ; looks plain
+	dw RaichuPlainFrames ; looks plain
+	dw RaichuRBFrames
+	assert_table_length NUM_RAICHU_FORMS

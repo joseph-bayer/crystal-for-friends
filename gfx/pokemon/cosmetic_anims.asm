@@ -11,9 +11,11 @@ CharizardRocketAnimation:	INCLUDE "gfx/pokemon/charizard_rocket/anim.asm"
 
 WeezingPlainAnimation:		INCLUDE "gfx/pokemon/weezing/anim.asm"
 WeezingRocketAnimation:		INCLUDE "gfx/pokemon/weezing_rocket/anim.asm"
+WeezingRBAnimation:		INCLUDE "gfx/pokemon/weezing_rb/anim.asm"
 
 CrobatPlainAnimation:		INCLUDE "gfx/pokemon/crobat/anim.asm"
 CrobatRocketAnimation:		INCLUDE "gfx/pokemon/crobat_rocket/anim.asm"
+CrobatBetaAnimation:		INCLUDE "gfx/pokemon/crobat_beta/anim.asm"
 
 ElectrodePlainAnimation:	INCLUDE "gfx/pokemon/electrode/anim.asm"
 ElectrodeRocketAnimation:	INCLUDE "gfx/pokemon/electrode_rocket/anim.asm"
@@ -23,6 +25,7 @@ ArbokRocketAnimation:		INCLUDE "gfx/pokemon/arbok_rocket/anim.asm"
 
 GolbatPlainAnimation:		INCLUDE "gfx/pokemon/golbat/anim.asm"
 GolbatRocketAnimation:		INCLUDE "gfx/pokemon/golbat_rocket/anim.asm"
+GolbatRBAnimation:		INCLUDE "gfx/pokemon/golbat_rb/anim.asm"
 
 SnorlaxPlainAnimation:		INCLUDE "gfx/pokemon/snorlax/anim.asm"
 SnorlaxApricornAnimation:	INCLUDE "gfx/pokemon/snorlax_apricorn/anim.asm"
@@ -61,6 +64,7 @@ UnownZAnimation: 		INCLUDE "gfx/pokemon/unown_z/anim.asm"
 MagikarpPlainAnimation:		INCLUDE "gfx/pokemon/magikarp/anim.asm"
 MagikarpXSAnimation:		INCLUDE "gfx/pokemon/magikarp_xs/anim.asm"
 MagikarpXLAnimation:		INCLUDE "gfx/pokemon/magikarp_xl/anim.asm"
+MagikarpRBAnimation:		INCLUDE "gfx/pokemon/magikarp_rb/anim.asm"
 
 MachopPlainAnimation:		INCLUDE "gfx/pokemon/machop/anim.asm"
 MachopRBAnimation:		INCLUDE "gfx/pokemon/machop_rb/anim.asm"
@@ -76,3 +80,90 @@ TentacoolRBAnimation:		INCLUDE "gfx/pokemon/tentacool_rb/anim.asm"
 
 TentacruelPlainAnimation:	INCLUDE "gfx/pokemon/tentacruel/anim.asm"
 TentacruelRBAnimation:		INCLUDE "gfx/pokemon/tentacruel_rb/anim.asm"
+
+IgglybuffPlainAnimation:		INCLUDE "gfx/pokemon/igglybuff/anim.asm"
+IgglybuffBetaAnimation:		INCLUDE "gfx/pokemon/igglybuff_beta/anim.asm"
+
+JigglypuffPlainAnimation:		INCLUDE "gfx/pokemon/jigglypuff/anim.asm"
+JigglypuffRBAnimation:		INCLUDE "gfx/pokemon/jigglypuff_rb/anim.asm"
+
+WigglytuffPlainAnimation:		INCLUDE "gfx/pokemon/wigglytuff/anim.asm"
+WigglytuffRBAnimation:		INCLUDE "gfx/pokemon/wigglytuff_rb/anim.asm"
+
+NidoranMPlainAnimation:		INCLUDE "gfx/pokemon/nidoran_m/anim.asm"
+NidoranMRBAnimation:		INCLUDE "gfx/pokemon/nidoran_m_rb/anim.asm"
+
+NidorinoPlainAnimation:		INCLUDE "gfx/pokemon/nidorino/anim.asm"
+NidorinoRBAnimation:		INCLUDE "gfx/pokemon/nidorino_rb/anim.asm"
+
+NidokingPlainAnimation:		INCLUDE "gfx/pokemon/nidoking/anim.asm"
+NidokingRBAnimation:		INCLUDE "gfx/pokemon/nidoking_rb/anim.asm"
+
+NidoranFPlainAnimation:		INCLUDE "gfx/pokemon/nidoran_f/anim.asm"
+NidoranFRBAnimation:		INCLUDE "gfx/pokemon/nidoran_f_rb/anim.asm"
+
+NidorinaPlainAnimation:		INCLUDE "gfx/pokemon/nidorina/anim.asm"
+NidorinaRBAnimation:		INCLUDE "gfx/pokemon/nidorina_rb/anim.asm"
+
+NidoqueenPlainAnimation:		INCLUDE "gfx/pokemon/nidoqueen/anim.asm"
+NidoqueenRBAnimation:		INCLUDE "gfx/pokemon/nidoqueen_rb/anim.asm"
+
+ZubatPlainAnimation:		INCLUDE "gfx/pokemon/zubat/anim.asm"
+ZubatRBAnimation:		INCLUDE "gfx/pokemon/zubat_rb/anim.asm"
+
+GeodudePlainAnimation:		INCLUDE "gfx/pokemon/geodude/anim.asm"
+GeodudeRBAnimation:		INCLUDE "gfx/pokemon/geodude_rb/anim.asm"
+
+GravelerPlainAnimation:		INCLUDE "gfx/pokemon/graveler/anim.asm"
+GravelerRBAnimation:		INCLUDE "gfx/pokemon/graveler_rb/anim.asm"
+
+GolemPlainAnimation:		INCLUDE "gfx/pokemon/golem/anim.asm"
+GolemRBAnimation:		INCLUDE "gfx/pokemon/golem_rb/anim.asm"
+
+ShellderPlainAnimation:		INCLUDE "gfx/pokemon/shellder/anim.asm"
+ShellderRBAnimation:		INCLUDE "gfx/pokemon/shellder_rb/anim.asm"
+
+CloysterPlainAnimation:		INCLUDE "gfx/pokemon/cloyster/anim.asm"
+CloysterRBAnimation:		INCLUDE "gfx/pokemon/cloyster_rb/anim.asm"
+
+GastlyPlainAnimation:		INCLUDE "gfx/pokemon/gastly/anim.asm"
+GastlyRBAnimation:		INCLUDE "gfx/pokemon/gastly_rb/anim.asm"
+
+HaunterPlainAnimation:		INCLUDE "gfx/pokemon/haunter/anim.asm"
+HaunterRBAnimation:		INCLUDE "gfx/pokemon/haunter_rb/anim.asm"
+
+GengarPlainAnimation:		INCLUDE "gfx/pokemon/gengar/anim.asm"
+GengarRBAnimation:		INCLUDE "gfx/pokemon/gengar_rb/anim.asm"
+
+KoffingPlainAnimation:		INCLUDE "gfx/pokemon/koffing/anim.asm"
+KoffingRBAnimation:		INCLUDE "gfx/pokemon/koffing_rb/anim.asm"
+
+HorseaPlainAnimation:		INCLUDE "gfx/pokemon/horsea/anim.asm"
+HorseaRBAnimation:		INCLUDE "gfx/pokemon/horsea_rb/anim.asm"
+
+SeadraPlainAnimation:		INCLUDE "gfx/pokemon/seadra/anim.asm"
+SeadraRBAnimation:		INCLUDE "gfx/pokemon/seadra_rb/anim.asm"
+
+KingdraPlainAnimation:		INCLUDE "gfx/pokemon/kingdra/anim.asm"
+KingdraBetaAnimation:		INCLUDE "gfx/pokemon/kingdra_beta/anim.asm"
+
+PsyduckPlainAnimation:		INCLUDE "gfx/pokemon/psyduck/anim.asm"
+PsyduckRBAnimation:		INCLUDE "gfx/pokemon/psyduck_rb/anim.asm"
+
+GolduckPlainAnimation:		INCLUDE "gfx/pokemon/golduck/anim.asm"
+GolduckRBAnimation:		INCLUDE "gfx/pokemon/golduck_rb/anim.asm"
+
+GyaradosPlainAnimation:		INCLUDE "gfx/pokemon/gyarados/anim.asm"
+GyaradosRBAnimation:		INCLUDE "gfx/pokemon/gyarados_rb/anim.asm"
+
+StaryuPlainAnimation:		INCLUDE "gfx/pokemon/staryu/anim.asm"
+StaryuRBAnimation:		INCLUDE "gfx/pokemon/staryu_rb/anim.asm"
+
+StarmiePlainAnimation:		INCLUDE "gfx/pokemon/starmie/anim.asm"
+StarmieRBAnimation:		INCLUDE "gfx/pokemon/starmie_rb/anim.asm"
+
+PichuPlainAnimation:		INCLUDE "gfx/pokemon/pichu/anim.asm"
+PichuBetaAnimation:		INCLUDE "gfx/pokemon/pichu_beta/anim.asm"
+
+RaichuPlainAnimation:		INCLUDE "gfx/pokemon/raichu/anim.asm"
+RaichuRBAnimation:		INCLUDE "gfx/pokemon/raichu_rb/anim.asm"

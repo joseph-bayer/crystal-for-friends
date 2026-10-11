@@ -46,6 +46,8 @@ INCLUDE "gfx/pokemon/crobat/shiny.pal"
 INCBIN	"gfx/pokemon/crobat_rocket/normal.gbcpal", middle_colors ; built from the front alone, see the Makefile
 ; A shiny Rocket Crobat takes the ordinary shiny Crobat colours, by design.
 INCLUDE "gfx/pokemon/crobat/shiny.pal"
+INCBIN	"gfx/pokemon/crobat_beta/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
 	assert_table_length NUM_CROBAT_FORMS
 
 ElectrodePalettes:
@@ -75,6 +77,8 @@ INCBIN	"gfx/pokemon/golbat/normal.gbcpal", middle_colors
 INCLUDE "gfx/pokemon/golbat/shiny.pal"
 INCBIN	"gfx/pokemon/golbat/normal.gbcpal", middle_colors ; the Rocket form is drawn in Golbat's colours
 INCLUDE "gfx/pokemon/golbat_rocket/shiny.pal"
+INCBIN	"gfx/pokemon/golbat_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
 	assert_table_length NUM_GOLBAT_FORMS
 
 SnorlaxPalettes:
@@ -180,3 +184,304 @@ INCLUDE "gfx/pokemon/tentacruel/shiny.pal"
 INCBIN	"gfx/pokemon/tentacruel_rb/normal.gbcpal", middle_colors
 INCLUDE "gfx/pokemon/dmg_shiny.pal"
 	assert_table_length NUM_TENTACRUEL_FORMS
+
+IgglybuffPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/igglybuff/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/igglybuff/shiny.pal"
+INCBIN	"gfx/pokemon/igglybuff_beta/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_IGGLYBUFF_FORMS
+
+JigglypuffPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/jigglypuff/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/jigglypuff/shiny.pal"
+INCBIN	"gfx/pokemon/jigglypuff_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_JIGGLYPUFF_FORMS
+
+WigglytuffPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/wigglytuff/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/wigglytuff/shiny.pal"
+INCBIN	"gfx/pokemon/wigglytuff_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_WIGGLYTUFF_FORMS
+
+NidoranMPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/nidoran_m/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/nidoran_m/shiny.pal"
+INCBIN	"gfx/pokemon/nidoran_m_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_NIDORAN_M_FORMS
+
+NidorinoPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/nidorino/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/nidorino/shiny.pal"
+INCBIN	"gfx/pokemon/nidorino_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_NIDORINO_FORMS
+
+NidokingPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/nidoking/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/nidoking/shiny.pal"
+INCBIN	"gfx/pokemon/nidoking_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_NIDOKING_FORMS
+
+NidoranFPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/nidoran_f/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/nidoran_f/shiny.pal"
+INCBIN	"gfx/pokemon/nidoran_f_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_NIDORAN_F_FORMS
+
+NidorinaPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/nidorina/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/nidorina/shiny.pal"
+INCBIN	"gfx/pokemon/nidorina_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_NIDORINA_FORMS
+
+NidoqueenPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/nidoqueen/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/nidoqueen/shiny.pal"
+INCBIN	"gfx/pokemon/nidoqueen_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_NIDOQUEEN_FORMS
+
+ZubatPalettes:
+	; 3 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/zubat/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/zubat/shiny.pal"
+INCBIN	"gfx/pokemon/zubat/normal.gbcpal", middle_colors ; looks plain
+INCLUDE "gfx/pokemon/zubat/shiny.pal"
+INCBIN	"gfx/pokemon/zubat_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_ZUBAT_FORMS
+
+GeodudePalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/geodude/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/geodude/shiny.pal"
+INCBIN	"gfx/pokemon/geodude_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_GEODUDE_FORMS
+
+GravelerPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/graveler/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/graveler/shiny.pal"
+INCBIN	"gfx/pokemon/graveler_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_GRAVELER_FORMS
+
+GolemPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/golem/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/golem/shiny.pal"
+INCBIN	"gfx/pokemon/golem_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_GOLEM_FORMS
+
+ShellderPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/shellder/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/shellder/shiny.pal"
+INCBIN	"gfx/pokemon/shellder_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_SHELLDER_FORMS
+
+CloysterPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/cloyster/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/cloyster/shiny.pal"
+INCBIN	"gfx/pokemon/cloyster_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_CLOYSTER_FORMS
+
+GastlyPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/gastly/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/gastly/shiny.pal"
+INCBIN	"gfx/pokemon/gastly_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_GASTLY_FORMS
+
+HaunterPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/haunter/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/haunter/shiny.pal"
+INCBIN	"gfx/pokemon/haunter_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_HAUNTER_FORMS
+
+GengarPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/gengar/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/gengar/shiny.pal"
+INCBIN	"gfx/pokemon/gengar_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_GENGAR_FORMS
+
+KoffingPalettes:
+	; 3 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/koffing/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/koffing/shiny.pal"
+INCBIN	"gfx/pokemon/koffing/normal.gbcpal", middle_colors ; looks plain
+INCLUDE "gfx/pokemon/koffing/shiny.pal"
+INCBIN	"gfx/pokemon/koffing_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_KOFFING_FORMS
+
+WeezingPalettes:
+	; 3 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/weezing/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/weezing/shiny.pal"
+INCBIN	"gfx/pokemon/weezing/normal.gbcpal", middle_colors ; the Rocket form is drawn in Weezing's colours
+INCLUDE "gfx/pokemon/weezing/shiny.pal"
+INCBIN	"gfx/pokemon/weezing_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_WEEZING_FORMS
+
+HorseaPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/horsea/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/horsea/shiny.pal"
+INCBIN	"gfx/pokemon/horsea_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_HORSEA_FORMS
+
+SeadraPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/seadra/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/seadra/shiny.pal"
+INCBIN	"gfx/pokemon/seadra_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_SEADRA_FORMS
+
+KingdraPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/kingdra/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/kingdra/shiny.pal"
+INCBIN	"gfx/pokemon/kingdra_beta/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_KINGDRA_FORMS
+
+PsyduckPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/psyduck/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/psyduck/shiny.pal"
+INCBIN	"gfx/pokemon/psyduck_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_PSYDUCK_FORMS
+
+GolduckPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/golduck/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/golduck/shiny.pal"
+INCBIN	"gfx/pokemon/golduck_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_GOLDUCK_FORMS
+
+MagikarpPalettes:
+	; 4 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/magikarp/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/magikarp/shiny.pal"
+INCBIN	"gfx/pokemon/magikarp/normal.gbcpal", middle_colors ; the XS form is drawn in Magikarp's colours
+INCLUDE "gfx/pokemon/magikarp/shiny.pal"
+INCBIN	"gfx/pokemon/magikarp/normal.gbcpal", middle_colors ; the XL form is drawn in Magikarp's colours
+INCLUDE "gfx/pokemon/magikarp/shiny.pal"
+INCBIN	"gfx/pokemon/magikarp_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_MAGIKARP_FORMS
+
+GyaradosPalettes:
+	; 4 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/gyarados/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/gyarados/shiny.pal"
+INCBIN	"gfx/pokemon/gyarados/normal.gbcpal", middle_colors ; looks plain
+INCLUDE "gfx/pokemon/gyarados/shiny.pal"
+INCBIN	"gfx/pokemon/gyarados/normal.gbcpal", middle_colors ; looks plain
+INCLUDE "gfx/pokemon/gyarados/shiny.pal"
+INCBIN	"gfx/pokemon/gyarados_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_GYARADOS_FORMS
+
+StaryuPalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/staryu/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/staryu/shiny.pal"
+INCBIN	"gfx/pokemon/staryu_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_STARYU_FORMS
+
+StarmiePalettes:
+	; 2 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/starmie/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/starmie/shiny.pal"
+INCBIN	"gfx/pokemon/starmie_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_STARMIE_FORMS
+
+PichuPalettes:
+	; 4 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/pichu/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/pichu/shiny.pal"
+INCBIN	"gfx/pokemon/pichu/normal.gbcpal", middle_colors ; looks plain
+INCLUDE "gfx/pokemon/pichu/shiny.pal"
+INCBIN	"gfx/pokemon/pichu/normal.gbcpal", middle_colors ; looks plain
+INCLUDE "gfx/pokemon/pichu/shiny.pal"
+INCBIN	"gfx/pokemon/pichu_beta/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_PICHU_FORMS
+
+RaichuPalettes:
+	; 4 middle palettes, normal and shiny, with 2 colors each
+	table_width COLOR_SIZE * 2 * 2
+INCBIN	"gfx/pokemon/raichu/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/raichu/shiny.pal"
+INCBIN	"gfx/pokemon/raichu/normal.gbcpal", middle_colors ; looks plain
+INCLUDE "gfx/pokemon/raichu/shiny.pal"
+INCBIN	"gfx/pokemon/raichu/normal.gbcpal", middle_colors ; looks plain
+INCLUDE "gfx/pokemon/raichu/shiny.pal"
+INCBIN	"gfx/pokemon/raichu_rb/normal.gbcpal", middle_colors
+INCLUDE "gfx/pokemon/dmg_shiny.pal"
+	assert_table_length NUM_RAICHU_FORMS

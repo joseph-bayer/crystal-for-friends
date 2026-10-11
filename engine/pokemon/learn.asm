@@ -154,7 +154,7 @@ LearnMove:
 	ld a, [hl]
 	and FORM_MASK ; only care about form bits, not shiny bit
 	cp PIKACHU_FLY_FORM  ; Fly form
-	jr nz, .done ; Not Plain form, not Surf form, not fly form... What are you??
+	jr nz, .done ; any other form, such as RB, never turns into Surf or Fly
 
 	ld hl, FLY
 	farcall CheckPokemonKnowsMove

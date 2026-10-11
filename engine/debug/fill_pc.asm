@@ -184,30 +184,59 @@ endc
 endc
 
 .FormCounts:
-; Ordered so a three-box budget still reaches every species here. Magikarp leads because it is
+; Ordered so a six-box budget still reaches every species here. Magikarp leads because it is
 ; the one species LoadEnemyMon has a form branch for -- a DV reroll loop that jumps backwards --
 ; so if the sweep is going to die on a form, it dies first. Smeargle trails because it has the
 ; most forms and is the one worth truncating.
-	dwb MAGIKARP,   NUM_MAGIKARP_FORMS   ; 3, running total 3
-	dwb PIKACHU,    NUM_PIKACHU_FORMS    ; 4, running total 7
-	dwb SCYTHER,    NUM_SCYTHER_FORMS    ; 3, running total 10
-	dwb SCIZOR,     NUM_SCIZOR_FORMS     ; 3, running total 13
-	dwb PINSIR,     NUM_PINSIR_FORMS     ; 3, running total 16
-	dwb SHUCKLE,    NUM_SHUCKLE_FORMS    ; 3, running total 19
-	dwb CHARMELEON, NUM_CHARMELEON_FORMS ; 2, running total 21
-	dwb CHARIZARD,  NUM_CHARIZARD_FORMS  ; 2, running total 23
-	dwb ARBOK,      NUM_ARBOK_FORMS      ; 2, running total 25
-	dwb GOLBAT,     NUM_GOLBAT_FORMS     ; 2, running total 27
-	dwb MACHOP,     NUM_MACHOP_FORMS     ; 2, running total 29
-	dwb MACHOKE,    NUM_MACHOKE_FORMS    ; 2, running total 31
-	dwb MACHAMP,    NUM_MACHAMP_FORMS    ; 2, running total 33
-	dwb TENTACOOL,  NUM_TENTACOOL_FORMS  ; 2, running total 35
-	dwb TENTACRUEL, NUM_TENTACRUEL_FORMS ; 2, running total 37
-	dwb ELECTRODE,  NUM_ELECTRODE_FORMS  ; 2, running total 39
-	dwb WEEZING,    NUM_WEEZING_FORMS    ; 2, running total 41
-	dwb SNORLAX,    NUM_SNORLAX_FORMS    ; 2, running total 43
-	dwb CROBAT,     NUM_CROBAT_FORMS     ; 2, running total 45
-	dwb SMEARGLE,   NUM_SMEARGLE_FORMS   ; 6, running total 51
+	dwb MAGIKARP,   NUM_MAGIKARP_FORMS   ; 4, running total 4
+	dwb PIKACHU,    NUM_PIKACHU_FORMS    ; 4, running total 8
+	dwb SCYTHER,    NUM_SCYTHER_FORMS    ; 3, running total 11
+	dwb SCIZOR,     NUM_SCIZOR_FORMS     ; 3, running total 14
+	dwb PINSIR,     NUM_PINSIR_FORMS     ; 3, running total 17
+	dwb SHUCKLE,    NUM_SHUCKLE_FORMS    ; 3, running total 20
+	dwb CHARMELEON, NUM_CHARMELEON_FORMS ; 2, running total 22
+	dwb CHARIZARD,  NUM_CHARIZARD_FORMS  ; 2, running total 24
+	dwb ARBOK,      NUM_ARBOK_FORMS      ; 2, running total 26
+	dwb GOLBAT,     NUM_GOLBAT_FORMS     ; 3, running total 29
+	dwb MACHOP,     NUM_MACHOP_FORMS     ; 2, running total 31
+	dwb MACHOKE,    NUM_MACHOKE_FORMS    ; 2, running total 33
+	dwb MACHAMP,    NUM_MACHAMP_FORMS    ; 2, running total 35
+	dwb TENTACOOL,  NUM_TENTACOOL_FORMS  ; 2, running total 37
+	dwb TENTACRUEL, NUM_TENTACRUEL_FORMS ; 2, running total 39
+	dwb ELECTRODE,  NUM_ELECTRODE_FORMS  ; 2, running total 41
+	dwb WEEZING,    NUM_WEEZING_FORMS    ; 3, running total 44
+	dwb SNORLAX,    NUM_SNORLAX_FORMS    ; 2, running total 46
+	dwb CROBAT,     NUM_CROBAT_FORMS     ; 3, running total 49
+	dwb IGGLYBUFF,  NUM_IGGLYBUFF_FORMS  ; 2, running total 51
+	dwb JIGGLYPUFF, NUM_JIGGLYPUFF_FORMS ; 2, running total 53
+	dwb WIGGLYTUFF, NUM_WIGGLYTUFF_FORMS ; 2, running total 55
+	dwb NIDORAN_M,  NUM_NIDORAN_M_FORMS  ; 2, running total 57
+	dwb NIDORINO,   NUM_NIDORINO_FORMS   ; 2, running total 59
+	dwb NIDOKING,   NUM_NIDOKING_FORMS   ; 2, running total 61
+	dwb NIDORAN_F,  NUM_NIDORAN_F_FORMS  ; 2, running total 63
+	dwb NIDORINA,   NUM_NIDORINA_FORMS   ; 2, running total 65
+	dwb NIDOQUEEN,  NUM_NIDOQUEEN_FORMS  ; 2, running total 67
+	dwb ZUBAT,      NUM_ZUBAT_FORMS      ; 3, running total 70
+	dwb GEODUDE,    NUM_GEODUDE_FORMS    ; 2, running total 72
+	dwb GRAVELER,   NUM_GRAVELER_FORMS   ; 2, running total 74
+	dwb GOLEM,      NUM_GOLEM_FORMS      ; 2, running total 76
+	dwb SHELLDER,   NUM_SHELLDER_FORMS   ; 2, running total 78
+	dwb CLOYSTER,   NUM_CLOYSTER_FORMS   ; 2, running total 80
+	dwb GASTLY,     NUM_GASTLY_FORMS     ; 2, running total 82
+	dwb HAUNTER,    NUM_HAUNTER_FORMS    ; 2, running total 84
+	dwb GENGAR,     NUM_GENGAR_FORMS     ; 2, running total 86
+	dwb KOFFING,    NUM_KOFFING_FORMS    ; 3, running total 89
+	dwb HORSEA,     NUM_HORSEA_FORMS     ; 2, running total 91
+	dwb SEADRA,     NUM_SEADRA_FORMS     ; 2, running total 93
+	dwb KINGDRA,    NUM_KINGDRA_FORMS    ; 2, running total 95
+	dwb PSYDUCK,    NUM_PSYDUCK_FORMS    ; 2, running total 97
+	dwb GOLDUCK,    NUM_GOLDUCK_FORMS    ; 2, running total 99
+	dwb GYARADOS,   NUM_GYARADOS_FORMS   ; 4, running total 103
+	dwb STARYU,     NUM_STARYU_FORMS     ; 2, running total 105
+	dwb STARMIE,    NUM_STARMIE_FORMS    ; 2, running total 107
+	dwb PICHU,      NUM_PICHU_FORMS      ; 4, running total 111
+	dwb RAICHU,     NUM_RAICHU_FORMS     ; 4, running total 115
+	dwb SMEARGLE,   NUM_SMEARGLE_FORMS   ; 6, running total 121
 if FILL_PC_ALL_UNOWN_LETTERS
 	dwb UNOWN,    NUM_UNOWN
 endc

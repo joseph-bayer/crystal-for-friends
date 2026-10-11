@@ -608,4 +608,7 @@ CianwoodCity_MapEvents:
 ; Palette 0 so they take the mon's own colors, and the event flag is -1 -- whether one is standing
 ; here is decided by whether its slot holds a rolled mon, not by a flag.
 	object_event 13, 23, SPRITE_OW_MON_1, SPRITEMOVEDATA_SWIM_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1
+	object_event 24, 27, SPRITE_OW_MON_2, SPRITEMOVEDATA_SWIM_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1
+	object_event 22, 21, SPRITE_OW_MON_3, SPRITEMOVEDATA_SWIM_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1
+	object_event 15, 18, SPRITE_OW_MON_4, SPRITEMOVEDATA_SWIM_WANDER_NOCLIP, 2, 2, -1, -1, 0, OBJECTTYPE_WILDMON, 0, ObjectEvent, -1
 	object_event 27, 34, SPRITE_SAILOR, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, CianwoodCityMysteryIslandSailorScript, -1

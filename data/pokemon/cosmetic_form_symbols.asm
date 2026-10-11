@@ -33,22 +33,22 @@ CosmeticFormSymbols::
 	dw 0					; EKANS (17)
 	dw ArbokFormSymbols		; ARBOK (18)
 	dw PikachuFormSymbols			; PIKACHU (19)
-	dw 0					; RAICHU (1a)
+	dw RaichuFormSymbols			; RAICHU (1a)
 	dw 0					; SANDSHREW (1b)
 	dw 0					; SANDSLASH (1c)
-	dw 0					; NIDORAN_F (1d)
-	dw 0					; NIDORINA (1e)
-	dw 0					; NIDOQUEEN (1f)
-	dw 0					; NIDORAN_M (20)
-	dw 0					; NIDORINO (21)
-	dw 0					; NIDOKING (22)
+	dw NidoranFFormSymbols			; NIDORAN_F (1d)
+	dw NidorinaFormSymbols			; NIDORINA (1e)
+	dw NidoqueenFormSymbols			; NIDOQUEEN (1f)
+	dw NidoranMFormSymbols			; NIDORAN_M (20)
+	dw NidorinoFormSymbols			; NIDORINO (21)
+	dw NidokingFormSymbols			; NIDOKING (22)
 	dw 0					; CLEFAIRY (23)
 	dw 0					; CLEFABLE (24)
 	dw 0					; VULPIX (25)
 	dw 0					; NINETALES (26)
-	dw 0					; JIGGLYPUFF (27)
-	dw 0					; WIGGLYTUFF (28)
-	dw 0					; ZUBAT (29)
+	dw JigglypuffFormSymbols			; JIGGLYPUFF (27)
+	dw WigglytuffFormSymbols			; WIGGLYTUFF (28)
+	dw ZubatFormSymbols			; ZUBAT (29)
 	dw GolbatFormSymbols			; GOLBAT (2a)
 	dw 0					; ODDISH (2b)
 	dw 0					; GLOOM (2c)
@@ -61,8 +61,8 @@ CosmeticFormSymbols::
 	dw 0					; DUGTRIO (33)
 	dw 0					; MEOWTH (34)
 	dw 0					; PERSIAN (35)
-	dw 0					; PSYDUCK (36)
-	dw 0					; GOLDUCK (37)
+	dw PsyduckFormSymbols			; PSYDUCK (36)
+	dw GolduckFormSymbols			; GOLDUCK (37)
 	dw 0					; MANKEY (38)
 	dw 0					; PRIMEAPE (39)
 	dw 0					; GROWLITHE (3a)
@@ -81,9 +81,9 @@ CosmeticFormSymbols::
 	dw 0					; VICTREEBEL (47)
 	dw TentacoolFormSymbols			; TENTACOOL (48)
 	dw TentacruelFormSymbols			; TENTACRUEL (49)
-	dw 0					; GEODUDE (4a)
-	dw 0					; GRAVELER (4b)
-	dw 0					; GOLEM (4c)
+	dw GeodudeFormSymbols			; GEODUDE (4a)
+	dw GravelerFormSymbols			; GRAVELER (4b)
+	dw GolemFormSymbols			; GOLEM (4c)
 	dw 0					; PONYTA (4d)
 	dw 0					; RAPIDASH (4e)
 	dw 0					; SLOWPOKE (4f)
@@ -97,11 +97,11 @@ CosmeticFormSymbols::
 	dw 0					; DEWGONG (57)
 	dw 0					; GRIMER (58)
 	dw 0					; MUK (59)
-	dw 0					; SHELLDER (5a)
-	dw 0					; CLOYSTER (5b)
-	dw 0					; GASTLY (5c)
-	dw 0					; HAUNTER (5d)
-	dw 0					; GENGAR (5e)
+	dw ShellderFormSymbols			; SHELLDER (5a)
+	dw CloysterFormSymbols			; CLOYSTER (5b)
+	dw GastlyFormSymbols			; GASTLY (5c)
+	dw HaunterFormSymbols			; HAUNTER (5d)
+	dw GengarFormSymbols			; GENGAR (5e)
 	dw 0					; ONIX (5f)
 	dw 0					; DROWZEE (60)
 	dw 0					; HYPNO (61)
@@ -116,19 +116,19 @@ CosmeticFormSymbols::
 	dw 0					; HITMONLEE (6a)
 	dw 0					; HITMONCHAN (6b)
 	dw 0					; LICKITUNG (6c)
-	dw 0					; KOFFING (6d)
+	dw KoffingFormSymbols			; KOFFING (6d)
 	dw WeezingFormSymbols			; WEEZING (6e)
 	dw 0					; RHYHORN (6f)
 	dw 0					; RHYDON (70)
 	dw 0					; CHANSEY (71)
 	dw 0					; TANGELA (72)
 	dw 0					; KANGASKHAN (73)
-	dw 0					; HORSEA (74)
-	dw 0					; SEADRA (75)
+	dw HorseaFormSymbols			; HORSEA (74)
+	dw SeadraFormSymbols			; SEADRA (75)
 	dw 0					; GOLDEEN (76)
 	dw 0					; SEAKING (77)
-	dw 0					; STARYU (78)
-	dw 0					; STARMIE (79)
+	dw StaryuFormSymbols			; STARYU (78)
+	dw StarmieFormSymbols			; STARMIE (79)
 	dw 0					; MR__MIME (7a)
 	dw 0					; SCYTHER (7b)
 	dw 0					; JYNX (7c)
@@ -136,8 +136,8 @@ CosmeticFormSymbols::
 	dw 0					; MAGMAR (7e)
 	dw 0					; PINSIR (7f)
 	dw 0					; TAUROS (80)
-	dw 0					; MAGIKARP (81)
-	dw 0					; GYARADOS (82)
+	dw MagikarpFormSymbols			; MAGIKARP (81)
+	dw GyaradosFormSymbols			; GYARADOS (82)
 	dw 0					; LAPRAS (83)
 	dw 0					; DITTO (84)
 	dw 0					; EEVEE (85)
@@ -179,9 +179,9 @@ CosmeticFormSymbols::
 	dw CrobatFormSymbols			; CROBAT (a9)
 	dw 0					; CHINCHOU (aa)
 	dw 0					; LANTURN (ab)
-	dw 0					; PICHU (ac)
+	dw PichuFormSymbols			; PICHU (ac)
 	dw 0					; CLEFFA (ad)
-	dw 0					; IGGLYBUFF (ae)
+	dw IgglybuffFormSymbols			; IGGLYBUFF (ae)
 	dw 0					; TOGEPI (af)
 	dw 0					; TOGETIC (b0)
 	dw 0					; NATU (b1)
@@ -237,7 +237,7 @@ CosmeticFormSymbols::
 	dw 0					; SKARMORY (e3)
 	dw 0					; HOUNDOUR (e4)
 	dw 0					; HOUNDOOM (e5)
-	dw 0					; KINGDRA (e6)
+	dw KingdraFormSymbols			; KINGDRA (e6)
 	dw 0					; PHANPY (e7)
 	dw 0					; DONPHAN (e8)
 	dw 0					; PORYGON2 (e9)
@@ -285,12 +285,14 @@ WeezingFormSymbols:
 	table_width 1
 	db 0
 	db "<ROCKET_LOGO>"
+	db "<CARTRIDGE>"
 	assert_table_length NUM_WEEZING_FORMS
 
 CrobatFormSymbols:
 	table_width 1
 	db 0
 	db "<ROCKET_LOGO>"
+	db "<CARTRIDGE>"
 	assert_table_length NUM_CROBAT_FORMS
 
 ElectrodeFormSymbols:
@@ -309,6 +311,7 @@ GolbatFormSymbols:
 	table_width 1
 	db 0
 	db "<ROCKET_LOGO>"
+	db "<CARTRIDGE>"
 	assert_table_length NUM_GOLBAT_FORMS
 
 MachopFormSymbols:
@@ -340,3 +343,193 @@ TentacruelFormSymbols:
 	db 0
 	db "<CARTRIDGE>"
 	assert_table_length NUM_TENTACRUEL_FORMS
+
+IgglybuffFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_IGGLYBUFF_FORMS
+
+JigglypuffFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_JIGGLYPUFF_FORMS
+
+WigglytuffFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_WIGGLYTUFF_FORMS
+
+NidoranMFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_NIDORAN_M_FORMS
+
+NidorinoFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_NIDORINO_FORMS
+
+NidokingFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_NIDOKING_FORMS
+
+NidoranFFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_NIDORAN_F_FORMS
+
+NidorinaFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_NIDORINA_FORMS
+
+NidoqueenFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_NIDOQUEEN_FORMS
+
+ZubatFormSymbols:
+	table_width 1
+	db 0
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_ZUBAT_FORMS
+
+GeodudeFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_GEODUDE_FORMS
+
+GravelerFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_GRAVELER_FORMS
+
+GolemFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_GOLEM_FORMS
+
+ShellderFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_SHELLDER_FORMS
+
+CloysterFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_CLOYSTER_FORMS
+
+GastlyFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_GASTLY_FORMS
+
+HaunterFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_HAUNTER_FORMS
+
+GengarFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_GENGAR_FORMS
+
+KoffingFormSymbols:
+	table_width 1
+	db 0
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_KOFFING_FORMS
+
+HorseaFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_HORSEA_FORMS
+
+SeadraFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_SEADRA_FORMS
+
+KingdraFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_KINGDRA_FORMS
+
+PsyduckFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_PSYDUCK_FORMS
+
+GolduckFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_GOLDUCK_FORMS
+
+MagikarpFormSymbols:
+	table_width 1
+	db 0
+	db 0
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_MAGIKARP_FORMS
+
+GyaradosFormSymbols:
+	table_width 1
+	db 0
+	db 0
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_GYARADOS_FORMS
+
+StaryuFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_STARYU_FORMS
+
+StarmieFormSymbols:
+	table_width 1
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_STARMIE_FORMS
+
+PichuFormSymbols:
+	table_width 1
+	db 0
+	db 0
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_PICHU_FORMS
+
+RaichuFormSymbols:
+	table_width 1
+	db 0
+	db 0
+	db 0
+	db "<CARTRIDGE>"
+	assert_table_length NUM_RAICHU_FORMS

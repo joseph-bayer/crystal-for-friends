@@ -33,22 +33,22 @@ CosmeticFormAnimationPointerTable:
 	dw 0					; EKANS (17) - no cosmetic forms
 	dw ArbokAnimationPointers		; ARBOK (18) - has cosmetic forms
 	dw PikachuAnimationPointers		; PIKACHU (19) - has cosmetic forms
-	dw 0					; RAICHU (1a) - no cosmetic forms
+	dw RaichuAnimationPointers		; RAICHU (1a) - has cosmetic forms
 	dw 0					; SANDSHREW (1b) - no cosmetic forms
 	dw 0					; SANDSLASH (1c) - no cosmetic forms
-	dw 0					; NIDORAN_F (1d) - no cosmetic forms
-	dw 0					; NIDORINA (1e) - no cosmetic forms
-	dw 0					; NIDOQUEEN (1f) - no cosmetic forms
-	dw 0					; NIDORAN_M (20) - no cosmetic forms
-	dw 0					; NIDORINO (21) - no cosmetic forms
-	dw 0					; NIDOKING (22) - no cosmetic forms
+	dw NidoranFAnimationPointers		; NIDORAN_F (1d) - has cosmetic forms
+	dw NidorinaAnimationPointers		; NIDORINA (1e) - has cosmetic forms
+	dw NidoqueenAnimationPointers		; NIDOQUEEN (1f) - has cosmetic forms
+	dw NidoranMAnimationPointers		; NIDORAN_M (20) - has cosmetic forms
+	dw NidorinoAnimationPointers		; NIDORINO (21) - has cosmetic forms
+	dw NidokingAnimationPointers		; NIDOKING (22) - has cosmetic forms
 	dw 0					; CLEFAIRY (23) - no cosmetic forms
 	dw 0					; CLEFABLE (24) - no cosmetic forms
 	dw 0					; VULPIX (25) - no cosmetic forms
 	dw 0					; NINETALES (26) - no cosmetic forms
-	dw 0					; JIGGLYPUFF (27) - no cosmetic forms
-	dw 0					; WIGGLYTUFF (28) - no cosmetic forms
-	dw 0					; ZUBAT (29) - no cosmetic forms
+	dw JigglypuffAnimationPointers		; JIGGLYPUFF (27) - has cosmetic forms
+	dw WigglytuffAnimationPointers		; WIGGLYTUFF (28) - has cosmetic forms
+	dw ZubatAnimationPointers		; ZUBAT (29) - has cosmetic forms
 	dw GolbatAnimationPointers		; GOLBAT (2a) - has cosmetic forms
 	dw 0					; ODDISH (2b) - no cosmetic forms
 	dw 0					; GLOOM (2c) - no cosmetic forms
@@ -61,8 +61,8 @@ CosmeticFormAnimationPointerTable:
 	dw 0					; DUGTRIO (33) - no cosmetic forms
 	dw 0					; MEOWTH (34) - no cosmetic forms
 	dw 0					; PERSIAN (35) - no cosmetic forms
-	dw 0					; PSYDUCK (36) - no cosmetic forms
-	dw 0					; GOLDUCK (37) - no cosmetic forms
+	dw PsyduckAnimationPointers		; PSYDUCK (36) - has cosmetic forms
+	dw GolduckAnimationPointers		; GOLDUCK (37) - has cosmetic forms
 	dw 0					; MANKEY (38) - no cosmetic forms
 	dw 0					; PRIMEAPE (39) - no cosmetic forms
 	dw 0					; GROWLITHE (3a) - no cosmetic forms
@@ -81,9 +81,9 @@ CosmeticFormAnimationPointerTable:
 	dw 0					; VICTREEBEL (47) - no cosmetic forms
 	dw TentacoolAnimationPointers		; TENTACOOL (48) - has cosmetic forms
 	dw TentacruelAnimationPointers		; TENTACRUEL (49) - has cosmetic forms
-	dw 0					; GEODUDE (4a) - no cosmetic forms
-	dw 0					; GRAVELER (4b) - no cosmetic forms
-	dw 0					; GOLEM (4c) - no cosmetic forms
+	dw GeodudeAnimationPointers		; GEODUDE (4a) - has cosmetic forms
+	dw GravelerAnimationPointers		; GRAVELER (4b) - has cosmetic forms
+	dw GolemAnimationPointers		; GOLEM (4c) - has cosmetic forms
 	dw 0					; PONYTA (4d) - no cosmetic forms
 	dw 0					; RAPIDASH (4e) - no cosmetic forms
 	dw 0					; SLOWPOKE (4f) - no cosmetic forms
@@ -97,11 +97,11 @@ CosmeticFormAnimationPointerTable:
 	dw 0					; DEWGONG (57) - no cosmetic forms
 	dw 0					; GRIMER (58) - no cosmetic forms
 	dw 0					; MUK (59) - no cosmetic forms
-	dw 0					; SHELLDER (5a) - no cosmetic forms
-	dw 0					; CLOYSTER (5b) - no cosmetic forms
-	dw 0					; GASTLY (5c) - no cosmetic forms
-	dw 0					; HAUNTER (5d) - no cosmetic forms
-	dw 0					; GENGAR (5e) - no cosmetic forms
+	dw ShellderAnimationPointers		; SHELLDER (5a) - has cosmetic forms
+	dw CloysterAnimationPointers		; CLOYSTER (5b) - has cosmetic forms
+	dw GastlyAnimationPointers		; GASTLY (5c) - has cosmetic forms
+	dw HaunterAnimationPointers		; HAUNTER (5d) - has cosmetic forms
+	dw GengarAnimationPointers		; GENGAR (5e) - has cosmetic forms
 	dw 0					; ONIX (5f) - no cosmetic forms
 	dw 0					; DROWZEE (60) - no cosmetic forms
 	dw 0					; HYPNO (61) - no cosmetic forms
@@ -116,19 +116,19 @@ CosmeticFormAnimationPointerTable:
 	dw 0					; HITMONLEE (6a) - no cosmetic forms
 	dw 0					; HITMONCHAN (6b) - no cosmetic forms
 	dw 0					; LICKITUNG (6c) - no cosmetic forms
-	dw 0					; KOFFING (6d) - no cosmetic forms
+	dw KoffingAnimationPointers		; KOFFING (6d) - has cosmetic forms
 	dw WeezingAnimationPointers		; WEEZING (6e) - has cosmetic forms
 	dw 0					; RHYHORN (6f) - no cosmetic forms
 	dw 0					; RHYDON (70) - no cosmetic forms
 	dw 0					; CHANSEY (71) - no cosmetic forms
 	dw 0					; TANGELA (72) - no cosmetic forms
 	dw 0					; KANGASKHAN (73) - no cosmetic forms
-	dw 0					; HORSEA (74) - no cosmetic forms
-	dw 0					; SEADRA (75) - no cosmetic forms
+	dw HorseaAnimationPointers		; HORSEA (74) - has cosmetic forms
+	dw SeadraAnimationPointers		; SEADRA (75) - has cosmetic forms
 	dw 0					; GOLDEEN (76) - no cosmetic forms
 	dw 0					; SEAKING (77) - no cosmetic forms
-	dw 0					; STARYU (78) - no cosmetic forms
-	dw 0					; STARMIE (79) - no cosmetic forms
+	dw StaryuAnimationPointers		; STARYU (78) - has cosmetic forms
+	dw StarmieAnimationPointers		; STARMIE (79) - has cosmetic forms
 	dw 0					; MR__MIME (7a) - no cosmetic forms
 	dw 0					; SCYTHER (7b) - no cosmetic forms
 	dw 0					; JYNX (7c) - no cosmetic forms
@@ -137,7 +137,7 @@ CosmeticFormAnimationPointerTable:
 	dw 0					; PINSIR (7f) - no cosmetic forms
 	dw 0					; TAUROS (80) - no cosmetic forms
 	dw MagikarpAnimationPointers		; MAGIKARP (81) - has cosmetic forms
-	dw 0					; GYARADOS (82) - no cosmetic forms
+	dw GyaradosAnimationPointers		; GYARADOS (82) - has cosmetic forms
 	dw 0					; LAPRAS (83) - no cosmetic forms
 	dw 0					; DITTO (84) - no cosmetic forms
 	dw 0					; EEVEE (85) - no cosmetic forms
@@ -179,9 +179,9 @@ CosmeticFormAnimationPointerTable:
 	dw CrobatAnimationPointers		; CROBAT (a9) - has cosmetic forms
 	dw 0					; CHINCHOU (aa) - no cosmetic forms
 	dw 0					; LANTURN (ab) - no cosmetic forms
-	dw 0					; PICHU (ac) - no cosmetic forms
+	dw PichuAnimationPointers		; PICHU (ac) - has cosmetic forms
 	dw 0					; CLEFFA (ad) - no cosmetic forms
-	dw 0					; IGGLYBUFF (ae) - no cosmetic forms
+	dw IgglybuffAnimationPointers		; IGGLYBUFF (ae) - has cosmetic forms
 	dw 0					; TOGEPI (af) - no cosmetic forms
 	dw 0					; TOGETIC (b0) - no cosmetic forms
 	dw 0					; NATU (b1) - no cosmetic forms
@@ -237,7 +237,7 @@ CosmeticFormAnimationPointerTable:
 	dw 0					; SKARMORY (e3) - no cosmetic forms
 	dw 0					; HOUNDOUR (e4) - no cosmetic forms
 	dw 0					; HOUNDOOM (e5) - no cosmetic forms
-	dw 0					; KINGDRA (e6) - no cosmetic forms
+	dw KingdraAnimationPointers		; KINGDRA (e6) - has cosmetic forms
 	dw 0					; PHANPY (e7) - no cosmetic forms
 	dw 0					; DONPHAN (e8) - no cosmetic forms
 	dw 0					; PORYGON2 (e9) - no cosmetic forms
@@ -289,22 +289,22 @@ CosmeticFormIdleAnimationPointers:
 	dw 0                           		; EKANS (17) - no cosmetic forms
 	dw ArbokAnimationIdlePointers		; ARBOK (18) - has cosmetic forms
 	dw PikachuAnimationIdlePointers		; PIKACHU (19) - has cosmetic forms
-	dw 0                           		; RAICHU (1a) - no cosmetic forms
+	dw RaichuAnimationIdlePointers		; RAICHU (1a) - has cosmetic forms
 	dw 0                           		; SANDSHREW (1b) - no cosmetic forms
 	dw 0                           		; SANDSLASH (1c) - no cosmetic forms
-	dw 0                           		; NIDORAN_F (1d) - no cosmetic forms
-	dw 0                           		; NIDORINA (1e) - no cosmetic forms
-	dw 0                           		; NIDOQUEEN (1f) - no cosmetic forms
-	dw 0                           		; NIDORAN_M (20) - no cosmetic forms
-	dw 0                           		; NIDORINO (21) - no cosmetic forms
-	dw 0                           		; NIDOKING (22) - no cosmetic forms
+	dw NidoranFAnimationIdlePointers		; NIDORAN_F (1d) - has cosmetic forms
+	dw NidorinaAnimationIdlePointers		; NIDORINA (1e) - has cosmetic forms
+	dw NidoqueenAnimationIdlePointers		; NIDOQUEEN (1f) - has cosmetic forms
+	dw NidoranMAnimationIdlePointers		; NIDORAN_M (20) - has cosmetic forms
+	dw NidorinoAnimationIdlePointers		; NIDORINO (21) - has cosmetic forms
+	dw NidokingAnimationIdlePointers		; NIDOKING (22) - has cosmetic forms
 	dw 0                           		; CLEFAIRY (23) - no cosmetic forms
 	dw 0                           		; CLEFABLE (24) - no cosmetic forms
 	dw 0                           		; VULPIX (25) - no cosmetic forms
 	dw 0                           		; NINETALES (26) - no cosmetic forms
-	dw 0                           		; JIGGLYPUFF (27) - no cosmetic forms
-	dw 0                           		; WIGGLYTUFF (28) - no cosmetic forms
-	dw 0                           		; ZUBAT (29) - no cosmetic forms
+	dw JigglypuffAnimationIdlePointers		; JIGGLYPUFF (27) - has cosmetic forms
+	dw WigglytuffAnimationIdlePointers		; WIGGLYTUFF (28) - has cosmetic forms
+	dw ZubatAnimationIdlePointers		; ZUBAT (29) - has cosmetic forms
 	dw GolbatAnimationIdlePointers		; GOLBAT (2a) - has cosmetic forms
 	dw 0                           		; ODDISH (2b) - no cosmetic forms
 	dw 0                           		; GLOOM (2c) - no cosmetic forms
@@ -317,8 +317,8 @@ CosmeticFormIdleAnimationPointers:
 	dw 0                           		; DUGTRIO (33) - no cosmetic forms
 	dw 0                           		; MEOWTH (34) - no cosmetic forms
 	dw 0                           		; PERSIAN (35) - no cosmetic forms
-	dw 0                           		; PSYDUCK (36) - no cosmetic forms
-	dw 0                           		; GOLDUCK (37) - no cosmetic forms
+	dw PsyduckAnimationIdlePointers		; PSYDUCK (36) - has cosmetic forms
+	dw GolduckAnimationIdlePointers		; GOLDUCK (37) - has cosmetic forms
 	dw 0                           		; MANKEY (38) - no cosmetic forms
 	dw 0                           		; PRIMEAPE (39) - no cosmetic forms
 	dw 0                           		; GROWLITHE (3a) - no cosmetic forms
@@ -337,9 +337,9 @@ CosmeticFormIdleAnimationPointers:
 	dw 0                           		; VICTREEBEL (47) - no cosmetic forms
 	dw TentacoolAnimationIdlePointers		; TENTACOOL (48) - has cosmetic forms
 	dw TentacruelAnimationIdlePointers		; TENTACRUEL (49) - has cosmetic forms
-	dw 0                           		; GEODUDE (4a) - no cosmetic forms
-	dw 0                           		; GRAVELER (4b) - no cosmetic forms
-	dw 0                           		; GOLEM (4c) - no cosmetic forms
+	dw GeodudeAnimationIdlePointers		; GEODUDE (4a) - has cosmetic forms
+	dw GravelerAnimationIdlePointers		; GRAVELER (4b) - has cosmetic forms
+	dw GolemAnimationIdlePointers		; GOLEM (4c) - has cosmetic forms
 	dw 0                           		; PONYTA (4d) - no cosmetic forms
 	dw 0                           		; RAPIDASH (4e) - no cosmetic forms
 	dw 0                           		; SLOWPOKE (4f) - no cosmetic forms
@@ -353,11 +353,11 @@ CosmeticFormIdleAnimationPointers:
 	dw 0                           		; DEWGONG (57) - no cosmetic forms
 	dw 0                           		; GRIMER (58) - no cosmetic forms
 	dw 0                           		; MUK (59) - no cosmetic forms
-	dw 0                           		; SHELLDER (5a) - no cosmetic forms
-	dw 0                           		; CLOYSTER (5b) - no cosmetic forms
-	dw 0                           		; GASTLY (5c) - no cosmetic forms
-	dw 0                           		; HAUNTER (5d) - no cosmetic forms
-	dw 0                           		; GENGAR (5e) - no cosmetic forms
+	dw ShellderAnimationIdlePointers		; SHELLDER (5a) - has cosmetic forms
+	dw CloysterAnimationIdlePointers		; CLOYSTER (5b) - has cosmetic forms
+	dw GastlyAnimationIdlePointers		; GASTLY (5c) - has cosmetic forms
+	dw HaunterAnimationIdlePointers		; HAUNTER (5d) - has cosmetic forms
+	dw GengarAnimationIdlePointers		; GENGAR (5e) - has cosmetic forms
 	dw 0                           		; ONIX (5f) - no cosmetic forms
 	dw 0                           		; DROWZEE (60) - no cosmetic forms
 	dw 0                           		; HYPNO (61) - no cosmetic forms
@@ -372,19 +372,19 @@ CosmeticFormIdleAnimationPointers:
 	dw 0                           		; HITMONLEE (6a) - no cosmetic forms
 	dw 0                           		; HITMONCHAN (6b) - no cosmetic forms
 	dw 0                           		; LICKITUNG (6c) - no cosmetic forms
-	dw 0                           		; KOFFING (6d) - no cosmetic forms
+	dw KoffingAnimationIdlePointers		; KOFFING (6d) - has cosmetic forms
 	dw WeezingAnimationIdlePointers		; WEEZING (6e) - has cosmetic forms
 	dw 0                           		; RHYHORN (6f) - no cosmetic forms
 	dw 0                           		; RHYDON (70) - no cosmetic forms
 	dw 0                           		; CHANSEY (71) - no cosmetic forms
 	dw 0                           		; TANGELA (72) - no cosmetic forms
 	dw 0                           		; KANGASKHAN (73) - no cosmetic forms
-	dw 0                           		; HORSEA (74) - no cosmetic forms
-	dw 0                           		; SEADRA (75) - no cosmetic forms
+	dw HorseaAnimationIdlePointers		; HORSEA (74) - has cosmetic forms
+	dw SeadraAnimationIdlePointers		; SEADRA (75) - has cosmetic forms
 	dw 0                           		; GOLDEEN (76) - no cosmetic forms
 	dw 0                           		; SEAKING (77) - no cosmetic forms
-	dw 0                           		; STARYU (78) - no cosmetic forms
-	dw 0                           		; STARMIE (79) - no cosmetic forms
+	dw StaryuAnimationIdlePointers		; STARYU (78) - has cosmetic forms
+	dw StarmieAnimationIdlePointers		; STARMIE (79) - has cosmetic forms
 	dw 0                           		; MR__MIME (7a) - no cosmetic forms
 	dw 0                           		; SCYTHER (7b) - no cosmetic forms
 	dw 0                           		; JYNX (7c) - no cosmetic forms
@@ -393,7 +393,7 @@ CosmeticFormIdleAnimationPointers:
 	dw 0                           		; PINSIR (7f) - no cosmetic forms
 	dw 0                           		; TAUROS (80) - no cosmetic forms
 	dw MagikarpAnimationIdlePointers        ; MAGIKARP (81) - no cosmetic forms
-	dw 0                           		; GYARADOS (82) - no cosmetic forms
+	dw GyaradosAnimationIdlePointers		; GYARADOS (82) - has cosmetic forms
 	dw 0                           		; LAPRAS (83) - no cosmetic forms
 	dw 0                           		; DITTO (84) - no cosmetic forms
 	dw 0                           		; EEVEE (85) - no cosmetic forms
@@ -435,9 +435,9 @@ CosmeticFormIdleAnimationPointers:
 	dw CrobatAnimationIdlePointers		; CROBAT (a9) - has cosmetic forms
 	dw 0                           		; CHINCHOU (aa) - no cosmetic forms
 	dw 0                           		; LANTURN (ab) - no cosmetic forms
-	dw 0                           		; PICHU (ac) - no cosmetic forms
+	dw PichuAnimationIdlePointers		; PICHU (ac) - has cosmetic forms
 	dw 0                           		; CLEFFA (ad) - no cosmetic forms
-	dw 0                           		; IGGLYBUFF (ae) - no cosmetic forms
+	dw IgglybuffAnimationIdlePointers		; IGGLYBUFF (ae) - has cosmetic forms
 	dw 0                           		; TOGEPI (af) - no cosmetic forms
 	dw 0                           		; TOGETIC (b0) - no cosmetic forms
 	dw 0                           		; NATU (b1) - no cosmetic forms
@@ -493,7 +493,7 @@ CosmeticFormIdleAnimationPointers:
 	dw 0                           		; SKARMORY (e3) - no cosmetic forms
 	dw 0                           		; HOUNDOUR (e4) - no cosmetic forms
 	dw 0                           		; HOUNDOOM (e5) - no cosmetic forms
-	dw 0                           		; KINGDRA (e6) - no cosmetic forms
+	dw KingdraAnimationIdlePointers		; KINGDRA (e6) - has cosmetic forms
 	dw 0                           		; PHANPY (e7) - no cosmetic forms
 	dw 0                           		; DONPHAN (e8) - no cosmetic forms
 	dw 0                           		; PORYGON2 (e9) - no cosmetic forms
@@ -542,12 +542,14 @@ WeezingAnimationPointers:
 	table_width 2
 	dw WeezingPlainAnimation
 	dw WeezingRocketAnimation
+	dw WeezingRBAnimation
 	assert_table_length NUM_WEEZING_FORMS
 
 CrobatAnimationPointers:
 	table_width 2
 	dw CrobatPlainAnimation
 	dw CrobatRocketAnimation
+	dw CrobatBetaAnimation
 	assert_table_length NUM_CROBAT_FORMS
 
 ElectrodeAnimationPointers:
@@ -566,6 +568,7 @@ GolbatAnimationPointers:
 	table_width 2
 	dw GolbatPlainAnimation
 	dw GolbatRocketAnimation
+	dw GolbatRBAnimation
 	assert_table_length NUM_GOLBAT_FORMS
 
 SnorlaxAnimationPointers:
@@ -616,6 +619,7 @@ MagikarpAnimationPointers:
 	dw MagikarpPlainAnimation
 	dw MagikarpXSAnimation
 	dw MagikarpXLAnimation
+	dw MagikarpRBAnimation
 	assert_table_length NUM_MAGIKARP_FORMS
 
 ; Idle Animation Pointers
@@ -643,12 +647,14 @@ WeezingAnimationIdlePointers:
 	table_width 2
 	dw WeezingPlainAnimationIdle
 	dw WeezingRocketAnimationIdle
+	dw WeezingRBAnimationIdle
 	assert_table_length NUM_WEEZING_FORMS
 
 CrobatAnimationIdlePointers:
 	table_width 2
 	dw CrobatPlainAnimationIdle
 	dw CrobatRocketAnimationIdle
+	dw CrobatBetaAnimationIdle
 	assert_table_length NUM_CROBAT_FORMS
 
 ElectrodeAnimationIdlePointers:
@@ -667,6 +673,7 @@ GolbatAnimationIdlePointers:
 	table_width 2
 	dw GolbatPlainAnimationIdle
 	dw GolbatRocketAnimationIdle
+	dw GolbatRBAnimationIdle
 	assert_table_length NUM_GOLBAT_FORMS
 
 SnorlaxAnimationIdlePointers:
@@ -717,6 +724,7 @@ MagikarpAnimationIdlePointers:
 	dw MagikarpPlainAnimationIdle
 	dw MagikarpXSAnimationIdle
 	dw MagikarpXLAnimationIdle
+	dw MagikarpRBAnimationIdle
 	assert_table_length NUM_MAGIKARP_FORMS
 
 MachopAnimationPointers:
@@ -778,3 +786,367 @@ TentacruelAnimationIdlePointers:
 	dw TentacruelPlainAnimationIdle
 	dw TentacruelRBAnimationIdle
 	assert_table_length NUM_TENTACRUEL_FORMS
+
+IgglybuffAnimationPointers:
+	table_width 2
+	dw IgglybuffPlainAnimation
+	dw IgglybuffBetaAnimation
+	assert_table_length NUM_IGGLYBUFF_FORMS
+
+JigglypuffAnimationPointers:
+	table_width 2
+	dw JigglypuffPlainAnimation
+	dw JigglypuffRBAnimation
+	assert_table_length NUM_JIGGLYPUFF_FORMS
+
+WigglytuffAnimationPointers:
+	table_width 2
+	dw WigglytuffPlainAnimation
+	dw WigglytuffRBAnimation
+	assert_table_length NUM_WIGGLYTUFF_FORMS
+
+NidoranMAnimationPointers:
+	table_width 2
+	dw NidoranMPlainAnimation
+	dw NidoranMRBAnimation
+	assert_table_length NUM_NIDORAN_M_FORMS
+
+NidorinoAnimationPointers:
+	table_width 2
+	dw NidorinoPlainAnimation
+	dw NidorinoRBAnimation
+	assert_table_length NUM_NIDORINO_FORMS
+
+NidokingAnimationPointers:
+	table_width 2
+	dw NidokingPlainAnimation
+	dw NidokingRBAnimation
+	assert_table_length NUM_NIDOKING_FORMS
+
+NidoranFAnimationPointers:
+	table_width 2
+	dw NidoranFPlainAnimation
+	dw NidoranFRBAnimation
+	assert_table_length NUM_NIDORAN_F_FORMS
+
+NidorinaAnimationPointers:
+	table_width 2
+	dw NidorinaPlainAnimation
+	dw NidorinaRBAnimation
+	assert_table_length NUM_NIDORINA_FORMS
+
+NidoqueenAnimationPointers:
+	table_width 2
+	dw NidoqueenPlainAnimation
+	dw NidoqueenRBAnimation
+	assert_table_length NUM_NIDOQUEEN_FORMS
+
+ZubatAnimationPointers:
+	table_width 2
+	dw ZubatPlainAnimation
+	dw ZubatPlainAnimation ; looks plain
+	dw ZubatRBAnimation
+	assert_table_length NUM_ZUBAT_FORMS
+
+GeodudeAnimationPointers:
+	table_width 2
+	dw GeodudePlainAnimation
+	dw GeodudeRBAnimation
+	assert_table_length NUM_GEODUDE_FORMS
+
+GravelerAnimationPointers:
+	table_width 2
+	dw GravelerPlainAnimation
+	dw GravelerRBAnimation
+	assert_table_length NUM_GRAVELER_FORMS
+
+GolemAnimationPointers:
+	table_width 2
+	dw GolemPlainAnimation
+	dw GolemRBAnimation
+	assert_table_length NUM_GOLEM_FORMS
+
+ShellderAnimationPointers:
+	table_width 2
+	dw ShellderPlainAnimation
+	dw ShellderRBAnimation
+	assert_table_length NUM_SHELLDER_FORMS
+
+CloysterAnimationPointers:
+	table_width 2
+	dw CloysterPlainAnimation
+	dw CloysterRBAnimation
+	assert_table_length NUM_CLOYSTER_FORMS
+
+GastlyAnimationPointers:
+	table_width 2
+	dw GastlyPlainAnimation
+	dw GastlyRBAnimation
+	assert_table_length NUM_GASTLY_FORMS
+
+HaunterAnimationPointers:
+	table_width 2
+	dw HaunterPlainAnimation
+	dw HaunterRBAnimation
+	assert_table_length NUM_HAUNTER_FORMS
+
+GengarAnimationPointers:
+	table_width 2
+	dw GengarPlainAnimation
+	dw GengarRBAnimation
+	assert_table_length NUM_GENGAR_FORMS
+
+KoffingAnimationPointers:
+	table_width 2
+	dw KoffingPlainAnimation
+	dw KoffingPlainAnimation ; looks plain
+	dw KoffingRBAnimation
+	assert_table_length NUM_KOFFING_FORMS
+
+HorseaAnimationPointers:
+	table_width 2
+	dw HorseaPlainAnimation
+	dw HorseaRBAnimation
+	assert_table_length NUM_HORSEA_FORMS
+
+SeadraAnimationPointers:
+	table_width 2
+	dw SeadraPlainAnimation
+	dw SeadraRBAnimation
+	assert_table_length NUM_SEADRA_FORMS
+
+KingdraAnimationPointers:
+	table_width 2
+	dw KingdraPlainAnimation
+	dw KingdraBetaAnimation
+	assert_table_length NUM_KINGDRA_FORMS
+
+PsyduckAnimationPointers:
+	table_width 2
+	dw PsyduckPlainAnimation
+	dw PsyduckRBAnimation
+	assert_table_length NUM_PSYDUCK_FORMS
+
+GolduckAnimationPointers:
+	table_width 2
+	dw GolduckPlainAnimation
+	dw GolduckRBAnimation
+	assert_table_length NUM_GOLDUCK_FORMS
+
+GyaradosAnimationPointers:
+	table_width 2
+	dw GyaradosPlainAnimation
+	dw GyaradosPlainAnimation ; looks plain
+	dw GyaradosPlainAnimation ; looks plain
+	dw GyaradosRBAnimation
+	assert_table_length NUM_GYARADOS_FORMS
+
+StaryuAnimationPointers:
+	table_width 2
+	dw StaryuPlainAnimation
+	dw StaryuRBAnimation
+	assert_table_length NUM_STARYU_FORMS
+
+StarmieAnimationPointers:
+	table_width 2
+	dw StarmiePlainAnimation
+	dw StarmieRBAnimation
+	assert_table_length NUM_STARMIE_FORMS
+
+IgglybuffAnimationIdlePointers:
+	table_width 2
+	dw IgglybuffPlainAnimationIdle
+	dw IgglybuffBetaAnimationIdle
+	assert_table_length NUM_IGGLYBUFF_FORMS
+
+JigglypuffAnimationIdlePointers:
+	table_width 2
+	dw JigglypuffPlainAnimationIdle
+	dw JigglypuffRBAnimationIdle
+	assert_table_length NUM_JIGGLYPUFF_FORMS
+
+WigglytuffAnimationIdlePointers:
+	table_width 2
+	dw WigglytuffPlainAnimationIdle
+	dw WigglytuffRBAnimationIdle
+	assert_table_length NUM_WIGGLYTUFF_FORMS
+
+NidoranMAnimationIdlePointers:
+	table_width 2
+	dw NidoranMPlainAnimationIdle
+	dw NidoranMRBAnimationIdle
+	assert_table_length NUM_NIDORAN_M_FORMS
+
+NidorinoAnimationIdlePointers:
+	table_width 2
+	dw NidorinoPlainAnimationIdle
+	dw NidorinoRBAnimationIdle
+	assert_table_length NUM_NIDORINO_FORMS
+
+NidokingAnimationIdlePointers:
+	table_width 2
+	dw NidokingPlainAnimationIdle
+	dw NidokingRBAnimationIdle
+	assert_table_length NUM_NIDOKING_FORMS
+
+NidoranFAnimationIdlePointers:
+	table_width 2
+	dw NidoranFPlainAnimationIdle
+	dw NidoranFRBAnimationIdle
+	assert_table_length NUM_NIDORAN_F_FORMS
+
+NidorinaAnimationIdlePointers:
+	table_width 2
+	dw NidorinaPlainAnimationIdle
+	dw NidorinaRBAnimationIdle
+	assert_table_length NUM_NIDORINA_FORMS
+
+NidoqueenAnimationIdlePointers:
+	table_width 2
+	dw NidoqueenPlainAnimationIdle
+	dw NidoqueenRBAnimationIdle
+	assert_table_length NUM_NIDOQUEEN_FORMS
+
+ZubatAnimationIdlePointers:
+	table_width 2
+	dw ZubatPlainAnimationIdle
+	dw ZubatPlainAnimationIdle ; looks plain
+	dw ZubatRBAnimationIdle
+	assert_table_length NUM_ZUBAT_FORMS
+
+GeodudeAnimationIdlePointers:
+	table_width 2
+	dw GeodudePlainAnimationIdle
+	dw GeodudeRBAnimationIdle
+	assert_table_length NUM_GEODUDE_FORMS
+
+GravelerAnimationIdlePointers:
+	table_width 2
+	dw GravelerPlainAnimationIdle
+	dw GravelerRBAnimationIdle
+	assert_table_length NUM_GRAVELER_FORMS
+
+GolemAnimationIdlePointers:
+	table_width 2
+	dw GolemPlainAnimationIdle
+	dw GolemRBAnimationIdle
+	assert_table_length NUM_GOLEM_FORMS
+
+ShellderAnimationIdlePointers:
+	table_width 2
+	dw ShellderPlainAnimationIdle
+	dw ShellderRBAnimationIdle
+	assert_table_length NUM_SHELLDER_FORMS
+
+CloysterAnimationIdlePointers:
+	table_width 2
+	dw CloysterPlainAnimationIdle
+	dw CloysterRBAnimationIdle
+	assert_table_length NUM_CLOYSTER_FORMS
+
+GastlyAnimationIdlePointers:
+	table_width 2
+	dw GastlyPlainAnimationIdle
+	dw GastlyRBAnimationIdle
+	assert_table_length NUM_GASTLY_FORMS
+
+HaunterAnimationIdlePointers:
+	table_width 2
+	dw HaunterPlainAnimationIdle
+	dw HaunterRBAnimationIdle
+	assert_table_length NUM_HAUNTER_FORMS
+
+GengarAnimationIdlePointers:
+	table_width 2
+	dw GengarPlainAnimationIdle
+	dw GengarRBAnimationIdle
+	assert_table_length NUM_GENGAR_FORMS
+
+KoffingAnimationIdlePointers:
+	table_width 2
+	dw KoffingPlainAnimationIdle
+	dw KoffingPlainAnimationIdle ; looks plain
+	dw KoffingRBAnimationIdle
+	assert_table_length NUM_KOFFING_FORMS
+
+HorseaAnimationIdlePointers:
+	table_width 2
+	dw HorseaPlainAnimationIdle
+	dw HorseaRBAnimationIdle
+	assert_table_length NUM_HORSEA_FORMS
+
+SeadraAnimationIdlePointers:
+	table_width 2
+	dw SeadraPlainAnimationIdle
+	dw SeadraRBAnimationIdle
+	assert_table_length NUM_SEADRA_FORMS
+
+KingdraAnimationIdlePointers:
+	table_width 2
+	dw KingdraPlainAnimationIdle
+	dw KingdraBetaAnimationIdle
+	assert_table_length NUM_KINGDRA_FORMS
+
+PsyduckAnimationIdlePointers:
+	table_width 2
+	dw PsyduckPlainAnimationIdle
+	dw PsyduckRBAnimationIdle
+	assert_table_length NUM_PSYDUCK_FORMS
+
+GolduckAnimationIdlePointers:
+	table_width 2
+	dw GolduckPlainAnimationIdle
+	dw GolduckRBAnimationIdle
+	assert_table_length NUM_GOLDUCK_FORMS
+
+GyaradosAnimationIdlePointers:
+	table_width 2
+	dw GyaradosPlainAnimationIdle
+	dw GyaradosPlainAnimationIdle ; looks plain
+	dw GyaradosPlainAnimationIdle ; looks plain
+	dw GyaradosRBAnimationIdle
+	assert_table_length NUM_GYARADOS_FORMS
+
+StaryuAnimationIdlePointers:
+	table_width 2
+	dw StaryuPlainAnimationIdle
+	dw StaryuRBAnimationIdle
+	assert_table_length NUM_STARYU_FORMS
+
+StarmieAnimationIdlePointers:
+	table_width 2
+	dw StarmiePlainAnimationIdle
+	dw StarmieRBAnimationIdle
+	assert_table_length NUM_STARMIE_FORMS
+
+PichuAnimationPointers:
+	table_width 2
+	dw PichuPlainAnimation
+	dw PichuPlainAnimation ; looks plain
+	dw PichuPlainAnimation ; looks plain
+	dw PichuBetaAnimation
+	assert_table_length NUM_PICHU_FORMS
+
+RaichuAnimationPointers:
+	table_width 2
+	dw RaichuPlainAnimation
+	dw RaichuPlainAnimation ; looks plain
+	dw RaichuPlainAnimation ; looks plain
+	dw RaichuRBAnimation
+	assert_table_length NUM_RAICHU_FORMS
+
+PichuAnimationIdlePointers:
+	table_width 2
+	dw PichuPlainAnimationIdle
+	dw PichuPlainAnimationIdle ; looks plain
+	dw PichuPlainAnimationIdle ; looks plain
+	dw PichuBetaAnimationIdle
+	assert_table_length NUM_PICHU_FORMS
+
+RaichuAnimationIdlePointers:
+	table_width 2
+	dw RaichuPlainAnimationIdle
+	dw RaichuPlainAnimationIdle ; looks plain
+	dw RaichuPlainAnimationIdle ; looks plain
+	dw RaichuRBAnimationIdle
+	assert_table_length NUM_RAICHU_FORMS
