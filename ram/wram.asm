@@ -747,6 +747,8 @@ wLinkPlayer1Name:: ds NAME_LENGTH
 wLinkPlayer2Name:: ds NAME_LENGTH
 wLinkTradeSendmonSpecies:: db
 wLinkTradeGetmonSpecies::  db
+wLinkTradeSendmonForm::    db
+wLinkTradeGetmonForm::     db
 
 NEXTU
 ; naming screen

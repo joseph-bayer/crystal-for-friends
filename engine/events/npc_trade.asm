@@ -202,6 +202,12 @@ DoNPCTrade:
 	ld de, wPlayerTrademonDVs
 	call Trade_CopyTwoBytes
 
+	ld hl, wPartyMon1Form
+	ld bc, PARTYMON_STRUCT_LENGTH
+	call Trade_GetAttributeOfCurrentPartymon
+	ld a, [hl]
+	ld [wPlayerTrademonForm], a
+
 	ld hl, wPartyMon1Species
 	ld bc, PARTYMON_STRUCT_LENGTH
 	call Trade_GetAttributeOfCurrentPartymon
@@ -220,6 +226,14 @@ DoNPCTrade:
 	sbc a
 	add CAUGHT_BY_BOY
 	ld [wOTTrademonCaughtData], a
+
+; TryAddMonToParty takes the new mon's form byte from wEnemyMonForm, which otherwise still holds
+; whatever the last battle left there.
+	ld e, NPCTRADE_FORM
+	call GetTradeAttr
+	ld a, [hl]
+	ld [wOTTrademonForm], a
+	ld [wEnemyMonForm], a
 
 	ld hl, wPartyMon1Level
 	ld bc, PARTYMON_STRUCT_LENGTH

@@ -321,6 +321,7 @@ MACRO trademon
 \1SenderName::  ds NAME_LENGTH
 \1OTName::      ds NAME_LENGTH
 \1DVs::         dw
+\1Form::        db
 \1ID::          dw
 \1CaughtData::  db
 \1End::

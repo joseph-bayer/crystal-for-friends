@@ -428,19 +428,12 @@ MoveList_InitAnimatedMonIcon:
 	ld [hl], SPRITE_ANIM_FUNC_NULL
 	ret
 
-; TODO: update trademon to populate form
 Trade_LoadMonIconGFX:
-	; hl = wPlayerTrademonDVs or wOTTrademonDVs
-	ld h, b
-	ld l, c
+	; bc = wLinkTradeSendmonForm or wLinkTradeGetmonForm
 	ld a, [wTempIconSpecies]
 	ld [wCurPartySpecies], a
 	ld [wCurIcon], a
-; A trademon carries no form byte -- the animation itself has a "TODO: load wForm" where one
-; would come from -- so pin both the form and the shiny bit to zero. The old code handed the DVs
-; to the shiny check, but shininess here is a stored form bit rather than something derived from
-; DVs, so any mon whose first DV byte had bit 7 set came out in shiny colors.
-	xor a
+	ld a, [bc]
 	ld [wForm], a
 	ld bc, wForm
 	ld a, [wTempIconSpecies]

@@ -208,6 +208,11 @@ defaults to `PLAIN_FORM`.
 **Scripted battles.** `loadwildmon SPECIES, level, FORM` before `startbattle`; the third argument
 defaults to `PLAIN_FORM` and may carry `| SHINY_MASK`. The clearing's Snorlax is the example.
 
+**NPC trades.** The fourth column of `npctrade` in `data/events/npc_trades.asm`, right after the
+offered species, is the form byte the received mon gets (`PLAIN_FORM`, or a form `| SHINY_MASK`).
+Only the requested *species* is checked, never its form. Link trades need nothing: the whole party
+struct goes over the cable, form byte included.
+
 **Random wild forms.** Grass and water tables have no form column. A species listed in
 `WildFormTable` (`engine/battle/core.asm`, near the end) gets a random form from 0 to the count
 given there, `NUM_<SPECIES>_WILD_FORMS` where only some forms should occur in the wild. Species
@@ -252,7 +257,7 @@ than adding one, and mark it `; TESTING`.
 ```
 Always:
 [ ] constants/pokemon_constants.asm                     <SPECIES>_<FORM>_FORM appended, NUM_<SPECIES>_FORMS
-[ ] something sets the form: parties / ow_wildmon / pop_mon / givepoke / WildFormTable / MultiFormEggTable
+[ ] something sets the form: parties / ow_wildmon / pop_mon / givepoke / npctrade / WildFormTable / MultiFormEggTable
 [ ] README.md                                           forms table
 [ ] make all                                            three targets; asserts catch a short table
 

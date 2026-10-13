@@ -1,14 +1,9 @@
 GetTrademonFrontpic:
+	ld a, [wOTTrademonForm]
+	ld [wForm], a
 	ld a, [wOTTrademonSpecies]
-	ld hl, wOTTrademonDVs ; TODO: Remove after adding form support when trading
 	ld de, vTiles2
 	push de
-	push af
-	predef GetUnownLetter ; TODO: Remove after adding form support when trading
-	; ; TODO: Implement Form Support for Trading.
-	; ld a, [wOTTrademonForm]
-	; ld [wForm], a
-	pop af
 	ld [wCurPartySpecies], a
 	ld [wCurSpecies], a
 	call GetBaseData
@@ -26,6 +21,9 @@ AnimateTrademonFrontpic:
 	ld [wTempMonDVs], a
 	ld a, [wOTTrademonDVs + 1]
 	ld [wTempMonDVs + 1], a
+	ld a, [wOTTrademonForm]
+	ld [wTempMonForm], a
+	ld [wForm], a ; AnimateFrontpic picks the form's animation by it
 	ld b, SCGB_PLAYER_OR_MON_FRONTPIC_PALS
 	call GetSGBLayout
 	ld a, %11100100 ; 3,2,1,0

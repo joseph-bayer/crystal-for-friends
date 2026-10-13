@@ -3,14 +3,16 @@ rsreset
 DEF NPCTRADE_DIALOG   rb
 DEF NPCTRADE_GIVEMON  rw
 DEF NPCTRADE_GETMON   rw
+DEF NPCTRADE_FORM     rb ; the offered mon's MON_FORM byte (form | SHINY_MASK)
 DEF NPCTRADE_NICKNAME rb MON_NAME_LENGTH
 DEF NPCTRADE_DVS      rw
 DEF NPCTRADE_ITEM     rw
 DEF NPCTRADE_OT_ID    rw
 DEF NPCTRADE_OT_NAME  rb PLAYER_NAME_LENGTH
 DEF NPCTRADE_GENDER   rb
-                      rb_skip
 DEF NPCTRADE_STRUCT_LENGTH EQU _RS
+; GetTradeAttr finds an entry by multiplying with shifts, not AddNTimes
+assert NPCTRADE_STRUCT_LENGTH == 32, "GetTradeAttr assumes 32-byte npctrade entries"
 
 ; NPCTrades indexes (see data/events/npc_trades.asm)
 	const_def

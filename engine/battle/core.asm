@@ -3905,7 +3905,11 @@ InitEnemyMon:
 	ld de, wEnemyMonSpecies
 	ld bc, MON_OT_ID
 	rst CopyBytes
-	ld bc, MON_DVS - MON_OT_ID
+	ld bc, MON_FORM - MON_OT_ID
+	add hl, bc
+	ld a, [hl]
+	ld [wEnemyMonForm], a
+	ld bc, MON_DVS - MON_FORM
 	add hl, bc
 	ld de, wEnemyMonDVs
 	ld bc, MON_POKERUS - MON_DVS

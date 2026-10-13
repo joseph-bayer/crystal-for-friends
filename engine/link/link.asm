@@ -2196,6 +2196,12 @@ LinkTrade:
 	ld [wPlayerTrademonDVs], a
 	ld a, [hl]
 	ld [wPlayerTrademonDVs + 1], a
+; form
+	ld hl, wPartyMon1Form
+	ld a, [wCurTradePartyMon]
+	call GetPartyLocation
+	ld a, [hl]
+	ld [wPlayerTrademonForm], a
 ; caught data
 	ld a, [wCurTradePartyMon]
 	ld hl, wPartyMon1Species
@@ -2243,6 +2249,12 @@ LinkTrade:
 	ld [wOTTrademonDVs], a
 	ld a, [hl]
 	ld [wOTTrademonDVs + 1], a
+; form
+	ld hl, wOTPartyMon1Form
+	ld a, [wCurOTTradePartyMon]
+	call GetPartyLocation
+	ld a, [hl]
+	ld [wOTTrademonForm], a
 ; caught data
 	ld a, [wCurOTTradePartyMon]
 	ld hl, wOTPartyMon1Species

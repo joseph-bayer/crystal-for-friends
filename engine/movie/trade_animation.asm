@@ -202,24 +202,14 @@ RunTradeAnimScript:
 	farcall GetTrademonFrontpic
 	call EnableLCD
 	call LoadTradeBallAndCableGFX
+	ld a, [wPlayerTrademonForm]
+	ld [wForm], a
 	ld a, [wPlayerTrademonSpecies]
-
-	; ; TODO: Implement Form Support for Trading.
-	; ld a, [wPlayerTrademonForm]
-	; ld [wForm], a
-
-	ld hl, wPlayerTrademonDVs
-
 	ld de, vTiles0
 	call TradeAnim_GetFrontpic
+	ld a, [wOTTrademonForm]
+	ld [wForm], a
 	ld a, [wOTTrademonSpecies]
-
-	; ; TODO: Implement Form Support for Trading.
-	; ld a, [wOTTrademonForm]
-	; ld [wForm], a
-
-	ld hl, wPlayerTrademonDVs
-
 	ld de, vTiles0 tile $31
 	call TradeAnim_GetFrontpic
 	ld a, [wPlayerTrademonSpecies]
@@ -328,8 +318,7 @@ TradeAnim_TubeToOT1:
 	call TradeAnim_PlaceTrademonStatsOnTubeAnim
 	ld a, [wLinkTradeSendmonSpecies]
 	ld [wTempIconSpecies], a
-	ld hl, wPlayerTrademonDVs
-	; TODO: load wForm
+	ld hl, wLinkTradeSendmonForm
 	xor a
 	depixel 5, 11, 4, 0
 	ld b, $0
@@ -340,8 +329,7 @@ TradeAnim_TubeToPlayer1:
 	call TradeAnim_PlaceTrademonStatsOnTubeAnim
 	ld a, [wLinkTradeGetmonSpecies]
 	ld [wTempIconSpecies], a
-	ld hl, wOTTrademonDVs
-	; TODO: load wForm
+	ld hl, wLinkTradeGetmonForm
 	ld a, TRADEANIMSTATE_2
 	depixel 9, 18, 4, 4
 	ld b, $4
@@ -351,7 +339,7 @@ TradeAnim_InitTubeAnim:
 	push bc
 	push de
 
-	push hl ; wPlayerTrademonDVs or wOTTrademonDVs
+	push hl ; wLinkTradeSendmonForm or wLinkTradeGetmonForm
 
 	push af
 	call DisableLCD
@@ -371,7 +359,7 @@ TradeAnim_InitTubeAnim:
 	ld a, $70
 	ldh [hWY], a
 	call EnableLCD
-	pop hl ; wPlayerTrademonDVs or wOTTrademonDVs
+	pop hl ; wLinkTradeSendmonForm or wLinkTradeGetmonForm
 	call LoadTradeBubbleGFX
 
 	pop de
@@ -757,6 +745,8 @@ TradeAnim_ShowGivemonData:
 	ld [wTempMonDVs], a
 	ld a, [wPlayerTrademonDVs + 1]
 	ld [wTempMonDVs + 1], a
+	ld a, [wPlayerTrademonForm]
+	ld [wTempMonForm], a
 	ld b, SCGB_PLAYER_OR_MON_FRONTPIC_PALS
 	call GetSGBLayout
 	ld a, %11100100 ; 3,2,1,0
@@ -781,6 +771,8 @@ TradeAnim_ShowGetmonData:
 	ld [wTempMonDVs], a
 	ld a, [wOTTrademonDVs + 1]
 	ld [wTempMonDVs + 1], a
+	ld a, [wOTTrademonForm]
+	ld [wTempMonForm], a
 	ld b, SCGB_PLAYER_OR_MON_FRONTPIC_PALS
 	call GetSGBLayout
 	ld a, %11100100 ; 3,2,1,0
@@ -793,10 +785,8 @@ TradeAnim_AnimateFrontpic:
 	jmp TradeAnim_AdvanceScriptPointer
 
 TradeAnim_GetFrontpic:
+; in: a = species, de = destination, wForm = its form byte
 	push de
-	push af ; TODO: Remove after adding form support when trading
-	predef GetUnownLetter ; TODO: Remove after adding form support when trading
-	pop af ; TODO: Remove after adding form support when trading
 	ld [wCurPartySpecies], a
 	ld [wCurSpecies], a
 	call GetBaseData
@@ -1297,10 +1287,22 @@ LinkTradeAnim_LoadTradePlayerNames:
 	jmp CopyBytes
 
 LinkTradeAnim_LoadTradeMonSpecies:
+; in: hl = the sendmon's trademon Species, de = the getmon's
+; Player 2's script runs the tube animations the other way round, so the forms have to swap along
+; with the species.
 	ld a, [hl]
 	ld [wLinkTradeSendmonSpecies], a
 	ld a, [de]
 	ld [wLinkTradeGetmonSpecies], a
+	ld bc, wPlayerTrademonForm - wPlayerTrademonSpecies
+	add hl, bc
+	ld a, [hl]
+	ld [wLinkTradeSendmonForm], a
+	ld h, d
+	ld l, e
+	add hl, bc
+	ld a, [hl]
+	ld [wLinkTradeGetmonForm], a
 	ret
 
 TradeAnim_FlashBGPals:
@@ -1332,10 +1334,10 @@ LoadTradeBallAndCableGFX:
 	ret
 
 LoadTradeBubbleGFX:
-	push hl ; wPlayerTrademonDVs or wOTTrademonDVs
+	push hl ; wLinkTradeSendmonForm or wLinkTradeGetmonForm
 	call DelayFrame
 	ld e, MONICON_TRADE
-	pop bc ; wPlayerTrademonDVs or wOTTrademonDVs
+	pop bc ; wLinkTradeSendmonForm or wLinkTradeGetmonForm
 	farcall LoadMenuMonIcon
 	ld de, TradeBubbleGFX
 	ld hl, vTiles0 tile $72
