@@ -69,5 +69,9 @@ BTTrainerClassGenders:
 	db MALE   ; BLUE
 	db MALE   ; OFFICER
 	db FEMALE ; GRUNTF
+	db FEMALE ; LORELEI
+	db FEMALE ; AGATHA
+	db MALE   ; GIOVANNI
+	db MALE   ; TORU
 	db FEMALE ; KRIS
 	assert_table_length NUM_TRAINER_CLASSES - 1 ; exclude MYSTICALMAN

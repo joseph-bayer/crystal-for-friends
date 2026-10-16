@@ -120,3 +120,6 @@ SECTION "Sprites 4", ROMX, ALIGN[4]
 KiyoSpriteGFX::                INCBIN "gfx/sprites/kiyo.2bpp"
 ShamanSpriteGFX::              INCBIN "gfx/sprites/shaman.2bpp"
 CampfireSpriteGFX::            INCBIN "gfx/sprites/campfire.2bpp" ; Polished Crystal's
+LoreleiSpriteGFX::             INCBIN "gfx/sprites/lorelei.2bpp"
+AgathaSpriteGFX::              INCBIN "gfx/sprites/agatha.2bpp"
+GiovanniSpriteGFX::            INCBIN "gfx/sprites/giovanni.2bpp"

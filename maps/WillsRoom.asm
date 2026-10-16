@@ -9,6 +9,7 @@ WillsRoom_MapScripts:
 
 	def_callbacks
 	callback MAPCALLBACK_TILES, WillsRoomDoorsCallback
+	callback MAPCALLBACK_CMDQUEUE, WillsRoomSeatCallback
 
 WillsRoomLockDoorScene:
 	sdefer WillsRoomDoorLocksBehindYouScript
@@ -16,6 +17,12 @@ WillsRoomLockDoorScene:
 
 WillsRoomNoopScene:
 	end
+
+WillsRoomSeatCallback:
+; During the Open League, whoever sits here, in their home room
+	setval E4_SEAT_1
+	callasm ApplyEliteFourRoom
+	endcallback
 
 WillsRoomDoorsCallback:
 	checkevent EVENT_WILLS_ROOM_ENTRANCE_CLOSED
@@ -46,6 +53,8 @@ WillScript_Battle:
 	opentext
 	checkevent EVENT_BEAT_ELITE_4_WILL
 	iftrue WillScript_AfterBattle
+	checkevent EVENT_OPEN_LEAGUE_STARTED
+	iftrue .OpenLeague
 	writetext WillScript_WillBeforeText
 	waitbutton
 	closetext
@@ -58,6 +67,7 @@ WillScript_Battle:
 	writetext WillScript_WillDefeatText
 	waitbutton
 	closetext
+.OpenDoor:
 	playsound SFX_ENTER_DOOR
 	changeblock 4, 2, $16 ; open door
 	refreshmap
@@ -66,11 +76,21 @@ WillScript_Battle:
 	waitsfx
 	end
 
+.OpenLeague:
+	farscall EliteFourSeatBattleScript
+	setevent EVENT_BEAT_ELITE_4_WILL
+	sjump .OpenDoor
+
 WillScript_AfterBattle:
+	checkevent EVENT_OPEN_LEAGUE_STARTED
+	iftrue .OpenLeagueAfter
 	writetext WillScript_WillDefeatText
 	waitbutton
 	closetext
 	end
+
+.OpenLeagueAfter:
+	farsjump EliteFourAfterBattleScript
 
 WillsRoom_EnterMovement:
 	step UP
@@ -80,7 +100,7 @@ WillsRoom_EnterMovement:
 	step UP
 	step_end
 
-WillScript_WillBeforeText:
+WillScript_WillBeforeText::
 	text "Welcome to #MON"
 	line "LEAGUE, <PLAYER>."
 
@@ -105,12 +125,12 @@ WillScript_WillBeforeText:
 	line "option!"
 	done
 
-WillScript_WillBeatenText:
+WillScript_WillBeatenText::
 	text "I… I can't…"
 	line "believe it…"
 	done
 
-WillScript_WillDefeatText:
+WillScript_WillDefeatText::
 	text "Even though I was"
 	line "defeated, I won't"
 	cont "change my course."
@@ -129,12 +149,17 @@ WillScript_WillDefeatText:
 	done
 
 WillsRoomXatuScript:
+	checkevent EVENT_OPEN_LEAGUE_STARTED
+	iftrue .OpenLeague
 	opentext
 	writetext WillsRoomXatuText
 	cry XATU
 	waitbutton
 	closetext
 	end
+
+.OpenLeague:
+	farsjump EliteFourPartnerScript
 
 WillsRoomXatuText:
 	text "XATU: …"

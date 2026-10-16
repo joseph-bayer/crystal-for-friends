@@ -28,11 +28,15 @@ ViridianGymBlueScript:
 	setflag ENGINE_EARTHBADGE
 	writetext LeaderBlueAfterText
 	waitbutton
+	writetext BlueEliteFourInviteText ; the Open League
+	waitbutton
 	closetext
 	end
 
 .FightDone:
 	writetext LeaderBlueEpilogueText
+	waitbutton
+	writetext BlueEliteFourInviteText ; the Open League
 	waitbutton
 	closetext
 	end
@@ -178,6 +182,17 @@ ViridianGymPidgeotScript:
 
 ViridianGymPidgeotText:
 	text "PIDGEOT: Bi bibii!"
+	done
+
+BlueEliteFourInviteText:
+	text "Take the ELITE"
+	line "FOUR challenge"
+	cont "again? You don't"
+	cont "have to ask me"
+	cont "twice."
+
+	para "Next time, I won't"
+	line "go so easy on you."
 	done
 
 ViridianGym_MapEvents:

@@ -2436,6 +2436,15 @@ wOtherTrainerID::
 ; (Joey, Mikey, Albert, etc.)
 	db
 
+; The Elite Four seat being fought, plus 1, or 0 for any other battle
+; (engine/events/elite_four_lineup.asm); cleared with the battle RAM
+wEliteFourSeatBattle:: db
+; The seat of the Elite Four room (or Hall of Fame) the player is in, set by ApplyEliteFourRoom
+wEliteFourRoomSeat:: db
+; EliteFourSeatFinishParty's working copy of the seat's minimum DV and EVs
+wEliteFourSeatMinDV:: db
+wEliteFourSeatEVs:: db
+
 wForcedSwitch:: db
 
 wTrainerClass:: db
@@ -2993,7 +3002,11 @@ wMobileOrCable_LastSelection:: db
 ; with means "never sailed". Carved out of the dead mobile-adapter padding below, which keeps it
 ; inside the save block without shifting anything after it.
 wMysteryIslandLast:: db
-	ds 8
+; The Open League's lineup: an E4_ROSTER_* id per seat, all zero until rolled
+; (engine/events/elite_four_lineup.asm). Also carved out of the padding.
+wEliteFourLineup:: ds NUM_E4_SEATS
+wEliteFourLastChampion:: db ; an E4_ROSTER_* id, set by the Hall of Fame
+	ds 8 - NUM_E4_SEATS - 1
 wBuenasPassword:: db
 wBlueCardBalance:: db
 wDailyRematchFlags:: ds 4

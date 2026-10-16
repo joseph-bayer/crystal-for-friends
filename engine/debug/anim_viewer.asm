@@ -1,6 +1,6 @@
 ; Debug ROM: the animation viewer, in the Lab scientist's menu in the bedroom. A battle against a
 ; level 50 Chansey where no turn is ever taken: instead, every move and special animation can be
-; played from either side (plans/move_animations_port_spec.md).
+; played from either side.
 ;   Left/Right: the previous or next animation; Up/Down: 10 at a time
 ;   SELECT: the animation's param, 0-10 (Magnitude's level, multi-hit count, send-out shiny...)
 ;   START: which sides play it: both, the player's Pokemon only, or the enemy's only

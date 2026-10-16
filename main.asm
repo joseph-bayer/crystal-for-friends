@@ -26,6 +26,16 @@ SECTION "bank2_2", ROMX
 INCLUDE "engine/gfx/color.asm"
 
 
+SECTION "Elite Four Lineup", ROMX
+
+INCLUDE "engine/events/elite_four_lineup.asm"
+
+
+SECTION "Elite Four OpenLeague Text", ROMX
+
+INCLUDE "data/text/elite_four_lines.asm"
+
+
 SECTION "Cosmetic Form Palette Pointers", ROMX
 
 INCLUDE "data/pokemon/cosmetic_form_palette_pointers.asm"
@@ -336,6 +346,7 @@ INCLUDE "engine/phone/scripts/reminders.asm"
 INCLUDE "engine/phone/scripts/hangups_2.asm"
 INCLUDE "engine/phone/scripts/reminders_2.asm"
 INCLUDE "engine/phone/scripts/bike_shop.asm"
+INCLUDE "engine/phone/scripts/lance.asm"
 INCLUDE "engine/phone/scripts/buena.asm"
 
 
@@ -521,6 +532,7 @@ INCLUDE "engine/debug/fill_pc.asm"
 INCLUDE "engine/debug/hidden_power.asm"
 INCLUDE "engine/debug/phone.asm"
 INCLUDE "engine/debug/anim_viewer.asm"
+INCLUDE "engine/debug/elite_four.asm"
 
 
 ; Its own section because the rosters outgrew bank3F: the grass and water tables are 100 bytes per

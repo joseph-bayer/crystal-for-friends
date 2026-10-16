@@ -3,7 +3,7 @@ if DEF(_DEBUG)
 ; The bedroom's phone debug NPC (maps/PlayersHouse2F.asm). Routines are in engine/phone/phone.asm.
 
 DebugPhoneScript::
-; Debug tools for testing the phone (plans/phone_improvements_spec.md, 2.8).
+; Debug tools for testing the phone.
 	faceplayer
 	opentext
 	writetext DebugPhoneText

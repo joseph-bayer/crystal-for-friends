@@ -11,6 +11,7 @@ LancesRoom_MapScripts:
 
 	def_callbacks
 	callback MAPCALLBACK_TILES, LancesRoomDoorsCallback
+	callback MAPCALLBACK_CMDQUEUE, LancesRoomSeatCallback
 
 LancesRoomLockDoorScene:
 	sdefer LancesRoomDoorLocksBehindYouScript
@@ -18,6 +19,13 @@ LancesRoomLockDoorScene:
 
 LancesRoomNoopScene:
 	end
+
+LancesRoomSeatCallback:
+; During the Open League, whoever is champion. The room
+; keeps its own layout.
+	setval E4_SEAT_CHAMPION
+	callasm ApplyEliteFourRoom
+	endcallback
 
 LancesRoomDoorsCallback:
 	checkevent EVENT_LANCES_ROOM_ENTRANCE_CLOSED
@@ -53,6 +61,8 @@ Script_ApproachLanceFromRight:
 LancesRoomLanceScript:
 	applymovement FOLLOWER, MovementData_FollowerInLanceRoom
 	turnobject LANCESROOM_LANCE, LEFT
+	checkevent EVENT_OPEN_LEAGUE_STARTED
+	iftrue .OpenLeague
 	opentext
 	writetext LanceBattleIntroText
 	waitbutton
@@ -68,6 +78,7 @@ LancesRoomLanceScript:
 	writetext LanceBattleAfterText
 	waitbutton
 	closetext
+.Ceremony:
 	playsound SFX_ENTER_DOOR
 	changeblock 4, 0, $0b ; open door
 	refreshmap
@@ -106,7 +117,14 @@ LancesRoomLanceScript:
 	applymovement LANCESROOM_LANCE, LancesRoomMovementData_LancePositionsSelfToGuidePlayerAway
 	turnobject PLAYER, UP
 	opentext
+	checkevent EVENT_OPEN_LEAGUE_STARTED
+	iftrue .NoisyOpenLeague
 	writetext LancesRoomNoisyText
+	sjump .Noisy
+
+.NoisyOpenLeague:
+	writetext LancesRoomNoisyOpenLeagueText
+.Noisy:
 	waitbutton
 	closetext
 	freezefollower
@@ -135,6 +153,26 @@ LancesRoomLanceScript:
 	pause 15
 	warpfacing UP, HALL_OF_FAME, 4, 13
 	end
+
+.OpenLeague:
+; The champion seat during the Open League: the seat holder's lines and team by the seat's rules
+	opentext
+	callasm PrintEliteFourBeforeText
+	waitbutton
+	closetext
+	callasm EliteFourRoomSeatToScriptVar
+	callasm LoadEliteFourSeatTrainer
+	winlosstext 0, 0 ; the seat holder's beaten text (PrintWinLossText); a loss blacks out
+	setlasttalked LANCESROOM_LANCE
+	startbattle
+	dontrestartmapmusic
+	reloadmapafterbattle
+	setevent EVENT_BEAT_CHAMPION_LANCE
+	opentext
+	callasm PrintEliteFourAfterText
+	waitbutton
+	closetext
+	sjump .Ceremony
 
 LancesRoom_EnterMovement:
 	step UP
@@ -225,7 +263,7 @@ LancesRoomMovementData_MaryRunsBackAndForth:
 	turn_head UP
 	step_end
 
-LanceBattleIntroText:
+LanceBattleIntroText::
 	text "LANCE: I've been"
 	line "waiting for you."
 
@@ -257,7 +295,7 @@ LanceBattleIntroText:
 	cont "your challenge!"
 	done
 
-LanceBattleWinText:
+LanceBattleWinText::
 	text "…It's over."
 
 	para "But it's an odd"
@@ -274,7 +312,7 @@ LanceBattleWinText:
 	line "CHAMPION!"
 	done
 
-LanceBattleAfterText:
+LanceBattleAfterText::
 	text "…Whew."
 
 	para "You have become"
@@ -341,6 +379,16 @@ LancesRoomMaryInterviewText:
 	cont "CHAMPION!"
 	done
 
+LancesRoomNoisyOpenLeagueText:
+; The champion may be anyone, so no name
+	text "This is getting"
+	line "to be a bit too"
+	cont "noisy…"
+
+	para "<PLAY_G>, could you"
+	line "come with me?"
+	done
+
 LancesRoomNoisyText:
 	text "LANCE: This is"
 	line "getting to be a"
@@ -357,12 +405,17 @@ LancesRoomMaryNoInterviewText:
 	done
 
 LancesRoomDragoniteScript:
+	checkevent EVENT_OPEN_LEAGUE_STARTED
+	iftrue .OpenLeague
 	opentext
 	writetext LancesRoomDragoniteText
 	cry DRAGONITE
 	waitbutton
 	closetext
 	end
+
+.OpenLeague:
+	farsjump EliteFourPartnerScript
 
 LancesRoomDragoniteText:
 	text "DRAGONITE: …"

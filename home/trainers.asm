@@ -227,7 +227,7 @@ PrintWinLossText::
 	ld a, [wBattleResult]
 	ld hl, wWinTextPointer
 	and $f ; WIN?
-	jr z, .ok
+	jr z, .won
 	ld hl, wLossTextPointer
 
 .ok
@@ -235,6 +235,45 @@ PrintWinLossText::
 	ld h, [hl]
 	ld l, a
 	call GetMapScriptsBank
+.print
 	call FarPrintText
 	call WaitBGMap
 	jmp WaitPressAorB_BlinkCursor
+
+.won
+; An Elite Four seat holder says their own beaten text
+	ld a, [wEliteFourSeatBattle]
+	and a
+	jr z, .ok
+	farcall GetEliteFourSeatBeatenText
+	jr .print
+
+GetTrainerAttributeClass::
+; a = the trainer class whose TrainerClassAttributes row (items, prize money, AI) and name apply.
+; In an Elite Four seat battle that's the seat's original member's, whoever sits in it; otherwise wTrainerClass. Preserves bc, de and hl.
+	ld a, [wEliteFourSeatBattle]
+	and a
+	jr z, .own
+	push hl
+	add LOW(EliteFourSeatClasses - 1)
+	ld l, a
+	adc HIGH(EliteFourSeatClasses - 1)
+	sub l
+	ld h, a
+	ld a, [hl]
+	pop hl
+	ret
+
+.own
+	ld a, [wTrainerClass]
+	ret
+
+EliteFourSeatClasses:
+; entries correspond to E4_SEAT_* constants
+	table_width 1
+	db WILL     ; E4_SEAT_1
+	db KOGA     ; E4_SEAT_2
+	db BRUNO    ; E4_SEAT_3
+	db KAREN    ; E4_SEAT_4
+	db CHAMPION ; E4_SEAT_CHAMPION
+	assert_table_length NUM_E4_SEATS

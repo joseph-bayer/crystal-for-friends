@@ -60,7 +60,7 @@ PlayBattleMusic:
 	ld de, MUSIC_JOHTO_WILD_BATTLE
 	ld a, [wTimeOfDay]
 	cp NITE_F
-	jr c, .done ; not NITE_F or EVE_F
+	jmp c, .done ; not NITE_F or EVE_F
 	ld de, MUSIC_JOHTO_WILD_BATTLE_NIGHT
 	jr .done
 
@@ -69,6 +69,18 @@ PlayBattleMusic:
 	jr .done
 
 .trainermusic
+	; An Elite Four seat sets the music: the champion's theme, or the Elite Four's
+	ld a, [wEliteFourSeatBattle]
+	and a
+	jr z, .not_seat
+	ld de, MUSIC_CHAMPION_BATTLE
+	cp E4_SEAT_CHAMPION + 1
+	jr z, .done
+	ld de, MUSIC_JOHTO_GYM_LEADER_BATTLE
+	jr .done
+
+.not_seat
+	ld a, [wOtherTrainerClass]
 	ld de, MUSIC_CHAMPION_BATTLE
 	cp CHAMPION
 	jr z, .done

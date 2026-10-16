@@ -9,6 +9,7 @@ KarensRoom_MapScripts:
 
 	def_callbacks
 	callback MAPCALLBACK_TILES, KarensRoomDoorsCallback
+	callback MAPCALLBACK_CMDQUEUE, KarensRoomSeatCallback
 
 KarensRoomLockDoorScene:
 	sdefer KarensRoomDoorLocksBehindYouScript
@@ -16,6 +17,12 @@ KarensRoomLockDoorScene:
 
 KarensRoomNoopScene:
 	end
+
+KarensRoomSeatCallback:
+; During the Open League, whoever sits here, in their home room
+	setval E4_SEAT_4
+	callasm ApplyEliteFourRoom
+	endcallback
 
 KarensRoomDoorsCallback:
 	checkevent EVENT_KARENS_ROOM_ENTRANCE_CLOSED
@@ -46,6 +53,8 @@ KarenScript_Battle:
 	opentext
 	checkevent EVENT_BEAT_ELITE_4_KAREN
 	iftrue KarenScript_AfterBattle
+	checkevent EVENT_OPEN_LEAGUE_STARTED
+	iftrue .OpenLeague
 	writetext KarenScript_KarenBeforeText
 	waitbutton
 	closetext
@@ -58,6 +67,7 @@ KarenScript_Battle:
 	writetext KarenScript_KarenDefeatText
 	waitbutton
 	closetext
+.OpenDoor:
 	playsound SFX_ENTER_DOOR
 	changeblock 4, 2, $16 ; open door
 	refreshmap
@@ -66,11 +76,21 @@ KarenScript_Battle:
 	waitsfx
 	end
 
+.OpenLeague:
+	farscall EliteFourSeatBattleScript
+	setevent EVENT_BEAT_ELITE_4_KAREN
+	sjump .OpenDoor
+
 KarenScript_AfterBattle:
+	checkevent EVENT_OPEN_LEAGUE_STARTED
+	iftrue .OpenLeagueAfter
 	writetext KarenScript_KarenDefeatText
 	waitbutton
 	closetext
 	end
+
+.OpenLeagueAfter:
+	farsjump EliteFourAfterBattleScript
 
 KarensRoom_EnterMovement:
 	step UP
@@ -80,7 +100,7 @@ KarensRoom_EnterMovement:
 	step UP
 	step_end
 
-KarenScript_KarenBeforeText:
+KarenScript_KarenBeforeText::
 	text "I am KAREN of the"
 	line "ELITE FOUR."
 
@@ -103,13 +123,13 @@ KarenScript_KarenBeforeText:
 	para "Let's go."
 	done
 
-KarenScript_KarenBeatenText:
+KarenScript_KarenBeatenText::
 	text "Well, aren't you"
 	line "good. I like that"
 	cont "in a trainer."
 	done
 
-KarenScript_KarenDefeatText:
+KarenScript_KarenDefeatText::
 	text "Strong #MON."
 
 	para "Weak #MON."
@@ -133,12 +153,17 @@ KarenScript_KarenDefeatText:
 	done
 
 KarensRoomHoundoomScript:
+	checkevent EVENT_OPEN_LEAGUE_STARTED
+	iftrue .OpenLeague
 	opentext
 	writetext KarensRoomHoundoomText
 	cry HOUNDOOM
 	waitbutton
 	closetext
 	end
+
+.OpenLeague:
+	farsjump EliteFourPartnerScript
 
 KarensRoomHoundoomText:
 	text "HOUNDOOM: Awoooo!"

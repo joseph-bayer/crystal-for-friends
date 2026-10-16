@@ -5,6 +5,7 @@
 	const INDIGOPLATEAUPOKECENTER1F_RIVAL
 	const INDIGOPLATEAUPOKECENTER1F_GRAMPS
 	const INDIGOPLATEAUPOKECENTER1F_ABRA
+	const INDIGOPLATEAUPOKECENTER1F_LANCE
 
 IndigoPlateauPokecenter1F_MapScripts:
 	def_scene_scripts
@@ -14,9 +15,31 @@ IndigoPlateauPokecenter1F_MapScripts:
 	callback MAPCALLBACK_NEWMAP, IndigoPlateauPokecenter1FPrepareElite4Callback
 
 IndigoPlateauPokecenter1FNoopScene:
+; Lance meets the player here once to start the Open League: only when the callback below has put him here
+	checkevent EVENT_INDIGO_PLATEAU_POKECENTER_LANCE
+	iftrue .done
+	sdefer IndigoPlateauPokecenter1FLanceOpenLeagueScript
+.done
 	end
 
 IndigoPlateauPokecenter1FPrepareElite4Callback:
+	; Lance waits here once the Elite Four is beaten and all 16 BADGES are held, until he has
+	; started the Open League
+	setevent EVENT_INDIGO_PLATEAU_POKECENTER_LANCE
+	checkevent EVENT_OPEN_LEAGUE_STARTED
+	iftrue .NoLance
+	checkevent EVENT_BEAT_ELITE_FOUR
+	iffalse .NoLance
+	readvar VAR_BADGES
+	ifnotequal NUM_BADGES, .NoLance
+	clearevent EVENT_INDIGO_PLATEAU_POKECENTER_LANCE
+.NoLance:
+	scall IndigoPlateauResetEliteFourRooms
+	endcallback
+
+IndigoPlateauResetEliteFourRooms::
+; Every Elite Four room back to locked and unbeaten, for a new run. Also the debug ROM's warp to
+; Will's room.
 	setmapscene WILLS_ROOM, SCENE_WILLSROOM_LOCK_DOOR
 	setmapscene KOGAS_ROOM, SCENE_KOGASROOM_LOCK_DOOR
 	setmapscene BRUNOS_ROOM, SCENE_BRUNOSROOM_LOCK_DOOR
@@ -39,7 +62,21 @@ IndigoPlateauPokecenter1FPrepareElite4Callback:
 	clearevent EVENT_BEAT_ELITE_4_KAREN
 	clearevent EVENT_BEAT_CHAMPION_LANCE
 	setevent EVENT_LANCES_ROOM_OAK_AND_MARY
-	endcallback
+	end
+
+IndigoPlateauPokecenter1FLanceOpenLeagueScript:
+	turnobject INDIGOPLATEAUPOKECENTER1F_LANCE, DOWN
+	showemote EMOTE_SHOCK, INDIGOPLATEAUPOKECENTER1F_LANCE, 15
+	turnobject PLAYER, UP
+	opentext
+	writetext IndigoPlateauPokecenter1FLanceOpenLeagueText
+	waitbutton
+	closetext
+	applymovement INDIGOPLATEAUPOKECENTER1F_LANCE, IndigoPlateauPokecenter1FLanceLeavesMovement
+	setevent EVENT_OPEN_LEAGUE_STARTED
+	setevent EVENT_INDIGO_PLATEAU_POKECENTER_LANCE
+	disappear INDIGOPLATEAUPOKECENTER1F_LANCE
+	end
 
 PlateauRivalBattle1:
 	checkevent EVENT_BEAT_RIVAL_IN_MT_MOON
@@ -174,6 +211,38 @@ AbraScript:
 	closetext
 	end
 
+IndigoPlateauPokecenter1FLanceOpenLeagueText:
+	text "LANCE: <PLAY_G>!"
+	line "The KANTO GYM"
+	cont "LEADERS told me"
+	cont "all about what"
+	cont "happened."
+
+	para "I'm impressed you"
+	line "were able to get"
+	cont "them all to"
+	cont "challenge the"
+	cont "ELITE FOUR."
+
+	para "I was able to get"
+	line "the JOHTO GYM"
+	cont "LEADERS and a few"
+	cont "others to take on"
+	cont "the ELITE FOUR"
+	cont "challenge too."
+
+	para "From now on, the"
+	line "roster of the"
+	cont "ELITE FOUR will"
+	cont "change every time"
+	cont "you challenge"
+	cont "them."
+
+	para "Now go and show"
+	line "everybody how a"
+	cont "CHAMPION battles!"
+	done
+
 PlateauRivalMovement1:
 	step UP
 	step UP
@@ -190,6 +259,17 @@ PlateauRivalMovement2:
 	step UP
 	step UP
 	turn_head RIGHT
+	step_end
+
+IndigoPlateauPokecenter1FLanceLeavesMovement:
+; From his spot to past the right edge of the screen, wherever the player came in
+	step RIGHT
+	step RIGHT
+	step RIGHT
+	step RIGHT
+	step RIGHT
+	step RIGHT
+	step RIGHT
 	step_end
 
 PlateauRivalLeavesMovement:
@@ -321,3 +401,4 @@ IndigoPlateauPokecenter1F_MapEvents:
 	object_event 16,  9, SPRITE_RIVAL, SPRITEMOVEDATA_STANDING_UP, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, ObjectEvent, EVENT_INDIGO_PLATEAU_POKECENTER_RIVAL
 	object_event  1,  9, SPRITE_GRAMPS, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, TeleportGuyScript, EVENT_TELEPORT_GUY
 	object_event  0,  9, SPRITE_OW_MON_1, SPRITEMOVEDATA_POKEMON, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, AbraScript, EVENT_TELEPORT_GUY
+	object_event  5, 10, SPRITE_LANCE, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, ObjectEvent, EVENT_INDIGO_PLATEAU_POKECENTER_LANCE

@@ -1508,7 +1508,7 @@
 	const EVENT_TOTODILE_WANDERING_IN_ELMS_LAB
 	const EVENT_CHIKORITA_WANDERING_IN_ELMS_LAB
 
-; The Hidden Power Shaman (plans/hidden_power_spec.md): met at the Ruins of Alph Research Center, then
+; The Hidden Power Shaman: met at the Ruins of Alph Research Center, then
 ; at home in the Lake of Rage house. The other two hide her object on each map, rebuilt on every
 ; load by the maps' object callbacks.
 	const EVENT_MET_HIDDEN_POWER_SHAMAN
@@ -1516,6 +1516,11 @@
 	const EVENT_RUINS_OF_ALPH_SHAMAN_HOUSE_SHAMAN
 	const EVENT_GOT_GLYPH_SHARD_FROM_HIDDEN_POWER_MAN ; the Lake of Rage Hidden Power man's gift
 	const EVENT_GOT_GLYPH_SHARD_FROM_SHAMAN ; her first talk's shard, owed to a later talk if the bag was full
+	const EVENT_OPEN_LEAGUE_STARTED ; every Elite Four run is a random lineup
+	const EVENT_LANCE_CALLED_ABOUT_OPEN_LEAGUE ; Lance's call after the first Hall of Fame
+	const EVENT_INDIGO_PLATEAU_POKECENTER_LANCE ; hides Lance there unless he's waiting to start the Open League
+	const EVENT_BEAT_RANDOM_ELITE_FOUR ; cleared a random lineup once; Oak then opens Mt. Silver
+	const EVENT_BEAT_YOUNGSTER_JOEY5 ; his final rematch team; unlocks him for the Open League
 
 	const_next 2048
 DEF NUM_EVENTS EQU const_value ; 800

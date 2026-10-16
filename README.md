@@ -1,30 +1,10 @@
-# Crystal For Friends
+# Pokemon Crystal Crunch
 
 > **Disclaimer:** Generative AI was used as a code assistant for some systems programming. All art/maps/dialogue (and everything creative) was made by myself and the community or was commissioned from real artists.
 
-This is a version of Pokemon Crystal meant for me and my friends. It is built upon the CrystalShireEngine.
+This is a hack of Pokemon Crystal meant to make you smile. All systems were designed with a pre gen 3 mindset. Other hacks already port new features like abilities, new moves, new items, etc. into Crystal (and do it incredibly well), so I don't see a reason to tread the same ground. There are exceptions to this rule when it comes to QoL - for example, the storage system now uses the Gen 3 UI.
 
 ## Changes
-- **Built upon the CrystalShireEngine** See section below titled "CrystalShireEngine" to see the README for that project
-
-- **Rebalances based heavily upon Crystal Legacy** Credits: [Crystal Legacy Team](https://github.com/cRz-Shadows/Pokemon_Crystal_Legacy)
-  - Trainer Teams
-  - Dynamic teams for CHUCK, PRYCE, and JASMINE depending on the order you face them in
-  - Wild Encounters
-  - NPC Trades
-  - Fossils
-    - Solve the fossil mon puzzles in the Ruins of Alph for each respective fossil
-  - Celebi Event
-    - Solve the Ho-Oh puzzle in the Ruins of Alph
-  - Game Corner Prizes
-  - TM shops
-  - Updated Evolution methods
-  - Level-up learnsets
-  - TM/HM learnsets
-  - Reduced hatch cycles
-  - Hatch Cycles
-  - Move updates
-
 - **All 251 Pokemon Available**
   - TODO: All Pokemon available
     - Articuno, Zapdos and Moltres appear once you have all 16 badges: Zapdos outside the Power Plant on Route 10, Articuno on Route 20 near the Seafoam Islands, and Moltres in Victory Road.
@@ -37,26 +17,15 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - A fainted follower waits in its Poke Ball, and comes back out when you heal it
   - Eggs can follow you too!
 
-- **Type Rebalance**
-  - Dark type moves are now Physical
-  - Ghost type moves are now Special
-
-- **Odd Egg Upgrades**
-  - Always Shiny
-  - Odds of getting each kind of mon is more even
-
-- **Track Caught Ball**
-  - The ball that a Pokemon is caught in is displayed on the stats screen
-
-- **Wild Held Item Rebalance**
-  - Wild Pokemon are more likely to hold items
-
-	| Common Item | Rare Item |
-	|----------------|-------------------|
-	| **40%** *(+17%)* | **10%** *(+8%)* |
-
-- **Flee Mechanic Upgrades**
-  - Only Roaming Legendaries flee wild battles
+- **Wild Pokemon in the Overworld**
+  - Many routes and towns have Pokemon wandering in the open
+  - Walk into one, or face it and press **A**, to start a wild battle
+  - What you see is what you fight - a shiny out in the grass is shiny in the battle
+  - They are worth chasing: better DVs, far more likely to be holding an item, and better shiny odds than the same Pokemon in the grass
+  - Some know egg moves or otherwise unobtainable moves 
+  - Some turn up in forms you cannot find any other way
+  - A chime plays when you walk into an area that has a shiny in it
+  - Who turns up is decided fresh each time you enter an area, so it is worth passing back through
 
 - **Hidden Power Overhaul**
   - Every Pokemon's Hidden Power attack power can be increased via various methods. The attack power starts at **20** and caps at **70**. Unown cap at **120**.
@@ -70,8 +39,44 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
     - She gives you your first GLYPH SHARD
     - She teaches Hidden Power for free, any time
 
-- **Kurt Upgrades**
-  - TODO: Kurt makes Apricorn balls instantly
+- **HM Upgrades**
+  - You can use an HM outside of battle if a Pokemon in your party can learn it, as long as you have the HM in your bag. It doesn't have to know the move
+  - Rock Smash works the same way once you've received its TM, even if you've since taught it
+  - Headbutt still has to be known
+  - HM moves can be forgotten like any other move, and Pokemon that know them can be released
+  - Fly from the Pokegear map: press A on a town you've visited. The Pokemon that would fly is shown on the town
+  - In a dark area, press A to prompt Flash
+
+- **New and Updated Daily Events**
+  - Bug Catching Contest now appears on Sundays as well (on top of Tuesdays, Thursdays, and Saturdays)
+  - A Sailor in Cianwood will take you to a mystery island once a day, where you can find new places to explore, rare Pokemon, and more
+  - Once a day, find rare variants in swarms by tuning into radio channel 12.5
+  - Mystery Gift with various NPCs once per day for rare items
+
+- **Mystery Gift with various NPCs**
+  - Improved rarity distribution - Uncommon, rare, and super rare items appear more often
+  - Upgraded rewards - All evolution items can be obtained by Mystery Gifting with NPCs
+  - Locations
+    - Carrie (Goldenrod Dept. Store 5f)
+    - Kim (Blackthorn City)
+    - Charlie (Silph Co. 1f)
+  - Limit once per day, per NPC
+
+- **Swarm System Overhaul**
+  - Daily swarms are announced via the radio on station 12.5, the Collection Guild's swarm report. Kanto swarms start after beating the Elite Four
+  - Up to three swarms can be going at once: Arnie's and Anthony's phone calls still start theirs (Yanma on Route 35, Dunsparce in Dark Cave), and a new radio station picks one more every day
+  - Swarms end at midnight
+  - A swarm takes over about 60% of a route's grass or surf encounters, at the route's own levels
+  - Find special forms in swarms
+  - Heightened shiny chance (see Shininess section)
+  - Swarm mon replace some overworld mon on the route. Battle one and the route's wandering Pokemon are rolled again, to increase chance of finding shinies.
+  - Active swarms are marked on the Pokegear map and the Fly map. When icons share a spot, they take turns showing
+
+- **Roaming Legendaries Overhaul**
+  - Roaming legendaries appear in the overworld now instead of in the grass
+  - The location of the roaming legendaries can be tracked on the Pokegear map 
+  - A roaming legendary stays put while you're on its route, so you can walk up to it. It only moves on when you leave, or after you battle it
+  - Check the Shininess section about updates to shiny mechanics surrounding the roaming legendaries
 
 - **Pokegear Upgrades**
   - Press **Select** on the Pokegear map or the Fly map to switch what the map shows:
@@ -92,17 +97,10 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Fewer filler calls: trainers are more likely to call about a rematch or a gift
   - A trainer with a rematch or gift waiting won't call again until you go see them
 
-- **Headbutt Tree Encounters Simplified**
-  - Headbutting a headbutt tree always results in a Pokemon appearing
-  - Each area type has one encounter table instead of a common and uncommon table
-
-- **HM Upgrades**
-  - You can use an HM outside of battle if a Pokemon in your party can learn it, as long as you have the HM in your bag. It doesn't have to know the move
-  - Rock Smash works the same way once you've received its TM, even if you've since taught it
-  - Headbutt still has to be known
-  - HM moves can be forgotten like any other move, and Pokemon that know them can be released
-  - Fly from the Pokegear map: press A on a town you've visited. The Pokemon that would fly is shown on the town
-  - In a dark area, press A to prompt Flash
+- **Type Rebalance**
+  - Dark type moves are now Physical
+  - Ghost type moves are now Special
+  - Dragon type moves are now Physical
 
 - **Shininess**
   - Shiny Pokemon no longer tied to specific DV spreads
@@ -140,48 +138,9 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
     | Same species | 50% |
     | Different species | 25% |
 
-- **Mystery Gift with various NPCs**
-  - Improved rarity distribution - Uncommon, rare, and super rare items appear more often
-  - Upgraded rewards - All evolution items can be obtained by Mystery Gifting with NPCs
-  - Locations
-    - Carrie (Goldenrod Dept. Store 5f)
-    - Kim (Blackthorn City)
-    - Charlie (Silph Co. 1f)
-    - TODO: Pocky
-  - Limit once per day, per NPC
-
-- **New and Updated Daily Events**
-  - Bug Catching Contest now appears on Sundays as well (on top of Tuesdays, Thursdays, and Saturdays)
-  - A Sailor in Cianwood will take you to a mystery island once a day, where you can find new places to explore, rare Pokemon, and more
-
-- **Wild Pokemon in the Overworld**
-  - Many routes and towns have Pokemon wandering in the open
-  - Walk into one, or face it and press **A**, to start a wild battle
-  - What you see is what you fight - a shiny out in the grass is shiny in the battle
-  - They are worth chasing: better DVs, far more likely to be holding an item, and better shiny odds than the same Pokemon in the grass
-  - Some know egg moves or otherwise unobtainable moves 
-  - Some turn up in forms you cannot find any other way
-  - A chime plays when you walk into an area that has a shiny in it
-  - Who turns up is decided fresh each time you enter an area, so it is worth passing back through
-
-- **Swarm Overhaul**
-  - Daily swarms are announced via the radio on station 12.5, the Collection Guild's swarm report. Kanto swarms start after beating the Elite Four
-  - Up to three swarms can be going at once: Arnie's and Anthony's phone calls still start theirs (Yanma on Route 35, Dunsparce in Dark Cave), and a new radio station picks one more every day
-  - Swarms end at midnight
-  - A swarm takes over about 60% of a route's grass or surf encounters, at the route's own levels
-  - Find special forms in swarms
-  - Heightened shiny chance (see Shininess section)
-  - Swarm mon replace some overworld mon on the route. Battle one and the route's wandering Pokemon are rolled again, to increase chance of finding shinies.
-  - Active swarms are marked on the Pokegear map and the Fly map. When icons share a spot, they take turns showing
-
-- **Roaming Legendaries**
-  - Roaming legendaries appear in the overworld now instead of in the grass
-  - The location of the roaming legendaries can be tracked on the Pokegear map 
-  - A roaming legendary stays put while you're on its route, so you can walk up to it. It only moves on when you leave, or after you battle it
-  - The Guide Gent in Cherrygrove gives you the Map Card even if you turn down his tour, so everyone can track them
-  - Check the Shininess section about updates to shiny mechanics surrounding the roaming legendaries
 
 - **New Cosmetic Forms**
+TODO: mention a few. Put the rest on the dex site if people want spoilers
 	| Species	| Form			| How to Obtain |
 	|---------------|-----------------------|---------------|
 	| Pikachu	| Surfing Pikachu	| Teach it Surf |
@@ -248,6 +207,30 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - A few towns keep a specialty item: Charcoal in Azalea, Surf Mail in Olivine and Cerulean, LiteBlueMail in Vermilion
   - Blackthorn's mart, the department stores, and specialty shops keep fixed stock; Blackthorn and the department stores sell TMs (see TM shops above)
 
+- **Odd Egg Upgrades**
+  - Always Shiny
+  - Odds of getting each kind of mon is more even
+
+- **Track Caught Ball**
+  - The ball that a Pokemon is caught in is displayed on the stats screen
+
+- **Wild Held Item Rebalance**
+  - Wild Pokemon are more likely to hold items
+
+	| Common Item | Rare Item |
+	|----------------|-------------------|
+	| **40%** *(+17%)* | **10%** *(+8%)* |
+
+- **Flee Mechanic Upgrades**
+  - Only Roaming Legendaries flee wild battles
+
+- **Kurt Upgrades**
+  - TODO: Kurt makes Apricorn balls instantly + can make multiple at once
+
+- **Headbutt Tree Encounters Simplified**
+  - Headbutting a headbutt tree always results in a Pokemon appearing
+  - Each area type has one encounter table instead of a common and uncommon table
+
 - **Misc.**
   - Turn around after healing in the Pokecenter so you don't accidentally heal again
   - Minor update to Goldenrod layout so it's easier to get to the underground and the bike shop
@@ -258,8 +241,28 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Simplified the clock reset
     - Hold **Down + B + Select** at the title screen, then confirm
 
-- **Code Credits**
-  - Please See the Crystal Shire Engine in the Crystal Shire Engine README that has been pasted below. The Crystal Shire Engine is a great base with code from many talented developers.
+---
+
+## **Code Credits**
+  - **Built upon the CrystalShireEngine** See section below titled "CrystalShireEngine" to see the README for that project. This includes a majority of bugfixes, engine upgrades, and a lot of QoL improvements (like the new box UI).
+
+  - **Rebalances based heavily upon Crystal Legacy** Credits: [Crystal Legacy Team](https://github.com/cRz-Shadows/Pokemon_Crystal_Legacy)
+    - Trainer Teams
+    - Dynamic teams for CHUCK, PRYCE, and JASMINE depending on the order you face them in
+    - Wild Encounters
+    - NPC Trades
+    - Fossils
+      - Solve the fossil mon puzzles in the Ruins of Alph for each respective fossil
+    - Celebi Event
+      - Solve the Ho-Oh puzzle in the Ruins of Alph
+    - Game Corner Prizes
+    - TM shops
+    - Updated Evolution methods
+    - Level-up learnsets
+    - TM/HM learnsets
+    - Reduced hatch cycles
+    - Hatch Cycles
+    - Move updates
   - Parts of the [Add a new party menu icon](https://github.com/pret/pokecrystal/wiki/Add-a-new-party-menu-icon) tutorial were used and modified for cosmetic form party menu/daycare overworld/box icons. Credits to [Rangi42](https://github.com/Rangi42) for writing the original tutorial and [Cherryello](https://github.com/Cherryello), [mid-kid](https://github.com/mid-kid), [aaaaaa123456789](https://github.com/aaaaaa123456789), [Idain](https://github.com/Idain), [FrenchOrange](https://github.com/FrenchOrange), [SonicRay100](https://github.com/SonicRay100), and [Brianum](https://github.com/Brianum) for their updates to it.
   - Untying shininess from DVs partially based on a similar implementation in [Polished Crystal](https://github.com/Rangi42/polishedcrystal)
   - New shiny check algorithm [Polished Crystal](https://github.com/Rangi42/polishedcrystal)
@@ -271,7 +274,8 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - The unlimited phone contact list, evening rematch times and the one-byte special phone call fix are ported from [Polished Crystal](https://github.com/Rangi42/polishedcrystal)
   - Answering or declining phone calls is ported from [Sour Crystal](https://github.com/SoupPotato/sourcrystal)
   - Trainers offering their number right after battle follows the [Improve the trainer rematch system](https://github.com/pret/pokecrystal/wiki/Improve-the-trainer-rematch-system) tutorial by Grate Oracle Lewot from the pret/pokecrystal wiki
-- **Art Credits**
+
+## **Art Credits**
   - SCMidna for Surfing Pikachu front sprites
   - bloodless for Flying Pikachu back sprite
   - Kuroko Aizawa, bloodless, and metalflygon08 for Flying Pikachu front sprites 
@@ -287,9 +291,12 @@ This is a version of Pokemon Crystal meant for me and my friends. It is built up
   - Kester Henrick for blackbelt overworld sprite used for Karate Master
   - [FrenchOrange](https://github.com/FrenchOrange) for help with the Shaman's overworld sprite
   - Campfire sprite and fire-pit tiles in the Shaman's house from [Polished Crystal](https://github.com/Rangi42/polishedcrystal)
+  - [FrenchOrange](https://github.com/FrenchOrange) for Lorelei's and Agatha's trainer sprites
+  - MauveSea for Giovanni's trainer sprite
   - Most Pokemon party menu icons from [Sour Crystal](https://github.com/SoupPotato/sourcrystal)
   - New and redrawn move animation graphics from [Sour Crystal](https://github.com/SoupPotato/sourcrystal)
 
+---
 
 ## Below, you will find the original readme for the CrystalShireEngine
 

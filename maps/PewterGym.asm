@@ -30,11 +30,15 @@ PewterGymBrockScript:
 	setflag ENGINE_BOULDERBADGE
 	writetext BrockBoulderBadgeText
 	waitbutton
+	writetext BrockEliteFourInviteText ; the Open League
+	waitbutton
 	closetext
 	end
 
 .FightDone:
 	writetext BrockFightDoneText
+	waitbutton
+	writetext BrockEliteFourInviteText ; the Open League
 	waitbutton
 	closetext
 	end
@@ -217,6 +221,16 @@ PewterGymSteelixScript:
 
 PewterGymSteelixText:
 	text "STEELIX: Groaaar!"
+	done
+
+BrockEliteFourInviteText:
+	text "The ELITE FOUR,"
+	line "huh? They won't"
+	cont "stand a chance"
+	cont "against my"
+	cont "rock-type #MON!"
+
+	para "Count me in."
 	done
 
 PewterGym_MapEvents:

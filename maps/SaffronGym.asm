@@ -36,11 +36,15 @@ SaffronGymSabrinaScript:
 	setflag ENGINE_MARSHBADGE
 	writetext SabrinaMarshBadgeText
 	waitbutton
+	writetext SabrinaEliteFourInviteText ; the Open League
+	waitbutton
 	closetext
 	end
 
 .FightDone:
 	writetext SabrinaFightDoneText
+	waitbutton
+	writetext SabrinaEliteFourInviteText ; the Open League
 	waitbutton
 	closetext
 	end
@@ -299,6 +303,18 @@ SaffronGymAlakazamScript:
 
 SaffronGymAlakazamText:
 	text "ALAKAZAM: …"
+	done
+
+SabrinaEliteFourInviteText:
+	text "There's no need to"
+	line "ask, I've seen"
+	cont "everything."
+
+	para "Despite my"
+	line "reservations for"
+	cont "battling, I will"
+	cont "take on the ELITE"
+	cont "FOUR challenge."
 	done
 
 SaffronGym_MapEvents:

@@ -35,9 +35,17 @@ Oak:
 	end
 
 .OpenMtSilver:
+; Facing RED is the reward for clearing a random Elite Four lineup
+	checkevent EVENT_BEAT_RANDOM_ELITE_FOUR
+	iffalse .ProveYourself
 	writetext OakOpenMtSilverText
 	promptbutton
 	setevent EVENT_OPENED_MT_SILVER
+	sjump .CheckPokedex
+
+.ProveYourself:
+	writetext OakProveYourselfAtLeagueText
+	promptbutton
 	sjump .CheckPokedex
 
 .Complain:
@@ -99,6 +107,22 @@ OakLabGoodbyeText:
 	text "If you're in the"
 	line "area, I hope you"
 	cont "come visit again."
+	done
+
+OakProveYourselfAtLeagueText:
+	text "OAK: Sixteen"
+	line "BADGES! That's"
+	cont "remarkable."
+
+	para "But Mt.SILVER…"
+	line "If you can prove"
+	cont "yourself against"
+	cont "the new ELITE"
+	cont "FOUR, I can make"
+	cont "arrangements for"
+	cont "you to go there."
+
+	para "That's a promise."
 	done
 
 OakOpenMtSilverText:

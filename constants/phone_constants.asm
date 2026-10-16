@@ -8,7 +8,7 @@
 	const PHONE_SCHOOLBOY_JACK
 	const PHONE_POKEFAN_BEVERLY
 	const PHONE_SAILOR_HUEY
-	const_skip
+	const PHONE_LANCE ; never registered; only places the Open League call
 	const_skip
 	const_skip
 	const PHONE_COOLTRAINERM_GAVEN
@@ -51,6 +51,7 @@ DEF NUM_PHONE_CONTACTS EQU const_value - 1
 	const SPECIALCALL_BIKESHOP
 	const SPECIALCALL_WORRIED
 	const SPECIALCALL_MASTERBALL
+	const SPECIALCALL_LANCE_OPEN_LEAGUE
 DEF NUM_SPECIALCALLS EQU const_value - 1
 DEF SPECIALCALL_SIZE EQU 6
 

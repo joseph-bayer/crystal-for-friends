@@ -594,16 +594,16 @@ TeamRocketBaseB3F_Blocks:
 IndigoPlateauPokecenter1F_Blocks:
 	INCBIN "maps/IndigoPlateauPokecenter1F.ablk"
 
-WillsRoom_Blocks:
+WillsRoom_Blocks::
 	INCBIN "maps/WillsRoom.ablk"
 
-KogasRoom_Blocks:
+KogasRoom_Blocks::
 	INCBIN "maps/KogasRoom.ablk"
 
-BrunosRoom_Blocks:
+BrunosRoom_Blocks::
 	INCBIN "maps/BrunosRoom.ablk"
 
-KarensRoom_Blocks:
+KarensRoom_Blocks::
 	INCBIN "maps/KarensRoom.ablk"
 
 AzaleaGym_Blocks:

@@ -7,6 +7,13 @@ HallOfFame_MapScripts:
 	scene_script HallOfFameNoopScene,  SCENE_HALLOFFAME_NOOP
 
 	def_callbacks
+	callback MAPCALLBACK_CMDQUEUE, HallOfFameSeatCallback
+
+HallOfFameSeatCallback:
+; During the Open League, the champion just beaten walks the player in, not Lance
+	setval E4_SEAT_CHAMPION
+	callasm ApplyEliteFourRoom
+	endcallback
 
 HallOfFameEnterScene:
 	sdefer HallOfFameEnterScript
@@ -21,7 +28,16 @@ HallOfFameEnterScript:
 	stopfollow
 	turnobject PLAYER, RIGHT
 	opentext
+	checkevent EVENT_OPEN_LEAGUE_STARTED
+	iftrue .OpenLeagueText
 	writetext HallOfFame_LanceText
+	sjump .Spoke
+
+.OpenLeagueText:
+	callasm PrintEliteFourHallOfFameText ; some champions have their own line
+	iftrue .Spoke
+	writetext HallOfFame_OpenLeagueText
+.Spoke:
 	waitbutton
 	closetext
 	turnobject HALLOFFAME_LANCE, UP
@@ -40,9 +56,20 @@ HallOfFameEnterScript:
 	setmapscene SPROUT_TOWER_3F, SCENE_SPROUTTOWER3F_NOOP
 	special HealParty
 	checkevent EVENT_GOT_SS_TICKET_FROM_ELM
+	iftrue .LanceCall
+	specialphonecall SPECIALCALL_SSTICKET ; Lance's call waits for the ticket (ElmGiveTicketScript)
+	sjump .SkipPhoneCall
+
+.LanceCall:
+	checkevent EVENT_LANCE_CALLED_ABOUT_OPEN_LEAGUE
 	iftrue .SkipPhoneCall
-	specialphonecall SPECIALCALL_SSTICKET
+	specialphonecall SPECIALCALL_LANCE_OPEN_LEAGUE
 .SkipPhoneCall:
+	checkevent EVENT_OPEN_LEAGUE_STARTED
+	iffalse .NotOpenLeague
+	setevent EVENT_BEAT_RANDOM_ELITE_FOUR ; Oak now opens Mt. Silver
+.NotOpenLeague:
+	callasm EndEliteFourRun ; the next Elite Four run rolls a new one, with a different champion
 	halloffame
 	end
 
@@ -68,6 +95,31 @@ HallOfFame_FollowerApproachMachine:
 	slow_step RIGHT
 	turn_head UP
 	step_end
+
+HallOfFame_OpenLeagueText:
+; During the Open League the champion may be anyone, so no name and no memories of the place
+	text "This is where we"
+	line "honor the LEAGUE"
+
+	para "CHAMPIONS for all"
+	line "eternity."
+
+	para "Their courageous"
+	line "#MON are also"
+	cont "inducted."
+
+	para "Here today, we"
+	line "witnessed the rise"
+
+	para "of a new LEAGUE"
+	line "CHAMPION!"
+
+	para "<PLAY_G>, allow me"
+	line "to register you"
+
+	para "and your partners"
+	line "as CHAMPIONS!"
+	done
 
 HallOfFame_LanceText:
 	text "LANCE: It's been a"

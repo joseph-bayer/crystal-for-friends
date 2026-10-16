@@ -45,10 +45,11 @@ GetOTName:
 	ret
 
 GetTrainerAttributes:
-	ld a, [wTrainerClass]
+; An Elite Four seat battle takes the seat's name, items and prize money (GetTrainerAttributeClass)
+	call GetTrainerAttributeClass
 	ld c, a
 	call GetOTName
-	ld a, [wTrainerClass]
+	call GetTrainerAttributeClass
 	dec a
 	ld hl, TrainerClassAttributes + TRNATTR_ITEM1
 	ld bc, NUM_TRAINER_ATTRIBUTES

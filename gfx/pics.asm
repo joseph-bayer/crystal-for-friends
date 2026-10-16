@@ -823,3 +823,8 @@ PichuBetaFrontpic:      	INCBIN "gfx/pokemon/pichu_beta/front.animated.2bpp.lz"
 PichuBetaBackpic:       	INCBIN "gfx/pokemon/pichu_beta/back.2bpp.lz"
 RaichuRBFrontpic:       	INCBIN "gfx/pokemon/raichu_rb/front.animated.2bpp.lz"
 RaichuRBBackpic:        	INCBIN "gfx/pokemon/raichu_rb/back.2bpp.lz"
+
+; The Elite Four's Gen 1 members (trainer pictures; the owner replaces the stubs)
+LoreleiPic:          		INCBIN "gfx/trainers/lorelei.2bpp.lz" ; TODO: the owner's picture
+AgathaPic:           		INCBIN "gfx/trainers/agatha.2bpp.lz" ; TODO: the owner's picture
+GiovanniPic:         		INCBIN "gfx/trainers/giovanni.2bpp.lz" ; TODO: the owner's picture

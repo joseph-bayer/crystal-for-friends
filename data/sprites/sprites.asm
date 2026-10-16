@@ -113,4 +113,7 @@ OverworldSprites:
 	overworld_sprite KiyoSpriteGFX, 12, WALKING_SPRITE, PAL_OW_GRAY
 	overworld_sprite ShamanSpriteGFX, 12, WALKING_SPRITE, PAL_OW_BROWN
 	overworld_sprite CampfireSpriteGFX, 12, STANDING_SPRITE, PAL_OW_CAMPFIRE
+	overworld_sprite LoreleiSpriteGFX, 12, WALKING_SPRITE, PAL_OW_RED
+	overworld_sprite AgathaSpriteGFX, 12, WALKING_SPRITE, PAL_OW_PURPLE
+	overworld_sprite GiovanniSpriteGFX, 12, WALKING_SPRITE, PAL_OW_GRAY
 	assert_table_length NUM_OVERWORLD_SPRITES - 1

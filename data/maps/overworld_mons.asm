@@ -14,7 +14,7 @@ OverworldMonObjects:
 ; Read by GetOverworldMonSlot. The form byte takes a cosmetic form, SHINY_MASK, or both.
 
 	ow_mon_map AZALEA_GYM
-	ow_mon SCYTHER,    PLAIN_FORM
+	ow_mon SCYTHER,    SCYTHER_TEAL_FORM
 
 	ow_mon_map BLACKTHORN_DRAGON_SPEECH_HOUSE
 	ow_mon DRATINI,    PLAIN_FORM

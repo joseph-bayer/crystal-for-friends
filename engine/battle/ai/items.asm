@@ -26,7 +26,7 @@ AI_SwitchOrTryItem:
 	and a
 	jr nz, .ok
 
-	ld a, [wTrainerClass]
+	call GetTrainerAttributeClass ; an Elite Four seat's, in a seat battle
 	dec a
 	ld bc, NUM_TRAINER_ATTRIBUTES
 	rst AddNTimes
@@ -162,7 +162,7 @@ AI_TryItem:
 	call .IsHighestLevel
 	ret nc
 
-	ld a, [wTrainerClass]
+	call GetTrainerAttributeClass ; an Elite Four seat's, in a seat battle
 	dec a
 	ld hl, TrainerClassAttributes + TRNATTR_AI_ITEM_SWITCH
 	ld bc, NUM_TRAINER_ATTRIBUTES

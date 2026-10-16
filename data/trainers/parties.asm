@@ -28,6 +28,35 @@ FalknerGroup:
 	dw TACKLE, MUD_SLAP, GROWL, PECK
 	db -1 ; end
 
+	next_list_item ; FALKNER_ELITE_FOUR (2): the Open League. Levels are set by the order you face them in;
+	; an Elite Four seat uses the first five, the champion all six
+	db "FALKNER@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
+	db 54
+	dw NOCTOWL
+	dw GOLD_BERRY
+	dw PSYCHIC_M, WING_ATTACK, HYPNOSIS, DREAM_EATER
+	db 53
+	dw SKARMORY
+	dw NO_ITEM
+	dw SPIKES, DRILL_PECK, MUD_SLAP, STEEL_WING
+	db 53
+	dw DODRIO
+	dw FOCUS_BAND
+	dw ENDURE, FLAIL, DRILL_PECK, TRI_ATTACK
+	db 54
+	dw MURKROW
+	dw NO_ITEM
+	dw DRILL_PECK, FAINT_ATTACK, HAZE, ICY_WIND
+	db 55
+	dw PIDGEOT
+	dw NO_ITEM
+	dw SKY_ATTACK, EXTREMESPEED, DOUBLE_TEAM, STEEL_WING
+	db 70
+	dw AERODACTYL
+	dw KINGS_ROCK
+	dw WING_ATTACK, ROCK_SLIDE, EARTHQUAKE, HYPER_BEAM
+	db -1 ; end
+
 	end_list_items
 
 SECTION "Whitney Trainer Party", ROMX
@@ -49,25 +78,92 @@ WhitneyGroup:
 	dw ROLLOUT, ATTRACT, STOMP, MILK_DRINK
 	db -1 ; end
 
+	next_list_item ; WHITNEY_ELITE_FOUR (2): the Open League. Levels are set by the order you face them in;
+	; an Elite Four seat uses the first five, the champion all six
+	db "WHITNEY@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
+	db 53
+	dw CLEFABLE
+	dw NO_ITEM
+	dw ICE_PUNCH, FIRE_PUNCH, THUNDERPUNCH, ENCORE
+	db 54
+	dw URSARING
+	dw MINT_BERRY
+	dw STRENGTH, EARTHQUAKE, REST, METAL_CLAW
+	db 53
+	dw BLISSEY
+	dw NO_ITEM
+	dw EGG_BOMB, ATTRACT, SOFTBOILED, LIGHT_SCREEN
+	db 54
+	dw TAUROS
+	dw NO_ITEM
+	dw THRASH, EARTHQUAKE, RAGE, PURSUIT
+	db 55
+	dw MILTANK
+	dw PINK_BOW
+	dw IRON_TAIL, ATTRACT, BODY_SLAM, MILK_DRINK
+	db 70
+	dw SNORLAX
+	dw LEFTOVERS
+	dw BODY_SLAM, EARTHQUAKE, REST, SLEEP_TALK
+	db -1 ; end
+
 	end_list_items
 
 SECTION "Bugsy Trainer Party", ROMX
 
 BugsyGroup:
 	next_list_item ; BUGSY (1)
-	db "BUGSY@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
+	db "BUGSY@", TRAINERTYPE_FORM |TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 15
 	dw PINECO
+	db PLAIN_FORM
 	dw NO_ITEM
 	dw PIN_MISSILE, HEADBUTT, MEGA_DRAIN, HARDEN
 	db 15
 	dw LEDIAN
+	db PLAIN_FORM
 	dw NO_ITEM
 	dw THUNDERPUNCH, COMET_PUNCH, SUPERSONIC, REFLECT
 	db 16
 	dw SCYTHER
+	db SCYTHER_TEAL_FORM
 	dw BERRY_JUICE
 	dw QUICK_ATTACK, FURY_CUTTER, CUT, PURSUIT
+	db -1 ; end
+
+	next_list_item ; BUGSY_ELITE_FOUR (2): the Open League. Levels are set by the order you face them in;
+	; an Elite Four seat uses the first five, the champion all six
+	db "BUGSY@", TRAINERTYPE_FORM | TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
+	db 54
+	dw LEDIAN
+	db PLAIN_FORM
+	dw FOCUS_BAND
+	dw GIGA_DRAIN, AGILITY, BATON_PASS, LIGHT_SCREEN
+	db 53
+	dw FORRETRESS
+	db PLAIN_FORM
+	dw NO_ITEM
+	dw CURSE, EXPLOSION, PIN_MISSILE, SPIKE_CANNON
+	db 53
+	dw SHUCKLE
+	db PLAIN_FORM
+	dw BERRY_JUICE
+	dw TOXIC, PROTECT, SANDSTORM, WRAP
+	db 54
+	dw SCIZOR
+	db SCIZOR_DUSTY_ROSE_FORM
+	dw NO_ITEM
+	dw METAL_CLAW, TWINEEDLE, AGILITY, SUBSTITUTE
+	db 55
+	dw SCYTHER
+	db SCYTHER_TEAL_FORM
+	dw SCOPE_LENS
+	dw SLASH, CUT, WING_ATTACK, SWORDS_DANCE
+	db 70
+	dw HERACROSS
+	db PLAIN_FORM
+	dw FOCUS_BAND
+	dw MEGAHORN, EARTHQUAKE, CROSS_CHOP, REVERSAL
 	db -1 ; end
 
 	end_list_items
@@ -93,6 +189,35 @@ MortyGroup:
 	dw GENGAR
 	dw MIRACLEBERRY
 	dw HYPNOSIS, SHADOW_BALL, MEAN_LOOK, DREAM_EATER
+	db -1 ; end
+
+	next_list_item ; MORTY_ELITE_FOUR (2): the Open League. Levels are set by the order you face them in;
+	; an Elite Four seat uses the first five, the champion all six
+	db "MORTY@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
+	db 54
+	dw GENGAR
+	dw NO_ITEM
+	dw SHADOW_BALL, DESTINY_BOND, MEAN_LOOK, CONFUSE_RAY
+	db 53
+	dw STANTLER
+	dw PINK_BOW
+	dw SHADOW_BALL, HEADBUTT, HYPNOSIS, DREAM_EATER
+	db 54
+	dw GENGAR
+	dw SPELL_TAG
+	dw SHADOW_BALL, GIGA_DRAIN, SLUDGE_BOMB, PSYCHIC_M
+	db 53
+	dw MISDREAVUS
+	dw NO_ITEM
+	dw SHADOW_BALL, MEAN_LOOK, PAIN_SPLIT, PERISH_SONG
+	db 55
+	dw GENGAR
+	dw GOLD_BERRY
+	dw SHADOW_BALL, HYPNOSIS, THUNDERBOLT, DREAM_EATER
+	db 70
+	dw ALAKAZAM
+	dw TWISTEDSPOON
+	dw PSYCHIC_M, SHADOW_BALL, RECOVER, THUNDERPUNCH
 	db -1 ; end
 
 	end_list_items
@@ -166,6 +291,35 @@ PryceGroup:
 	dw PILOSWINE
 	dw GOLD_BERRY
 	dw HEADBUTT, EARTHQUAKE, ROCK_SMASH, BLIZZARD
+	db -1 ; end
+
+	next_list_item ; PRYCE_ELITE_FOUR (2): the Open League. Levels are set by the order you face them in;
+	; an Elite Four seat uses the first five, the champion all six
+	db "PRYCE@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
+	db 54
+	dw SNEASEL
+	dw NO_ITEM
+	dw FAINT_ATTACK, METAL_CLAW, BEAT_UP, BLIZZARD
+	db 53
+	dw DEWGONG
+	dw MIRACLEBERRY
+	dw SURF, ICE_BEAM, REST, ENCORE
+	db 53
+	dw JYNX
+	dw NO_ITEM
+	dw ICE_BEAM, PSYCHIC_M, SHADOW_BALL, LOVELY_KISS
+	db 54
+	dw OMASTAR
+	dw NO_ITEM
+	dw BLIZZARD, HYDRO_PUMP, ANCIENTPOWER, HAZE
+	db 55
+	dw PILOSWINE
+	dw SOFT_SAND
+	dw STRENGTH, EARTHQUAKE, ROCK_SMASH, BLIZZARD
+	db 70
+	dw CLOYSTER
+	dw NEVERMELTICE
+	dw SURF, BLIZZARD, SPIKES, TOXIC
 	db -1 ; end
 
 	end_list_items
@@ -246,6 +400,35 @@ JasmineGroup:
 	db -1 ; end
 
 
+	next_list_item ; JASMINE_ELITE_FOUR (4): the Open League. Levels are set by the order you face them in;
+	; an Elite Four seat uses the first five, the champion all six
+	db "JASMINE@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
+	db 53
+	dw SKARMORY
+	dw NO_ITEM
+	dw SPIKES, DRILL_PECK, SWAGGER, STEEL_WING
+	db 53
+	dw CORSOLA
+	dw NO_ITEM
+	dw RAIN_DANCE, SURF, RECOVER, ANCIENTPOWER
+	db 54
+	dw MAGNETON
+	dw NO_ITEM
+	dw DOUBLE_EDGE, SUBSTITUTE, RAIN_DANCE, THUNDER
+	db 55
+	dw SCIZOR
+	dw FOCUS_BAND
+	dw TWINEEDLE, SWORDS_DANCE, STEEL_WING, LIGHT_SCREEN
+	db 55
+	dw STEELIX
+	dw QUICK_CLAW
+	dw CRUNCH, EARTHQUAKE, ROCK_SLIDE, IRON_TAIL
+	db 70
+	dw AMPHAROS
+	dw LEFTOVERS
+	dw THUNDERBOLT, FIRE_PUNCH, THUNDER_WAVE, LIGHT_SCREEN
+	db -1 ; end
+
 	end_list_items
 
 SECTION "Chuck Trainer Party", ROMX
@@ -319,6 +502,35 @@ ChuckGroup:
 	dw ICE_PUNCH, MIND_READER, SURF, DYNAMICPUNCH
 	db -1 ; end
 
+	next_list_item ; CHUCK_ELITE_FOUR (4): the Open League. Levels are set by the order you face them in;
+	; an Elite Four seat uses the first five, the champion all six
+	db "CHUCK@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
+	db 54
+	dw HITMONTOP
+	dw SCOPE_LENS
+	dw TRIPLE_KICK, DOUBLE_KICK, DIG, PURSUIT
+	db 53
+	dw SUDOWOODO
+	dw NO_ITEM
+	dw ROCK_SLIDE, THUNDERPUNCH, LOW_KICK, FAINT_ATTACK
+	db 54
+	dw PRIMEAPE
+	dw NO_ITEM
+	dw CROSS_CHOP, THUNDERPUNCH, ROCK_SLIDE, MEDITATE
+	db 53
+	dw PINSIR
+	dw NO_ITEM
+	dw SUBMISSION, TWINEEDLE, STRENGTH, SWORDS_DANCE
+	db 55
+	dw POLIWRATH
+	dw GOLD_BERRY
+	dw SURF, DYNAMICPUNCH, BELLY_DRUM, BODY_SLAM
+	db 70
+	dw MACHAMP
+	dw FOCUS_BAND
+	dw CROSS_CHOP, EARTHQUAKE, FIRE_PUNCH, ICE_PUNCH
+	db -1 ; end
+
 	end_list_items
 
 SECTION "Clair Trainer Party", ROMX
@@ -346,6 +558,35 @@ ClairGroup:
 	dw KINGDRA
 	dw LEFTOVERS
 	dw SMOKESCREEN, SURF, HYPER_BEAM, DRAGONBREATH
+	db -1 ; end
+
+	next_list_item ; CLAIR_ELITE_FOUR (2): the Open League. Levels are set by the order you face them in;
+	; an Elite Four seat uses the first five, the champion all six
+	db "CLAIR@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
+	db 54
+	dw DRAGONAIR
+	dw GOLD_BERRY
+	dw THUNDER_WAVE, THUNDERBOLT, FLAMETHROWER, DRAGONBREATH
+	db 53
+	dw GYARADOS
+	dw FOCUS_BAND
+	dw BITE, SURF, FLY, TWISTER
+	db 53
+	dw LAPRAS
+	dw MIRACLEBERRY
+	dw SURF, ICE_BEAM, BODY_SLAM, REST
+	db 54
+	dw DRAGONAIR
+	dw GOLD_BERRY
+	dw THUNDER_WAVE, THUNDERBOLT, ICE_BEAM, DRAGONBREATH
+	db 55
+	dw KINGDRA
+	dw LEFTOVERS
+	dw AGILITY, HYDRO_PUMP, ICE_BEAM, DRAGONBREATH
+	db 70
+	dw DRAGONITE
+	dw DRAGON_FANG
+	dw OUTRAGE, FIRE_BLAST, THUNDER, BLIZZARD
 	db -1 ; end
 
 	end_list_items
@@ -801,6 +1042,35 @@ BrockGroup:
 	dw FOCUS_BAND
 	dw ANCIENTPOWER, ICE_BEAM, SURF, TOXIC
 	db 66
+	dw STEELIX
+	dw LEFTOVERS
+	dw CURSE, EARTHQUAKE, ROCK_SLIDE, IRON_TAIL
+	db 66
+	dw TYRANITAR
+	dw MAGNET
+	dw CRUNCH, ROCK_SLIDE, CURSE, THUNDERBOLT
+	db -1 ; end
+
+	next_list_item ; BROCK_ELITE_FOUR (2): the Open League. Levels are set by the order you face them in;
+	; an Elite Four seat uses the first five, the champion all six
+	db "BROCK@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
+	db 66
+	dw GOLEM
+	dw QUICK_CLAW
+	dw CURSE, ROCK_SLIDE, BODY_SLAM, EARTHQUAKE
+	db 66
+	dw AERODACTYL
+	dw HARD_STONE
+	dw ANCIENTPOWER, SKY_ATTACK, EARTHQUAKE, FIRE_BLAST
+	db 66
+	dw KABUTOPS
+	dw SCOPE_LENS
+	dw SURF, ANCIENTPOWER, CUT, SWORDS_DANCE
+	db 66
+	dw OMASTAR
+	dw FOCUS_BAND
+	dw ANCIENTPOWER, ICE_BEAM, SURF, TOXIC
+	db 66
 	dw TYRANITAR
 	dw MAGNET
 	dw CRUNCH, ROCK_SLIDE, CURSE, THUNDERBOLT
@@ -843,6 +1113,35 @@ MistyGroup:
 	dw SURF, PSYCHIC_M, RECOVER, THUNDERBOLT
 	db -1 ; end
 
+	next_list_item ; MISTY_ELITE_FOUR (2): the Open League. Levels are set by the order you face them in;
+	; an Elite Four seat uses the first five, the champion all six
+	db "MISTY@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
+	db 62
+	dw GOLDUCK
+	dw NO_ITEM
+	dw SURF, PSYCHIC_M, HYPNOSIS, CROSS_CHOP
+	db 61
+	dw VAPOREON
+	dw LEFTOVERS
+	dw SURF, ICE_BEAM, ACID_ARMOR, SHADOW_BALL
+	db 61
+	dw KINGDRA
+	dw NO_ITEM
+	dw HYDRO_PUMP, ICE_BEAM, REST, SLEEP_TALK
+	db 62
+	dw LAPRAS
+	dw NEVERMELTICE
+	dw SURF, ICE_BEAM, RAIN_DANCE, REFLECT
+	db 63
+	dw STARMIE
+	dw MYSTIC_WATER
+	dw SURF, PSYCHIC_M, RECOVER, THUNDERBOLT
+	db 62
+	dw TOGETIC
+	dw QUICK_CLAW
+	dw TRI_ATTACK, PSYCHIC_M, FLAMETHROWER, SWEET_KISS
+	db -1 ; end
+
 	end_list_items
 
 SECTION "Lt Surge Trainer Party", ROMX
@@ -874,6 +1173,35 @@ LtSurgeGroup:
 	dw RAICHU
 	dw MAGNET
 	dw THUNDER, RAIN_DANCE, BODY_SLAM, SURF
+	db -1 ; end
+
+	next_list_item ; LT_SURGE_ELITE_FOUR (2): the Open League. Levels are set by the order you face them in;
+	; an Elite Four seat uses the first five, the champion all six
+	db "LT.SURGE@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
+	db 57
+	dw ELECTRODE
+	dw FOCUS_BAND
+	dw THUNDER, RAIN_DANCE, THUNDER_WAVE, EXPLOSION
+	db 59
+	dw MAGNETON
+	dw NO_ITEM
+	dw THUNDER, REFLECT, RAIN_DANCE, DOUBLE_EDGE
+	db 58
+	dw AMPHAROS
+	dw NO_ITEM
+	dw RAIN_DANCE, THUNDER, THUNDER_WAVE, IRON_TAIL
+	db 59
+	dw ELECTABUZZ
+	dw SCOPE_LENS
+	dw THUNDERBOLT, FIRE_PUNCH, ICE_PUNCH, SUBMISSION
+	db 60
+	dw RAICHU
+	dw MAGNET
+	dw THUNDER, RAIN_DANCE, BODY_SLAM, SURF
+	db 58
+	dw LANTURN
+	dw LEFTOVERS
+	dw SURF, THUNDERBOLT, ICE_BEAM, CONFUSE_RAY
 	db -1 ; end
 
 	end_list_items
@@ -945,6 +1273,35 @@ SECTION "Erika Trainer Party", ROMX
 
 ErikaGroup:
 	next_list_item ; ERIKA (1)
+	db "ERIKA@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
+	db 61
+	dw JUMPLUFF
+	dw FOCUS_BAND
+	dw GIGA_DRAIN, SLEEP_POWDER, ENCORE, LEECH_SEED
+	db 60
+	dw SUDOWOODO
+	dw NO_ITEM
+	dw ROCK_SLIDE, EARTHQUAKE, FAINT_ATTACK, THUNDERPUNCH
+	db 60
+	dw EXEGGUTOR
+	dw NO_ITEM
+	dw GIGA_DRAIN, PSYCHIC_M, STUN_SPORE, ANCIENTPOWER
+	db 61
+	dw VENUSAUR
+	dw LEFTOVERS
+	dw SUNNY_DAY, SOLARBEAM, SLUDGE_BOMB, SLEEP_POWDER
+	db 62
+	dw VICTREEBEL
+	dw POISON_BARB
+	dw SLUDGE_BOMB, GIGA_DRAIN, SWORDS_DANCE, SLEEP_POWDER
+	db 62
+	dw BELLOSSOM
+	dw MIRACLE_SEED
+	dw SUNNY_DAY, SYNTHESIS, SLEEP_POWDER, SOLARBEAM
+	db -1 ; end
+
+	next_list_item ; ERIKA_ELITE_FOUR (2): the Open League. Levels are set by the order you face them in;
+	; an Elite Four seat uses the first five, the champion all six
 	db "ERIKA@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
 	db 61
 	dw JUMPLUFF
@@ -1671,6 +2028,35 @@ JanineGroup:
 	dw VENOMOTH
 	dw BRIGHTPOWDER
 	dw GIGA_DRAIN, PSYCHIC_M, TOXIC, DOUBLE_TEAM
+	db -1 ; end
+
+	next_list_item ; JANINE_ELITE_FOUR (2): the Open League. Levels are set by the order you face them in;
+	; an Elite Four seat uses the first five, the champion all six
+	db "JANINE@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
+	db 63
+	dw WEEZING
+	dw LEFTOVERS
+	dw SLUDGE_BOMB, FIRE_BLAST, DESTINY_BOND, AMNESIA
+	db 62
+	dw MUK
+	dw NO_ITEM
+	dw MINIMIZE, SLUDGE_BOMB, TOXIC, ACID_ARMOR
+	db 62
+	dw NIDOQUEEN
+	dw QUICK_CLAW
+	dw EARTHQUAKE, SLUDGE_BOMB, THUNDERBOLT, SUBMISSION
+	db 63
+	dw CROBAT
+	dw NO_ITEM
+	dw PURSUIT, SLUDGE_BOMB, TOXIC, CONFUSE_RAY
+	db 64
+	dw VENOMOTH
+	dw BRIGHTPOWDER
+	dw GIGA_DRAIN, PSYCHIC_M, TOXIC, DOUBLE_TEAM
+	db 61
+	dw TENTACRUEL
+	dw MYSTIC_WATER
+	dw SURF, ICE_BEAM, TOXIC, CONFUSE_RAY
 	db -1 ; end
 
 	end_list_items
@@ -2887,6 +3273,35 @@ SabrinaGroup:
 	dw ALAKAZAM
 	dw TWISTEDSPOON
 	dw SHADOW_BALL, PSYCHIC_M, RECOVER, THUNDERPUNCH
+	db -1 ; end
+
+	next_list_item ; SABRINA_ELITE_FOUR (2): the Open League. Levels are set by the order you face them in;
+	; an Elite Four seat uses the first five, the champion all six
+	db "SABRINA@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
+	db 65
+	dw MR__MIME
+	dw QUICK_CLAW
+	dw PSYCHIC_M, THUNDER_WAVE, ENCORE, ICE_PUNCH
+	db 64
+	dw JYNX
+	dw NO_ITEM
+	dw PSYCHIC_M, ICE_BEAM, LOVELY_KISS, BUBBLEBEAM
+	db 64
+	dw SLOWBRO
+	dw MINT_BERRY
+	dw REST, SLEEP_TALK, SUBMISSION, SURF
+	db 65
+	dw HYPNO
+	dw FOCUS_BAND
+	dw DREAM_EATER, HYPNOSIS, FIRE_PUNCH, SUBMISSION
+	db 66
+	dw ALAKAZAM
+	dw TWISTEDSPOON
+	dw SHADOW_BALL, PSYCHIC_M, RECOVER, THUNDERPUNCH
+	db 64
+	dw WOBBUFFET
+	dw LEFTOVERS
+	dw MIRROR_COAT, COUNTER, SAFEGUARD, DESTINY_BOND
 	db -1 ; end
 
 	end_list_items
@@ -4413,6 +4828,35 @@ BlaineGroup:
 	dw ARCANINE
 	dw CHARCOAL
 	dw CRUNCH, DRAGONBREATH, FIRE_BLAST, EXTREMESPEED
+	db -1 ; end
+
+	next_list_item ; BLAINE_ELITE_FOUR (2): the Open League. Levels are set by the order you face them in;
+	; an Elite Four seat uses the first five, the champion all six
+	db "BLAINE@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
+	db 66
+	dw RAPIDASH
+	dw QUICK_CLAW
+	dw DOUBLE_EDGE, SUNNY_DAY, FIRE_BLAST, SOLARBEAM
+	db 65
+	dw MAGMAR
+	dw GOLD_BERRY
+	dw THUNDERPUNCH, FIRE_BLAST, PSYCHIC_M, CONFUSE_RAY
+	db 65
+	dw NINETALES
+	dw LEFTOVERS
+	dw FIRE_BLAST, SHADOW_BALL, SUNNY_DAY, HYPNOSIS
+	db 67
+	dw MAGCARGO
+	dw MIRACLEBERRY
+	dw FLAMETHROWER, CURSE, ROCK_SLIDE, SUNNY_DAY
+	db 67
+	dw ARCANINE
+	dw CHARCOAL
+	dw CRUNCH, DRAGONBREATH, FIRE_BLAST, EXTREMESPEED
+	db 66
+	dw HOUNDOOM
+	dw MIRACLE_SEED
+	dw FIRE_BLAST, SUNNY_DAY, SOLARBEAM, CRUNCH
 	db -1 ; end
 
 	end_list_items
@@ -6022,6 +6466,35 @@ BlueGroup:
 	dw FLAMETHROWER, CURSE, CRUNCH, EXTREMESPEED
 	db -1 ; end
 
+	next_list_item ; BLUE_ELITE_FOUR (2): the Open League. Levels are set by the order you face them in;
+	; an Elite Four seat uses the first five, the champion all six
+	db "BLUE@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
+	db 69
+	dw PIDGEOT
+	dw MIRACLEBERRY
+	dw QUICK_ATTACK, WHIRLWIND, WING_ATTACK, MIRROR_MOVE
+	db 68
+	dw ALAKAZAM
+	dw TWISTEDSPOON
+	dw THUNDERPUNCH, RECOVER, PSYCHIC_M, SHADOW_BALL
+	db 67
+	dw RHYDON
+	dw QUICK_CLAW
+	dw ROCK_SLIDE, EARTHQUAKE, IRON_TAIL, CRUNCH
+	db 68
+	dw EXEGGUTOR
+	dw LEFTOVERS
+	dw LEECH_SEED, SLEEP_POWDER, PSYCHIC_M, GIGA_DRAIN
+	db 68
+	dw GYARADOS
+	dw FOCUS_BAND
+	dw HYDRO_PUMP, DOUBLE_TEAM, BODY_SLAM, REVERSAL
+	db 69
+	dw ARCANINE
+	dw PINK_BOW
+	dw FLAMETHROWER, CURSE, CRUNCH, EXTREMESPEED
+	db -1 ; end
+
 	end_list_items
 
 SECTION "Officer Trainer Party", ROMX
@@ -6122,6 +6595,142 @@ MysticalmanGroup:
 	db 27
 	dw FLAAFFY
 	dw THUNDERPUNCH, THUNDER_WAVE, THUNDERSHOCK, BODY_SLAM
+	db -1 ; end
+
+	end_list_items
+
+SECTION "Lorelei Trainer Party", ROMX
+
+LoreleiGroup:
+	next_list_item ; LORELEI_ELITE_FOUR (1): the Open League. Levels are set by the order you face them in;
+	; an Elite Four seat uses the first five, the champion all six
+	db "LORELEI@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
+	db 50
+	dw DEWGONG
+	dw LEFTOVERS
+	dw ICE_BEAM, SURF, TOXIC, PROTECT
+	db 50
+	dw CLOYSTER
+	dw NEVERMELTICE
+	dw ICE_BEAM, HYDRO_PUMP, SPIKES, SUPERSONIC
+	db 50
+	dw SLOWBRO
+	dw LEFTOVERS
+	dw SURF, PSYCHIC_M, AMNESIA, REST
+	db 50
+	dw JYNX
+	dw TWISTEDSPOON
+	dw LOVELY_KISS, ICE_BEAM, PSYCHIC_M, DREAM_EATER
+	db 50
+	dw LAPRAS
+	dw LEFTOVERS
+	dw HYDRO_PUMP, ICE_BEAM, THUNDERBOLT, CONFUSE_RAY
+	db 50
+	dw SLOWKING
+	dw KINGS_ROCK
+	dw SURF, PSYCHIC_M, FLAMETHROWER, ICE_BEAM
+	db -1 ; end
+
+	end_list_items
+
+SECTION "Agatha Trainer Party", ROMX
+
+AgathaGroup:
+	next_list_item ; AGATHA_ELITE_FOUR (1): the Open League. Levels are set by the order you face them in;
+	; an Elite Four seat uses the first five, the champion all six
+	db "AGATHA@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
+	db 50
+	dw CROBAT
+	dw SHARP_BEAK
+	dw WING_ATTACK, SLUDGE_BOMB, CONFUSE_RAY, HAZE
+	db 50
+	dw ARBOK
+	dw POISON_BARB
+	dw SLUDGE_BOMB, EARTHQUAKE, GLARE, CRUNCH
+	db 50
+	dw HAUNTER
+	dw BRIGHTPOWDER
+	dw HYPNOSIS, DREAM_EATER, NIGHT_SHADE, CONFUSE_RAY
+	db 50
+	dw MISDREAVUS
+	dw LEFTOVERS
+	dw SHADOW_BALL, THUNDERBOLT, PAIN_SPLIT, CONFUSE_RAY
+	db 50
+	dw GENGAR
+	dw SPELL_TAG
+	dw SHADOW_BALL, THUNDERBOLT, HYPNOSIS, DESTINY_BOND
+	db 50
+	dw MAROWAK
+	dw THICK_CLUB
+	dw EARTHQUAKE, ROCK_SLIDE, SWORDS_DANCE, FIRE_PUNCH
+	db -1 ; end
+
+	end_list_items
+
+SECTION "Giovanni Trainer Party", ROMX
+
+GiovanniGroup:
+	next_list_item ; GIOVANNI_ELITE_FOUR (1): the Open League. Levels are set by the order you face them in;
+	; an Elite Four seat uses the first five, the champion all six
+	db "???@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
+	db 50
+	dw KANGASKHAN
+	dw LEFTOVERS
+	dw BODY_SLAM, EARTHQUAKE, SHADOW_BALL, CURSE
+	db 50
+	dw NIDOQUEEN
+	dw LEFTOVERS
+	dw EARTHQUAKE, BODY_SLAM, ICE_BEAM, FIRE_BLAST
+	db 50
+	dw NIDOKING
+	dw SOFT_SAND
+	dw EARTHQUAKE, SLUDGE_BOMB, ICE_BEAM, THUNDERBOLT
+	db 50
+	dw PERSIAN
+	dw SCOPE_LENS
+	dw SLASH, FAINT_ATTACK, HYPNOSIS, THUNDERBOLT
+	db 50
+	dw RHYDON
+	dw HARD_STONE
+	dw EARTHQUAKE, ROCK_SLIDE, HORN_DRILL, ROAR
+	db 50
+	dw TYRANITAR
+	dw BLACKGLASSES
+	dw CRUNCH, ROCK_SLIDE, EARTHQUAKE, FIRE_BLAST
+	db -1 ; end
+
+	end_list_items
+
+SECTION "Toru Trainer Party", ROMX
+
+ToruGroup:
+	next_list_item ; TORU_ELITE_FOUR (1): the Open League. Levels are set by the seat;
+	; an Elite Four seat uses the first five, the champion all six
+	db "TORU@", TRAINERTYPE_ITEM | TRAINERTYPE_MOVES
+	db 50
+	dw JYNX
+	dw TWISTEDSPOON
+	dw DOUBLE_TEAM, LOVELY_KISS, PSYCHIC_M, BLIZZARD
+	db 50
+	dw TAUROS
+	dw KINGS_ROCK
+	dw HYPER_BEAM, BLIZZARD, BODY_SLAM, EARTHQUAKE
+	db 50
+	dw STARMIE
+	dw LEFTOVERS
+	dw RECOVER, SURF, PSYCHIC_M, MINIMIZE
+	db 50
+	dw ELECTRODE
+	dw MAGNET
+	dw THUNDERBOLT, EXPLOSION, LIGHT_SCREEN, THUNDER_WAVE
+	db 50
+	dw KANGASKHAN
+	dw PINK_BOW
+	dw HYPER_BEAM, ROCK_SLIDE, BLIZZARD, EARTHQUAKE
+	db 50
+	dw ARTICUNO
+	dw NEVERMELTICE
+	dw ICE_BEAM, DOUBLE_TEAM, BLIZZARD, TOXIC
 	db -1 ; end
 
 	end_list_items

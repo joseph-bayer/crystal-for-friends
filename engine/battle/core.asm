@@ -3952,6 +3952,13 @@ InitEnemyMon:
 	inc de
 	dec b
 	jr nz, .loop
+	; and, as LoadEnemyMon does, the catch rate and base experience (an Elite Four seat battle
+	; gives experience)
+	ld a, [wBaseCatchRate]
+	ld [de], a
+	inc de
+	ld a, [wBaseExp]
+	ld [de], a
 	ld a, [wCurPartyMon]
 	ld [wCurOTMon], a
 	ret
@@ -6038,6 +6045,17 @@ LoadEnemyMon:
 	bit IN_BATTLE_TOWER_BATTLE_F, a
 	jmp nz, InitEnemyMon
 
+; or an Elite Four seat battle, whose party stats already include the seat's EVs. Like any other
+; trainer's, its Pokemon count as seen.
+	ld a, [wEliteFourSeatBattle]
+	and a
+	jr z, .not_seat_battle
+	call InitEnemyMon
+	ld a, [wEnemyMonSpecies]
+	jmp SetSeenMon
+
+.not_seat_battle
+
 ; Make sure everything knows what species we're working with
 	ld a, [wTempEnemyMonSpecies]
 	ld [wEnemyMonSpecies], a
@@ -7322,47 +7340,7 @@ GiveExperiencePoints:
 	jr z, .no_pokerus_boost
 	add a
 .no_pokerus_boost
-; Make sure total EVs never surpass 510
-	push bc
-	push hl
-	ld d, a
-	ld a, c
-.find_correct_ev_address
-	; If address of first EV is changed, find the correct one.
-	cp NUM_STATS
-	jr z, .found_address
-	dec hl
-	inc a
-	jr .find_correct_ev_address
-.found_address
-	ld e, NUM_STATS
-	ld bc, 0
-.count_evs
-	ld a, [hli]
-	add c
-	ld c, a
-	adc b
-	sub c
-	ld b, a
-	dec e
-	jr nz, .count_evs
-	ld a, d
-	add c
-	ld c, a
-	adc b
-	sub c
-	ld b, a
-	ld e, d
-.decrease_evs_gained
-	call IsEvsGreaterThan510
-	jr nc, .check_ev_overflow
-	dec e
-	dec bc
-	jr .decrease_evs_gained
-.check_ev_overflow
-	pop hl
-	pop bc
-	ld a, e
+; No total cap: every stat can reach MAX_EV, like Gen 2 stat experience
 	add [hl]
 	jr c, .ev_overflow
 	cp MAX_EV + 1
@@ -7700,15 +7678,6 @@ GiveExperiencePoints:
 	call Divide
 	ldh a, [hQuotient + 3]
 	ld [hl], a
-	ret
-
-IsEvsGreaterThan510:
-; Total EVs in bc. Set Carry flag if bc > 510.
-	ld a, HIGH(MAX_TOTAL_EV)
-	cp b
-	ret nz
-	ld a, LOW(MAX_TOTAL_EV)
-	cp c
 	ret
 
 BoostExp:
@@ -8544,6 +8513,7 @@ CleanUpBattleRAM:
 	ld [wAttackMissed], a
 	ld [wTempWildMonSpecies], a
 	ld [wOtherTrainerClass], a
+	ld [wEliteFourSeatBattle], a
 	ld [wFailedToFlee], a
 	ld [wNumFleeAttempts], a
 	ld [wForcedSwitch], a

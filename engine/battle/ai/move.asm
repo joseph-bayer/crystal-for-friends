@@ -71,7 +71,7 @@ AIChooseMove:
 	bit IN_BATTLE_TOWER_BATTLE_F, a
 	jr nz, .battle_tower_skip
 
-	ld a, [wTrainerClass]
+	call GetTrainerAttributeClass ; an Elite Four seat's, in a seat battle
 	dec a
 	ld bc, NUM_TRAINER_ATTRIBUTES
 	rst AddNTimes

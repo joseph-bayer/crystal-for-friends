@@ -547,7 +547,7 @@ TilesetIslandsAttr::
 INCBIN "data/tilesets/islands_attributes.bin.lz"
 
 ; The Hidden Power Shaman's house. A copy of the traditional house to begin with, plus her hearth,
-; its fire frames and the glowing floor around it (plans/shaman_house_bonfire_spec.md).
+; its fire frames and the glowing floor around it.
 TilesetShamanHousevTiles2GFX::
 INCBIN "gfx/tilesets/shaman_house.2bpp.vtiles2.lz"
 

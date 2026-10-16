@@ -70,5 +70,9 @@ TrainerPicPointers::
 	dba OfficerPic
 	dba GruntfPic
 	dba MysticalmanPic
+	dba LoreleiPic
+	dba AgathaPic
+	dba GiovanniPic
+	dba CooltrainermPic ; TORU: Cooltrainer M's
 	dba KrisTrainerPic
 	assert_table_length NUM_TRAINER_CLASSES

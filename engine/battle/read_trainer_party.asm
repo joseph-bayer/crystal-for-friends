@@ -66,6 +66,7 @@ ReadTrainerParty:
 	ld d, h
 	ld e, l
 	call ReadTrainerPartyPieces
+	farcall EliteFourSeatFinishParty
 
 .done
 	jmp ComputeTrainerReward
@@ -95,6 +96,9 @@ ReadTrainerPartyPieces:
 
 	; Store level in wCurPartyLevel
 	ld [wCurPartyLevel], a
+	; An Elite Four seat sets its own levels and team size
+	farcall EliteFourSeatMonLevel
+	ret c
 
 	; hl = pointer to species low byte
 	call GetNextTrainerDataByte

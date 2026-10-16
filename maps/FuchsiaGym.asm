@@ -55,6 +55,8 @@ FuchsiaGymJanineScript:
 .AfterTM:
 	writetext JanineText_ApplyMyself
 	waitbutton
+	writetext JanineEliteFourInviteText ; the Open League
+	waitbutton
 	closetext
 	end
 
@@ -389,6 +391,22 @@ FuchsiaGymVenomothScript:
 
 FuchsiaGymVenomothText:
 	text "VENOMOTH: Kwee!"
+	done
+
+JanineEliteFourInviteText:
+	text "Take the ELITE"
+	line "FOUR challenge?"
+
+	para "I may not be as"
+	line "strong as my"
+	cont "father, but I can"
+	cont "still put up a"
+	cont "good fight."
+
+	para "This will be a"
+	line "great way to"
+	cont "improve my"
+	cont "battling skills!"
 	done
 
 FuchsiaGym_MapEvents:

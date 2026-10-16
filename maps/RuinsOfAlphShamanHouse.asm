@@ -22,7 +22,7 @@ RuinsOfAlphShamanHouseShamanCallback:
 	endcallback
 
 HiddenPowerShamanScript:
-; The Hidden Power Shaman (plans/hidden_power_spec.md). The first talk brings out the player's power
+; The Hidden Power Shaman. The first talk brings out the player's power
 ; to see Hidden Power (the stats screen's 4th page), explains it, gives a GLYPH SHARD and offers to
 ; teach Hidden Power; every talk after that offers to teach it or explain it again. A shard a full
 ; bag couldn't take is handed over at the start of the next talk.
@@ -192,7 +192,7 @@ RuinsOfAlphShamanHouseXatu:
 	jumptext RuinsOfAlphShamanHouseXatuText
 
 RuinsOfAlphShamanHouseXatuText:
-	text "..."
+	text "…"
 	done
 
 RuinsOfAlphShamanHouse_MapEvents:

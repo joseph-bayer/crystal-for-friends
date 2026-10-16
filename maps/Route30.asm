@@ -122,6 +122,7 @@ TrainerYoungsterJoey:
 	loadtrainer YOUNGSTER, JOEY5
 	startbattle
 	reloadmapafterbattle
+	setevent EVENT_BEAT_YOUNGSTER_JOEY5 ; unlocks him for the Open League's lineup
 	clearflag ENGINE_JOEY_READY_FOR_REMATCH
 	checkevent EVENT_JOEY_HP_UP
 	iftrue .GiveHPUp

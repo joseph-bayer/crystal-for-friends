@@ -45,6 +45,8 @@ CeladonGymErikaScript:
 .GotGigaDrain:
 	writetext ErikaAfterBattleText
 	waitbutton
+	writetext ErikaEliteFourInviteText ; the Open League
+	waitbutton
 	closetext
 	end
 
@@ -277,6 +279,17 @@ CeladonGymVictreebelScript:
 CeladonGymVictreebelText:
 	text "VICTREEBEL:"
 	line "Treee!"
+	done
+
+ErikaEliteFourInviteText:
+	text "…Oh? I didn't"
+	line "realize you were"
+	cont "still here."
+
+	para "The ELITE FOUR"
+	line "challenge? That"
+	cont "sounds lovely. You"
+	cont "can count me in."
 	done
 
 CeladonGym_MapEvents:

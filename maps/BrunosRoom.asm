@@ -9,6 +9,7 @@ BrunosRoom_MapScripts:
 
 	def_callbacks
 	callback MAPCALLBACK_TILES, BrunosRoomDoorsCallback
+	callback MAPCALLBACK_CMDQUEUE, BrunosRoomSeatCallback
 
 BrunosRoomLockDoorScene:
 	sdefer BrunosRoomDoorLocksBehindYouScript
@@ -16,6 +17,12 @@ BrunosRoomLockDoorScene:
 
 BrunosRoomNoopScene:
 	end
+
+BrunosRoomSeatCallback:
+; During the Open League, whoever sits here, in their home room
+	setval E4_SEAT_3
+	callasm ApplyEliteFourRoom
+	endcallback
 
 BrunosRoomDoorsCallback:
 	checkevent EVENT_BRUNOS_ROOM_ENTRANCE_CLOSED
@@ -46,6 +53,8 @@ BrunoScript_Battle:
 	opentext
 	checkevent EVENT_BEAT_ELITE_4_BRUNO
 	iftrue BrunoScript_AfterBattle
+	checkevent EVENT_OPEN_LEAGUE_STARTED
+	iftrue .OpenLeague
 	writetext BrunoScript_BrunoBeforeText
 	waitbutton
 	closetext
@@ -58,6 +67,7 @@ BrunoScript_Battle:
 	writetext BrunoScript_BrunoDefeatText
 	waitbutton
 	closetext
+.OpenDoor:
 	playsound SFX_ENTER_DOOR
 	changeblock 4, 2, $16 ; open door
 	refreshmap
@@ -66,11 +76,21 @@ BrunoScript_Battle:
 	waitsfx
 	end
 
+.OpenLeague:
+	farscall EliteFourSeatBattleScript
+	setevent EVENT_BEAT_ELITE_4_BRUNO
+	sjump .OpenDoor
+
 BrunoScript_AfterBattle:
+	checkevent EVENT_OPEN_LEAGUE_STARTED
+	iftrue .OpenLeagueAfter
 	writetext BrunoScript_BrunoDefeatText
 	waitbutton
 	closetext
 	end
+
+.OpenLeagueAfter:
+	farsjump EliteFourAfterBattleScript
 
 BrunosRoom_EnterMovement:
 	step UP
@@ -80,7 +100,7 @@ BrunosRoom_EnterMovement:
 	step UP
 	step_end
 
-BrunoScript_BrunoBeforeText:
+BrunoScript_BrunoBeforeText::
 	text "I am BRUNO of the"
 	line "ELITE FOUR."
 
@@ -110,12 +130,12 @@ BrunoScript_BrunoBeforeText:
 	para "Hoo hah!"
 	done
 
-BrunoScript_BrunoBeatenText:
+BrunoScript_BrunoBeatenText::
 	text "Why? How could we"
 	line "lose?"
 	done
 
-BrunoScript_BrunoDefeatText:
+BrunoScript_BrunoDefeatText::
 	text "Having lost, I"
 	line "have no right to"
 	cont "say anything…"
@@ -125,12 +145,17 @@ BrunoScript_BrunoDefeatText:
 	done
 
 BrunosRoomMachampScript:
+	checkevent EVENT_OPEN_LEAGUE_STARTED
+	iftrue .OpenLeague
 	opentext
 	writetext BrunosRoomMachampText
 	cry MACHAMP
 	waitbutton
 	closetext
 	end
+
+.OpenLeague:
+	farsjump EliteFourPartnerScript
 
 BrunosRoomMachampText:
 	text "MACHAMP: Champ!"

@@ -496,6 +496,11 @@ ElmGiveTicketScript:
 	promptbutton
 	verbosegiveitem S_S_TICKET
 	setevent EVENT_GOT_SS_TICKET_FROM_ELM
+	; Only one special call can wait at a time, so Lance's Open League call follows the ticket's
+	checkevent EVENT_LANCE_CALLED_ABOUT_OPEN_LEAGUE
+	iftrue .LanceCalled
+	specialphonecall SPECIALCALL_LANCE_OPEN_LEAGUE
+.LanceCalled:
 	writetext ElmGiveTicketText2
 	waitbutton
 	closetext

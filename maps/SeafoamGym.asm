@@ -35,11 +35,15 @@ SeafoamGymBlaineScript:
 	setflag ENGINE_VOLCANOBADGE
 	writetext BlaineAfterBattleText
 	waitbutton
+	writetext BlaineEliteFourInviteText ; the Open League
+	waitbutton
 	closetext
 	end
 
 .FightDone:
 	writetext BlaineFightDoneText
+	waitbutton
+	writetext BlaineEliteFourInviteText ; the Open League
 	waitbutton
 	closetext
 	end
@@ -166,6 +170,19 @@ SeafoamGymArcanineScript:
 
 SeafoamGymArcanineText:
 	text "ARCANINE: Boof!"
+	done
+
+BlaineEliteFourInviteText:
+	text "Challenge the"
+	line "ELITE FOUR?"
+
+	para "With the winnings,"
+	line "I could buy a new"
+	cont "home for me and my"
+	cont "#MON…" 
+	
+	para "Alright."
+	line "I'll be there!"
 	done
 
 SeafoamGym_MapEvents:

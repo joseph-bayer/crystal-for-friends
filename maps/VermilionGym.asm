@@ -34,11 +34,15 @@ VermilionGymSurgeScript:
 	setflag ENGINE_THUNDERBADGE
 	writetext LtSurgeThunderBadgeText
 	waitbutton
+	writetext LtSurgeEliteFourInviteText ; the Open League
+	waitbutton
 	closetext
 	end
 
 .FightDone:
 	writetext LtSurgeFightDoneText
+	waitbutton
+	writetext LtSurgeEliteFourInviteText ; the Open League
 	waitbutton
 	closetext
 	end
@@ -269,6 +273,18 @@ VermilionGymRaichuScript:
 
 VermilionGymRaichuText:
 	text "RAICHU: Rai!"
+	done
+
+LtSurgeEliteFourInviteText:
+	text "What's that, kid?"
+	line "The ELITE FOUR"
+	cont "challenge? Not a"
+	cont "bad idea."
+
+	para "Next time we"
+	line "battle, I'll show"
+	cont "you why I'm"
+	cont "number one!"
 	done
 
 VermilionGym_MapEvents:

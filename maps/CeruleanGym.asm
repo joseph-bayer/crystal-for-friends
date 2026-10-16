@@ -81,6 +81,8 @@ CeruleanGymMistyScript:
 .FightDone:
 	writetext MistyFightDoneText
 	waitbutton
+	writetext MistyEliteFourInviteText ; the Open League
+	waitbutton
 	closetext
 	end
 
@@ -371,6 +373,26 @@ CeruleanGymStarmieScript:
 
 CeruleanGymStarmieText:
 	text "STARMIE: Hyah!"
+	done
+
+MistyEliteFourInviteText:
+	text "That's it! I'm"
+	line "tired of being"
+	cont "underestimated."
+
+	para "I'm going to train"
+	line "and take on the"
+	cont "ELITE FOUR to"
+	cont "become CHAMPION!"
+
+	para "Wait, that's what"
+	line "you came here to"
+	cont "ask me about?"
+
+	para "Well, good then!"
+	line "I'll see you there,"
+	cont "and I won't be"
+	cont "holding back!"
 	done
 
 CeruleanGym_MapEvents:

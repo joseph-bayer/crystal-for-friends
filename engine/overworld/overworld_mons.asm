@@ -27,6 +27,9 @@ GetOverworldMonSlot::
 	ret
 
 .static_table
+; During the Open League, an Elite Four room's partner is the seat holder's
+	farcall EliteFourRoomPartner
+	ret c
 	ld hl, OverworldMonObjects
 
 .map_loop

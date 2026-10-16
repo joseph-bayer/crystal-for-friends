@@ -162,7 +162,7 @@ if DEF(_DEBUG)
 	givepokemove HEADBUTT,   wPartyMon3, 2
 	givepokemove WATERFALL,  wPartyMon3, 3
 
-	; DEBUG: RB form breeding (plans/rb_form_breeding.md) -- a beta Kingdra and a Ditto, in party
+	; DEBUG: RB form breeding -- a beta Kingdra and a Ditto, in party
 	; slots 4 and 5. Their eggs should always hatch an RB Horsea.
 	givepoke KINGDRA, 50, NO_ITEM, KINGDRA_BETA_FORM
 	givepoke DITTO, 50
@@ -604,12 +604,17 @@ PlayersHouseDebugLabScript:
 	ifequal 4, PlayersHouseDebugHPToolsScript
 	ifequal 5, PlayersHouseDebugHPBattlesScript
 	ifequal 6, .AnimViewer
+	ifequal 7, .EliteFourLineup
 	closetext
 	end
 
+.EliteFourLineup:
+; The Open League's lineup. In engine/debug/elite_four.asm, for room in this bank.
+	farsjump DebugEliteFourLineupScript
+
 .AnimViewer:
-; Every move and special animation, from either side (plans/move_animations_port_spec.md). In
-; engine/debug/anim_viewer.asm, for room in this bank.
+; Every move and special animation, from either side. In engine/debug/anim_viewer.asm, for room
+; in this bank.
 	farsjump DebugAnimViewerScript
 
 .LearnersParty:
@@ -687,23 +692,24 @@ PlayersHouseDebugLabScript:
 
 .MenuHeader:
 	db MENU_BACKUP_TILES ; flags
-	menu_coords 0, 0, 16, 15 ; wide enough for SKIP THE THEFT
+	menu_coords 0, 0, 16, SCREEN_HEIGHT - 1 ; wide enough for SKIP THE THEFT; eight items
 	dw .MenuData
 	db 1 ; default option
 
 .MenuData:
 	db STATICMENU_CURSOR ; flags
-	db 7 ; items
+	db 8 ; items
 	db "REPLAY LAB@"
 	db "SKIP THE THEFT@"
 	db "LEARNERS PARTY@"
 	db "HP TOOLS@"
 	db "HP BATTLES@"
 	db "ANIM VIEWER@"
+	db "E4 LINEUP@"
 	db "CANCEL@"
 
 PlayersHouseDebugHPToolsScript:
-; Tools for testing Hidden Power (plans/hidden_power_spec.md): the lead's Hidden Power level, the
+; Tools for testing Hidden Power: the lead's Hidden Power level, the
 ; stats page, one 256-step cycle's rolls, a GLYPH SHARD, and a pair whose higher stat is the other
 ; side from their Hidden Power type.
 	writetext PlayersHouseDebugHiddenPowerText

@@ -9,6 +9,7 @@ KogasRoom_MapScripts:
 
 	def_callbacks
 	callback MAPCALLBACK_TILES, KogasRoomDoorsCallback
+	callback MAPCALLBACK_CMDQUEUE, KogasRoomSeatCallback
 
 KogasRoomLockDoorScene:
 	sdefer KogasRoomDoorLocksBehindYouScript
@@ -16,6 +17,12 @@ KogasRoomLockDoorScene:
 
 KogasRoomNoopScene:
 	end
+
+KogasRoomSeatCallback:
+; During the Open League, whoever sits here, in their home room
+	setval E4_SEAT_2
+	callasm ApplyEliteFourRoom
+	endcallback
 
 KogasRoomDoorsCallback:
 	checkevent EVENT_KOGAS_ROOM_ENTRANCE_CLOSED
@@ -46,6 +53,8 @@ KogaScript_Battle:
 	opentext
 	checkevent EVENT_BEAT_ELITE_4_KOGA
 	iftrue KogaScript_AfterBattle
+	checkevent EVENT_OPEN_LEAGUE_STARTED
+	iftrue .OpenLeague
 	writetext KogaScript_KogaBeforeText
 	waitbutton
 	closetext
@@ -58,6 +67,7 @@ KogaScript_Battle:
 	writetext KogaScript_KogaDefeatText
 	waitbutton
 	closetext
+.OpenDoor:
 	playsound SFX_ENTER_DOOR
 	changeblock 4, 2, $16 ; open door
 	refreshmap
@@ -66,11 +76,21 @@ KogaScript_Battle:
 	waitsfx
 	end
 
+.OpenLeague:
+	farscall EliteFourSeatBattleScript
+	setevent EVENT_BEAT_ELITE_4_KOGA
+	sjump .OpenDoor
+
 KogaScript_AfterBattle:
+	checkevent EVENT_OPEN_LEAGUE_STARTED
+	iftrue .OpenLeagueAfter
 	writetext KogaScript_KogaDefeatText
 	waitbutton
 	closetext
 	end
+
+.OpenLeagueAfter:
+	farsjump EliteFourAfterBattleScript
 
 KogasRoom_EnterMovement:
 	step UP
@@ -80,7 +100,7 @@ KogasRoom_EnterMovement:
 	step UP
 	step_end
 
-KogaScript_KogaBeforeText:
+KogaScript_KogaBeforeText::
 	text "Fwahahahaha!"
 
 	para "I am KOGA of the"
@@ -109,13 +129,13 @@ KogaScript_KogaBeforeText:
 	line "see soon enough!"
 	done
 
-KogaScript_KogaBeatenText:
+KogaScript_KogaBeatenText::
 	text "Ah!"
 	line "You have proven"
 	cont "your worth!"
 	done
 
-KogaScript_KogaDefeatText:
+KogaScript_KogaDefeatText::
 	text "I subjected you to"
 	line "everything I could"
 	cont "muster."
@@ -130,12 +150,17 @@ KogaScript_KogaDefeatText:
 	done
 
 KogasRoomCrobatScript:
+	checkevent EVENT_OPEN_LEAGUE_STARTED
+	iftrue .OpenLeague
 	opentext
 	writetext KogasRoomCrobatText
 	cry CROBAT
 	waitbutton
 	closetext
 	end
+
+.OpenLeague:
+	farsjump EliteFourPartnerScript
 
 KogasRoomCrobatText:
 	text "CROBAT: Hwuh!"
