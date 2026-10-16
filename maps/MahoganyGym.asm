@@ -393,7 +393,7 @@ MahoganyGymPiloswineScript:
 	end
 
 MahoganyGymPiloswineText:
-	text "PILOSWINE: *SNORT*"
+	text "PILOSWINE: SNORT!"
 	done
 
 MahoganyGym_MapEvents:
