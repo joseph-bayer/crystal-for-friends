@@ -30,15 +30,13 @@ PewterGymBrockScript:
 	setflag ENGINE_BOULDERBADGE
 	writetext BrockBoulderBadgeText
 	waitbutton
-	writetext BrockEliteFourInviteText ; the Open League
+	writetext BrockEliteFourInviteText ; the Open League: only right after the battle
 	waitbutton
 	closetext
 	end
 
 .FightDone:
 	writetext BrockFightDoneText
-	waitbutton
-	writetext BrockEliteFourInviteText ; the Open League
 	waitbutton
 	closetext
 	end

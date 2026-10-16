@@ -40,11 +40,20 @@ FuchsiaGymJanineScript:
 	playsound SFX_GET_BADGE
 	waitsfx
 	setflag ENGINE_SOULBADGE
-	sjump .AfterBattle
+	scall .GiveTM
+	writetext JanineEliteFourInviteText ; the Open League: only right after the battle
+	waitbutton
+	closetext
+	end
+
 .FightDone:
 	faceplayer
 	opentext
-.AfterBattle:
+	scall .GiveTM
+	closetext
+	end
+
+.GiveTM:
 	checkevent EVENT_GOT_TM06_TOXIC
 	iftrue .AfterTM
 	writetext JanineText_ToxicSpeech
@@ -55,9 +64,6 @@ FuchsiaGymJanineScript:
 .AfterTM:
 	writetext JanineText_ApplyMyself
 	waitbutton
-	writetext JanineEliteFourInviteText ; the Open League
-	waitbutton
-	closetext
 	end
 
 LassAliceScript:

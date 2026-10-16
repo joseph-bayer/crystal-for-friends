@@ -28,15 +28,13 @@ ViridianGymBlueScript:
 	setflag ENGINE_EARTHBADGE
 	writetext LeaderBlueAfterText
 	waitbutton
-	writetext BlueEliteFourInviteText ; the Open League
+	writetext BlueEliteFourInviteText ; the Open League: only right after the battle
 	waitbutton
 	closetext
 	end
 
 .FightDone:
 	writetext LeaderBlueEpilogueText
-	waitbutton
-	writetext BlueEliteFourInviteText ; the Open League
 	waitbutton
 	closetext
 	end

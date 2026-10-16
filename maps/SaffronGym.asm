@@ -36,15 +36,13 @@ SaffronGymSabrinaScript:
 	setflag ENGINE_MARSHBADGE
 	writetext SabrinaMarshBadgeText
 	waitbutton
-	writetext SabrinaEliteFourInviteText ; the Open League
+	writetext SabrinaEliteFourInviteText ; the Open League: only right after the battle
 	waitbutton
 	closetext
 	end
 
 .FightDone:
 	writetext SabrinaFightDoneText
-	waitbutton
-	writetext SabrinaEliteFourInviteText ; the Open League
 	waitbutton
 	closetext
 	end

@@ -34,7 +34,18 @@ CeladonGymErikaScript:
 	playsound SFX_GET_BADGE
 	waitsfx
 	setflag ENGINE_RAINBOWBADGE
+	scall .GiveTM
+	writetext ErikaEliteFourInviteText ; the Open League: only right after the battle
+	waitbutton
+	closetext
+	end
+
 .FightDone:
+	scall .GiveTM
+	closetext
+	end
+
+.GiveTM:
 	checkevent EVENT_GOT_TM19_GIGA_DRAIN
 	iftrue .GotGigaDrain
 	writetext ErikaExplainTMText
@@ -45,9 +56,6 @@ CeladonGymErikaScript:
 .GotGigaDrain:
 	writetext ErikaAfterBattleText
 	waitbutton
-	writetext ErikaEliteFourInviteText ; the Open League
-	waitbutton
-	closetext
 	end
 
 TrainerLassMichelle:

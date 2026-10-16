@@ -507,6 +507,7 @@ RingTwice_StartCall:
 	db PHONE_OAK ; the Bike Shop
 	db PHONE_BILL
 	db PHONE_ELM
+	db PHONE_LANCE ; the Open League call
 	db 0 ; end
 
 .Ring:

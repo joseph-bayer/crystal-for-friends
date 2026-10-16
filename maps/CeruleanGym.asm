@@ -78,10 +78,15 @@ CeruleanGymMistyScript:
 	playsound SFX_GET_BADGE
 	waitsfx
 	setflag ENGINE_CASCADEBADGE
-.FightDone:
 	writetext MistyFightDoneText
 	waitbutton
-	writetext MistyEliteFourInviteText ; the Open League
+	writetext MistyEliteFourInviteText ; the Open League: only right after the battle
+	waitbutton
+	closetext
+	end
+
+.FightDone:
+	writetext MistyFightDoneText
 	waitbutton
 	closetext
 	end

@@ -35,15 +35,13 @@ SeafoamGymBlaineScript:
 	setflag ENGINE_VOLCANOBADGE
 	writetext BlaineAfterBattleText
 	waitbutton
-	writetext BlaineEliteFourInviteText ; the Open League
+	writetext BlaineEliteFourInviteText ; the Open League: only right after the battle
 	waitbutton
 	closetext
 	end
 
 .FightDone:
 	writetext BlaineFightDoneText
-	waitbutton
-	writetext BlaineEliteFourInviteText ; the Open League
 	waitbutton
 	closetext
 	end

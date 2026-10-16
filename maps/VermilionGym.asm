@@ -34,15 +34,13 @@ VermilionGymSurgeScript:
 	setflag ENGINE_THUNDERBADGE
 	writetext LtSurgeThunderBadgeText
 	waitbutton
-	writetext LtSurgeEliteFourInviteText ; the Open League
+	writetext LtSurgeEliteFourInviteText ; the Open League: only right after the battle
 	waitbutton
 	closetext
 	end
 
 .FightDone:
 	writetext LtSurgeFightDoneText
-	waitbutton
-	writetext LtSurgeEliteFourInviteText ; the Open League
 	waitbutton
 	closetext
 	end
