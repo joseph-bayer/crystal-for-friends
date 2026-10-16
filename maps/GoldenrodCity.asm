@@ -422,7 +422,8 @@ GoldenrodCityRocket6Text:
 
 GoldenrodCityRocket7Text:
 	text "We're back and"
-	line "stronger than ever!"
+	line "stronger than"
+	cont "ever!"
 
 	para "This time we won't"
 	line "let some kid ruin"
