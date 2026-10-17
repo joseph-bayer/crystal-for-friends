@@ -128,6 +128,7 @@ CanObjectLeaveTile:
 	push af
 	ld hl, OBJECT_WALKING
 	add hl, bc
+	ld a, [hl] ; the direction; without this the wall mask was used, trapping objects on wall-edge tiles
 	maskbits NUM_DIRECTIONS
 	ld e, a
 	ld d, 0
