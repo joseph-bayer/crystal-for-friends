@@ -96,8 +96,6 @@ Kurt1:
 	iffalse .NoRoomForBall
 	setevent EVENT_KURT_GAVE_YOU_LURE_BALL
 .GotLureBall:
-	checkevent EVENT_TEMPORARY_UNTIL_MAP_RELOAD_1
-	iftrue .WaitForApricorns
 	checkevent EVENT_GAVE_KURT_RED_APRICORN
 	iftrue .GiveLevelBall
 	checkevent EVENT_GAVE_KURT_BLU_APRICORN
@@ -190,13 +188,17 @@ Kurt1:
 	setevent EVENT_GAVE_KURT_PNK_APRICORN
 ; fallthrough
 .GaveKurtApricorns:
-	setevent EVENT_TEMPORARY_UNTIL_MAP_RELOAD_1
-	setflag ENGINE_KURT_MAKING_BALLS
-.WaitForApricorns:
-	writetext KurtsHouseKurtItWillTakeADayText
+	writetext KurtsHouseKurtGetStartedText
 	waitbutton
 	closetext
-	end
+	special FadeOutToBlack
+	special ReloadSpritesNoPalettes
+	playsound SFX_WARP_TO
+	waitsfx
+	pause 35
+	special FadeInFromBlack
+	opentext
+	sjump .GotLureBall
 
 .Cancel:
 	writetext KurtsHouseKurtThatsALetdownText
@@ -472,6 +474,11 @@ KurtsHouseKurtGoAroundPlayerThenExitHouseMovement:
 	big_step DOWN
 	step_end
 
+KurtsHouseKurtGetStartedText:
+	text "KURT: I'll get"
+	line "started right now!"
+	done
+
 KurtsHouseFollowerMove:
 	step DOWN
 	step LEFT
@@ -556,14 +563,6 @@ KurtsHouseKurtAskYouHaveAnApricornText:
 
 	para "Fine! I'll turn it"
 	line "into a BALL."
-	done
-
-KurtsHouseKurtItWillTakeADayText:
-	text "KURT: It'll take a"
-	line "day to make you a"
-
-	para "BALL. Come back"
-	line "for it later."
 	done
 
 KurtsHouseKurtThatsALetdownText:

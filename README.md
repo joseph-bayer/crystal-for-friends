@@ -224,14 +224,12 @@ TODO: mention a few. Put the rest on the dex site if people want spoilers
 - **Flee Mechanic Upgrades**
   - Only Roaming Legendaries flee wild battles
 
-- **Kurt Upgrades**
-  - TODO: Kurt makes Apricorn balls instantly + can make multiple at once
-
 - **Headbutt Tree Encounters Simplified**
   - Headbutting a headbutt tree always results in a Pokemon appearing
   - Each area type has one encounter table instead of a common and uncommon table
 
 - **Misc.**
+  - Kurt makes Apricorn balls instantly, and can make several at once
   - Turn around after healing in the Pokecenter so you don't accidentally heal again
   - Minor update to Goldenrod layout so it's easier to get to the underground and the bike shop
   - Bug Catching Contest rebalanced + includes overworld encounters
@@ -274,6 +272,7 @@ TODO: mention a few. Put the rest on the dex site if people want spoilers
   - The unlimited phone contact list, evening rematch times and the one-byte special phone call fix are ported from [Polished Crystal](https://github.com/Rangi42/polishedcrystal)
   - Answering or declining phone calls is ported from [Sour Crystal](https://github.com/SoupPotato/sourcrystal)
   - Trainers offering their number right after battle follows the [Improve the trainer rematch system](https://github.com/pret/pokecrystal/wiki/Improve-the-trainer-rematch-system) tutorial by Grate Oracle Lewot from the pret/pokecrystal wiki
+  - Kurt making Apricorn balls instantly follows the [Kurt Makes Pokeballs Instantly](https://github.com/pret/pokecrystal/wiki/Kurt-Makes-Pokeballs-Instantly) tutorial by [Nayru62](https://github.com/Nayru62) from the pret/pokecrystal wiki (adapted from [Polished Crystal](https://github.com/Rangi42/polishedcrystal)), with the fade back in from [Sour Crystal](https://github.com/SoupPotato/sourcrystal)
 
 ## **Art Credits**
   - SCMidna for Surfing Pikachu front sprites
