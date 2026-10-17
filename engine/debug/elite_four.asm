@@ -74,6 +74,7 @@ DebugEliteFourLineupScript::
 	ifequal 4, .WarpBruno
 	ifequal 5, .WarpKaren
 	ifequal 6, .WarpLance
+	ifequal 7, .WarpRed
 	sjump DebugE4Done
 
 .WarpIndigo:
@@ -116,6 +117,13 @@ DebugEliteFourLineupScript::
 	setevent EVENT_OPEN_LEAGUE_STARTED
 	farscall IndigoPlateauResetEliteFourRooms
 	warp LANCES_ROOM, 5, 23
+	end
+
+.WarpRed:
+; Silver Cave's top room, with RED there to battle
+	closetext
+	clearevent EVENT_RED_IN_MT_SILVER
+	warp SILVER_CAVE_ROOM_3, 9, 33
 	end
 
 .Story:
@@ -228,19 +236,20 @@ DebugEliteFourLineupScript::
 
 .WarpMenuHeader:
 	db MENU_BACKUP_TILES ; flags
-	menu_coords 0, 0, 13, 15 ; seven items
+	menu_coords 0, 0, 13, SCREEN_HEIGHT - 1 ; eight items
 	dw .WarpMenuData
 	db 1 ; default option
 
 .WarpMenuData:
 	db STATICMENU_CURSOR ; flags
-	db 7 ; items
+	db 8 ; items
 	db "INDIGO PC@"
 	db "WILL'S ROOM@"
 	db "KOGA'S ROOM@"
 	db "BRUNO'S ROOM@"
 	db "KAREN'S ROOM@"
 	db "LANCE'S ROOM@"
+	db "RED'S ROOM@"
 	db "CANCEL@"
 
 .StoryMenuHeader:
