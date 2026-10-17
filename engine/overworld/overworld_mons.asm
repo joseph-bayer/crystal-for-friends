@@ -260,10 +260,16 @@ HidePlayerForOverworldMonBattle:
 
 ShowPlayerAfterOverworldMonBattle:
 ; The map reload that follows respawns both of them, but clear the flags rather than trusting it.
+; The follower goes back to its own state, not straight to visible: one recalled into its ball
+; on water (FOLLOWER_INVISIBLE) has to stay hidden, or it stands on the water after the battle.
 	ld hl, wPlayerStruct + OBJECT_FLAGS1
 	res INVISIBLE_F, [hl]
 	ld hl, wObject1Struct + OBJECT_FLAGS1
 	res INVISIBLE_F, [hl]
+	ld a, [wFollowerFlags]
+	and FOLLOWER_INVISIBLE
+	ret z
+	set INVISIBLE_F, [hl]
 	ret
 
 EndOverworldMonBattle::

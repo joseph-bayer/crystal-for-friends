@@ -1396,6 +1396,9 @@ RareCandyEffect:
 	hlcoord 11, 1
 	ld bc, 4
 	predef PrintTempMonStats
+	; Textbox set the box's palette in wAttrmap only; send it, or a tile the box covers keeps its
+	; party menu palette (the follower's red star turns that stat's text red)
+	call WaitBGMap2
 
 	call WaitPressAorB_BlinkCursor
 

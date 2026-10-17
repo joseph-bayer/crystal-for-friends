@@ -528,6 +528,18 @@ TryObjectEvent:
 	ret
 
 .IsObject:
+; A hidden follower -- recalled into its ball on water, or hidden for a warp -- is still on the
+; map, so IsNPCAtCoord finds it, but there is nothing there to talk to.
+	ldh a, [hObjectStructIndex]
+	cp FOLLOWER ; object struct 1 is the follower's
+	jr nz, .talk
+	ld a, [wFollowerFlags]
+	and FOLLOWER_INVISIBLE | 1 << FOLLOWER_IN_POKEBALL_F
+	jr z, .talk
+	xor a
+	ret
+
+.talk
 	call PlayTalkObject
 	ldh a, [hObjectStructIndex]
 	call GetObjectStruct
@@ -1035,9 +1047,12 @@ WarpToNewMapScript:
 
 FallIntoMapScript:
 	newloadmap MAPSETUP_FALL
+	; Recall the follower before the fall, not after: while it is only hidden for the warp,
+	; TryRestoreHiddenFollower sees its tile free (the player is still in the air) and shows it
+	; there, so the player lands on it.
+	callasm FollowerInBall
 	playsound SFX_KINESIS
 	applymovement PLAYER, .SkyfallMovement
-	callasm FollowerInBall
 	playsound SFX_STRENGTH
 	scall LandAfterPitfallScript
 	end
@@ -1131,6 +1146,7 @@ FollowerInBall:
 	ld hl, wFollowerFlags
 	set FOLLOWER_INVISIBLE_F, [hl]
 	set FOLLOWER_IN_POKEBALL_F, [hl]
+	set FOLLOWER_INVISIBLE_ONE_STEP_F, [hl] ; so the player's next step brings it back out
 	pop bc
 	ret
 

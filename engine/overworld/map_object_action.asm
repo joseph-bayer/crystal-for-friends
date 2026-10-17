@@ -346,6 +346,17 @@ SetFacingFollowerIdle:
 	add hl, bc
 	ld [hl], 0 ; a step may have left the hop behind
 
+; While text is up the font sits in VRAM where the second frame lives (OpenText and reanchormap
+; load it over the walking frames, and CloseText reloads the sprites), so hold the standing frame
+; until then. Otherwise every other frame draws font tiles: an Elite Four door closing behind a
+; follower that applymovement left unfrozen.
+	ld a, [wStateFlags]
+	bit TEXT_STATE_F, a
+	jr z, .animate
+	xor a ; the standing frame
+	jr _SetFacingFollowerIdleFrame
+
+.animate
 	ld hl, OBJECT_STEP_FRAME
 	add hl, bc
 	inc [hl]
