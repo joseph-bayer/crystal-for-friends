@@ -339,7 +339,7 @@ PrintParty_OTString:
 	db "OT/@"
 
 PrintParty_MoveString:
-	db "MOVE@"
+	db "MOVES@"
 
 PrintParty_IDNoString:
 	db "<ID>№.@"

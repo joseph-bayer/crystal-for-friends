@@ -31,6 +31,6 @@ MonMenuOptions:
 .switch: db "SWITCH@"
 .item:   db "ITEM@"
 .cancel: db "CANCEL@"
-.move:   db "MOVE@"
+.move:   db "MOVES@"
 .mail:   db "MAIL@"
 .error:  db "ERROR!@"
