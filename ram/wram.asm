@@ -3006,7 +3006,8 @@ wMysteryIslandLast:: db
 ; (engine/events/elite_four_lineup.asm). Also carved out of the padding.
 wEliteFourLineup:: ds NUM_E4_SEATS
 wEliteFourLastChampion:: db ; an E4_ROSTER_* id, set by the Hall of Fame
-	ds 8 - NUM_E4_SEATS - 1
+wShipwreckCargoSpot:: db ; which of this trip's Shipwreck Beach dig spots (1-10) holds the cargo
+	ds 8 - NUM_E4_SEATS - 2
 wBuenasPassword:: db
 wBlueCardBalance:: db
 wDailyRematchFlags:: ds 4

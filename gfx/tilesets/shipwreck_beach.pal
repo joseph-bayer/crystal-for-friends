@@ -1,0 +1,7 @@
+; PAL_BG_SHIPWRECK: brown (see bg_tiles.pal) with color 2 replaced by the overworld water's color 2,
+; the dark blue outdoor water is drawn with (bg_tiles.pal's "overworld water", not its water row).
+; Loaded into the red slot on Shipwreck Beach only (no red tiles there).
+	RGB 28,31,16, 24,18,07, 13,12,31, 07,07,07 ; morn
+	RGB 27,31,27, 24,18,07, 13,12,31, 07,07,07 ; day
+	RGB 15,14,24, 12,09,15, 04,03,18, 00,00,00 ; nite
+	RGB 31,21,14, 21,13,05, 11,09,23, 06,05,05 ; eve

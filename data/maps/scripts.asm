@@ -488,6 +488,6 @@ INCLUDE "maps/HiddenGrove.asm"
 INCLUDE "maps/ApricornForestOutside.asm"
 INCLUDE "maps/ApricornForest.asm"
 INCLUDE "maps/ApricornForestClearing.asm"
-INCLUDE "maps/MysteryIsland3.asm"
+INCLUDE "maps/ShipwreckBeach.asm"
 
 ENDSECTION

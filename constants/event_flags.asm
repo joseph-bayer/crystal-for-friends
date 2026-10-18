@@ -1521,6 +1521,18 @@
 	const EVENT_INDIGO_PLATEAU_POKECENTER_LANCE ; hides Lance there unless he's waiting to start the Open League
 	const EVENT_BEAT_RANDOM_ELITE_FOUR ; cleared a random lineup once; Oak then opens Mt. Silver
 	const EVENT_BEAT_YOUNGSTER_JOEY5 ; his final rematch team; unlocks him for the Open League
+; Shipwreck Beach (maps/ShipwreckBeach.asm): which dig spots hold something this trip (set when the
+; sailor sets off, cleared once dug). RollShipwreckBeach clears them together, so they stay in order.
+	const EVENT_SHIPWRECK_DIG_SPOT_1
+	const EVENT_SHIPWRECK_DIG_SPOT_2
+	const EVENT_SHIPWRECK_DIG_SPOT_3
+	const EVENT_SHIPWRECK_DIG_SPOT_4
+	const EVENT_SHIPWRECK_DIG_SPOT_5
+	const EVENT_SHIPWRECK_DIG_SPOT_6
+	const EVENT_SHIPWRECK_DIG_SPOT_7
+	const EVENT_SHIPWRECK_DIG_SPOT_8
+	const EVENT_SHIPWRECK_DIG_SPOT_9
+	const EVENT_SHIPWRECK_DIG_SPOT_10
 
 	const_next 2048
 DEF NUM_EVENTS EQU const_value ; 800

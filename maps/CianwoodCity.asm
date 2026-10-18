@@ -449,7 +449,7 @@ else
 	callasm RollMysteryIsland
 endc
 	ifequal 1, .ApricornForest
-	ifequal 2, .Island3
+	ifequal 2, .ShipwreckBeach
 	warpfacing LEFT, HIDDEN_GROVE, 4, 10
 	end
 
@@ -457,8 +457,9 @@ endc
 	warpfacing LEFT, APRICORN_FOREST_OUTSIDE, 14, 9
 	end
 
-.Island3:
-	warpfacing DOWN, MYSTERY_ISLAND_3, 11, 4
+.ShipwreckBeach:
+	callasm RollShipwreckBeach ; this trip's dig spots
+	warpfacing LEFT, SHIPWRECK_BEACH, 14, 17
 	end
 
 if DEF(_DEBUG)
@@ -473,7 +474,7 @@ if DEF(_DEBUG)
 	db 4 ; items
 	db "HIDDEN GROVE@"
 	db "APRICORN FOREST@"
-	db "MYSTERY ISLE 3@"
+	db "SHIPWRECK BEACH@"
 	db "RANDOM@"
 endc
 

@@ -912,7 +912,7 @@ ApricornForest_Blocks:
 ApricornForestClearing_Blocks:
 	INCBIN "maps/ApricornForestClearing.ablk"
 
-MysteryIsland3_Blocks:
-	INCBIN "maps/MysteryIsland3.ablk"
+ShipwreckBeach_Blocks:
+	INCBIN "maps/ShipwreckBeach.ablk"
 
 ENDSECTION

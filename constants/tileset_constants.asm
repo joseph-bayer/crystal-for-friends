@@ -62,3 +62,4 @@ DEF ROOF_LENGTH EQU 9
 ; whose corners border orange ground instead (gfx/tilesets/tree_corner.pal). An attribute byte
 ; selects it as 6.
 DEF PAL_BG_TREE_CORNER EQU PAL_BG_ROOF
+DEF PAL_BG_SHIPWRECK   EQU PAL_BG_RED ; Shipwreck Beach only: brown with the overworld water's dark blue (LoadMapPals)

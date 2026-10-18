@@ -507,7 +507,7 @@ ENDM
 ; can grow without renumbering anything, and so MapGroupRoofs can give them no roof.
 	map_const HIDDEN_GROVE,                                15, 15 ;  1
 	map_const APRICORN_FOREST_OUTSIDE,                     16,  9 ;  2
-	map_const MYSTERY_ISLAND_3,                            10,  9 ;  3
+	map_const SHIPWRECK_BEACH,                             17, 13 ;  3
 	endgroup
 
 DEF NUM_MAP_GROUPS EQU const_value ; 27

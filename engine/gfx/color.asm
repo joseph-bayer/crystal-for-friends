@@ -1360,6 +1360,23 @@ LoadMapPals:
 	ld de, wBGPals1 palette PAL_BG_TREE_CORNER
 	ld bc, 1 palettes
 	ld a, BANK(wBGPals1)
+	call FarCopyWRAM
+
+; Shipwreck Beach has no red tiles, so it gives the red slot to PAL_BG_SHIPWRECK
+	ld a, [wMapGroup]
+	cp GROUP_SHIPWRECK_BEACH
+	ret nz
+	ld a, [wMapNumber]
+	cp MAP_SHIPWRECK_BEACH
+	ret nz
+	ld a, [wTimeOfDayPal]
+	maskbits NUM_DAYTIMES
+	ld hl, ShipwreckBeachPals
+	ld bc, 1 palettes
+	rst AddNTimes
+	ld de, wBGPals1 palette PAL_BG_SHIPWRECK
+	ld bc, 1 palettes
+	ld a, BANK(wBGPals1)
 	jmp FarCopyWRAM
 
 INCLUDE "data/maps/environment_colors.asm"
@@ -1397,6 +1414,12 @@ TreeCornerPals:
 ; PAL_BG_TREE_CORNER, one palette per time of day (see LoadMapPals)
 	table_width 1 palettes
 INCLUDE "gfx/tilesets/tree_corner.pal"
+	assert_table_length NUM_DAYTIMES
+
+ShipwreckBeachPals:
+; PAL_BG_SHIPWRECK, one palette per time of day (see LoadMapPals)
+	table_width 1 palettes
+INCLUDE "gfx/tilesets/shipwreck_beach.pal"
 	assert_table_length NUM_DAYTIMES
 
 DiplomaPalettes:

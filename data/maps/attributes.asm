@@ -699,4 +699,4 @@ ENDM
 	map_attributes ApricornForestOutside, APRICORN_FOREST_OUTSIDE, $11, 0
 	map_attributes ApricornForest, APRICORN_FOREST, $41, 0
 	map_attributes ApricornForestClearing, APRICORN_FOREST_CLEARING, $41, 0
-	map_attributes MysteryIsland3, MYSTERY_ISLAND_3, $35, 0
+	map_attributes ShipwreckBeach, SHIPWRECK_BEACH, $11, 0

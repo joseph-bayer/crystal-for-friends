@@ -111,7 +111,7 @@ QueueMysteryIslandArrival::
 	farjp LoadMemScript
 
 MysteryIslandArriveScript:
-	turnobject PLAYER, LEFT ; he lands you at (11, 4) and stands at (10, 4)
+	turnobject PLAYER, LEFT ; he lands you on his right, facing him
 	opentext
 	writetext MysteryIslandArriveText
 	waitbutton
@@ -126,3 +126,126 @@ MysteryIslandArriveText:
 	cont "here taking a nap."
 	done
 
+
+; Shipwreck Beach (maps/ShipwreckBeach.asm). Each trip, SHIPWRECK_SPOTS_PER_TRIP of the island's
+; SHIPWRECK_DIG_SPOTS spots hold something, marked with an X: exactly one holds cargo (a held item
+; the game otherwise gives only once), and the rest treasure to sell.
+
+	assert EVENT_SHIPWRECK_DIG_SPOT_10 == EVENT_SHIPWRECK_DIG_SPOT_1 + SHIPWRECK_DIG_SPOTS - 1, 		"the shipwreck dig spot flags must be in order"
+
+RollShipwreckBeach::
+; The boat sails for the shipwreck beach: clear last trip's spots, pick this trip's, all different,
+; and make one of them the cargo spot. The flags and wShipwreckCargoSpot are in the save, so
+; battles, menus and continuing keep them.
+	ld de, EVENT_SHIPWRECK_DIG_SPOT_1
+	ld c, SHIPWRECK_DIG_SPOTS
+.clear
+	push bc
+	push de
+	ld b, RESET_FLAG
+	call EventFlagAction
+	pop de
+	pop bc
+	inc de
+	dec c
+	jr nz, .clear
+
+; The last spot picked is the cargo spot: the picks are random, so it is as good as any of them.
+	ld b, SHIPWRECK_SPOTS_PER_TRIP
+.pick
+	push bc
+	ld a, SHIPWRECK_DIG_SPOTS
+	call RandomRange
+	ld [wShipwreckCargoSpot], a ; 0-based for now
+	ld hl, EVENT_SHIPWRECK_DIG_SPOT_1
+	ld e, a
+	ld d, 0
+	add hl, de
+	ld d, h
+	ld e, l
+	push de
+	ld b, CHECK_FLAG
+	call EventFlagAction
+	pop de
+	ld a, c
+	and a
+	jr nz, .taken ; picked already, so roll again
+	ld b, SET_FLAG
+	call EventFlagAction
+	pop bc
+	dec b
+	jr nz, .pick
+	ld hl, wShipwreckCargoSpot
+	inc [hl] ; 1-based, like the spot numbers
+	ret
+
+.taken
+	pop bc
+	jr .pick
+
+RollShipwreckItem::
+; in: wScriptVar = the spot being dug (1-10)
+; out: wScriptVar = the item it holds, for `giveitem ITEM_FROM_MEM`: cargo on this trip's cargo
+; spot, treasure anywhere else. Rolled each time, so a full bag can turn up something else later.
+	ld a, [wShipwreckCargoSpot]
+	ld b, a
+	ld a, [wScriptVar]
+	cp b
+	jr nz, .treasure
+	ld hl, ShipwreckCargo
+	ld a, (ShipwreckCargo.End - ShipwreckCargo) / 2
+	jr .pick
+
+.treasure
+	ld hl, ShipwreckTreasure
+	ld a, (ShipwreckTreasure.End - ShipwreckTreasure) / 2
+.pick
+	push hl
+	call RandomRange
+	pop hl
+	ld e, a
+	ld d, 0
+	add hl, de
+	add hl, de
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	call GetItemIDFromIndex
+	ld [wScriptVar], a
+	ret
+
+ShipwreckTreasure:
+; Treasure to sell, and the ship's rations. Equal odds.
+	dw PEARL
+	dw BIG_PEARL
+	dw STARDUST
+	dw STAR_PIECE
+	dw NUGGET
+	; Silver Leaf and Gold Leaf are out for now; maybe they become a currency of some kind later.
+	; dw SILVER_LEAF
+	; dw GOLD_LEAF
+	dw BERRY_JUICE
+.End:
+
+ShipwreckCargo:
+; Held items and vitamins the game otherwise gives once or not at all. Nothing from Mystery Gift's
+; rare tier; HP Up and PP Up are from its super rare tier, and are here by the owner's choice.
+; Equal odds.
+	dw LEFTOVERS
+	dw FOCUS_BAND
+	dw BRIGHTPOWDER
+	dw QUICK_CLAW
+	dw AMULET_COIN
+	dw LUCKY_EGG
+	dw CLEANSE_TAG
+	dw MYSTIC_WATER
+	dw NEVERMELTICE
+	dw POLKADOT_BOW
+	dw ZINC
+	dw PROTEIN
+	dw IRON
+	dw CARBOS
+	dw CALCIUM
+	dw HP_UP
+	dw PP_UP
+.End:
