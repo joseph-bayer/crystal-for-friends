@@ -79,6 +79,8 @@ VBlank_Normal::
 	ldh a, [hWX]
 	ldh [rWX], a
 
+	call SilhouetteVBlank
+
 	; There's only time to call one of these in one vblank.
 	; Calls are in order of priority.
 

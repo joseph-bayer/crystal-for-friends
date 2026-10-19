@@ -430,6 +430,26 @@ GetFollowerIconSprite:
 	ld e, a
 	ld d, 0 ; not a day-care mon, so wForm above is used as-is
 	farcall LoadOverworldMonIcon ; de = icon graphics, b = its bank, c = 8 tiles
+	farcall SilSelectFollowerArt
+	ld a, [wSilFollowerArt]
+	and a
+	jr z, ExpandMonIconToSprite
+; Four-color art (engine/overworld/silhouette.asm): expand its silhouette mask exactly like the
+; sprite, so every facing's mask matches, and keep it; then expand the art itself.
+	ld a, [wSilArtBank]
+	ld b, a
+	ld hl, wSilMaskPtr
+	ld a, [hli]
+	ld d, [hl]
+	ld e, a
+	call ExpandMonIconToSprite
+	farcall SilKeepFollowerMask
+	ld a, [wSilArtBank]
+	ld b, a
+	ld hl, wSilArtPtr
+	ld a, [hli]
+	ld d, [hl]
+	ld e, a
 	; fallthrough
 
 ExpandMonIconToSprite::
@@ -627,7 +647,7 @@ _GetSpritePalette::
 	ret z
 	ld bc, wForm
 	farcall GetArrangedMonIconColors ; bc = the light color, de = the dark one
-	jr ClaimOverworldMonPalette
+	jmp ClaimOverworldMonPalette
 
 .GetBeast:
 ; The legendary beasts' sprites are colored from the beast itself, by its stored form, so a shiny
@@ -689,6 +709,20 @@ _GetSpritePalette::
 	ld c, l ; bc = the follower's form byte, its shiny bit included
 	pop af ; a = the follower's species
 	farcall GetArrangedMonIconColors ; bc = the light color, de = the dark one
+	farcall SilSelectFollowerArt
+	ld a, [wSilFollowerArt]
+	and a
+	jr z, .store_follower_colors
+	; four-color art brings its own colors: the first two here, the third read by CopySpritePal
+	ld hl, wSilFollowerPal
+	ld a, [hli]
+	ld c, a
+	ld a, [hli]
+	ld b, a
+	ld a, [hli]
+	ld e, a
+	ld d, [hl]
+.store_follower_colors
 	call StoreFollowerPalette
 	ld c, PAL_OW_FOLLOWER
 	ret
@@ -929,6 +963,7 @@ GetUsedSprites:
 GetUsedSprite::
 	ldh a, [hUsedSpriteIndex]
 	call SafeGetSprite
+	farcall SilRegisterMask ; the sprite is built in wDecompressScratch now
 	ldh a, [hUsedSpriteTile]
 	call .GetTileAddr
 	push hl

@@ -79,6 +79,7 @@ GetMapSceneID::
 	ret
 
 LoadOverworldTilemapAndAttrmapPals::
+	call SilhouetteReset
 	; fallthrough
 LoadOverworldTilemap::
 	farjp _LoadOverworldTilemap
@@ -1216,6 +1217,9 @@ _LoadTilesetGFX4:
 	ldh [rVBK], a
 	pop af
 	ldh [rSVBK], a
+	; vTiles4 holds the silhouette's private tiles, which are gone now
+	ld a, TRUE
+	ld [wSilDirty], a
 	ret
 
 _LoadTilesetGFX2:

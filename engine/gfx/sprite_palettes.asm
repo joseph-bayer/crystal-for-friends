@@ -22,7 +22,7 @@ CopySpritePal::
 	ld hl, wBGPals1
 	ld bc, 1 palettes
 	rst AddNTimes
-	jr .got_pal
+	jmp .got_pal
 
 .not_copy_bg
 	; check darkness
@@ -75,7 +75,13 @@ CopySpritePal::
 
 .follower
 	ld hl, wFollowerPalette
-	jr .mon_colors
+	ld a, [wSilFollowerArt]
+	and a
+	jr z, .mon_colors
+	; four-color art writes its own palette (engine/overworld/silhouette.asm)
+	farcall SilWriteFollowerPalette ; de = the destination
+	pop de
+	jr .apply
 
 .overworld_mon
 ; An overworld Pokemon object. Its colors were arranged into wOverworldMonPals when the sprite's
@@ -275,7 +281,7 @@ SingleObjectPals:
 INCLUDE "gfx/overworld/npc_single_object.pal"
 	assert_table_length NUM_OW_INDIVIDUAL_PALS
 
-DarknessOBPalette:
+DarknessOBPalette::
 	table_width 1 palettes
 INCLUDE "gfx/overworld/npc_sprites_darkness.pal"
 	assert_table_length NUM_OW_TIME_OF_DAY_PALS + NUM_OW_INDIVIDUAL_PALS

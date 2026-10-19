@@ -7,7 +7,7 @@
 	const ROOF_GOLDENROD ; 4
 DEF NUM_ROOFS EQU const_value
 
-MapGroupRoofs:
+MapGroupRoofs::
 ; entries correspond to MAPGROUP_* constants
 ; values are indexes for Roofs (see below)
 	table_width 1
@@ -41,7 +41,7 @@ MapGroupRoofs:
 	db -1             ; 27 (Mystery Islands)
 	assert_table_length NUM_MAP_GROUPS + 1
 
-Roofs:
+Roofs::
 ; entries correspond to ROOF_* constants
 	table_width ROOF_LENGTH * TILE_SIZE
 INCBIN "gfx/tilesets/roofs/new_bark.2bpp"

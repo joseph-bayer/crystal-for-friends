@@ -75,6 +75,7 @@ INCLUDE "constants/battle_tower_constants.asm"
 INCLUDE "constants/mystery_gift_npc_constants.asm"
 INCLUDE "constants/swarm_constants.asm"
 INCLUDE "constants/elite_four_constants.asm"
+INCLUDE "constants/silhouette_constants.asm"
 INCLUDE "constants/16_bit_translation_constants.asm"
 INCLUDE "constants/16_bit_locking_constants.asm" ; MUST come after the translation constants file!
 

@@ -191,9 +191,10 @@ ROMX $3e
 	"bank3E"
 ROMX $3f
 	"bank3F"
+	"Fade System"
 ROMX $40
 	"Dynamic Pals System"
-	"Fade System"
+	"bank2_2"
 ROMX $41
 	"bank41"
 ROMX $42
@@ -208,6 +209,9 @@ ROMX $45
 	"mobile45"
 ROMX $46
 	"mobile46"
+	"Silhouette"
+	align 8
+	"Silhouette Tables"
 ROMX $47
 	"Battle Tower"
 	"Overworld Mons"

@@ -577,6 +577,11 @@ SECTION "mobile46", ROMX
 INCLUDE "mobile/mobile_46.asm"
 
 
+SECTION "Silhouette", ROMX
+
+INCLUDE "engine/overworld/silhouette.asm"
+
+
 SECTION "Battle Tower", ROMX
 
 INCLUDE "engine/events/battle_tower/trainer_text.asm"

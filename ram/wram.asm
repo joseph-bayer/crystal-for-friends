@@ -3482,3 +3482,110 @@ wMapIconTurn:: db ; which turn icons sharing a landmark are on
 wMapIconGroupSize:: db ; scratch for MapIcons_Apply
 wMapIconRank:: db ; scratch for MapIcons_Apply
 wMapIcons:: ds NUM_MAP_ICONS * 3 ; each icon's sprite anim struct (dw) and landmark, in turn order
+
+
+SECTION "Silhouette WRAM0", WRAM0
+
+; Four-color mon icons (engine/overworld/silhouette.asm). Kept in WRAM0 so VBlank, the palette
+; code, the sprite loader and InitSprites can reach them without a bank switch.
+wSilDisable:: db ; nonzero turns the feature off (debug A/B comparisons)
+wSilTestMons:: db ; nonzero: overworld mons get silhouettes from their icons' black pixels (perf test)
+wSilForceArt:: db ; nonzero: every follower uses the first four-color art (spike)
+wSilFollowerArt:: db ; nonzero while the follower uses four-color art
+wSilFollowerPal:: ds 3 * 2 ; its three colors, shiny already applied
+wSilArtBank:: db
+wSilArtPtr:: dw
+wSilMaskPtr:: dw
+wSilPending:: db ; tiles and a VBlank list are ready
+wSilSendTiles:: db ; how many private tiles VBlank sends
+wSilDirty:: db ; redraw everything
+wSilResetReq:: db ; the background map was rewritten: forget every drawn icon
+wSilStructMask:: dw ; bit n: object VRAM slot n has a silhouette
+wSilObjOpen:: db ; SilObjectStart noted an object that SilObjectEnd should close
+
+
+SECTION "Silhouette WRAM0 2", WRAM0
+
+wSilColor3:: db ; scratch for SilWriteFollowerPalette
+wSilTempPal:: ds 3 * 2
+
+
+SECTION "Silhouette WRAM", WRAMX, BANK[5], ALIGN[4]
+
+; GDMA ignores the low four bits of its source, so the staging tiles come first, aligned
+wSilStaging:: ds SIL_BUFFER_TILES * TILE_SIZE ; also holds a new mask on its way to a slot
+wSilSlots:: ds SIL_MAX_SLOTS * SILSLOT_LENGTH
+wSilMasks:: ds SIL_MAX_SLOTS * SIL_MASK_SIZE
+wSilIcons:: ds SIL_MAX_ICONS * SILICON_LENGTH
+wSilSrc:: ds TILE_SIZE
+wSilStructSlot:: ds NUM_OBJECT_STRUCTS
+wSilObjCount:: db
+wSilObjs:: ds SIL_MAX_ICONS * 3 ; object VRAM slot, first OAM byte, past its last
+wSilNewMode:: ds SIL_CELLS
+wSilNewTile:: ds SIL_CELLS
+wSilNewAttr:: ds SIL_CELLS
+wSilTemp:: ds 8
+wSilListPtr:: dw
+wSilTileset:: db
+wSilGroup:: db
+wSilAnchorCol:: db
+wSilAnchorRow:: db
+wSilPendingMask:: db
+wSilRendered:: db
+wSilAnyDrawn:: db
+wSilObjIndex:: db
+wSilObjStruct:: db
+wSilObjStart:: db
+wSilObjEntries:: db
+wSilGroupSlot:: db
+wSilChanged:: db
+wSilCur:: db
+wSilX0:: db
+wSilY0:: db
+wSilMinDX:: db
+wSilMinDY:: db
+wSilBaseX:: db
+wSilBaseY:: db
+wSilBCX:: db
+wSilBCY:: db
+wSilPX:: db
+wSilPY:: db
+wSilAttr:: db
+wSilAnyBehind:: db
+wSilPlotLeft:: db
+wSilMaskBase:: dw
+wSilRecPtr:: dw
+wSilMoved:: db
+wSilOldGone:: db
+wSilScreenCol:: db
+wSilScreenRow:: db
+wSilIconFirst:: db
+wSilCellK:: db
+wSilCellR:: db
+wSilCellC:: db
+wSilCellTile:: db
+wSilCellAttr:: db
+wSilCellMask:: dw
+wSilSrcBank:: db
+wSilSrcPtr:: dw
+wSilRowCounter:: db
+
+
+SECTION "Silhouette Grids", WRAMX, BANK[5]
+
+wSilGridNormal:: ds SIL_GRID_SIZE
+wSilGridBehind:: ds SIL_GRID_SIZE
+
+
+SECTION "Silhouette Composites", WRAMX, BANK[5]
+
+wSilCompNormal:: ds 32
+wSilCompBehind:: ds 32
+wSilRowOfs:: ds 3 * 2
+wSilRPage:: db
+
+
+SECTION "Silhouette VBlank List", WRAMX, BANK[2]
+
+wSilListCount:: db
+wSilList:: ds SIL_LIST_MAX * 4 ; address, tile, attribute

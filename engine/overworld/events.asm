@@ -163,6 +163,9 @@ NextOverworldFrame:
 	ldh [hTileAnimFrame], a
 
 .gfx_done
+	; This frame's OAM and scroll are final, and the next VBlank latches them: draw the
+	; silhouettes under the mon icons to match.
+	farcall SilhouetteUpdate
 	ldh a, [hDelayFrameLY]
 	and a
 	call z, DelayFrame

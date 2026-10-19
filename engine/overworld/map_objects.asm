@@ -3371,6 +3371,7 @@ DEF PRIORITY_NORM EQU $20
 DEF PRIORITY_HIGH EQU $30
 
 InitSprites:
+	call SilObjectsReset
 	call .DeterminePriorities
 	ld c, PRIORITY_HIGH
 	call .InitSpritesByPriority
@@ -3445,8 +3446,10 @@ InitSprites:
 	push hl
 	ld a, d
 	and $f
+	call SilObjectStart ; four-color mon icons note where their OAM goes
 	call .GetObjectStructPointer
 	call .InitSprite
+	call SilObjectEnd
 	pop hl
 	pop bc
 	jr .next_sprite
