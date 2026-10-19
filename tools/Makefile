@@ -13,7 +13,8 @@ tools := \
 	pokemon_animation \
 	pokemon_animation_graphics \
 	scan_includes \
-	stadium
+	stadium \
+	trainer_palettes
 
 all: $(tools)
 	@:
@@ -27,6 +28,9 @@ lzcomp: $(wildcard lz/*.c) $(wildcard lz/*.h)
 
 bankends: bankends.c parsemap.o
 	$(CC) $(CFLAGS) -o $@ $^
+
+trainer_palettes: trainer_palettes.c common.h lodepng/lodepng.c lodepng/lodepng.h
+	$(CC) $(CFLAGS) -o $@ trainer_palettes.c lodepng/lodepng.c
 
 parsemap.o: parsemap.c parsemap.h
 	$(CC) $(CFLAGS) -c $^

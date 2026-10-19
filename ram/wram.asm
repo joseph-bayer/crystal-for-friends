@@ -601,6 +601,9 @@ wSomeoneIsRampaging:: db
 
 wPlayerJustGotFrozen:: db
 wEnemyJustGotFrozen:: db
+
+; screen column of the enemy trainer pic, while it uses extra palettes (0 otherwise)
+wEnemyTrainerPicCol:: db
 wBattleEnd::
 
 

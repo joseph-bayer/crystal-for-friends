@@ -9,6 +9,7 @@ if DEF(_DEBUG)
 	const PLAYERSHOUSE2F_DEBUG_BEASTS
 	const PLAYERSHOUSE2F_DEBUG_LAB
 	const PLAYERSHOUSE2F_DEBUG_PHONE
+	const PLAYERSHOUSE2F_DEBUG_TRAINER_PIC
 endc
 
 PlayersHouse2F_MapScripts:
@@ -590,6 +591,26 @@ PlayersHouseDebugPhoneScript:
 ; The phone debug tools live in engine/debug/phone.asm, for room in this bank.
 	farsjump DebugPhoneScript
 
+PlayersHouseDebugTrainerPicScript:
+; A battle with BROCK, to check a trainer pic that uses extra palettes. It can be lost without
+; whiting out (see PlayersHouseDebugHPBattlesScript).
+	faceplayer
+	opentext
+	writetext PlayersHouseDebugTrainerPicText
+	yesorno
+	iffalse .done
+	closetext
+	winlosstext PlayersHouseDebugBattleWinText, PlayersHouseDebugBattleWinText
+	loadtrainer BROCK, BROCK1
+	loadvar VAR_BATTLETYPE, BATTLETYPE_CANLOSE
+	startbattle
+	reloadmap
+	end
+
+.done
+	closetext
+	end
+
 PlayersHouseDebugLabScript:
 ; Debug tools for the starters in ELM's lab (the Super Nerd's FORCE SHINY covers them too), and a
 ; party for testing the HM field move rule.
@@ -875,7 +896,7 @@ PlayersHouseDebugHPBattlesScript:
 .Screens:
 ; Two MR.MIME, one knowing only REFLECT, then one knowing only LIGHT SCREEN.
 	closetext
-	winlosstext PlayersHouseDebugBattleWinText, 0
+	winlosstext PlayersHouseDebugBattleWinText, PlayersHouseDebugBattleWinText
 	loadtrainer SCIENTIST, SCIENTIST_DEBUG_SCREENS
 	loadvar VAR_BATTLETYPE, BATTLETYPE_CANLOSE
 	startbattle
@@ -885,7 +906,7 @@ PlayersHouseDebugHPBattlesScript:
 .EnemyHiddenPower:
 ; MACHAMP and ALAKAZAM, each knowing only HIDDEN POWER: 70, on the side of their higher stat.
 	closetext
-	winlosstext PlayersHouseDebugBattleWinText, 0
+	winlosstext PlayersHouseDebugBattleWinText, PlayersHouseDebugBattleWinText
 	loadtrainer SCIENTIST, SCIENTIST_DEBUG_HIDDEN_POWER
 	loadvar VAR_BATTLETYPE, BATTLETYPE_CANLOSE
 	startbattle
@@ -975,6 +996,12 @@ PlayersHouseDebugBattleWinText:
 	text "DEBUG: test over."
 	done
 
+PlayersHouseDebugTrainerPicText:
+	text "DEBUG: trainer pic"
+	line "colors. Battle"
+	cont "BROCK?"
+	done
+
 PlayersHouseDebugLabStolenText:
 	text "DEBUG: <RIVAL>"
 	line "stole his #MON."
@@ -1017,4 +1044,5 @@ if DEF(_DEBUG)
 	object_event  1,  4, SPRITE_SUPER_NERD, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, PlayersHouseDebugBeastsScript, -1
 	object_event  0,  4, SPRITE_SCIENTIST, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_GREEN, OBJECTTYPE_SCRIPT, 0, PlayersHouseDebugLabScript, -1
 	object_event  7,  4, SPRITE_YOUNGSTER, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, PlayersHouseDebugPhoneScript, -1
+	object_event  6,  4, SPRITE_COOLTRAINER_M, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, PlayersHouseDebugTrainerPicScript, -1
 endc

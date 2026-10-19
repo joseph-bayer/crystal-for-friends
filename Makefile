@@ -45,7 +45,7 @@ RGBLINK ?= $(RGBDS)rgblink
 ### Build targets
 
 .SUFFIXES:
-.PHONY: all crystal clean tidy tools
+.PHONY: all crystal clean tidy tools check_trainer_art
 .SECONDEXPANSION:
 .PRECIOUS:
 .SECONDARY:
@@ -61,6 +61,9 @@ clean: tidy
 	        -o -name "*.2bpp.vtiles[245]" \
 	        -o -name "*.lz" \
 	        -o -name "*.gbcpal" \
+	        -o -name "*.allpals" \
+	        -o -name "*.palx" \
+	        -o -name "*.rgbgfxmap" \
 	        -o -name "*.sgb.tilemap" \) \
 	     -delete
 	find gfx/pokemon -mindepth 1 \
@@ -104,7 +107,7 @@ rgbdscheck.o: rgbdscheck.asm
 
 # Build tools when building the rom.
 # This has to happen before the rules are processed, since that's when scan_includes is run.
-ifeq (,$(filter clean tidy tools,$(MAKECMDGOALS)))
+ifeq (,$(filter clean tidy tools check_trainer_art,$(MAKECMDGOALS)))
 
 $(info $(shell $(MAKE) -C tools))
 
@@ -165,13 +168,28 @@ gfx/pokemon/%/front.2bpp: gfx/pokemon/%/front.png gfx/pokemon/%/normal.gbcpal
 gfx/pokemon/%/normal.gbcpal: gfx/pokemon/%/front.gbcpal gfx/pokemon/%/back.gbcpal
 	tools/gbcpal $(tools/gbcpal) $@ $^
 
+# Trainer pics can use up to 3 palettes, which may share colors. tools/trainer_palettes picks them:
+# .gbcpal is palette A (TrainerPalettes) and .allpals is every palette, for rgbgfx. rgbgfx gives
+# each tile a palette (-q); from that map, --palx writes .palx (TrainerExtraPalettes): palettes B
+# and C plus the map, after checking that every tile's colors are in its palette.
+# Per-pic options go in trainer_palettes_<name> (see "Pokemon and trainer sprite rules").
+gfx/trainers/%.gbcpal gfx/trainers/%.allpals: gfx/trainers/%.png
+	tools/trainer_palettes $(trainer_palettes_$*) $< gfx/trainers/$*.gbcpal gfx/trainers/$*.allpals
+
 gfx/trainers/%.2bpp: rgbgfx += --columns
-gfx/trainers/%.2bpp: gfx/trainers/%.png gfx/trainers/%.gbcpal
-	$(RGBGFX) $(rgbgfx) --colors gbc:$(word 2,$^) -o $@ $<
+gfx/trainers/%.2bpp: gfx/trainers/%.png gfx/trainers/%.allpals
+	$(RGBGFX) $(rgbgfx) --colors gbc:$(word 2,$^) -q gfx/trainers/$*.rgbgfxmap -o $@ $<
 
 # This is a special case for kris since we don't INCBIN her palette.
-gfx/trainers/kris.2bpp: gfx/trainers/kris.png gfx/trainers/kris.gbcpal
-	$(RGBGFX) $(rgbgfx) --colors gbc:$(word 2,$^) -o $@ $<
+gfx/trainers/kris.2bpp: gfx/trainers/kris.png gfx/trainers/kris.allpals
+	$(RGBGFX) $(rgbgfx) --colors gbc:$(word 2,$^) -q gfx/trainers/kris.rgbgfxmap -o $@ $<
+
+gfx/trainers/%.palx: gfx/trainers/%.png gfx/trainers/%.2bpp
+	tools/trainer_palettes --palx $(trainer_palettes_$*) $< gfx/trainers/$*.rgbgfxmap $@
+
+check_trainer_art:
+	$(MAKE) -C tools trainer_palettes
+	tools/trainer_palettes --verbose $(trainer_palettes_$(TRAINER)) gfx/trainers/$(TRAINER).png
 
 # Egg does not have a back sprite, so it only uses front.gbcpal
 gfx/pokemon/egg/front.2bpp: gfx/pokemon/egg/front.png gfx/pokemon/egg/front.gbcpal
@@ -233,7 +251,7 @@ gfx/pokemon/jynx/normal.gbcpal: tools/gbcpal += --reverse
 gfx/pokemon/porygon/normal.gbcpal: tools/gbcpal += --reverse
 gfx/pokemon/porygon2/normal.gbcpal: tools/gbcpal += --reverse
 
-gfx/trainers/swimmer_m.gbcpal: tools/gbcpal += --reverse
+trainer_palettes_swimmer_m := --reverse
 
 gfx/new_game/shrink1.2bpp: rgbgfx += --columns
 gfx/new_game/shrink2.2bpp: rgbgfx += --columns

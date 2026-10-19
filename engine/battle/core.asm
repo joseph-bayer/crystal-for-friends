@@ -3007,8 +3007,19 @@ SlideBattlePicOut:
 	add hl, de
 	dec b
 	jr nz, .loop2
+	; an enemy trainer pic with extra palettes moves its attributes too
+	ldh a, [hMapObjectIndex]
+	cp $8
+	jr nz, .delay
+	ld a, [wEnemyTrainerPicCol]
+	and a
+	jr z, .delay
+	farcall SlideEnemyTrainerPicAttrsRight
+	jr .next
+.delay
 	ld c, 2
 	call DelayFrames
+.next
 	pop hl
 	pop bc
 	dec c
@@ -3135,6 +3146,8 @@ ResetEnemyBattleVars:
 	hlcoord 18, 0
 	ld a, 8
 	call SlideBattlePicOut
+	xor a
+	ld [wEnemyTrainerPicCol], a
 	call EmptyBattleTextbox
 	jmp LoadStandardMenuHeader
 
@@ -6831,6 +6844,8 @@ BattleWinSlideInEnemyTrainerFrontpic:
 	ld [wTrainerClass], a
 	ld de, vTiles2
 	farcall GetTrainerPic
+	ld a, SCREEN_WIDTH ; off screen until the first step
+	farcall SetEnemyTrainerPicCol
 	hlcoord 19, 0
 	ld c, 0
 
@@ -6855,9 +6870,20 @@ BattleWinSlideInEnemyTrainerFrontpic:
 	dec c
 	jr nz, .inner_loop
 
+	; with extra palettes, push this step's attributes with its tiles first
+	ld c, 4
+	ld a, [wEnemyTrainerPicCol]
+	and a
+	jr z, .push_tiles
+	pop hl
+	pop bc
+	push bc
+	push hl
+	farcall EnemyTrainerPicSlideInStep
+	ld c, 4 - 2 ; EnemyTrainerPicSlideInStep took 2 frames
+.push_tiles
 	ld a, $1
 	ldh [hBGMapMode], a
-	ld c, 4
 	call DelayFrames
 	pop hl
 	pop bc
@@ -8404,6 +8430,8 @@ InitEnemyTrainer:
 	hlcoord 12, 0
 	lb bc, 7, 7
 	predef PlaceGraphic
+	ld a, 12 ; the pic's column
+	farcall SetEnemyTrainerPicCol
 	ld a, -1
 	ld [wCurOTMon], a
 	ld a, TRAINER_BATTLE

@@ -9,6 +9,9 @@
 *.2bpp.vtiles5
 *.lz
 *.gbcpal
+*.allpals
+*.palx
+*.rgbgfxmap
 *.dimensions
 *.animated.tilemap
 *.sgb.tilemap

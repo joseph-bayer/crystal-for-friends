@@ -756,6 +756,12 @@ SECTION "Following", ROMX
 INCLUDE "engine/events/follower.asm"
 
 
+SECTION "Trainer Extra Palettes", ROMX
+
+INCLUDE "engine/gfx/trainer_extra_palettes.asm"
+INCLUDE "data/trainers/extra_palettes.asm"
+
+
 SECTION "Stadium 2 Checksums", ROMX[$7DE0], BANK[$7F]
 
 ; The end of the ROM is taken up by checksums of the content, apparently used

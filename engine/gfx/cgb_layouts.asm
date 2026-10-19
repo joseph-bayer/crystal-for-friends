@@ -154,6 +154,7 @@ _CGB_BattleColors:
 	call SetBattlePal_EnemyHP
 	call SetBattlePal_PlayerHP
 	call SetBattlePal_Exp
+	farcall LoadTrainerExtraBattlePals
 	ld de, wOBPals1
 	call SetBattlePal_Enemy
 	call SetBattlePal_Player
@@ -195,6 +196,7 @@ _CGB_FinishBattleScreenLayout:
 	ld bc, 6 palettes
 	ld a, BANK(wOBPals1)
 	call FarCopyWRAM
+	farcall ApplyEnemyTrainerPicAttrs
 	jmp ApplyAttrmap
 
 InitPartyMenuBGPal7:
