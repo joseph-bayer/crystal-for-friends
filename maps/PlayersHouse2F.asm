@@ -4,12 +4,9 @@
 	const PLAYERSHOUSE2F_DOLL_2
 	const PLAYERSHOUSE2F_BIG_DOLL
 if DEF(_DEBUG)
-	const PLAYERSHOUSE2F_DEBUG_TRADER
-	const PLAYERSHOUSE2F_DEBUG_WARPER
-	const PLAYERSHOUSE2F_DEBUG_BEASTS
-	const PLAYERSHOUSE2F_DEBUG_LAB
-	const PLAYERSHOUSE2F_DEBUG_PHONE
-	const PLAYERSHOUSE2F_DEBUG_TRAINER_PIC
+	const PLAYERSHOUSE2F_DEBUG_STORY
+	const PLAYERSHOUSE2F_DEBUG_BATTLES
+	const PLAYERSHOUSE2F_DEBUG_TOOLS
 endc
 
 PlayersHouse2F_MapScripts:
@@ -336,7 +333,7 @@ PlayersRadioText4:
 	done
 
 if DEF(_DEBUG)
-PlayersHouseDebugWarperScript:
+PlayersHouseDebugWarperScript::
 ; Drops you straight into the Rocket Base B2F Electrode room, on the tile the B1F
 ; stairs arrive at. Talk to him again from down there? No -- walk back up the stairs.
 ;
@@ -360,7 +357,7 @@ PlayersHouseDebugWarperText:
 	cont "passwords and all."
 	done
 
-PlayersHouseDebugTraderScript:
+PlayersHouseDebugTraderScript::
 ; Reaches the trade screen on demand, as often as you like. See NPC_TRADE_DEBUG.
 ; The wrapping matters: trade draws into a text window, so without opentext around it the box
 ; lands in the wrong place and the font is never loaded.
@@ -371,7 +368,7 @@ PlayersHouseDebugTraderScript:
 	closetext
 	end
 
-PlayersHouseDebugBeastsScript:
+PlayersHouseDebugBeastsScript::
 ; Debug tools for the legendary beasts and the wandering Unown. The menu takes the whole screen
 ; height, over where the text box would be, so there is no title text.
 	faceplayer
@@ -591,7 +588,7 @@ PlayersHouseDebugPhoneScript:
 ; The phone debug tools live in engine/debug/phone.asm, for room in this bank.
 	farsjump DebugPhoneScript
 
-PlayersHouseDebugTrainerPicScript:
+PlayersHouseDebugTrainerPicScript::
 ; A battle with BROCK, to check a trainer pic that uses extra palettes. It can be lost without
 ; whiting out (see PlayersHouseDebugHPBattlesScript).
 	faceplayer
@@ -611,35 +608,20 @@ PlayersHouseDebugTrainerPicScript:
 	closetext
 	end
 
-PlayersHouseDebugLabScript:
-; Debug tools for the starters in ELM's lab (the Super Nerd's FORCE SHINY covers them too), and a
-; party for testing the HM field move rule.
-	faceplayer
-	opentext
-	writetext PlayersHouseDebugLabText
-	loadmenu .MenuHeader
-	verticalmenu
-	closewindow
-	ifequal 1, .ReplayLab
-	ifequal 2, .SkipTheft
-	ifequal 3, .LearnersParty
-	ifequal 4, PlayersHouseDebugHPToolsScript
-	ifequal 5, PlayersHouseDebugHPBattlesScript
-	ifequal 6, .AnimViewer
-	ifequal 7, .EliteFourLineup
-	closetext
-	end
+; The three debug NPCs' top menus live in engine/debug/menus.asm, for room in this bank.
+PlayersHouseDebugStoryScript:
+	farsjump DebugStoryScript
 
-.EliteFourLineup:
-; The Open League's lineup. In engine/debug/elite_four.asm, for room in this bank.
-	farsjump DebugEliteFourLineupScript
+PlayersHouseDebugBattlesScript:
+	farsjump DebugBattlesScript
 
-.AnimViewer:
-; Every move and special animation, from either side. In engine/debug/anim_viewer.asm, for room
-; in this bank.
-	farsjump DebugAnimViewerScript
+PlayersHouseDebugToolsScript:
+	farsjump DebugToolsScript
 
-.LearnersParty:
+PlayersHouseDebugLabItems::
+; Reached from the debug menus (engine/debug/menus.asm) with the text box still open.
+
+.LearnersParty::
 ; For the HM rule: Feraligatr, Pidgeot and Ampharos can learn every HM and Rock Smash between them
 ; (with a Pikachu and an egg behind them)
 ; and know none of them, so a field move can only come from "can learn it". Replaces the party
@@ -667,7 +649,7 @@ PlayersHouseDebugLabScript:
 	closetext
 	end
 
-.ReplayLab:
+.ReplayLab::
 ; Back to just before the pick: all three on the table and ELM waiting, without the intro, so
 ; walking in rolls them again. Picking again gives another starter, which may go to the PC.
 ; Lands just inside, past the coord events that stop you leaving before you pick.
@@ -684,7 +666,7 @@ PlayersHouseDebugLabScript:
 	warp ELMS_LAB, 4, 5
 	end
 
-.SkipTheft:
+.SkipTheft::
 ; What the end of Mr. Pokemon's visit does to the lab: SILVER takes the starter strong against yours.
 	checkevent EVENT_GOT_A_POKEMON_FROM_ELM
 	iffalse .PickFirst
@@ -712,25 +694,7 @@ PlayersHouseDebugLabScript:
 	closetext
 	end
 
-.MenuHeader:
-	db MENU_BACKUP_TILES ; flags
-	menu_coords 0, 0, 16, SCREEN_HEIGHT - 1 ; wide enough for SKIP THE THEFT; eight items
-	dw .MenuData
-	db 1 ; default option
-
-.MenuData:
-	db STATICMENU_CURSOR ; flags
-	db 8 ; items
-	db "REPLAY LAB@"
-	db "SKIP THE THEFT@"
-	db "LEARNERS PARTY@"
-	db "HP TOOLS@"
-	db "HP BATTLES@"
-	db "ANIM VIEWER@"
-	db "E4 LINEUP@"
-	db "CANCEL@"
-
-PlayersHouseDebugHPToolsScript:
+PlayersHouseDebugHPToolsScript::
 ; Tools for testing Hidden Power: the lead's Hidden Power level, the
 ; stats page, one 256-step cycle's rolls, a GLYPH SHARD, and a pair whose higher stat is the other
 ; side from their Hidden Power type.
@@ -851,7 +815,7 @@ PlayersHouseDebugHPToolsScript:
 	db "SET 15@"
 	db "DONE@"
 
-PlayersHouseDebugHPBattlesScript:
+PlayersHouseDebugHPBattlesScript::
 ; Hidden Power test battles.
 	writetext PlayersHouseDebugHiddenPowerText
 	loadmenu .MenuHeader
@@ -927,10 +891,6 @@ PlayersHouseDebugHPBattlesScript:
 	db "SCREENS@"
 	db "ENEMY HP@"
 	db "CANCEL@"
-
-PlayersHouseDebugLabText:
-	text "DEBUG: ELM's lab."
-	done
 
 PlayersHouseDebugHiddenPowerText:
 	text "DEBUG: HIDDEN"
@@ -1039,10 +999,7 @@ PlayersHouse2F_MapEvents:
 	object_event  5,  4, SPRITE_DOLL_2, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, PlayersHouseDoll2Script, EVENT_PLAYERS_HOUSE_2F_DOLL_2
 	object_event  0,  1, SPRITE_BIG_DOLL, SPRITEMOVEDATA_BIGDOLL, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, PlayersHouseBigDollScript, EVENT_PLAYERS_HOUSE_2F_BIG_DOLL
 if DEF(_DEBUG)
-	object_event  2,  4, SPRITE_GENTLEMAN, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, PlayersHouseDebugTraderScript, -1
-	object_event  3,  4, SPRITE_ROCKET, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, PlayersHouseDebugWarperScript, -1
-	object_event  1,  4, SPRITE_SUPER_NERD, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, PlayersHouseDebugBeastsScript, -1
-	object_event  0,  4, SPRITE_SCIENTIST, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_GREEN, OBJECTTYPE_SCRIPT, 0, PlayersHouseDebugLabScript, -1
-	object_event  7,  4, SPRITE_YOUNGSTER, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, PlayersHouseDebugPhoneScript, -1
-	object_event  6,  4, SPRITE_COOLTRAINER_M, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, PlayersHouseDebugTrainerPicScript, -1
+	object_event  0,  4, SPRITE_SCIENTIST, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_GREEN, OBJECTTYPE_SCRIPT, 0, PlayersHouseDebugStoryScript, -1
+	object_event  1,  4, SPRITE_SUPER_NERD, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, PlayersHouseDebugBattlesScript, -1
+	object_event  2,  4, SPRITE_YOUNGSTER, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, PlayersHouseDebugToolsScript, -1
 endc

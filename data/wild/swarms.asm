@@ -1,5 +1,6 @@
 ; Swarms
-; Each row says which mon swarms, in which form, where, and which encounters it replaces.
+; Each row says which mon swarms, in which form, where, and which encounters it replaces, and
+; optionally an event flag the radio waits for before it offers the row.
 ; Entries correspond to the SWARM_* constants and must stay in that order.
 ;
 ; Route 35 and Dark Cave Violet Entrance belong to the two vanilla swarms and host no others: Arnie's
@@ -37,6 +38,15 @@ SwarmTable::
 	swarm_def PSYDUCK,    PSYDUCK_RB_FORM,     ROUTE_6,                       SWARM_WATER
 	swarm_def TENTACOOL,  TENTACOOL_RB_FORM,   VERMILION_CITY,            	  SWARM_WATER
 	swarm_def HORSEA,     HORSEA_RB_FORM,      ROUTE_12,                      SWARM_WATER
-	
+
+	; Team Rocket's, left behind as each operation falls. Offered once that part of the story is
+	; over; each Rocket line swarms on one route only.
+	; - After the Mahogany hideout
+	swarm_def GOLBAT,     GOLBAT_ROCKET_FORM,     ROUTE_42, SWARM_GRASS | SWARM_ROCKET, EVENT_CLEARED_ROCKET_HIDEOUT
+	swarm_def WEEZING,    WEEZING_ROCKET_FORM,    ROUTE_43, SWARM_GRASS | SWARM_ROCKET, EVENT_CLEARED_ROCKET_HIDEOUT
+	; - After the Radio Tower
+	swarm_def CHARMELEON, CHARMELEON_ROCKET_FORM, ROUTE_37, SWARM_GRASS | SWARM_ROCKET, EVENT_CLEARED_RADIO_TOWER
+	swarm_def ARBOK,      ARBOK_ROCKET_FORM,      ROUTE_39, SWARM_GRASS | SWARM_ROCKET, EVENT_CLEARED_RADIO_TOWER
+
 
 	assert_table_length NUM_SWARMS

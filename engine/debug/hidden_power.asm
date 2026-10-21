@@ -1,6 +1,6 @@
 if DEF(_DEBUG)
 
-; Tools for the Scientist's HIDDEN POWER debug menu (maps/PlayersHouse2F.asm).
+; Tools for the HP TOOLS debug menu (the Youngster's, maps/PlayersHouse2F.asm).
 
 DebugGetLeadHPLevel::
 ; out: wScriptVar = the lead mon's Hidden Power level

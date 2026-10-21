@@ -64,8 +64,10 @@ This is a hack of Pokemon Crystal meant to make you smile. All systems were desi
 
 - **Swarm System Overhaul**
   - Daily swarms are announced via the radio on station 12.5, the Collection Guild's swarm report. Kanto swarms start after beating the Elite Four
+  - Team Rocket's Pokémon, left behind when as you complete the story
   - Up to three swarms can be going at once: Arnie's and Anthony's phone calls still start theirs (Yanma on Route 35, Dunsparce in Dark Cave), and a new radio station picks one more every day
   - Swarms end at midnight
+  - The radio won't announce the same swarm as either of the last two days you played
   - A swarm takes over about 60% of a route's grass or surf encounters, at the route's own levels
   - Find special forms in swarms
   - Heightened shiny chance (see Shininess section)
@@ -200,6 +202,12 @@ TODO: mention a few. Put the rest on the dex site if people want spoilers
 	| Gyarados      | Red/Blue              | Evolve an RB Magikarp |
 	| Staryu        | Red/Blue              | Tune into channel 12.5 |
 	| Starmie       | Red/Blue              | Evolve an RB Staryu |
+	| Golbat        | Team Rocket           | Tune into channel 12.5 after clearing the Mahogany hideout |
+	| Crobat        | Team Rocket           | Evolve a Team Rocket Golbat |
+	| Weezing       | Team Rocket           | Tune into channel 12.5 after clearing the Mahogany hideout |
+	| Charmeleon    | Team Rocket           | Tune into channel 12.5 after freeing the Radio Tower |
+	| Charizard     | Team Rocket           | Evolve a Team Rocket Charmeleon |
+	| Arbok         | Team Rocket           | Tune into channel 12.5 after freeing the Radio Tower |
   - *NOTE:* Some forms will have a symbol that goes along with them to indicate that they're different. Not all forms will have this.
 
 - **Scaling Marts**

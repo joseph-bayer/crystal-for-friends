@@ -590,6 +590,22 @@ _SwarmRadioText6::
 	line "they're gone!"
 	done
 
+_SwarmRadioRocketText2::
+	text_start
+	line "ROCKET @"
+	text_ram wMonOrItemNameBuffer
+	text_end
+
+_SwarmRadioRocketText5::
+	text_start
+	line "TEAM ROCKET left"
+	done
+
+_SwarmRadioRocketText6::
+	text_start
+	line "them behind…"
+	done
+
 _SwarmRadioNoneText1::
 	text_start
 	line "GUILD: No reports"

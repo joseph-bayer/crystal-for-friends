@@ -1401,7 +1401,11 @@ SwarmRadio1:
 	jmp NextRadioLine
 
 SwarmRadio2:
+	farcall IsDailySwarmRocket
 	ld hl, SwarmRadioText2
+	jr nc, .got_text
+	ld hl, SwarmRadioRocketText2
+.got_text
 	ld a, SWARM_RADIO_3
 	jmp NextRadioLine
 
@@ -1417,12 +1421,20 @@ SwarmRadio4:
 	jmp NextRadioLine
 
 SwarmRadio5:
+	farcall IsDailySwarmRocket
 	ld hl, SwarmRadioText5
+	jr nc, .got_text
+	ld hl, SwarmRadioRocketText5
+.got_text
 	ld a, SWARM_RADIO_6
 	jmp NextRadioLine
 
 SwarmRadio6:
+	farcall IsDailySwarmRocket
 	ld hl, SwarmRadioText6
+	jr nc, .got_text
+	ld hl, SwarmRadioRocketText6
+.got_text
 	ld a, SWARM_RADIO
 	jmp NextRadioLine
 
@@ -1453,6 +1465,18 @@ SwarmRadioText5:
 
 SwarmRadioText6:
 	text_far _SwarmRadioText6
+	text_end
+
+SwarmRadioRocketText2:
+	text_far _SwarmRadioRocketText2
+	text_end
+
+SwarmRadioRocketText5:
+	text_far _SwarmRadioRocketText5
+	text_end
+
+SwarmRadioRocketText6:
+	text_far _SwarmRadioRocketText6
 	text_end
 
 SwarmRadioNoneText1:

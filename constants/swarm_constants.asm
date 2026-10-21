@@ -9,6 +9,15 @@
 	const_def
 	const SWARM_GRASS ; 0
 	const SWARM_WATER ; 1
+DEF SWARM_TERRAIN_MASK EQU %00000001
+; OR'd into a row's terrain: Team Rocket's mon, left behind when a Rocket operation fell. The
+; radio announces these with their own lines. Anything reading the terrain masks this off.
+DEF SWARM_ROCKET_F EQU 7
+DEF SWARM_ROCKET EQU 1 << SWARM_ROCKET_F
+	assert !(SWARM_ROCKET & SWARM_TERRAIN_MASK), "SWARM_ROCKET overlaps the terrain"
+
+; A row's story gate when it has none (event flag 0 is a real flag)
+DEF SWARM_NO_GATE EQU -1
 
 	const_def 1
 ; The two vanilla swarms, kept because their phone calls still start them. They are enumerated
@@ -33,6 +42,10 @@ DEF FIRST_STUDIED_SWARM EQU const_value
 	const SWARM_PSYDUCK_RB    ; 14
 	const SWARM_TENTACOOL_RB  ; 15
 	const SWARM_HORSEA_RB     ; 16
+	const SWARM_GOLBAT_ROCKET     ; 17
+	const SWARM_WEEZING_ROCKET    ; 18
+	const SWARM_CHARMELEON_ROCKET ; 19
+	const SWARM_ARBOK_ROCKET      ; 20
 DEF NUM_SWARMS EQU const_value - 1
 
 DEF MAX_ACTIVE_SWARMS EQU 3 ; Arnie's call, Anthony's call, and the radio's daily roll

@@ -1264,10 +1264,37 @@ DailySwarmBroadcast::
 
 .IsOnOffer:
 ; in: a = a SWARM_* id
-; out: carry if the Guild can report it. Kanto's rows wait for the Elite Four.
+; out: carry if the Guild can report it. Not if it was rolled on either of the last two days
+; (wSwarmHistory). A row with a story gate waits for its event flag, and Kanto's rows wait for
+; the Elite Four.
 ; Preserves bc.
+	ld hl, wSwarmHistory
+	cp [hl] ; an empty entry is 0, which no id is
+	jr z, .recent
+	inc hl
+	cp [hl]
+	jr z, .recent
 	push bc
 	call GetSwarmRow
+	push hl
+	ld bc, SWARM_ENTRY_LENGTH - 2
+	add hl, bc ; to the gate
+	ld a, [hli]
+	ld e, a
+	ld d, [hl]
+	and d
+	inc a
+	jr z, .no_gate ; SWARM_NO_GATE
+	ld b, CHECK_FLAG
+	call EventFlagAction
+	ld a, c
+	and a
+	jr nz, .no_gate
+	pop hl
+	jr .done ; `and a` has cleared carry
+
+.no_gate
+	pop hl
 	inc hl
 	inc hl
 	inc hl ; past the species and form, to the map
@@ -1287,6 +1314,24 @@ DailySwarmBroadcast::
 	scf
 .done
 	pop bc
+	ret
+
+.recent
+	and a
+	ret
+
+IsDailySwarmRocket::
+; For the radio, which picks Team Rocket's lines for their mon.
+; out: carry if today's swarm is one of SWARM_ROCKET's rows
+	ld a, [wDailySwarm]
+	and a
+	ret z ; `and a` has cleared carry
+	call GetSwarmRow
+	ld bc, 2 + 1 + 2
+	add hl, bc ; past the species, form and map, to the terrain
+	ld a, [hl]
+	add a
+	assert SWARM_ROCKET_F == 7
 	ret
 
 StartDailySwarm::
@@ -1313,7 +1358,9 @@ StartSwarm::
 	ld d, a
 	ld a, [hli]
 	ld e, a
-	ld b, [hl] ; its terrain
+	ld a, [hl]
+	and SWARM_TERRAIN_MASK
+	ld b, a ; its terrain
 	call GetActiveSwarmForMap ; preserves bc
 	ret c
 
@@ -1448,6 +1495,7 @@ GetActiveSwarmForMap::
 	cp e
 	jr nz, .no_match
 	ld a, [hl]
+	and SWARM_TERRAIN_MASK
 	cp b
 	jr nz, .no_match
 

@@ -131,13 +131,20 @@ MACRO swarm_def
 ;\1: the species that swarms
 ;\2: its form byte -- a *_FORM constant, optionally | SHINY_MASK for one that is always shiny
 ;\3: the map it swarms on
-;\4: SWARM_GRASS or SWARM_WATER, the encounters it replaces
+;\4: SWARM_GRASS or SWARM_WATER, the encounters it replaces, optionally | SWARM_ROCKET
+;\5: optional: an event flag that must be set before the radio offers it
 	dw \1
 	db \2
 	map_id \3
+	assert !((\4) & ~(SWARM_TERRAIN_MASK | SWARM_ROCKET)), "unknown bits in swarm terrain \4"
 	db \4
+	IF _NARG >= 5
+		dw \5
+	ELSE
+		dw SWARM_NO_GATE
+	ENDC
 ENDM
-DEF SWARM_ENTRY_LENGTH EQU 2 + 1 + 2 + 1
+DEF SWARM_ENTRY_LENGTH EQU 2 + 1 + 2 + 1 + 2
 
 MACRO def_grass_wildmons
 ;\1: map id

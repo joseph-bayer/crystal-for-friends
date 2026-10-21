@@ -2987,6 +2987,9 @@ wActiveSwarms:: ds MAX_ACTIVE_SWARMS
 ; The Collection Guild's pick for today, as a SWARM_* id, or 0 if it has not been rolled yet. It
 ; only goes into wActiveSwarms once the player hears the broadcast. Cleared with the daily flags.
 wDailySwarm:: db
+; The Guild's picks on the last two days the game was running, most recent first, 0 for none.
+; The radio won't roll either again. Shifted by the daily reset, never cleared by it.
+wSwarmHistory:: ds 2
 wTimerEventStartDay:: db
 
 wFruitTreeFlags:: flag_array NUM_FRUIT_TREES

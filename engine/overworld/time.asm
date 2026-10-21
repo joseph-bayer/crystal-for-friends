@@ -95,10 +95,20 @@ RestartDailyResetTimer:
 	ld hl, wDailyResetTimer
 	jr InitOneDayCountdown
 
+ShiftSwarmHistory::
+; Before the daily reset clears today's radio swarm, remember it (0 if none was rolled) and forget
+; the oldest.
+	ld a, [wSwarmHistory]
+	ld [wSwarmHistory + 1], a
+	ld a, [wDailySwarm]
+	ld [wSwarmHistory], a
+	ret
+
 CheckDailyResetTimer::
 	ld hl, wDailyResetTimer
 	call CheckDayDependentEventHL
 	ret nc
+	call ShiftSwarmHistory
 	xor a
 	ld hl, wDailyFlags1
 	ld [hli], a ; wDailyFlags1

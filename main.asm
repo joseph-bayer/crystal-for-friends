@@ -535,6 +535,12 @@ INCLUDE "engine/debug/anim_viewer.asm"
 INCLUDE "engine/debug/elite_four.asm"
 
 
+SECTION "Debug Menus", ROMX
+
+INCLUDE "engine/debug/menus.asm"
+INCLUDE "engine/debug/swarm.asm"
+
+
 ; Its own section because the rosters outgrew bank3F: the grass and water tables are 100 bytes per
 ; map and there are over a hundred of them. Everything outside reaches this file by farcall or a
 ; dba mapsetup pointer, so the bank it lands in does not matter.
