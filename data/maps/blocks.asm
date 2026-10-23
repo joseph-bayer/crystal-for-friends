@@ -915,4 +915,13 @@ ApricornForestClearing_Blocks:
 ShipwreckBeach_Blocks:
 	INCBIN "maps/ShipwreckBeach.ablk"
 
+CeruleanCave1F_Blocks:
+	INCBIN "maps/CeruleanCave1F.ablk"
+
+CeruleanCave2F_Blocks:
+	INCBIN "maps/CeruleanCave2F.ablk"
+
+CeruleanCaveB1F_Blocks:
+	INCBIN "maps/CeruleanCaveB1F.ablk"
+
 ENDSECTION

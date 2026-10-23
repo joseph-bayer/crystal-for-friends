@@ -1380,6 +1380,65 @@ OverworldWildMonsGrass:
 	ow_wildmon 5,  HAUNTER,    45, PLAIN_FORM, 0,                  PSYWAVE
 	end_ow_wildmons
 
+	def_ow_wildmons CERULEAN_CAVE_1F
+	db 4 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+	; morn
+	ow_wildmon 40, GRAVELER,   45, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 40, SANDSLASH,  52, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, VENOMOTH,   54, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, PARASECT,   54, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 40, GRAVELER,   45, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 40, SANDSLASH,  52, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, VENOMOTH,   54, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, PARASECT,   54, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 40, GRAVELER,   45, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 40, SANDSLASH,  52, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, VENOMOTH,   54, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, PARASECT,   54, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons CERULEAN_CAVE_2F
+	db 4 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+	; morn
+	ow_wildmon 40, RHYHORN,    50, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, DITTO,      60, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 15, GLOOM,      58, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 15, WEEPINBELL, 58, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 40, RHYHORN,    50, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, DITTO,      60, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 15, GLOOM,      58, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 15, WEEPINBELL, 58, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 40, RHYHORN,    50, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 30, DITTO,      60, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 15, GLOOM,      58, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 15, WEEPINBELL, 58, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
+
+	def_ow_wildmons CERULEAN_CAVE_B1F
+	db 3 ; how many can be out at once
+	db 100 percent ; the chance each one shows up
+	; morn
+	ow_wildmon 45, RHYDON,     62, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 35, DITTO,      60, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, CHANSEY,    56, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, LICKITUNG,  55, PLAIN_FORM, 0,                  NO_MOVE
+	; day
+	ow_wildmon 45, RHYDON,     62, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 35, DITTO,      60, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, CHANSEY,    56, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, LICKITUNG,  55, PLAIN_FORM, 0,                  NO_MOVE
+	; nite
+	ow_wildmon 45, RHYDON,     62, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 35, DITTO,      60, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, CHANSEY,    56, PLAIN_FORM, 0,                  NO_MOVE
+	ow_wildmon 10, LICKITUNG,  55, PLAIN_FORM, 0,                  NO_MOVE
+	end_ow_wildmons
 	def_ow_wildmons VICTORY_ROAD
 	db 3 ; how many can be out at once
 	db 100 percent ; the chance each one shows up

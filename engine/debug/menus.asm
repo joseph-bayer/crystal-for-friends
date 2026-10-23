@@ -7,7 +7,7 @@ if DEF(_DEBUG)
 
 DebugStoryScript::
 ; The Scientist: ELM's lab (the beasts menu's FORCE SHINY covers the starters too), the beasts and
-; Unown, the Open League, swarms, and the Rocket Base.
+; Unown, the Open League, swarms, and warps (the Rocket Base, Cerulean Cave 1F).
 	faceplayer
 	opentext
 	writetext DebugStoryText
@@ -18,7 +18,7 @@ DebugStoryScript::
 	ifequal 2, .Beasts
 	ifequal 3, .EliteFourLineup
 	ifequal 4, .Swarms
-	ifequal 5, .RocketBase
+	ifequal 5, .Warps
 	closetext
 	end
 
@@ -48,9 +48,24 @@ DebugStoryScript::
 	closetext
 	farsjump DebugSwarmScript
 
+.Warps:
+	loadmenu .WarpsMenuHeader
+	verticalmenu
+	closewindow
+	ifequal 1, .RocketBase
+	ifequal 2, .CeruleanCave1F
+	closetext
+	end
+
 .RocketBase:
 	closetext
 	farsjump PlayersHouseDebugWarperScript
+
+.CeruleanCave1F:
+; On the floor just inside the exit to Cerulean City.
+	closetext
+	warp CERULEAN_CAVE_1F, 24, 16
+	end
 
 .MenuHeader:
 	db MENU_BACKUP_TILES ; flags
@@ -65,7 +80,20 @@ DebugStoryScript::
 	db "BEASTS@"
 	db "E4 LINEUP@"
 	db "SWARMS@"
+	db "WARPS@"
+	db "CANCEL@"
+
+.WarpsMenuHeader:
+	db MENU_BACKUP_TILES ; flags
+	menu_coords 0, 0, 14, 7
+	dw .WarpsMenuData
+	db 1 ; default option
+
+.WarpsMenuData:
+	db STATICMENU_CURSOR ; flags
+	db 3 ; items
 	db "ROCKET BASE@"
+	db "CERULEAN 1F@"
 	db "CANCEL@"
 
 .LabMenuHeader:

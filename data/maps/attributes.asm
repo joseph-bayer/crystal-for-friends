@@ -700,3 +700,6 @@ ENDM
 	map_attributes ApricornForest, APRICORN_FOREST, $41, 0
 	map_attributes ApricornForestClearing, APRICORN_FOREST_CLEARING, $41, 0
 	map_attributes ShipwreckBeach, SHIPWRECK_BEACH, $11, 0
+	map_attributes CeruleanCave1F, CERULEAN_CAVE_1F, $1d, 0
+	map_attributes CeruleanCave2F, CERULEAN_CAVE_2F, $1d, 0
+	map_attributes CeruleanCaveB1F, CERULEAN_CAVE_B1F, $1d, 0

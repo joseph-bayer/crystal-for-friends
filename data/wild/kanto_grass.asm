@@ -842,4 +842,87 @@ KantoGrassWildMons:
 	dbw 42, GOLBAT
 	end_grass_wildmons
 
+	def_grass_wildmons CERULEAN_CAVE_1F
+	db 4 percent, 4 percent, 4 percent ; encounter rates: morn/day/nite
+	; morn
+	dbw 50, GOLBAT
+	dbw 45, GRAVELER
+	dbw 55, GLOOM
+	dbw 55, WEEPINBELL
+	dbw 52, SANDSLASH
+	dbw 54, VENOMOTH
+	dbw 54, PARASECT
+	; day
+	dbw 50, GOLBAT
+	dbw 45, GRAVELER
+	dbw 55, GLOOM
+	dbw 55, WEEPINBELL
+	dbw 52, SANDSLASH
+	dbw 54, VENOMOTH
+	dbw 54, PARASECT
+	; nite
+	dbw 50, GOLBAT
+	dbw 45, GRAVELER
+	dbw 55, GLOOM
+	dbw 55, WEEPINBELL
+	dbw 52, SANDSLASH
+	dbw 54, VENOMOTH
+	dbw 55, DITTO
+	end_grass_wildmons
+
+	def_grass_wildmons CERULEAN_CAVE_2F
+	db 6 percent, 6 percent, 6 percent ; encounter rates: morn/day/nite
+	; morn
+	dbw 52, GOLBAT
+	dbw 50, GRAVELER
+	dbw 56, SANDSLASH
+	dbw 50, RHYHORN
+	dbw 60, DITTO
+	dbw 60, RHYDON
+	dbw 58, GLOOM
+	; day
+	dbw 52, GOLBAT
+	dbw 50, GRAVELER
+	dbw 56, SANDSLASH
+	dbw 50, RHYHORN
+	dbw 60, DITTO
+	dbw 60, RHYDON
+	dbw 58, GLOOM
+	; nite
+	dbw 52, GOLBAT
+	dbw 50, GRAVELER
+	dbw 56, SANDSLASH
+	dbw 50, RHYHORN
+	dbw 60, DITTO
+	dbw 60, RHYDON
+	dbw 58, WEEPINBELL
+	end_grass_wildmons
+
+	def_grass_wildmons CERULEAN_CAVE_B1F
+	db 10 percent, 10 percent, 10 percent ; encounter rates: morn/day/nite
+	; morn
+	dbw 54, GOLBAT
+	dbw 55, GRAVELER
+	dbw 60, DITTO
+	dbw 52, RHYHORN
+	dbw 62, RHYDON
+	dbw 56, CHANSEY
+	dbw 55, LICKITUNG
+	; day
+	dbw 54, GOLBAT
+	dbw 55, GRAVELER
+	dbw 60, DITTO
+	dbw 52, RHYHORN
+	dbw 62, RHYDON
+	dbw 56, CHANSEY
+	dbw 55, LICKITUNG
+	; nite
+	dbw 54, GOLBAT
+	dbw 55, GRAVELER
+	dbw 60, DITTO
+	dbw 52, RHYHORN
+	dbw 62, RHYDON
+	dbw 56, CHANSEY
+	dbw 55, LICKITUNG
+	end_grass_wildmons
 	db -1 ; end

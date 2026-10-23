@@ -35,6 +35,9 @@ OverworldMonObjects:
 	ow_mon MEOWTH,     PLAIN_FORM
 	ow_mon NIDORAN_F,  PLAIN_FORM
 
+	ow_mon_map CERULEAN_CAVE_B1F
+	ow_mon MEWTWO,     PLAIN_FORM
+
 	ow_mon_map CERULEAN_CITY
 	ow_mon SLOWBRO,    PLAIN_FORM
 

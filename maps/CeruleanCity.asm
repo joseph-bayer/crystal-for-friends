@@ -5,15 +5,28 @@
 	const CERULEANCITY_COOLTRAINER_F
 	const CERULEANCITY_FISHER
 	const CERULEANCITY_YOUNGSTER
+	const CERULEANCITY_CAVE_GUARD
 
 CeruleanCity_MapScripts:
 	def_scene_scripts
 
 	def_callbacks
 	callback MAPCALLBACK_NEWMAP, CeruleanCityFlypointCallback
+	callback MAPCALLBACK_OBJECTS, CeruleanCityCaveGuardCallback
 
 CeruleanCityFlypointCallback:
 	setflag ENGINE_FLYPOINT_CERULEAN
+	endcallback
+
+CeruleanCityCaveGuardCallback:
+; He steps aside for a trainer with all 16 badges
+	readvar VAR_BADGES
+	ifequal NUM_BADGES, .StepAside
+	appear CERULEANCITY_CAVE_GUARD
+	endcallback
+
+.StepAside:
+	disappear CERULEANCITY_CAVE_GUARD
 	endcallback
 
 CeruleanCityCooltrainerMScript:
@@ -87,38 +100,13 @@ CeruleanCityFisherScript:
 CeruleanCityYoungsterScript:
 	faceplayer
 	opentext
-	writetext CeruleanCityYoungsterText1
+	writetext CeruleanCityYoungsterText
 	waitbutton
 	closetext
-	checkevent EVENT_FOUND_BERSERK_GENE_IN_CERULEAN_CITY
-	iffalse .BerserkGenePingsItemfinder
 	end
 
-.BerserkGenePingsItemfinder:
-	waitsfx
-	playsound SFX_SECOND_PART_OF_ITEMFINDER
-	waitsfx
-	playsound SFX_TRANSACTION
-	waitsfx
-	playsound SFX_SECOND_PART_OF_ITEMFINDER
-	waitsfx
-	playsound SFX_TRANSACTION
-	waitsfx
-	playsound SFX_SECOND_PART_OF_ITEMFINDER
-	waitsfx
-	playsound SFX_TRANSACTION
-	waitsfx
-	playsound SFX_SECOND_PART_OF_ITEMFINDER
-	waitsfx
-	playsound SFX_TRANSACTION
-	waitsfx
-	showemote EMOTE_SHOCK, CERULEANCITY_YOUNGSTER, 15
-	turnobject CERULEANCITY_YOUNGSTER, LEFT
-	opentext
-	writetext CeruleanCityYoungsterText2
-	waitbutton
-	closetext
-	end
+CeruleanCityCaveGuardScript:
+	jumptextfaceplayer CeruleanCityCaveGuardText
 
 CeruleanCitySign:
 	jumptext CeruleanCitySignText
@@ -143,9 +131,6 @@ CeruleanCityPokecenterSign:
 
 CeruleanCityMartSign:
 	jumpstd MartSignScript
-
-CeruleanCityHiddenBerserkGene:
-	hiddenitem BERSERK_GENE, EVENT_FOUND_BERSERK_GENE_IN_CERULEAN_CITY
 
 CeruleanCityCooltrainerMText1:
 	text "KANTO's POWER"
@@ -211,19 +196,21 @@ CeruleanCityFisherRocketTipText:
 	cont "CERULEAN's CAPE."
 	done
 
-CeruleanCityYoungsterText1:
-	text "There used to be a"
-	line "cave here that had"
-
-	para "horribly powerful"
-	line "#MON in it."
+CeruleanCityYoungsterText:
+	text "Only trainers with"
+	line "all 16 BADGES may"
+	cont "go in that cave."
 	done
 
-CeruleanCityYoungsterText2:
-	text "Ayuh?"
+CeruleanCityCaveGuardText:
+	text "This is CERULEAN"
+	line "CAVE! Horribly"
+	cont "strong #MON"
+	cont "live in there!"
 
-	para "My ITEMFINDER is"
-	line "responding…"
+	para "Only trainers with"
+	line "all 16 BADGES are"
+	cont "allowed in!"
 	done
 
 CeruleanCitySignText:
@@ -283,6 +270,7 @@ CeruleanCity_MapEvents:
 	warp_event 19, 21, CERULEAN_POKECENTER_1F, 1
 	warp_event 30, 23, CERULEAN_GYM, 1
 	warp_event 25, 29, CERULEAN_MART, 2
+	warp_event  2, 11, CERULEAN_CAVE_1F, 1
 
 	def_coord_events
 
@@ -295,7 +283,6 @@ CeruleanCity_MapEvents:
 	bg_event 14, 29, BGEVENT_READ, CeruleanLockedDoor
 	bg_event 20, 21, BGEVENT_READ, CeruleanCityPokecenterSign
 	bg_event 26, 29, BGEVENT_READ, CeruleanCityMartSign
-	bg_event  2, 12, BGEVENT_ITEM, CeruleanCityHiddenBerserkGene
 
 	def_object_events
 	object_event 15, 23, SPRITE_COOLTRAINER_M, SPRITEMOVEDATA_WANDER, 2, 2, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, CeruleanCityCooltrainerMScript, -1
@@ -304,3 +291,4 @@ CeruleanCity_MapEvents:
 	object_event 21, 24, SPRITE_COOLTRAINER_F, SPRITEMOVEDATA_STANDING_LEFT, 0, 0, -1, -1, PAL_NPC_GREEN, OBJECTTYPE_SCRIPT, 0, CeruleanCityCooltrainerFScript, -1
 	object_event 30, 26, SPRITE_FISHER, SPRITEMOVEDATA_WALK_LEFT_RIGHT, 1, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, CeruleanCityFisherScript, -1
 	object_event  6, 12, SPRITE_YOUNGSTER, SPRITEMOVEDATA_SPINRANDOM_SLOW, 1, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, CeruleanCityYoungsterScript, -1
+	object_event  2, 12, SPRITE_SUPER_NERD, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, CeruleanCityCaveGuardScript, EVENT_CERULEAN_CITY_CAVE_GUARD

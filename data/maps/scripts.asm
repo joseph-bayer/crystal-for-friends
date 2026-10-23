@@ -490,4 +490,10 @@ INCLUDE "maps/ApricornForest.asm"
 INCLUDE "maps/ApricornForestClearing.asm"
 INCLUDE "maps/ShipwreckBeach.asm"
 
+INCLUDE "maps/CeruleanCave1F.asm"
+
+INCLUDE "maps/CeruleanCave2F.asm"
+
+INCLUDE "maps/CeruleanCaveB1F.asm"
+
 ENDSECTION

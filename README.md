@@ -9,7 +9,7 @@ This is a hack of Pokemon Crystal meant to make you smile. All systems were desi
   - TODO: All Pokemon available
     - Articuno, Zapdos and Moltres appear once you have all 16 badges: Zapdos outside the Power Plant on Route 10, Articuno on Route 20 near the Seafoam Islands, and Moltres in Victory Road.
       - The locations of Zapdos and Articuno may be temporary and may be updated in the future.
-    - TODO: Mewtwo
+    - Mewtwo (level 75) waits at the bottom of Cerulean Cave, which opens once you have all 16 badges. Catching it leaves a Berserk Gene behind.
     - TODO: Mew
 
 - **Following Pokemon**
@@ -281,6 +281,7 @@ TODO: mention a few. Put the rest on the dex site if people want spoilers
   - Answering or declining phone calls is ported from [Sour Crystal](https://github.com/SoupPotato/sourcrystal)
   - Trainers offering their number right after battle follows the [Improve the trainer rematch system](https://github.com/pret/pokecrystal/wiki/Improve-the-trainer-rematch-system) tutorial by Grate Oracle Lewot from the pret/pokecrystal wiki
   - Kurt making Apricorn balls instantly follows the [Kurt Makes Pokeballs Instantly](https://github.com/pret/pokecrystal/wiki/Kurt-Makes-Pokeballs-Instantly) tutorial by [Nayru62](https://github.com/Nayru62) from the pret/pokecrystal wiki (adapted from [Polished Crystal](https://github.com/Rangi42/polishedcrystal)), with the fade back in from [Sour Crystal](https://github.com/SoupPotato/sourcrystal)
+  - Cerulean Cave's three floors follow Pokémon Yellow's layout, from [pret/pokeyellow](https://github.com/pret/pokeyellow)
 
 ## **Art Credits**
   - SCMidna for Surfing Pikachu front sprites

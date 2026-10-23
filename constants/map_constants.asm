@@ -157,6 +157,9 @@ ENDM
 	map_const VICTORY_ROAD,                                10, 36 ; 91
 	map_const APRICORN_FOREST,                             15, 27 ; 92
 	map_const APRICORN_FOREST_CLEARING,                    10, 10 ; 93
+	map_const CERULEAN_CAVE_1F,                            15,  9 ; 95
+	map_const CERULEAN_CAVE_2F,                            15,  9 ; 96
+	map_const CERULEAN_CAVE_B1F,                           15,  9 ; 97
 	endgroup
 
 	newgroup ECRUTEAK                                             ;  4
