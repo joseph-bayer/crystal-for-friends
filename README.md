@@ -6,11 +6,11 @@ This is a hack of Pokemon Crystal meant to make you smile. All systems were desi
 
 ## Changes
 - **All 251 Pokemon Available**
-  - TODO: All Pokemon available
+  - All Pokemon available
     - Articuno, Zapdos and Moltres appear once you have all 16 badges: Zapdos outside the Power Plant on Route 10, Articuno on Route 20 near the Seafoam Islands, and Moltres in Victory Road.
       - The locations of Zapdos and Articuno may be temporary and may be updated in the future.
     - Mewtwo (level 75) waits at the bottom of Cerulean Cave, which opens once you have all 16 badges. Catching it leaves a Berserk Gene behind.
-    - TODO: Mew
+    - Mew (level 60) hides under the old truck at Vermilion Port once you've caught 250 species.
 
 - **Following Pokemon**
   - Press **Select** on a party member to make it your follower
@@ -299,6 +299,7 @@ TODO: mention a few. Put the rest on the dex site if people want spoilers
   - Kester Henrick for blackbelt overworld sprite used for Karate Master
   - [FrenchOrange](https://github.com/FrenchOrange) for help with the Shaman's overworld sprite
   - Campfire sprite and fire-pit tiles in the Shaman's house from [Polished Crystal](https://github.com/Rangi42/polishedcrystal)
+  - The truck at Vermilion Port is Pokémon Red and Blue's (Game Freak), from [pret/pokered](https://github.com/pret/pokered)
   - [FrenchOrange](https://github.com/FrenchOrange) for Lorelei's and Agatha's trainer sprites
   - MauveSea for Giovanni's trainer sprite
   - Most Pokemon party menu icons from [Sour Crystal](https://github.com/SoupPotato/sourcrystal)

@@ -344,6 +344,7 @@ WRAM0
 	"Miscellaneous"
 	align 8
 	"Overworld Map"
+	"Vermilion Port Truck"
 	align 4
 	"Video"
 	align 5

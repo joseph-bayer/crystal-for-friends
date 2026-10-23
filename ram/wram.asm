@@ -1147,6 +1147,12 @@ wccb4:: ds 1
 wccb5:: ds 3
 
 
+SECTION "Vermilion Port Truck", WRAM0
+
+; How many times the truck has been read since Vermilion Port was entered
+wVermilionPortTruckPresses:: db
+
+
 SECTION "Video", WRAM0
 
 UNION

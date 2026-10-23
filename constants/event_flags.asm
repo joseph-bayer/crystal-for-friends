@@ -301,9 +301,9 @@
 	const EVENT_GAVEN_ASKED_FOR_PHONE_NUMBER
 	const EVENT_CERULEAN_CITY_CAVE_GUARD ; was unused
 	const EVENT_BETH_ASKED_FOR_PHONE_NUMBER
-	const_skip ; unused in Crystal
+	const EVENT_FOUGHT_MEW ; was unused
 	const EVENT_JOSE_ASKED_FOR_PHONE_NUMBER
-	const_skip ; unused in Crystal
+	const EVENT_CAUGHT_MEW ; was unused
 	const EVENT_REENA_ASKED_FOR_PHONE_NUMBER
 	const_skip ; unused in Crystal
 	const EVENT_JOEY_ASKED_FOR_PHONE_NUMBER

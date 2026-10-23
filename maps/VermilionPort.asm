@@ -10,7 +10,8 @@ VermilionPort_MapScripts:
 	scene_script VermilionPortLeaveShipScene, SCENE_VERMILIONPORT_LEAVE_SHIP
 
 	def_callbacks
-	callback MAPCALLBACK_NEWMAP, VermilionPortFlypointCallback
+	callback MAPCALLBACK_NEWMAP, VermilionPortNewMapCallback
+	callback MAPCALLBACK_TILES, VermilionPortTruckCallback
 
 VermilionPortNoopScene:
 	end
@@ -19,8 +20,17 @@ VermilionPortLeaveShipScene:
 	sdefer VermilionPortLeaveShipScript
 	end
 
-VermilionPortFlypointCallback:
+VermilionPortNewMapCallback:
 	setflag ENGINE_FLYPOINT_VERMILION
+	loadmem wVermilionPortTruckPresses, 0
+	endcallback
+
+VermilionPortTruckCallback:
+; The truck is only parked here once 250 species are caught
+	readvar VAR_DEXCAUGHT
+	ifless 250, .NoTruck
+	changeblock 14, 10, $40 ; truck
+.NoTruck:
 	endcallback
 
 VermilionPortLeaveShipScript:
@@ -196,6 +206,41 @@ VermilionPortSuperNerdScript:
 VermilionPortHiddenIron:
 	hiddenitem IRON, EVENT_VERMILION_PORT_HIDDEN_IRON
 
+VermilionPortTruckScript:
+; Mew turns up on the fifth read since entering the map, until it's been battled
+	readvar VAR_DEXCAUGHT
+	ifless 250, .NoTruck
+	checkevent EVENT_FOUGHT_MEW
+	iftrue .JustATruck
+	readmem wVermilionPortTruckPresses
+	addval 1
+	writemem wVermilionPortTruckPresses
+	ifequal 5, .Mew
+.JustATruck:
+	jumptext VermilionPortTruckText
+
+.NoTruck:
+	end
+
+.Mew:
+	opentext
+	writetext VermilionPortTruckText
+	promptbutton
+	writetext VermilionPortTruckMewText
+	cry MEW
+	pause 15
+	closetext
+	setevent EVENT_FOUGHT_MEW
+	loadvar VAR_BATTLETYPE, BATTLETYPE_FORCEITEM
+	loadwildmon MEW, 60
+	startbattle
+	reloadmapafterbattle
+	special CheckBattleCaughtResult
+	iffalse .NotCaught
+	setevent EVENT_CAUGHT_MEW
+.NotCaught:
+	end
+
 VermilionPortEnterFastShipMovement:
 	step DOWN
 	step_end
@@ -298,6 +343,15 @@ VermilionPortSuperNerdText:
 	cont "there."
 	done
 
+VermilionPortTruckText:
+	text "It's an old truck."
+	done
+
+VermilionPortTruckMewText:
+	text "Wait, something is"
+	line "under the truck!"
+	done
+
 VermilionPort_MapEvents:
 	db 0, 0 ; filler
 
@@ -310,6 +364,8 @@ VermilionPort_MapEvents:
 
 	def_bg_events
 	bg_event 16, 13, BGEVENT_ITEM, VermilionPortHiddenIron
+	bg_event 14, 10, BGEVENT_UP, VermilionPortTruckScript
+	bg_event 15, 10, BGEVENT_UP, VermilionPortTruckScript
 
 	def_object_events
 	object_event  7, 17, SPRITE_SAILOR, SPRITEMOVEDATA_STANDING_UP, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, VermilionPortSailorAtGangwayScript, EVENT_VERMILION_PORT_SAILOR_AT_GANGWAY

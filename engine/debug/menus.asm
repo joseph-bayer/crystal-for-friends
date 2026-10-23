@@ -149,7 +149,7 @@ DebugBattlesScript::
 	db "CANCEL@"
 
 DebugToolsScript::
-; The Youngster: the phone, Hidden Power, the HM party and the animation viewer.
+; The Youngster: the phone, Hidden Power, the HM party, the animation viewer and the Pokedex.
 	faceplayer
 	opentext
 	writetext DebugToolsText
@@ -160,6 +160,7 @@ DebugToolsScript::
 	ifequal 2, .HPTools
 	ifequal 3, .LearnersParty
 	ifequal 4, .AnimViewer
+	ifequal 5, .Pokedex
 	closetext
 	end
 
@@ -176,19 +177,57 @@ DebugToolsScript::
 .AnimViewer:
 	farsjump DebugAnimViewerScript
 
+.Pokedex:
+; Set the Pokedex to just under and just at Mew's 250-caught gate
+	loadmenu .DexMenuHeader
+	verticalmenu
+	closewindow
+	ifequal 1, .Dex249
+	ifequal 2, .Dex250
+	closetext
+	end
+
+.Dex249:
+	callasm DebugSetDex249
+	writetext DebugDex249Text
+	waitbutton
+	closetext
+	end
+
+.Dex250:
+	callasm DebugSetDex250
+	writetext DebugDex250Text
+	waitbutton
+	closetext
+	end
+
 .MenuHeader:
 	db MENU_BACKUP_TILES ; flags
-	menu_coords 0, 0, 16, 11
+	menu_coords 0, 0, 16, 13
 	dw .MenuData
 	db 1 ; default option
 
 .MenuData:
 	db STATICMENU_CURSOR ; flags
-	db 5 ; items
+	db 6 ; items
 	db "PHONE@"
 	db "HP TOOLS@"
 	db "LEARNERS PARTY@"
 	db "ANIM VIEWER@"
+	db "#DEX@"
+	db "CANCEL@"
+
+.DexMenuHeader:
+	db MENU_BACKUP_TILES ; flags
+	menu_coords 0, 0, 14, 7
+	dw .DexMenuData
+	db 1 ; default option
+
+.DexMenuData:
+	db STATICMENU_CURSOR ; flags
+	db 3 ; items
+	db "249 CAUGHT@"
+	db "250 CAUGHT@"
 	db "CANCEL@"
 
 DebugStoryText:
@@ -201,6 +240,16 @@ DebugBattlesText:
 
 DebugToolsText:
 	text "DEBUG: tools."
+	done
+
+DebugDex249Text:
+	text "DEBUG: #DEX"
+	line "set to 249 caught."
+	done
+
+DebugDex250Text:
+	text "DEBUG: #DEX"
+	line "set to 250 caught."
 	done
 
 endc

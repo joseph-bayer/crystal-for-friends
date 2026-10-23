@@ -859,6 +859,45 @@ DebugClearPokedex::
 	xor a
 	jmp ByteFill
 
+DebugSetDex250::
+; 250 caught: every species seen and caught but Mew, which is neither
+	call DebugFillPokedex
+	jr DebugUncatchMew
+
+DebugSetDex249::
+; 249 caught: every species seen and caught but Mew and Celebi, which are neither
+	call DebugFillPokedex
+	ld de, CELEBI
+	call DebugUncatchMon
+DebugUncatchMew:
+	ld de, MEW
+DebugUncatchMon:
+; de = a species index
+	dec de
+	push de
+	ld hl, wPokedexCaught
+	ld b, RESET_FLAG
+	call FlagAction
+	pop de
+	ld hl, wPokedexSeen
+	ld b, RESET_FLAG
+	jmp FlagAction
+
+DebugFillPokedex:
+	ld de, NUM_POKEMON
+.loop
+	push de
+	call SetSeenMonIndex
+	pop de
+	push de
+	call SetCaughtMonIndex
+	pop de
+	dec de
+	ld a, d
+	or e
+	jr nz, .loop
+	ret
+
 DebugResetOpenLeague::
 ; RESET LEAGUE's save state: no lineup and no last champion
 	xor a
