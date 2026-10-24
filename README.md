@@ -65,6 +65,7 @@ This is a hack of Pokemon Crystal meant to make you smile. All systems were desi
 - **Swarm System Overhaul**
   - Daily swarms are announced via the radio on station 12.5, the Collection Guild's swarm report. Kanto swarms start after beating the Elite Four
   - Team Rocket's Pokémon, left behind when as you complete the story
+  - Team Rocket's swarm Pokémon all know Thief. One holding nothing can steal your Pokémon's item, which you only get back by catching it
   - Up to three swarms can be going at once: Arnie's and Anthony's phone calls still start theirs (Yanma on Route 35, Dunsparce in Dark Cave), and a new radio station picks one more every day
   - Swarms end at midnight
   - The radio won't announce the same swarm as either of the last two days you played

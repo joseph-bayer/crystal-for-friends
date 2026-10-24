@@ -6515,7 +6515,7 @@ LoadEnemyMon:
 	ld [wSkipMovesBeforeLevelUp], a
 ; Fill moves based on level
 	predef FillMoves
-	farcall ApplyOverworldMonMove ; a wandering mon may have been rolled with one more
+	farcall ApplyWildMonMove ; a wandering or swarm mon may have been rolled with one more
 
 .PP:
 ; Trainer battle?

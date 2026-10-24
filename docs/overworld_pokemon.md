@@ -193,8 +193,11 @@ mon, and testing that leaves the battle type free for the contest.
 | DVs | `.GenerateDVs` | take the rolled DVs |
 | Form and shininess | `.check_unown`, before the Unown letter roll | take the rolled form byte whole (`.overworld_mon_form`) |
 
-The move is applied by `ApplyOverworldMonMove`, after `FillMoves` and before the PP fill so it gets
-PP for free. It fills an empty slot, or replaces move 1 if the mon already knows four. **It is
+The move is applied by `ApplyWildMonMove`, after `FillMoves` and before the PP fill so it gets
+PP for free. The same routine gives a swarm's grass or surf mon its swarm's move, from
+`wTempWildMonMove` (see [Swarms](#swarms)). If the mon already knows the move nothing changes;
+otherwise it fills an empty slot, or replaces move 1, the earliest learned, if the mon already
+knows four. **It is
 stored as a 16-bit move index, not an 8-bit ID** — IDs come from a recycled table and can be
 evicted, and the roll may be minutes old.
 
@@ -388,8 +391,11 @@ side; the encounter side is `ApplySwarmToWildSlot` in `engine/overworld/wildmons
   combined weight moves nearer `SWARM_ENCOUNTER_RATE` (60%), and never all four, so one row always
   stays the route's own. Rows are weighted rather than fixed-odds slots, which is why this differs
   from the grass's slot masks.
-- **A taken row** gets the swarm's species and form and keeps the row's level. It does not keep the
-  row's perks or extra move, which belong to the species it displaced. On water, whether it floats
+- **A taken row** gets the swarm's species, form and move (the row's optional last argument in
+  `swarm_def`, `NO_MOVE` for none) and keeps the row's level. It does not keep the row's perks or
+  extra move, which belong to the species it displaced. A swarm's grass and surf mon get the same
+  move: `ApplySwarmToWildSlot` puts it in `wTempWildMonMove`, which `ApplyWildMonMove` uses up. On
+  water, whether it floats
   comes from its species, as for any water mon. Its shininess is rolled at `SWARM_SHINY_NUMERATOR`.
 - **After a battle with one of its wandering mon**, a swarming route rerolls every slot, so standing
   in a swarm is a loop. The fought mon's slot is emptied again, so it doesn't reappear a tile or two

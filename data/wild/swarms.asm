@@ -1,6 +1,7 @@
 ; Swarms
 ; Each row says which mon swarms, in which form, where, and which encounters it replaces, and
-; optionally an event flag the radio waits for before it offers the row.
+; optionally an event flag the radio waits for before it offers the row, and a move every mon of
+; the swarm knows. A row with a move but no flag passes SWARM_NO_GATE.
 ; Entries correspond to the SWARM_* constants and must stay in that order.
 ;
 ; Route 35 and Dark Cave Violet Entrance belong to the two vanilla swarms and host no others: Arnie's
@@ -40,13 +41,13 @@ SwarmTable::
 	swarm_def HORSEA,     HORSEA_RB_FORM,      ROUTE_12,                      SWARM_WATER
 
 	; Team Rocket's, left behind as each operation falls. Offered once that part of the story is
-	; over; each Rocket line swarms on one route only.
+	; over; each Rocket line swarms on one route only. Every one knows Thief.
 	; - After the Mahogany hideout
-	swarm_def GOLBAT,     GOLBAT_ROCKET_FORM,     ROUTE_42, SWARM_GRASS | SWARM_ROCKET, EVENT_CLEARED_ROCKET_HIDEOUT
-	swarm_def WEEZING,    WEEZING_ROCKET_FORM,    ROUTE_43, SWARM_GRASS | SWARM_ROCKET, EVENT_CLEARED_ROCKET_HIDEOUT
+	swarm_def GOLBAT,     GOLBAT_ROCKET_FORM,     ROUTE_42, SWARM_GRASS | SWARM_ROCKET, EVENT_CLEARED_ROCKET_HIDEOUT, THIEF
+	swarm_def WEEZING,    WEEZING_ROCKET_FORM,    ROUTE_43, SWARM_GRASS | SWARM_ROCKET, EVENT_CLEARED_ROCKET_HIDEOUT, THIEF
 	; - After the Radio Tower
-	swarm_def CHARMELEON, CHARMELEON_ROCKET_FORM, ROUTE_37, SWARM_GRASS | SWARM_ROCKET, EVENT_CLEARED_RADIO_TOWER
-	swarm_def ARBOK,      ARBOK_ROCKET_FORM,      ROUTE_39, SWARM_GRASS | SWARM_ROCKET, EVENT_CLEARED_RADIO_TOWER
+	swarm_def CHARMELEON, CHARMELEON_ROCKET_FORM, ROUTE_37, SWARM_GRASS | SWARM_ROCKET, EVENT_CLEARED_RADIO_TOWER,    THIEF
+	swarm_def ARBOK,      ARBOK_ROCKET_FORM,      ROUTE_39, SWARM_GRASS | SWARM_ROCKET, EVENT_CLEARED_RADIO_TOWER,    THIEF
 
 
 	assert_table_length NUM_SWARMS

@@ -572,9 +572,9 @@ RollOverworldMons::
 	ld a, [hl]
 	ld [wOverworldMonRollBuffer + OW_MON_MOVE + 1], a
 
-; A swarm takes the row over with its own species and form, keeping the row's level so it fits the
-; route. The row's perks and extra move belong to the species it displaces, so neither carries over.
-; .RollForm still rolls shininess.
+; A swarm takes the row over with its own species, form and move, keeping the row's level so it fits
+; the route. The row's perks and extra move belong to the species it displaces, so neither carries
+; over. .RollForm still rolls shininess.
 	ld a, b
 	and a
 	jr z, .FinishRoll
@@ -584,10 +584,11 @@ RollOverworldMons::
 	ld [wOverworldMonRollBuffer + OW_MON_SPECIES + 1], a
 	ld a, [wOverworldMonSwarmForm]
 	ld [wOverworldMonRollBuffer + OW_MON_FORM], a
-	assert NO_MOVE == 0
-	xor a
+	ld a, [wOverworldMonSwarmMove]
 	ld [wOverworldMonRollBuffer + OW_MON_MOVE], a
+	ld a, [wOverworldMonSwarmMove + 1]
 	ld [wOverworldMonRollBuffer + OW_MON_MOVE + 1], a
+	xor a
 	ld [wOverworldMonRollBuffer + OW_MON_PERKS], a
 
 .FinishRoll:
@@ -647,7 +648,7 @@ RollOverworldMons::
 ; stays the route's own. Rows are weighted, not fixed-odds slots, so this is how the overworld
 ; lands on the same rate the grass does with its slot masks.
 ; in: hl = this time of day's roster
-; out: wOverworldMonSwarmRows, and the swarm's species and form when there is one
+; out: wOverworldMonSwarmRows, and the swarm's species, form and move when there is one
 	xor a
 	ld [wOverworldMonSwarmRows], a
 	push hl
@@ -661,6 +662,10 @@ RollOverworldMons::
 	pop hl
 	ret nc
 	ld [wOverworldMonSwarmForm], a
+	ld a, c
+	ld [wOverworldMonSwarmMove], a
+	ld a, b
+	ld [wOverworldMonSwarmMove + 1], a
 	ld a, e
 	ld [wOverworldMonSwarmSpecies], a
 	ld a, d
@@ -2169,20 +2174,30 @@ endr
 	pop bc
 	ret
 
-ApplyOverworldMonMove::
-; Give the mon the extra move its roster entry named, on top of whatever its level taught it.
-; A wild encounter has nowhere to carry a move, which is what makes egg moves on a wandering mon
-; worth having at all.
+ApplyWildMonMove::
+; Give a wild mon the one extra move it was rolled with, on top of whatever its level taught it: a
+; wandering mon's from its roster entry or its swarm, a swarm's grass or surf mon's from
+; wTempWildMonMove. A plain wild encounter has nowhere to carry a move, which is what makes egg
+; moves on a wandering mon worth having at all.
 ; Called from LoadEnemyMon after FillMoves and before the PP fill, so the move gets its PP free.
+	ld hl, wTempWildMonMove
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	assert NO_MOVE == 0
+	xor a
+	ld [wTempWildMonMove], a
+	ld [wTempWildMonMove + 1], a ; used up
 	ld a, [wOverworldMonBattleSlot]
 	and a
-	ret z
+	jr z, .got_move
 	call GetOverworldMonBattleEncounter
 	ld de, OW_MON_MOVE
 	add hl, de
 	ld a, [hli]
 	ld h, [hl]
 	ld l, a
+.got_move
 	ld a, h
 	or l
 	ret z ; the entry asked for nothing

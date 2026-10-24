@@ -132,7 +132,8 @@ MACRO swarm_def
 ;\2: its form byte -- a *_FORM constant, optionally | SHINY_MASK for one that is always shiny
 ;\3: the map it swarms on
 ;\4: SWARM_GRASS or SWARM_WATER, the encounters it replaces, optionally | SWARM_ROCKET
-;\5: optional: an event flag that must be set before the radio offers it
+;\5: optional: an event flag that must be set before the radio offers it, or SWARM_NO_GATE
+;\6: optional: a move every mon of this swarm knows on top of its level-up moves
 	dw \1
 	db \2
 	map_id \3
@@ -143,8 +144,13 @@ MACRO swarm_def
 	ELSE
 		dw SWARM_NO_GATE
 	ENDC
+	IF _NARG >= 6
+		dw \6
+	ELSE
+		dw NO_MOVE
+	ENDC
 ENDM
-DEF SWARM_ENTRY_LENGTH EQU 2 + 1 + 2 + 1 + 2
+DEF SWARM_ENTRY_LENGTH EQU 2 + 1 + 2 + 1 + 2 + 2
 
 MACRO def_grass_wildmons
 ;\1: map id

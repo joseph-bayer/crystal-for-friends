@@ -1153,6 +1153,15 @@ SECTION "Vermilion Port Truck", WRAM0
 wVermilionPortTruckPresses:: db
 
 
+SECTION "Swarm Moves", WRAM0
+
+; The move a swarm's grass or surf mon knows on top of its level-up moves, NO_MOVE for none. Set by
+; ApplySwarmToWildSlot and used up by LoadEnemyMon.
+wTempWildMonMove:: dw
+; The wandering-mon roll's copy of the swarm's move, beside wOverworldMonSwarmSpecies and -Form.
+wOverworldMonSwarmMove:: dw
+
+
 SECTION "Video", WRAM0
 
 UNION

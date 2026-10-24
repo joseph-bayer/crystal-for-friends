@@ -213,6 +213,9 @@ TryWildEncounter::
 	xor a ; BATTLETYPE_NORMAL
 	ld [wTempWildMonSpecies], a
 	ld [wTempWildMonForm], a
+	assert NO_MOVE == 0
+	ld [wTempWildMonMove], a
+	ld [wTempWildMonMove + 1], a
 	ld [wBattleType], a
 	ld a, 1
 	and a
@@ -279,10 +282,14 @@ ApplyCleanseTagEffectOnEncounterRate::
 	ret
 
 ChooseWildEncounter:
-; A swarm hands its form to the battle through wTempWildMonForm, and a roll that never becomes
-; a battle (Repel, say) must not leave one behind for whatever wild mon comes next.
+; A swarm hands its form and move to the battle through wTempWildMonForm and wTempWildMonMove, and
+; a roll that never becomes a battle (Repel, say) must not leave them behind for whatever wild mon
+; comes next.
 	xor a
 	ld [wTempWildMonForm], a
+	assert NO_MOVE == 0
+	ld [wTempWildMonMove], a
+	ld [wTempWildMonMove + 1], a
 	call LoadWildMonDataPointer
 	jr nc, .nowildbattle
 ; Roaming beasts aren't met in the grass, only as wandering mon, so one can't be caught twice.
@@ -1109,7 +1116,7 @@ GetSwarmRow::
 
 ApplySwarmToWildSlot:
 ; A swarm takes some of its map's encounter slots (SWARM_GRASS_SLOTS / SWARM_WATER_SLOTS) and
-; substitutes its own species and form into them. The slot's level stands, so a swarm is
+; substitutes its own species, form and move into them. The slot's level stands, so a swarm is
 ; route-appropriate wherever it is put, and the map's encounter rate is untouched -- a swarm
 ; changes what you meet, not how often.
 ; in: hl = the rolled slot's species index, c = that slot's offset in its table (index * 3)
@@ -1150,6 +1157,14 @@ ApplySwarmToWildSlot:
 	ld e, a
 	ld a, [hli]
 	ld d, a ; de = the swarm's species
+	push hl
+	ld bc, 1 + 2 + 1 + 2
+	add hl, bc ; past the form, map, terrain and gate, to the move
+	ld a, [hli]
+	ld [wTempWildMonMove], a
+	ld a, [hl]
+	ld [wTempWildMonMove + 1], a
+	pop hl
 	ld a, [hl]
 ; The form reaches the battle through the same byte loadwildmon uses, which the battle takes whole
 ; and skips its own shiny roll for. So the swarm's shininess is rolled into that byte here. A plain
@@ -1277,8 +1292,8 @@ DailySwarmBroadcast::
 	push bc
 	call GetSwarmRow
 	push hl
-	ld bc, SWARM_ENTRY_LENGTH - 2
-	add hl, bc ; to the gate
+	ld bc, 2 + 1 + 2 + 1
+	add hl, bc ; past the species, form, map and terrain, to the gate
 	ld a, [hli]
 	ld e, a
 	ld d, [hl]
@@ -1447,13 +1462,21 @@ CheckAnySwarm::
 GetSwarmSpeciesForMap::
 ; For the overworld roll, which lives in another bank and so cannot read a SwarmTable row itself.
 ; in: d = map group, e = map number, b = SWARM_GRASS or SWARM_WATER
-; out: carry, de = the swarm's species and a = its form byte, if that map is swarming there
+; out: carry, de = the swarm's species, a = its form byte and bc = its move, if that map is
+; swarming there
 	call GetActiveSwarmForMap
 	ret nc
 	ld a, [hli]
 	ld e, a
 	ld a, [hli]
 	ld d, a
+	push hl
+	ld bc, 1 + 2 + 1 + 2
+	add hl, bc ; past the form, map, terrain and gate, to the move
+	ld a, [hli]
+	ld b, [hl]
+	ld c, a
+	pop hl
 	ld a, [hl]
 	scf
 	ret

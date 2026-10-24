@@ -345,6 +345,7 @@ WRAM0
 	align 8
 	"Overworld Map"
 	"Vermilion Port Truck"
+	"Swarm Moves"
 	align 4
 	"Video"
 	align 5
